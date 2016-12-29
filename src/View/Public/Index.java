@@ -1,4 +1,4 @@
-package src.View.Public;
+package View.Public;
 
 /**
  * Created by lorenzobraconi on 29/12/16.
