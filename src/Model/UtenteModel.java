@@ -1,5 +1,47 @@
-package src.Model;
+package Model;
 
+
+import Model.Dbtable.Utente;
+import Object.UtenteObject;
+import java.lang.reflect.Field;
 
 public class UtenteModel {
+    protected Utente tabella;
+
+    public UtenteModel() {
+        tabella= new Utente();
+    }
+
+    public String valueString(Object o){
+        Class<?> classe = o.getClass();
+        String temp_name = "";
+        String temp_value="";
+        String total="";
+        int i=0;
+        for(Field field : classe.getDeclaredFields()) {
+            temp_name=field.getName();
+            try{
+                Field f = classe.getDeclaredField(temp_name);
+                f.setAccessible(true);
+                temp_value = f.get(o).toString();
+            }
+            catch(Exception e){
+                temp_value="VOID";
+            }
+            if (i==0){
+                total="'"+temp_value+"'";
+            }
+            else{
+                total = total + ", '" + temp_value+"'";
+            }
+            i++;
+        }
+        return total;
+    }
+
+    public void inserisciUtente(UtenteObject utente){
+        String dati= valueString(utente);
+        tabella.insert(dati);
+        tabella.execute();
+    }
 }
