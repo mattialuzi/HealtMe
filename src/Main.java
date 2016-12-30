@@ -21,7 +21,7 @@ public class Main {
         utente.setLivello_attivita_fisica(LivelloAttivitaFisicaEnum.leggero);
         utente.setPeso(71);
         utente.setSesso(1);
-        utente.setUsername("lorebraco");
+        utente.setUsername("mattialuzi");
         utente.setPassword("pass");
         utente.setProg_alim_comb(false);
         utente.setProg_allen_comb(false);
@@ -29,6 +29,9 @@ public class Main {
         UtenteModel tabella= new UtenteModel();
         tabella.inserisciUtente(utente);
     }
+
+    // aggiunta una riga di prova lore
+
 }
 
 //lorebraco
