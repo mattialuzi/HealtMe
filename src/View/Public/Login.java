@@ -1,14 +1,13 @@
 package View.Public;
 
-
-import Controller.PublicController;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Index {
-    private JButton loginButton;
+
+public class Login {
+    private JTextField textField1;
+    private JPasswordField passwordField1;
     private JButton registratiButton;
     private JPanel mainPanel;
 
@@ -16,11 +15,12 @@ public class Index {
         return mainPanel;
     }
 
-    public Index(JFrame finestra) {
-        loginButton.addActionListener(new ActionListener() {
+    public Login(JFrame finestra) {
+
+        registratiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PublicController(finestra).registrazioneAction();
+                // da finire...
             }
         });
     }
