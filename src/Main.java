@@ -30,9 +30,6 @@ public class Main {
         tabella.inserisciUtente(utente);
     }
 
-    // aggiunta una riga di prova lore
 
 }
 
-//lorebraco
-//mattiarovazzi
