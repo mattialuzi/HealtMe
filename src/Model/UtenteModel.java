@@ -24,6 +24,12 @@ public class UtenteModel {
                 Field f = classe.getDeclaredField(temp_name);
                 f.setAccessible(true);
                 temp_value = f.get(o).toString();
+                if (temp_value=="false") {
+                    temp_value = "0";
+                }
+                else if (temp_value=="true") {
+                    temp_value = "1";
+                }
             }
             catch(Exception e){
                 temp_value="VOID";

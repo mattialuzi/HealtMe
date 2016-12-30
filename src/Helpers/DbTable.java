@@ -10,7 +10,7 @@ public class DbTable {
     protected String sql;
 
     public void insert(String campi){
-        sql="insert into" + name + "values("+ campi +")";
+        sql="insert into " + name + " values("+ campi +")";
     }
 
     public boolean execute(){
