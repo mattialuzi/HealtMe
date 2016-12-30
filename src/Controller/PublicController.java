@@ -17,7 +17,7 @@ public class PublicController {
         render(view.getMainPanel());
     }
 
-    public void registrazioneAction() {
+    public void loginAction() {
         Login view = new Login(finestra);
         render(view.getMainPanel());
     }

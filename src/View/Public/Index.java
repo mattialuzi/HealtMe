@@ -20,7 +20,7 @@ public class Index {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PublicController(finestra).registrazioneAction();
+                new PublicController(finestra).loginAction();
             }
         });
     }
