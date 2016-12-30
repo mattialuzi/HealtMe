@@ -22,7 +22,7 @@ public class PublicController {
         render(view.getMainPanel());
     }
 
-    public void render(JPanel view){
+    public void render(JPanel view){            //andrebbe sull'Helpers Controller; da creare...
         finestra.getContentPane().removeAll();
         try {
             finestra.add(view);
