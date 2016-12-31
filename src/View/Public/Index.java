@@ -23,5 +23,11 @@ public class Index {
                 new PublicController(finestra).loginAction();
             }
         });
+        registratiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PublicController(finestra).registrazioneAction();
+            }
+        });
     }
 }

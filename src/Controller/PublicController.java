@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.UtenteModel;
+import Object.*;
 import View.Public.*;
 import javax.swing.*;
 import java.awt.*;
@@ -22,12 +24,22 @@ public class PublicController {
         render(view.getMainPanel());
     }
 
+    public void registrazioneAction() {
+        Registrazione view = new Registrazione(finestra);
+        render(view.getMainPanel());
+    }
+
+    public void completaregistrazioneAction(UtenteObject utente) {
+        UtenteModel tabella= new UtenteModel();
+        tabella.inserisciUtente(utente);
+    }
+
     public void render(JPanel view){            //andrebbe sull'Helpers Controller; da creare...
         finestra.getContentPane().removeAll();
         try {
             finestra.add(view);
             finestra.validate();
-            finestra.setLocation(300,20);
+            //finestra.setLocation(300,20);
             finestra.pack();
             finestra.setMinimumSize(new Dimension(500,300));
             finestra.setLocationRelativeTo(null);
