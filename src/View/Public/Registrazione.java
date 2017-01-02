@@ -8,6 +8,7 @@ import Object.Enum.LavoroEnum;
 import Object.Enum.LivelloAttivitaFisicaEnum;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
@@ -59,13 +60,14 @@ public class Registrazione extends View{
                 UtenteObject utente = new UtenteObject();
 
                 boolean validator = true;
+                // manca il validatore per la presenza dello stesso username nel db
                 if(!validate(username.getText(),"testo")){
                     JOptionPane.showMessageDialog(null, "Username non valido", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     nome.requestFocus();
                     validator=false;
                 }
                 if(!validate(pass.getText(),"password")){
-                    JOptionPane.showMessageDialog(null, "Passord non valida: la password deve contenere almeno 6 caratteri e non può contenere caratteri speciali eccetto $ , _ , !", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Passord non valida: la password deve contenere almeno 6 caratteri e può contenere alcuni caratteri speciali($ , _ , !)", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     nome.requestFocus();
                     validator=false;
                 }
@@ -80,17 +82,17 @@ public class Registrazione extends View{
                     validator=false;
                 }
                 if(!validate(eta.getText(),"eta")){
-                    JOptionPane.showMessageDialog(null, "Eta non valida: l'età deve essere un numero compreso tra 0 e 99", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Eta non valida: l'età deve essere compresa tra 0 e 99", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     nome.requestFocus();
                     validator=false;
                 }
                 if(!validate(altezza.getText(),"intero")){
-                    JOptionPane.showMessageDialog(null, "Altezza non valida: l'altezza va espressa in cm", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Altezza non valida: l'altezza va espressa in centimetri", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     nome.requestFocus();
                     validator=false;
                 }
                 if(!validate(peso.getText(),"virgola")){
-                    JOptionPane.showMessageDialog(null, "Peso non valido: inserire un numero con la virgola (es: 70,0)", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Peso non valido: inserire un numero con la virgola (es: 70.0)", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     nome.requestFocus();
                     validator=false;
                 }
@@ -108,7 +110,7 @@ public class Registrazione extends View{
                     utente.setEta(Integer.parseInt(eta.getText()));
                     utente.setEmail(email.getText());
                     utente.setAltezza(Integer.parseInt(altezza.getText()));
-                    utente.setPeso(Integer.parseInt(peso.getText()));
+                    utente.setPeso(Float.parseFloat(peso.getText()));
                     Enumeration elements = sessoGroup.getElements();
                     while (elements.hasMoreElements()) {
                         JRadioButton button = (JRadioButton) elements.nextElement();
