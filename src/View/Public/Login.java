@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class Login {
     private JTextField textField1;
     private JPasswordField passwordField1;
-    private JButton registratiButton;
+    private JButton accediButton;
     private JPanel mainPanel;
 
     public JPanel getMainPanel() {
@@ -17,7 +17,7 @@ public class Login {
 
     public Login(JFrame finestra) {
 
-        registratiButton.addActionListener(new ActionListener() {
+        accediButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // da finire...

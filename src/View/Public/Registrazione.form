@@ -70,6 +70,7 @@
                           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
+                          <labelFor value="fbbda"/>
                           <text value="Lavoro"/>
                         </properties>
                       </component>
@@ -121,47 +122,25 @@
                         </constraints>
                         <properties/>
                       </component>
-                      <component id="6de3d" class="javax.swing.JComboBox" binding="lavoro">
+                      <component id="fbbda" class="javax.swing.JComboBox" binding="lavoro">
                         <constraints>
                           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <model>
-                            <item value="Leggero"/>
-                            <item value="Moderato"/>
-                            <item value="Pesante"/>
-                          </model>
+                          <model/>
                         </properties>
                       </component>
-                      <component id="c7d93" class="javax.swing.JComboBox" binding="livelloattivitafisica">
+                      <component id="eea4c" class="javax.swing.JComboBox" binding="livelloattivitafisica">
                         <constraints>
                           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
-                        <properties>
-                          <model>
-                            <item value="Assente"/>
-                            <item value="Leggero"/>
-                            <item value="Moderato"/>
-                            <item value="Intenso"/>
-                          </model>
-                        </properties>
+                        <properties/>
                       </component>
-                      <component id="5f654" class="javax.swing.JComboBox" binding="allergia">
+                      <component id="def2f" class="javax.swing.JComboBox" binding="allergia">
                         <constraints>
                           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
-                        <properties>
-                          <model>
-                            <item value="Glutine"/>
-                            <item value="Uova"/>
-                            <item value="Latticini"/>
-                            <item value="Pesce"/>
-                            <item value="Crostacei"/>
-                            <item value="Molluschi"/>
-                            <item value="Soia"/>
-                            <item value="Frutta a Guscio"/>
-                          </model>
-                        </properties>
+                        <properties/>
                       </component>
                     </children>
                   </grid>
