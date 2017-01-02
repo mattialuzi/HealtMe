@@ -57,36 +57,47 @@ public class Registrazione {
 
                 UtenteObject utente = new UtenteObject();
                 //manca l'eliminazione degli spazi dai campi di testo
-                utente.setUsername(username.getText());
-                utente.setPassword(pass.getText());
-                utente.setNome(nome.getText());
-                utente.setCognome(cognome.getText());
-                utente.setEta(Integer.parseInt(eta.getText()));
-                utente.setEmail(email.getText());
-                utente.setAltezza(Integer.parseInt(altezza.getText()));
-                utente.setPeso(Integer.parseInt(peso.getText()));
-                Enumeration elements = sessoGroup.getElements();
-                while (elements.hasMoreElements()) {
-                    JRadioButton button = (JRadioButton)elements.nextElement();
-                    if (button.isSelected()){
-                        if (button.getText()=="Uomo")
-                        utente.setSesso(1);
-                        else
-                            utente.setSesso(0);
-                    }
+                boolean validator = true;
+                if(!validate(username.getText(),"testo")){
+                    JOptionPane.showMessageDialog(null, "Username non valido", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    nome.requestFocus();
+                    validator=false;
+                }
+                if(!validate(pass.getText(),"testo")){
+                    JOptionPane.showMessageDialog(null, "Passord non valida", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    nome.requestFocus();
+                    validator=false;
                 }
 
-                // Setto lavoro, livello attivita fisica e allergia dell'utente
-                LavoroEnum lav= (LavoroEnum)lavoro.getSelectedItem();
-                utente.setLavoro(lav);
-                LivelloAttivitaFisicaEnum livello= (LivelloAttivitaFisicaEnum)livelloattivitafisica.getSelectedItem();
-                utente.setLivello_attivita_fisica(livello);
-                AllergiaEnum all= (AllergiaEnum)allergia.getSelectedItem();
-                utente.setAllergia(all);
 
-
-                new PublicController(finestra).completaregistrazioneAction(utente);
-
+                if(validator) {
+                    utente.setUsername(username.getText());
+                    utente.setPassword(pass.getText());
+                    utente.setNome(nome.getText());
+                    utente.setCognome(cognome.getText());
+                    utente.setEta(Integer.parseInt(eta.getText()));
+                    utente.setEmail(email.getText());
+                    utente.setAltezza(Integer.parseInt(altezza.getText()));
+                    utente.setPeso(Integer.parseInt(peso.getText()));
+                    Enumeration elements = sessoGroup.getElements();
+                    while (elements.hasMoreElements()) {
+                        JRadioButton button = (JRadioButton) elements.nextElement();
+                        if (button.isSelected()) {
+                            if (button.getText() == "Uomo")
+                                utente.setSesso(1);
+                            else
+                                utente.setSesso(0);
+                        }
+                    }
+                    // Setto lavoro, livello attivita fisica e allergia dell'utente
+                    LavoroEnum lav = (LavoroEnum) lavoro.getSelectedItem();
+                    utente.setLavoro(lav);
+                    LivelloAttivitaFisicaEnum livello = (LivelloAttivitaFisicaEnum) livelloattivitafisica.getSelectedItem();
+                    utente.setLivello_attivita_fisica(livello);
+                    AllergiaEnum all = (AllergiaEnum) allergia.getSelectedItem();
+                    utente.setAllergia(all);
+                    new PublicController(finestra).completaregistrazioneAction(utente);
+                }
             }
         });
     }
