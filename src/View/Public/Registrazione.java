@@ -1,6 +1,7 @@
 package View.Public;
 
 import Controller.PublicController;
+import Helpers.View;
 import Object.*;
 import Object.Enum.AllergiaEnum;
 import Object.Enum.LavoroEnum;
@@ -12,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.HashMap;
 
-public class Registrazione {
+public class Registrazione extends View{
 
     private JPanel mainPanel;
     private JTextField username;
@@ -56,19 +57,48 @@ public class Registrazione {
             public void actionPerformed(ActionEvent e) {
 
                 UtenteObject utente = new UtenteObject();
-                //manca l'eliminazione degli spazi dai campi di testo
+
                 boolean validator = true;
                 if(!validate(username.getText(),"testo")){
                     JOptionPane.showMessageDialog(null, "Username non valido", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     nome.requestFocus();
                     validator=false;
                 }
-                if(!validate(pass.getText(),"testo")){
-                    JOptionPane.showMessageDialog(null, "Passord non valida", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                if(!validate(pass.getText(),"password")){
+                    JOptionPane.showMessageDialog(null, "Passord non valida: la password deve contenere almeno 6 caratteri e non può contenere caratteri speciali eccetto $ , _ , !", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     nome.requestFocus();
                     validator=false;
                 }
-
+                if(!validate(nome.getText(),"testo")){
+                    JOptionPane.showMessageDialog(null, "Nome non valido", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    nome.requestFocus();
+                    validator=false;
+                }
+                if(!validate(cognome.getText(),"testo")){
+                    JOptionPane.showMessageDialog(null, "Cognome non valido", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    nome.requestFocus();
+                    validator=false;
+                }
+                if(!validate(eta.getText(),"eta")){
+                    JOptionPane.showMessageDialog(null, "Eta non valida: l'età deve essere un numero compreso tra 0 e 99", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    nome.requestFocus();
+                    validator=false;
+                }
+                if(!validate(altezza.getText(),"intero")){
+                    JOptionPane.showMessageDialog(null, "Altezza non valida: l'altezza va espressa in cm", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    nome.requestFocus();
+                    validator=false;
+                }
+                if(!validate(peso.getText(),"virgola")){
+                    JOptionPane.showMessageDialog(null, "Peso non valido: inserire un numero con la virgola (es: 70,0)", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    nome.requestFocus();
+                    validator=false;
+                }
+                if(!validate(email.getText(),"email")){
+                    JOptionPane.showMessageDialog(null, "Email non valida", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    nome.requestFocus();
+                    validator=false;
+                }
 
                 if(validator) {
                     utente.setUsername(username.getText());
