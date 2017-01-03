@@ -4,6 +4,7 @@ import Model.UtenteModel;
 import Object.*;
 import View.Public.*;
 import javax.swing.*;
+import javax.xml.ws.LogicalMessage;
 import java.awt.*;
 
 public class PublicController {
@@ -31,7 +32,15 @@ public class PublicController {
 
     public void completaregistrazioneAction(UtenteObject utente) {
         UtenteModel tabella= new UtenteModel();
-        tabella.inserisciUtente(utente);
+        boolean validator = tabella.getUserByUsername(utente.getUsername());
+        if(validator){
+            JOptionPane.showMessageDialog(null, "Username già esistente", "Errore", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            tabella.inserisciUtente(utente);
+            JOptionPane.showMessageDialog(null, "Registrazione completata con successo", "Benvenuto in Health Me!", JOptionPane.INFORMATION_MESSAGE);
+            loginAction();
+        }
     }
 
     public void render(JPanel view){            //andrebbe sull'Helpers Controller; da creare...

@@ -50,4 +50,16 @@ public class UtenteModel {
         tabella.insert(dati);
         tabella.execute();
     }
+
+    public boolean getUserByUsername(String user){
+        boolean success=false;
+        tabella.select();
+        tabella.where("username='" + user + "'");
+        int n = tabella.count(tabella.fetch());
+        if (n==1)
+            success=true;
+        else
+            success=false;
+        return success;
+    }
 }

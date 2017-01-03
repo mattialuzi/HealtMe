@@ -53,19 +53,27 @@ public class Registrazione extends View{
                 new PublicController(finestra).indexAction();
             }
         });
+
+        azzeraButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PublicController(finestra).registrazioneAction();
+            }
+        });
+
         completaRegistrazioneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 UtenteObject utente = new UtenteObject();
+                //elimino lo spazio eventualmente presente alla fine della stringa
                 username.setText(deleteLastSpace(username.getText()));
                 pass.setText(deleteLastSpace(pass.getText()));
                 nome.setText(deleteLastSpace(nome.getText()));
                 cognome.setText(deleteLastSpace(cognome.getText()));
-
-
+                email.setText(deleteLastSpace(email.getText()));
                 boolean validator = true;
-                // manca il validatore per la presenza dello stesso username nel db
+
                 if(!validate(username.getText(),"testo")){
                     JOptionPane.showMessageDialog(null, "Username non valido", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     nome.requestFocus();
@@ -137,6 +145,7 @@ public class Registrazione extends View{
                 }
             }
         });
+
     }
 
     private void createUIComponents() {
