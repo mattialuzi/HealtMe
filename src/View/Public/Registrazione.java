@@ -99,8 +99,8 @@ public class Registrazione extends View{
                     nome.requestFocus();
                     validator=false;
                 }
-                if(!validate(altezza.getText(),"intero")){
-                    JOptionPane.showMessageDialog(null, "Altezza non valida: l'altezza va espressa in centimetri", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                if(!validate(altezza.getText(),"virgola")){
+                    JOptionPane.showMessageDialog(null, "Altezza non valida: l'altezza va espressa in metri (es: 1.70) ", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     nome.requestFocus();
                     validator=false;
                 }
@@ -122,7 +122,8 @@ public class Registrazione extends View{
                     utente.setCognome(cognome.getText());
                     utente.setEta(Integer.parseInt(eta.getText()));
                     utente.setEmail(email.getText());
-                    utente.setAltezza(Integer.parseInt(altezza.getText()));
+                    float altezzauser = Float.parseFloat(altezza.getText());
+                    utente.setAltezza(altezzauser);
                     utente.setPeso(Float.parseFloat(peso.getText()));
                     Enumeration elements = sessoGroup.getElements();
                     while (elements.hasMoreElements()) {
@@ -141,6 +142,8 @@ public class Registrazione extends View{
                     utente.setLivello_attivita_fisica(livello);
                     AllergiaEnum all = (AllergiaEnum) allergia.getSelectedItem();
                     utente.setAllergia(all);
+                    utente.setPeso_forma(new PublicController(finestra).calcoloPesoForma(altezzauser,utente.getSesso()));
+
                     new PublicController(finestra).completaregistrazioneAction(utente);
                 }
             }

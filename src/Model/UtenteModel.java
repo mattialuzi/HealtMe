@@ -62,4 +62,16 @@ public class UtenteModel {
             success=false;
         return success;
     }
+
+    public boolean getUserByCredential(String user, String pass){
+        boolean success = false;
+        tabella.select();
+        tabella.where("username='" + user + "' and password='" + pass+"'");
+        int n = tabella.count(tabella.fetch());
+        if(n==1)
+            success = true;
+        else
+            success=false;
+        return success;
+    }
 }

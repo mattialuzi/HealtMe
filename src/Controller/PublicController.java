@@ -3,6 +3,8 @@ package Controller;
 import Model.UtenteModel;
 import Object.*;
 import View.Public.*;
+import View.User.Homepage;
+
 import javax.swing.*;
 import javax.xml.ws.LogicalMessage;
 import java.awt.*;
@@ -25,6 +27,18 @@ public class PublicController {
         render(view.getMainPanel());
     }
 
+    public void completaloginAction(String username, String password) {
+        UtenteModel utente = new UtenteModel();
+        boolean validator = utente.getUserByCredential(username, password);
+        if(!validator){
+            JOptionPane.showMessageDialog(null, "Username o Password errati", "Errore", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            Homepage view = new Homepage(finestra);
+            render(view.getMainPanel());
+        }
+    }
+
     public void registrazioneAction() {
         Registrazione view = new Registrazione(finestra);
         render(view.getMainPanel());
@@ -41,6 +55,18 @@ public class PublicController {
             JOptionPane.showMessageDialog(null, "Registrazione completata con successo", "Benvenuto in Health Me!", JOptionPane.INFORMATION_MESSAGE);
             loginAction();
         }
+    }
+
+    public float calcoloPesoForma(float altezza, int sesso){
+        float peso_forma;
+        //per indicare un numero float si mette una f alla fine
+        if(sesso == 1) {
+            peso_forma = 22.1f * altezza * altezza;
+        }
+        else {
+            peso_forma = 20.6f * altezza * altezza;
+        }
+        return peso_forma;
     }
 
     public void render(JPanel view){            //andrebbe sull'Helpers Controller; da creare...
