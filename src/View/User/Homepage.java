@@ -7,12 +7,15 @@ import javax.swing.*;
  */
 public class Homepage {
     private JPanel mainPanel;
-    private JLabel homelabel;
 
     public JPanel getMainPanel() {
         return mainPanel;
     }
 
     public Homepage(JFrame finestra) {
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
