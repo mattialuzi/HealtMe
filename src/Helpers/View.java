@@ -11,6 +11,10 @@ public class View {
         panel= new JPanel();
     }
 
+    public String DeleteLastSpace(String elemento)
+    {
+        return elemento.replaceAll("\\s+$", "");
+    }
     public boolean validate(String elemento, String tipo){
         boolean res = false;
         if(tipo.equals("testo"))
