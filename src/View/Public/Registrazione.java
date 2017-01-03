@@ -58,6 +58,11 @@ public class Registrazione extends View{
             public void actionPerformed(ActionEvent e) {
 
                 UtenteObject utente = new UtenteObject();
+                username.setText(deleteLastSpace(username.getText()));
+                pass.setText(deleteLastSpace(pass.getText()));
+                nome.setText(deleteLastSpace(nome.getText()));
+                cognome.setText(deleteLastSpace(cognome.getText()));
+
 
                 boolean validator = true;
                 // manca il validatore per la presenza dello stesso username nel db
