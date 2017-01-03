@@ -26,6 +26,7 @@ public class UserController {
     public void renderprova(JPanel view, JPanel variable){            //andrebbe sull'Helpers Controller; da creare...
         variable.removeAll();
         try {
+            variable = new JPanel(new GridLayout());
             variable.add(view);
             variable.validate();
             //finestra.setLocation(300,20);
