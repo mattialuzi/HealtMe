@@ -7,7 +7,7 @@ import javax.swing.*;
  */
 public class Homepage {
     private JPanel mainPanel;
-
+    private JPanel prova;
     public JPanel getMainPanel() {
         return mainPanel;
     }
