@@ -4,6 +4,7 @@ package Model;
 import Model.Dbtable.Utente;
 import Object.UtenteObject;
 import java.lang.reflect.Field;
+import java.sql.ResultSet;
 
 public class UtenteModel {
     protected Utente tabella;
@@ -51,7 +52,7 @@ public class UtenteModel {
         tabella.execute();
     }
 
-    public boolean getUserByUsername(String user){
+    public boolean findUserByUsername(String user){
         boolean success=false;
         tabella.select();
         tabella.where("username='" + user + "'");
@@ -62,6 +63,14 @@ public class UtenteModel {
             success=false;
         return success;
     }
+
+    public ResultSet getUserByUsername(String user){
+        tabella.select();
+        tabella.where("username='" + user + "'");
+        ResultSet utente= tabella.fetch();
+        return utente;
+    }
+
 
     public boolean getUserByCredential(String user, String pass){
         boolean success = false;

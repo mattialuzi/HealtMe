@@ -22,21 +22,21 @@ public class Homepage {
         return mainPanel;
     }
 
-    public Homepage(JFrame finestra) {
+    public Homepage(JFrame finestra, String username) {
         JMenuItem alim = menu.add (new JMenuItem("Alimentazione"));
         JMenuItem allen= menu.add (new JMenuItem("Allenamento"));
         JMenuItem profilo= menu.add (new JMenuItem("Profilo"));
         allen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new UserController(finestra).allenamentoAction(variablePanel);
+                new UserController(finestra, username).allenamentoAction(variablePanel);
             }
         });
 
         profilo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new UserController(finestra).profiloAction(variablePanel);
+                new UserController(finestra, username).profiloAction(variablePanel);
             }
         });
 

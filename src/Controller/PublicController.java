@@ -34,7 +34,7 @@ public class PublicController {
             JOptionPane.showMessageDialog(null, "Username o Password errati", "Errore", JOptionPane.ERROR_MESSAGE);
         }
         else {
-            Homepage view = new Homepage(finestra);
+            Homepage view = new Homepage(finestra, username);
             render(view.getMainPanel());
         }
     }
@@ -46,7 +46,7 @@ public class PublicController {
 
     public void completaregistrazioneAction(UtenteObject utente) {
         UtenteModel tabella= new UtenteModel();
-        boolean validator = tabella.getUserByUsername(utente.getUsername());
+        boolean validator = tabella.findUserByUsername(utente.getUsername());
         if(validator){
             JOptionPane.showMessageDialog(null, "Username già esistente", "Errore", JOptionPane.ERROR_MESSAGE);
         }
