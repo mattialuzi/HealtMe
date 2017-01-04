@@ -28,7 +28,8 @@ public class Profilo {
             while (utente.next()) {
                 String io = utente.getString("username");
                 nome.setText(io);
-                nome.paintImmediately(nome.getVisibleRect());
+                nome.validate();
+                nome.repaint();
                 String pass=utente.getString("password");
                 cognome.setText(pass);
             }

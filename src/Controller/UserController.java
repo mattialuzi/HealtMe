@@ -5,6 +5,7 @@ import Model.UtenteModel;
 import View.Public.Index;
 import View.User.Alimentazione;
 import View.User.Allenamento;
+import View.User.Homepage;
 import View.User.Profilo;
 import Object.*;
 import javax.swing.*;
@@ -17,11 +18,14 @@ import java.sql.ResultSet;
 public class UserController {
 
     protected JFrame finestra;
+    protected Homepage home;
     protected String username;
 
     public UserController(JFrame finestra, String username) {
         this.finestra = finestra;
+
         this.username = username;
+
     }
 
     public void allenamentoAction(JPanel variable){

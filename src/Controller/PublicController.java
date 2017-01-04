@@ -13,17 +13,18 @@ public class PublicController {
 
     protected JFrame finestra;
 
+
     public PublicController(JFrame finestra) {
         this.finestra = finestra;
     }
 
     public void indexAction(){
-        Index view = new Index(finestra);
+        Index view = new Index(this);
         render(view.getMainPanel());
     }
 
     public void loginAction() {
-        Login view = new Login(finestra);
+        Login view = new Login(this);
         render(view.getMainPanel());
     }
 
@@ -40,7 +41,7 @@ public class PublicController {
     }
 
     public void registrazioneAction() {
-        Registrazione view = new Registrazione(finestra);
+        Registrazione view = new Registrazione(this);
         render(view.getMainPanel());
     }
 

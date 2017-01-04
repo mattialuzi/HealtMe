@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 public class Registrazione extends View{
 
+    private PublicController controller;
     private JPanel mainPanel;
     private JTextField username;
     private JTextField pass;
@@ -39,8 +40,9 @@ public class Registrazione extends View{
         return mainPanel;
     }
 
-    public Registrazione(JFrame finestra) {
+    public Registrazione(PublicController controller) {
 
+        this.controller = controller;
         // Setto i valori dei ComboBox prendendoli dalle enumerazioni
         lavoro.setModel(new DefaultComboBoxModel(LavoroEnum.values()));
         livelloattivitafisica.setModel(new DefaultComboBoxModel(LivelloAttivitaFisicaEnum.values()));
@@ -50,14 +52,14 @@ public class Registrazione extends View{
         indietroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PublicController(finestra).indexAction();
+                controller.indexAction();
             }
         });
 
         azzeraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PublicController(finestra).registrazioneAction();
+                controller.registrazioneAction();
             }
         });
 
@@ -142,9 +144,9 @@ public class Registrazione extends View{
                     utente.setLivello_attivita_fisica(livello);
                     AllergiaEnum all = (AllergiaEnum) allergia.getSelectedItem();
                     utente.setAllergia(all);
-                    utente.setPeso_forma(new PublicController(finestra).calcoloPesoForma(altezzauser,utente.getSesso()));
+                    utente.setPeso_forma(controller.calcoloPesoForma(altezzauser,utente.getSesso()));
 
-                    new PublicController(finestra).completaregistrazioneAction(utente);
+                    controller.completaregistrazioneAction(utente);
                 }
             }
         });

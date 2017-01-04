@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 
 
 public class Login {
+
+    private PublicController controller;
     private JTextField username;
     private JPasswordField password;
     private JButton accediButton;
@@ -18,20 +20,21 @@ public class Login {
         return mainPanel;
     }
 
-    public Login(JFrame finestra) {
+    public Login(PublicController controller) {
 
+        this.controller = controller;
         accediButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String passText = new String(password.getPassword());
-                new PublicController(finestra).completaloginAction(username.getText(), passText);
+                controller.completaloginAction(username.getText(), passText);
             }
         });
 
         indietroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new PublicController(finestra).indexAction();
+                controller.indexAction();
             }
         });
     }
