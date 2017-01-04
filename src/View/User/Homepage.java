@@ -25,11 +25,18 @@ public class Homepage {
     public Homepage(JFrame finestra) {
         JMenuItem alim = menu.add (new JMenuItem("Alimentazione"));
         JMenuItem allen= menu.add (new JMenuItem("Allenamento"));
-        menu.add (new JMenuItem("Profilo"));
+        JMenuItem profilo= menu.add (new JMenuItem("Profilo"));
         allen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new UserController(finestra).allenamentoAction(variablePanel);
+            }
+        });
+
+        profilo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new UserController(finestra).profiloAction(variablePanel);
             }
         });
 

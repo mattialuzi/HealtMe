@@ -1,9 +1,11 @@
 package Controller;
 
+import Model.Dbtable.Utente;
 import View.Public.Index;
 import View.User.Alimentazione;
 import View.User.Allenamento;
-
+import View.User.Profilo;
+import Object.*;
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,11 +25,18 @@ public class UserController {
         renderprova(view.getAllenPanel(), variable);
     }
 
+    public void profiloAction(JPanel variable){
+        String nome = System.getProperty("user.name");
+        UtenteObject utente = new UtenteObject();
+        Profilo view = new Profilo(finestra, utente);
+        renderprova(view.getMainPanel(), variable);
+    }
+
     public void renderprova(JPanel view, JPanel variable){            //andrebbe sull'Helpers Controller; da creare...
         finestra.getContentPane().remove(variable);
         try {
             finestra.add(view);
-            variable.validate();
+            finestra.validate();
             //finestra.setLocation(300,20);
             finestra.pack();
             finestra.setMinimumSize(new Dimension(500,300));
