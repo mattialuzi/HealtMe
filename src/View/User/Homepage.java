@@ -3,10 +3,10 @@ package View.User;
 import Controller.PublicController;
 import Controller.UserController;
 import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 /**
  * Created by lorenzobraconi on 03/01/17.
