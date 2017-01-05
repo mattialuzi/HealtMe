@@ -20,9 +20,9 @@ public class Login {
         return mainPanel;
     }
 
-    public Login(PublicController controller) {
+    public Login() {
 
-        this.controller = controller;
+        /*
         accediButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -36,6 +36,6 @@ public class Login {
             public void actionPerformed(ActionEvent e) {
                 controller.indexAction();
             }
-        });
+        });*/
     }
 }

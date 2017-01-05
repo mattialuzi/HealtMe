@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 
 public class Index {
 
-    private PublicController controller;
     private JButton loginButton;
     private JButton registratiButton;
     private JPanel mainPanel;
@@ -18,20 +17,15 @@ public class Index {
         return mainPanel;
     }
 
-    public Index(PublicController controller) {
+    public Index() {
 
-        this.controller = controller;
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.loginAction();
-            }
-        });
-        registratiButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.registrazioneAction();
-            }
-        });
+    }
+
+    public void addLoginButtonListener(ActionListener listener){
+        loginButton.addActionListener(listener);
+    }
+
+    public void addRegistratiButtonListener(ActionListener listener){
+        registratiButton.addActionListener(listener);
     }
 }

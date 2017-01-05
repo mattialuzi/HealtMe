@@ -40,9 +40,9 @@ public class Registrazione extends View{
         return mainPanel;
     }
 
-    public Registrazione(PublicController controller) {
+    public Registrazione() {
 
-        this.controller = controller;
+        /*
         // Setto i valori dei ComboBox prendendoli dalle enumerazioni
         lavoro.setModel(new DefaultComboBoxModel(LavoroEnum.values()));
         livelloattivitafisica.setModel(new DefaultComboBoxModel(LivelloAttivitaFisicaEnum.values()));
@@ -149,7 +149,7 @@ public class Registrazione extends View{
                     controller.completaregistrazioneAction(utente);
                 }
             }
-        });
+        }); */
 
     }
 

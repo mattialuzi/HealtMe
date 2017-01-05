@@ -2,23 +2,47 @@ package Controller;
 
 import Model.UtenteModel;
 import Object.*;
+import View.Auth;
 import View.Public.*;
-import View.User.Homepage;
 
 import javax.swing.*;
-import javax.xml.ws.LogicalMessage;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PublicController {
 
-    protected JFrame finestra;
+    //protected JFrame finestra;
+    private Auth view;
+    private CardLayout cardLayout = new CardLayout();
+    private JPanel mainPanel;
 
 
-    public PublicController(JFrame finestra) {
-        this.finestra = finestra;
+    public PublicController(Auth view) {
+
+        this.view = view;
+        view.setVisible(true);
+        mainPanel = view.getMainPanel();
+        cardLayout = (CardLayout)mainPanel.getLayout();
+        cardLayout.show(mainPanel, "Index");
+        Index indexview = view.getIndexview();
+        indexview.addLoginButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel,"Login");
+            }
+        });
+        indexview.addRegistratiButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel,"Registrazione");
+            }
+        });
+
+
     }
 
-    public void indexAction(){
+   /* public void indexAction(){
         Index view = new Index(this);
         render(view.getMainPanel());
     }
@@ -87,7 +111,7 @@ public class PublicController {
         catch(Exception e){
             System.out.println(e);
         }
-    }
+    }*/
 
 
 }
