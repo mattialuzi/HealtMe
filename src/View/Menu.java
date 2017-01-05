@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 public class Menu {
 
 
+    private JPanel panel1;
+
     public Menu() {
 
     }
