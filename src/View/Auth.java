@@ -16,6 +16,8 @@ public class Auth {
     private JPanel loginPanel;
     private JPanel registrazionePanel;
     private Index indexview;
+    private Login loginview;
+    private Registrazione registrazioneview;
 
     public Auth() {
 
@@ -24,8 +26,8 @@ public class Auth {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         indexview = new Index();
-        Login loginview = new Login();
-        Registrazione registrazioneview = new Registrazione();
+        loginview = new Login();
+        registrazioneview = new Registrazione();
         indexPanel = indexview.getMainPanel();
         loginPanel = loginview.getMainPanel();
         registrazionePanel = registrazioneview.getMainPanel();
@@ -48,4 +50,7 @@ public class Auth {
         return indexview;
     }
 
+    public Login getLoginview() { return loginview; }
+
+    public Registrazione getRegistrazioneview() { return registrazioneview; }
 }

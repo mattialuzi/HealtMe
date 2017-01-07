@@ -26,6 +26,9 @@ public class PublicController {
         cardLayout = (CardLayout)mainPanel.getLayout();
         cardLayout.show(mainPanel, "Index");
         Index indexview = view.getIndexview();
+        Login loginview = view.getLoginview();
+        Registrazione registrazioneview = view.getRegistrazioneview();
+
         indexview.addLoginButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -36,6 +39,38 @@ public class PublicController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(mainPanel,"Registrazione");
+            }
+        });
+        registrazioneview.addAzzeraButton(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                registrazioneview.azzeraCampi();
+            }
+        });
+        registrazioneview.addIndietroButton(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                registrazioneview.azzeraCampi();
+                cardLayout.show(mainPanel, "Index");
+            }
+        });
+        registrazioneview.addCompletaRegistrazioneButton(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                registrazioneview.eliminaSpazi();
+                if (registrazioneview.isValid()){
+                    UtenteObject nuovoutente = registrazioneview.getNuovoUtente();
+                    UtenteModel tabella= new UtenteModel();
+                    boolean validator = tabella.findUserByUsername(nuovoutente.getUsername());
+                    if(validator){
+                        JOptionPane.showMessageDialog(null, "Username già esistente", "Errore", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else {
+                        tabella.inserisciUtente(nuovoutente);
+                        JOptionPane.showMessageDialog(null, "Registrazione completata con successo", "Benvenuto in Health Me!", JOptionPane.INFORMATION_MESSAGE);
+                        cardLayout.show(mainPanel, "Login");
+                    }
+                }
             }
         });
 
