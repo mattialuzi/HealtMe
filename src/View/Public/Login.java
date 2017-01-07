@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
+
 public class Login {
 
     private PublicController controller;
@@ -22,20 +23,15 @@ public class Login {
 
     public Login() {
 
-        /*
-        accediButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String passText = new String(password.getPassword());
-                controller.completaloginAction(username.getText(), passText);
-            }
-        });
+    }
 
-        indietroButton.addActionListener(new ActionListener() {
+        public void addAccediButton(ActionListener listener) {accediButton.addActionListener(listener); }
+
+       /* indietroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.indexAction();
             }
-        });*/
-    }
+        }); */
+
 }

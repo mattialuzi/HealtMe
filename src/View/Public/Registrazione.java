@@ -49,15 +49,15 @@ public class Registrazione extends View {
         allergia.setModel(new DefaultComboBoxModel(AllergiaEnum.values()));
     }
 
-    public void addIndietroButton(ActionListener listener) {
+    public void addIndietroButtonListener(ActionListener listener) {
         indietroButton.addActionListener(listener);
     }
 
-    public void addAzzeraButton(ActionListener listener) {
+    public void addAzzeraButtonListener(ActionListener listener) {
         azzeraButton.addActionListener(listener);
     }
 
-    public void addCompletaRegistrazioneButton(ActionListener listener){
+    public void addCompletaRegistrazioneButtonListener(ActionListener listener){
         completaRegistrazioneButton.addActionListener(listener);
     }
 

@@ -41,20 +41,20 @@ public class PublicController {
                 cardLayout.show(mainPanel,"Registrazione");
             }
         });
-        registrazioneview.addAzzeraButton(new ActionListener() {
+        registrazioneview.addAzzeraButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 registrazioneview.azzeraCampi();
             }
         });
-        registrazioneview.addIndietroButton(new ActionListener() {
+        registrazioneview.addIndietroButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 registrazioneview.azzeraCampi();
                 cardLayout.show(mainPanel, "Index");
             }
         });
-        registrazioneview.addCompletaRegistrazioneButton(new ActionListener() {
+        registrazioneview.addCompletaRegistrazioneButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 registrazioneview.eliminaSpazi();
@@ -73,6 +73,16 @@ public class PublicController {
                 }
             }
         });
+        loginview.addAccediButton(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                                      }
+                                  }
+
+
+        );
 
 
     }
