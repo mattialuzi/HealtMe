@@ -25,7 +25,15 @@ public class Login {
 
     }
 
-        public void addAccediButton(ActionListener listener) {accediButton.addActionListener(listener); }
+    public void addAccediButtonListener(ActionListener listener) {accediButton.addActionListener(listener); }
+
+    public String getUsername() {
+        return this.username.getText();
+    }
+
+    public String getPassword() {
+       return this.password.getText();
+    }
 
        /* indietroButton.addActionListener(new ActionListener() {
             @Override

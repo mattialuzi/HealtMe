@@ -72,7 +72,7 @@ public class UtenteModel {
     }
 
 
-    public boolean getUserByCredential(String user, String pass){
+    public boolean findUserByCredential(String user, String pass){
         boolean success = false;
         tabella.select();
         tabella.where("username='" + user + "' and password='" + pass+"'");
