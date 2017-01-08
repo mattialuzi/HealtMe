@@ -122,8 +122,8 @@ public class PublicController {
             } catch (Exception e) {
                 System.out.println("C'è un errore:" + e);
             }
-            Menu prova = new Menu();
-            new MenuController(prova);
+            Menu welcome = new Menu();
+            new MenuController(welcome);
             view.setVisible(false);
         }
     }
