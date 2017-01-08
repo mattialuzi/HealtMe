@@ -8,6 +8,8 @@ import Object.Enum.LivelloAttivitaFisicaEnum;
 import View.Auth;
 import View.Public.*;
 
+import View.Menu;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,7 +32,6 @@ public class PublicController {
         cardLayout.show(mainPanel, "Index");
         Index indexview = view.getIndexview();
         Login loginview = view.getLoginview();
-
         Registrazione registrazioneview = view.getRegistrazioneview();
 
         indexview.addLoginButtonListener(new ActionListener() {
@@ -100,28 +101,30 @@ public class PublicController {
         String password = view.getLoginview().getPassword();
         UtenteModel utentemodel = new UtenteModel();
         boolean validator = utentemodel.findUserByCredential(username, password);
-        if(!validator){
+        if (!validator) {
             JOptionPane.showMessageDialog(null, "Username o Password errati", "Errore", JOptionPane.ERROR_MESSAGE);
-        }
-        else {
-            ResultSet risultato  = utentemodel.getUserByUsername(username);
+        } else {
+            ResultSet risultato = utentemodel.getUserByUsername(username);
             UtenteObject utentecorrente = new UtenteObject();
             try {
-                    utentecorrente.setUsername(risultato.getString("username"));
-                    utentecorrente.setPassword(risultato.getString("password"));
-                    utentecorrente.setNome(risultato.getString("nome"));
-                    utentecorrente.setCognome(risultato.getString("cognome"));
-                    utentecorrente.setEta(risultato.getInt("eta"));
-                    utentecorrente.setAltezza(risultato.getFloat("altezza"));
-                    utentecorrente.setPeso(risultato.getFloat("peso"));
-                    utentecorrente.setPeso_forma(risultato.getFloat("peso_forma"));
-                    utentecorrente.setAllergia(AllergiaEnum.valueOf(risultato.getString("allergia")));
-                    utentecorrente.setLavoro(LavoroEnum.valueOf(risultato.getString("lavoro")));
-                    utentecorrente.setLivello_attivita_fisica(LivelloAttivitaFisicaEnum.valueOf(risultato.getString("livello_attivita_fisica")));
-                    utentecorrente.setEmail(risultato.getString("email"));
+                utentecorrente.setUsername(risultato.getString("username"));
+                utentecorrente.setPassword(risultato.getString("password"));
+                utentecorrente.setNome(risultato.getString("nome"));
+                utentecorrente.setCognome(risultato.getString("cognome"));
+                utentecorrente.setEta(risultato.getInt("eta"));
+                utentecorrente.setAltezza(risultato.getFloat("altezza"));
+                utentecorrente.setPeso(risultato.getFloat("peso"));
+                utentecorrente.setPeso_forma(risultato.getFloat("peso_forma"));
+                utentecorrente.setAllergia(AllergiaEnum.valueOf(risultato.getString("allergia")));
+                utentecorrente.setLavoro(LavoroEnum.valueOf(risultato.getString("lavoro")));
+                utentecorrente.setLivello_attivita_fisica(LivelloAttivitaFisicaEnum.valueOf(risultato.getString("livello_attivita_fisica")));
+                utentecorrente.setEmail(risultato.getString("email"));
+            } catch (Exception e) {
+                System.out.println("C'è un errore:" + e);
             }
-            catch (Exception e){
-            System.out.println("C'è un errore:" + e);
+            Menu prova = new Menu();
+            new MenuController(prova);
+            view.setVisible(false);
         }
     }
 
