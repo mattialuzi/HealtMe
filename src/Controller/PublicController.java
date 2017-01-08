@@ -78,22 +78,20 @@ public class PublicController {
                 }
             }
         });
-
         loginview.addAccediButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 completaloginAction();
-
-
-
-
                                       }
                                   }
-
-
         );
-
-
+        loginview.addIndietroButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginview.azzeraCampi();
+                cardLayout.show(mainPanel,"Index");
+            }
+        });
     }
 
     public void completaloginAction() {

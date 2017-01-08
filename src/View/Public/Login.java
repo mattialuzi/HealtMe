@@ -23,9 +23,12 @@ public class Login {
 
     public Login() {
 
+
     }
 
     public void addAccediButtonListener(ActionListener listener) {accediButton.addActionListener(listener); }
+
+    public void addIndietroButtonListener(ActionListener listener) {indietroButton.addActionListener(listener); }
 
     public String getUsername() {
         return this.username.getText();
@@ -33,6 +36,11 @@ public class Login {
 
     public String getPassword() {
        return this.password.getText();
+    }
+
+    public void azzeraCampi(){
+        username.setText("");
+        password.setText("");
     }
 
        /* indietroButton.addActionListener(new ActionListener() {
