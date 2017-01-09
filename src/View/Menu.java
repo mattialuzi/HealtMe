@@ -15,8 +15,6 @@ import java.awt.event.ActionListener;
  */
 public class Menu {
 
-
-    private static JFrame frame = new JFrame("Health Me!");
     private JPanel mainPanel;
     private JPanel menuPanel;
     private JButton menuButton;
@@ -49,7 +47,7 @@ public class Menu {
     private ProfiloView profilo;
     private RiepilogoView riepilogo;
 
-    public Menu() {
+    public Menu(JFrame frame) {
 
         frame.setContentPane(mainPanel);
         frame.setMinimumSize(new Dimension(500, 300));
@@ -91,10 +89,6 @@ public class Menu {
 
     public void addLogoutButtonListener(ActionListener listener){
         logoutButton.addActionListener(listener);
-    }
-
-    public static void setVisible(boolean visible) {
-        frame.setVisible(visible);
     }
 
     public JPanel getVariablePanel() {

@@ -53,4 +53,8 @@ public class Auth {
     public Login getLoginview() { return loginview; }
 
     public Registrazione getRegistrazioneview() { return registrazioneview; }
+
+    public static JFrame getFrame() {
+        return frame;
+    }
 }

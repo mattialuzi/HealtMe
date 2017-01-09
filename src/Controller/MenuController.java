@@ -21,7 +21,6 @@ public class MenuController {
     public MenuController(Menu menu)
     {
         this.menu=menu;
-        menu.setVisible(true);
         variablePanel = menu.getVariablePanel();
         cardLayout = (CardLayout)variablePanel.getLayout();
         cardLayout.show(variablePanel,"AlimentazioneView");
@@ -76,7 +75,6 @@ public class MenuController {
                 if (replay == JOptionPane.YES_OPTION){
                     Auth view = new Auth();
                     new PublicController(view);
-                    menu.setVisible(false);
                 }
             }
         });

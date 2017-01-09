@@ -18,7 +18,6 @@ import java.sql.ResultSet;
 
 public class PublicController {
 
-    //protected JFrame finestra;
     private Auth view;
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel;
@@ -120,9 +119,8 @@ public class PublicController {
             } catch (Exception e) {
                 System.out.println("C'è un errore:" + e);
             }
-            Menu welcome = new Menu();
+            Menu welcome = new Menu(view.getFrame());
             new MenuController(welcome);
-            view.setVisible(false);
         }
     }
 
