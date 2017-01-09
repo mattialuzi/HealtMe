@@ -5,6 +5,8 @@ import View.Menu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by lorenzobraconi on 05/01/17.
@@ -12,19 +14,29 @@ import java.awt.*;
 public class MenuController {
     private Menu menu;
     private CardLayout cardLayout = new CardLayout();
-    private JPanel mainPanel;
+    private JPanel variablePanel;
 
     public MenuController(Menu menu)
     {
         this.menu=menu;
         menu.setVisible(true);
-        mainPanel = menu.getMainPanel();
-        cardLayout = (CardLayout)mainPanel.getLayout();
-        cardLayout.show(mainPanel,"AlimentazioneView");
+        variablePanel = menu.getVariablePanel();
+        cardLayout = (CardLayout)variablePanel.getLayout();
+        cardLayout.show(variablePanel,"AlimentazioneView");
 
         AlimentazioneView alimentazione = menu.getAlimentazioneview();
 
+        menu.addMenuButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel menuPanel = menu.getMenuPanel();
+                if (menuPanel.isVisible()) {
+                    menuPanel.setVisible(false);
+                } else
+                    menuPanel.setVisible(true);
+            }
+        });
 
     }
-
 }
+
