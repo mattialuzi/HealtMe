@@ -114,4 +114,8 @@ public class Menu {
     public AllenamentoView getAllenamentoview() {
         return allenamento;
     }
+
+    public ProfiloView getProfiloview() {
+        return profilo;
+    }
 }

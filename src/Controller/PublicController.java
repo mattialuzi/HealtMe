@@ -104,23 +104,25 @@ public class PublicController {
             ResultSet risultato = utentemodel.getUserByUsername(username);
             UtenteObject utentecorrente = new UtenteObject();
             try {
-                utentecorrente.setUsername(risultato.getString("username"));
-                utentecorrente.setPassword(risultato.getString("password"));
-                utentecorrente.setNome(risultato.getString("nome"));
-                utentecorrente.setCognome(risultato.getString("cognome"));
-                utentecorrente.setEta(risultato.getInt("eta"));
-                utentecorrente.setAltezza(risultato.getFloat("altezza"));
-                utentecorrente.setPeso(risultato.getFloat("peso"));
-                utentecorrente.setPeso_forma(risultato.getFloat("peso_forma"));
-                utentecorrente.setAllergia(AllergiaEnum.valueOf(risultato.getString("allergia")));
-                utentecorrente.setLavoro(LavoroEnum.valueOf(risultato.getString("lavoro")));
-                utentecorrente.setLivello_attivita_fisica(LivelloAttivitaFisicaEnum.valueOf(risultato.getString("livello_attivita_fisica")));
-                utentecorrente.setEmail(risultato.getString("email"));
+                while(risultato.next()) {
+                    utentecorrente.setUsername(risultato.getString("username"));
+                    utentecorrente.setPassword(risultato.getString("password"));
+                    utentecorrente.setNome(risultato.getString("nome"));
+                    utentecorrente.setCognome(risultato.getString("cognome"));
+                    utentecorrente.setEta(risultato.getInt("eta"));
+                    utentecorrente.setAltezza(risultato.getFloat("altezza"));
+                    utentecorrente.setPeso(risultato.getFloat("peso"));
+                    utentecorrente.setPeso_forma(risultato.getFloat("peso_forma"));
+                    utentecorrente.setAllergia(AllergiaEnum.valueOf(risultato.getString("allergia")));
+                    utentecorrente.setLavoro(LavoroEnum.valueOf(risultato.getString("lavoro")));
+                    utentecorrente.setLivello_attivita_fisica(LivelloAttivitaFisicaEnum.valueOf(risultato.getString("livello_attivita_fisica")));
+                    utentecorrente.setEmail(risultato.getString("email"));
+                }
             } catch (Exception e) {
                 System.out.println("C'è un errore:" + e);
             }
             Menu welcome = new Menu(view.getFrame());
-            new MenuController(welcome);
+            new MenuController(welcome, utentecorrente);
         }
     }
 

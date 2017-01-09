@@ -4,6 +4,8 @@ import View.Alimentazione.AlimentazioneView;
 import View.Allenamento.AllenamentoView;
 import View.Auth;
 import View.Menu;
+import Object.UtenteObject;
+import View.Profilo.ProfiloView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,15 +19,18 @@ public class MenuController {
     private Menu menu;
     private CardLayout cardLayout = new CardLayout();
     private JPanel variablePanel;
+    private UtenteObject utente;
 
-    public MenuController(Menu menu)
+    public MenuController(Menu menu, UtenteObject utente)
     {
         this.menu=menu;
+        this.utente=utente;
         variablePanel = menu.getVariablePanel();
         cardLayout = (CardLayout)variablePanel.getLayout();
         cardLayout.show(variablePanel,"AlimentazioneView");
         AlimentazioneView alimentazione = menu.getAlimentazioneview();
         AllenamentoView allenamento = menu.getAllenamentoview();
+        ProfiloView profilo = menu.getProfiloview();
 
         menu.addMenuButtonListener(new ActionListener() {
             @Override
@@ -57,6 +62,7 @@ public class MenuController {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(variablePanel, "ProfiloView");
                 MenuVisibility();
+                new ProfiloController(profilo, utente);
             }
         });
 
@@ -95,5 +101,6 @@ public class MenuController {
         } else
             subPanel.setVisible(true);
     }
+
 }
 
