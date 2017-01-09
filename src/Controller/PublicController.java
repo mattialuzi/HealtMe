@@ -117,6 +117,7 @@ public class PublicController {
                     utentecorrente.setLavoro(LavoroEnum.valueOf(risultato.getString("lavoro")));
                     utentecorrente.setLivello_attivita_fisica(LivelloAttivitaFisicaEnum.valueOf(risultato.getString("livello_attivita_fisica")));
                     utentecorrente.setEmail(risultato.getString("email"));
+                    utentecorrente.setSesso(risultato.getInt("sesso"));
                 }
             } catch (Exception e) {
                 System.out.println("C'è un errore:" + e);
