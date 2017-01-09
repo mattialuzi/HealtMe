@@ -50,9 +50,6 @@ public class Menu {
     public Menu(JFrame frame) {
 
         frame.setContentPane(mainPanel);
-        frame.setMinimumSize(new Dimension(500, 300));
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         alimentazione = new AlimentazioneView();
         allenamento = new AllenamentoView();
         profilo = new ProfiloView();

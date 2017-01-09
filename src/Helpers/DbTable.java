@@ -35,6 +35,10 @@ public class DbTable {
         return i;
     }
 
+    public void delete(){
+        sql="delete from "+name;
+    }
+
     public boolean execute(){
         Connector connector= new Connector();
         Connection db = connector.connect();

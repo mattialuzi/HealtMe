@@ -2,6 +2,9 @@ package View.Profilo;
 
 import javax.swing.*;
 import Object.UtenteObject;
+
+import java.awt.event.ActionListener;
+
 /**
  * Created by lorenzobraconi on 05/01/17.
  */
@@ -39,6 +42,10 @@ public class ProfiloView {
         if(utente.getSesso()==1){
             sessoLabel.setText("Uomo");
         } else sessoLabel.setText("Donna");
+    }
+
+    public void addEliminaButtonListener(ActionListener listener){
+        eliminaAccountButton.addActionListener(listener);
     }
 
     public JPanel getMainPanel() {

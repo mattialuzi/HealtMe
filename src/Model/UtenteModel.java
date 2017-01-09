@@ -64,14 +64,6 @@ public class UtenteModel {
         return success;
     }
 
-    public ResultSet getUserByUsername(String user){
-        tabella.select();
-        tabella.where("username='" + user + "'");
-        ResultSet utente= tabella.fetch();
-        return utente;
-    }
-
-
     public boolean findUserByCredential(String user, String pass){
         boolean success = false;
         tabella.select();
@@ -82,5 +74,18 @@ public class UtenteModel {
         else
             success=false;
         return success;
+    }
+
+    public ResultSet getUserByUsername(String user){
+        tabella.select();
+        tabella.where("username='" + user + "'");
+        ResultSet utente= tabella.fetch();
+        return utente;
+    }
+
+    public void eliminaUtente(String username){
+        tabella.delete();
+        tabella.where("username='" + username + "'");
+        tabella.execute();
     }
 }
