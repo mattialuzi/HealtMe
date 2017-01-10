@@ -3,6 +3,7 @@ package View.Profilo;
 import javax.swing.*;
 import Object.UtenteObject;
 
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -23,8 +24,19 @@ public class ProfiloView {
     private JLabel allergiaLabel;
     private JLabel pesoformaLabel;
     private JLabel emailLabel;
+    private JButton usernameModButton;
+    private JButton nomeModButton;
+    private JButton cognomeModButton;
+    private JButton etaModButton;
+    private JButton altezzaModButton;
+    private JButton pesoModButton;
+    private JButton lavoroModButton;
+    private JButton attivitaModButton;
+    private JButton allergiaModButton;
+    private JButton emailModButton;
 
     public ProfiloView() {
+
     }
 
     public void setInfoUtente(UtenteObject utente){
@@ -42,6 +54,10 @@ public class ProfiloView {
         if(utente.getSesso()==1){
             sessoLabel.setText("Uomo");
         } else sessoLabel.setText("Donna");
+    }
+
+    public void addNomeModButtonListener(ActionListener listener){
+        nomeModButton.addActionListener(listener);
     }
 
     public void addEliminaButtonListener(ActionListener listener){

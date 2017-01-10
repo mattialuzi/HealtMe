@@ -1,5 +1,6 @@
 package View;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import View.Alimentazione.*;
 import View.Allenamento.AllenamentoView;
@@ -49,6 +50,15 @@ public class Menu {
 
     public Menu(JFrame frame) {
 
+        //da finire il bottone
+        try {
+            Image img = ImageIO.read(getClass().getResource("resources/menu1.png"));
+            Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH );
+            menuButton.setIcon(new ImageIcon(newimg));
+            menuButton.setBorder(null);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
         frame.setContentPane(mainPanel);
         alimentazione = new AlimentazioneView();
         allenamento = new AllenamentoView();

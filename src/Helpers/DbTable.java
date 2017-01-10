@@ -22,6 +22,11 @@ public class DbTable {
         sql="insert into " + name + " values("+ campi +")";
     }
 
+    public void update(String info){
+
+        sql="update "+ name + " set " + info;
+    }
+
     public int count(ResultSet risultato){
         int i=0;
         try {

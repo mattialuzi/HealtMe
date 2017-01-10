@@ -83,6 +83,12 @@ public class UtenteModel {
         return utente;
     }
 
+    public void updateInfoUtente(String username, String info){
+        tabella.update(info);
+        tabella.where("username='" + username + "'");
+        tabella.execute();
+    }
+
     public void eliminaUtente(String username){
         tabella.delete();
         tabella.where("username='" + username + "'");
