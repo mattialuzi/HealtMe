@@ -52,11 +52,15 @@ public class ProfiloController {
         String key = (String) i.next();
         String value = (String) info.get(key);
         String dati="";
-        String name = JOptionPane.showInputDialog(null,
+        String newvalue = JOptionPane.showInputDialog(null,
                 "Modifica il tuo " + key + ": ", value);
-        dati=dati + key+"='" + name+ "'";
-        UtenteModel utentemodel = new UtenteModel();
-        utentemodel.updateInfoUtente(username, dati);
-        return name;
+        dati=dati + key+"='" + newvalue+ "'";
+        if(newvalue==null || (newvalue != null && ("".equals(newvalue)))) {
+            return value;
+        } else {
+            UtenteModel utentemodel = new UtenteModel();
+            utentemodel.updateInfoUtente(username, dati);
+            return newvalue;
+        }
     }
 }
