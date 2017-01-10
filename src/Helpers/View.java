@@ -62,7 +62,7 @@ public class View {
 
     public boolean checkEta(String elemento){
         boolean ritorno = false;
-        String regola = "[0-9]{0,2}";
+        String regola = "[1-9][0-9]";
         if (elemento.matches(regola) && elemento.length()>0)
             ritorno=true;
         return ritorno;

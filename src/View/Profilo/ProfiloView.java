@@ -1,6 +1,8 @@
 package View.Profilo;
 
 import javax.swing.*;
+
+import Helpers.View;
 import Object.UtenteObject;
 
 import java.awt.*;
@@ -9,7 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by lorenzobraconi on 05/01/17.
  */
-public class ProfiloView {
+public class ProfiloView extends View {
     private JPanel mainPanel;
     private JButton eliminaAccountButton;
     private JLabel usernameLabel;
@@ -56,8 +58,42 @@ public class ProfiloView {
         } else sessoLabel.setText("Donna");
     }
 
+    public void addUsernameModButtonListener(ActionListener listener){ usernameModButton.addActionListener(listener); }
+
     public void addNomeModButtonListener(ActionListener listener){
         nomeModButton.addActionListener(listener);
+    }
+
+    public void addCognomeModButtonListener(ActionListener listener){
+        cognomeModButton.addActionListener(listener);
+    }
+
+    public void addEtaModButtonListener(ActionListener listener){
+        etaModButton.addActionListener(listener);
+    }
+
+    public void addAltezzaModButtonListener(ActionListener listener){
+        altezzaModButton.addActionListener(listener);
+    }
+
+    public void addPesoModButtonListener(ActionListener listener){
+        pesoModButton.addActionListener(listener);
+    }
+
+    public void addLavoroModButtonListener(ActionListener listener){
+        lavoroModButton.addActionListener(listener);
+    }
+
+    public void addAttivitaModButtonListener(ActionListener listener){
+        attivitaModButton.addActionListener(listener);
+    }
+
+    public void addAllergiaModButtonListener(ActionListener listener){
+        allergiaModButton.addActionListener(listener);
+    }
+
+    public void addEmailModButtonListener(ActionListener listener){
+        emailModButton.addActionListener(listener);
     }
 
     public void addEliminaButtonListener(ActionListener listener){

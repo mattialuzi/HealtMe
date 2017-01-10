@@ -5,6 +5,9 @@ import Model.Dbtable.Utente;
 import Object.UtenteObject;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class UtenteModel {
     protected Utente tabella;
@@ -83,8 +86,13 @@ public class UtenteModel {
         return utente;
     }
 
-    public void updateInfoUtente(String username, String info){
-        tabella.update(info);
+    public void updateInfoUtente(String username, HashMap campoutente){
+        Set keys = campoutente.keySet();
+        Iterator i= keys.iterator();
+        String key = (String) i.next();
+        String value = (String) campoutente.get(key);
+        String dati = key+"='" + value+ "'";
+        tabella.update(dati);
         tabella.where("username='" + username + "'");
         tabella.execute();
     }

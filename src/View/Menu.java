@@ -53,7 +53,7 @@ public class Menu {
         //da finire il bottone
         try {
             Image img = ImageIO.read(getClass().getResource("resources/menu1.png"));
-            Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH );
+            Image newimg = img.getScaledInstance( 25, 25,  java.awt.Image.SCALE_SMOOTH );
             menuButton.setIcon(new ImageIcon(newimg));
             menuButton.setBorder(null);
         } catch (Exception ex) {

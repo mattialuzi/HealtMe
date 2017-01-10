@@ -1,6 +1,9 @@
 package Controller;
 
 import Model.UtenteModel;
+import Object.Enum.AllergiaEnum;
+import Object.Enum.LavoroEnum;
+import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.UtenteObject;
 import View.Auth;
 import View.Profilo.ProfiloView;
@@ -8,6 +11,7 @@ import View.Profilo.ProfiloView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -17,18 +21,140 @@ import java.util.Set;
  */
 public class ProfiloController {
 
+    private ProfiloView profilo;
+
     public ProfiloController(ProfiloView profilo, UtenteObject utente) {
 
+        this.profilo = profilo;
         profilo.setInfoUtente(utente);
+
+        profilo.addUsernameModButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String  username = utente.getUsername();
+                String campo = "username";
+                String nuovoUsername = modificaInfoUtente(campo, username, utente.getUsername(), "testo");
+                if(!nuovoUsername.equals(username)) {
+                    utente.setUsername(nuovoUsername);
+                    profilo.setInfoUtente(utente);
+                }
+            }
+        });
+
         profilo.addNomeModButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nome = utente.getNome();
-                HashMap campoutente = new HashMap();
-                campoutente.put("nome", nome);
-                String nuovoNome = modificaInfoUtente(campoutente, utente.getUsername());
-                utente.setNome(nuovoNome);
-                profilo.setInfoUtente(utente);
+                String campo = "nome";
+                String nuovoNome = modificaInfoUtente(campo,nome, utente.getUsername(), "testo");
+                if(!nuovoNome.equals(nome)) {
+                    utente.setNome(nuovoNome);
+                    profilo.setInfoUtente(utente);
+                }
+            }
+        });
+
+        profilo.addCognomeModButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String cognome = utente.getCognome();
+                String campo = "cognome";
+                String nuovoCognome = modificaInfoUtente(campo,cognome, utente.getUsername(), "testo");
+                if(!nuovoCognome.equals(cognome)) {
+                    utente.setCognome(nuovoCognome);
+                    profilo.setInfoUtente(utente);
+                }
+            }
+        });
+
+        profilo.addEtaModButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String eta = String.valueOf(utente.getEta());
+                String campo = "eta";
+                String nuovaEta = modificaInfoUtente(campo,eta, utente.getUsername(), "eta");
+                if(!nuovaEta.equals(eta)) {
+                    utente.setEta(Integer.parseInt(nuovaEta));
+                    profilo.setInfoUtente(utente);
+                }
+            }
+        });
+
+        profilo.addAltezzaModButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String altezza = String.valueOf(utente.getAltezza());
+                String campo = "altezza";
+                String nuovaAltezza = modificaInfoUtente(campo,altezza, utente.getUsername(), "virgola");
+                if(!nuovaAltezza.equals(altezza)) {
+                    utente.setAltezza(Float.parseFloat(nuovaAltezza));
+                    profilo.setInfoUtente(utente);
+                }
+            }
+        });
+
+        profilo.addPesoModButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String peso = String.valueOf(utente.getPeso());
+                String campo = "peso";
+                String nuovoPeso = modificaInfoUtente(campo,peso, utente.getUsername(), "virgola");
+                if(!nuovoPeso.equals(peso)) {
+                    utente.setPeso(Float.parseFloat(nuovoPeso));
+                    profilo.setInfoUtente(utente);
+                }
+            }
+        });
+
+        profilo.addLavoroModButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String lavoro = String.valueOf(utente.getLavoro());
+                String campo = "lavoro";
+                Object nuovoLavoro = modificaInfoUtenteEnum(campo, lavoro, LavoroEnum.class, utente.getUsername());
+                if( nuovoLavoro!=null && !nuovoLavoro.toString().equals(lavoro)) {
+                    utente.setLavoro((LavoroEnum) nuovoLavoro);
+                    profilo.setInfoUtente(utente);
+                }
+            }
+        });
+
+        profilo.addAttivitaModButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String attivita = String.valueOf(utente.getLivello_attivita_fisica());
+                String campo = "livello_attivita_fisica";
+                Object nuovaAttivita = modificaInfoUtenteEnum(campo, attivita,LivelloAttivitaFisicaEnum.class, utente.getUsername());
+                if( nuovaAttivita!=null && !nuovaAttivita.toString().equals(attivita)) {
+                    utente.setLivello_attivita_fisica((LivelloAttivitaFisicaEnum) nuovaAttivita);
+                    profilo.setInfoUtente(utente);
+                }
+            }
+        });
+
+        profilo.addAllergiaModButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String allergia = String.valueOf(utente.getAllergia());
+                String campo = "allergia";
+                Object nuovaAllergia = modificaInfoUtenteEnum(campo, allergia, AllergiaEnum.class, utente.getUsername());
+                if( nuovaAllergia!=null && !nuovaAllergia.toString().equals(allergia)) {
+                    utente.setAllergia((AllergiaEnum) nuovaAllergia);
+                    profilo.setInfoUtente(utente);
+                }
+            }
+        });
+
+        profilo.addEmailModButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String email = utente.getEmail();
+                String campo = "email";
+                String nuovaEmail = modificaInfoUtente(campo,email, utente.getUsername(), "email");
+                if(!nuovaEmail.equals(email)) {
+                    utente.setEmail(nuovaEmail);
+                    profilo.setInfoUtente(utente);
+                }
             }
         });
 
@@ -46,21 +172,42 @@ public class ProfiloController {
         });
     }
 
-    public String modificaInfoUtente(HashMap info, String username ){
-        Set keys = info.keySet();
-        Iterator i= keys.iterator();
-        String key = (String) i.next();
-        String value = (String) info.get(key);
-        String dati="";
-        String newvalue = JOptionPane.showInputDialog(null,
-                "Modifica il tuo " + key + ": ", value);
-        dati=dati + key+"='" + newvalue+ "'";
-        if(newvalue==null || (newvalue != null && ("".equals(newvalue)))) {
-            return value;
+    public String modificaInfoUtente(String campo, String info, String username, String tipocampo ) {
+
+        String newvalue = JOptionPane.showInputDialog(null, "Modifica " + campo + ": ", info);
+        if(newvalue == null){
+            return info;
+        } else if (("".equals(newvalue)) || !(profilo.validate(newvalue, tipocampo))) {
+            JOptionPane.showMessageDialog(null, "Valore nullo o non valido", "Errore", JOptionPane.ERROR_MESSAGE);
+            return info;
+        } else if((campo.equals("username")) && (newvalue.equals(info))){
+            return info;
+        } else if(campo.equals("username")) {
+            UtenteModel tabella = new UtenteModel();
+            boolean validator = tabella.findUserByUsername(newvalue);
+            if (validator) {
+                JOptionPane.showMessageDialog(null, "Username già esistente", "Errore", JOptionPane.ERROR_MESSAGE);
+                return info;
+            }
+        }
+        HashMap campoutente = new HashMap();
+        campoutente.put(campo, newvalue);
+        UtenteModel utentemodel = new UtenteModel();
+        utentemodel.updateInfoUtente(username, campoutente);
+        return newvalue;
+
+    }
+
+    public <T extends Enum<T>> Object modificaInfoUtenteEnum(String campo, String info, Class<T> tipo, String username){
+        Object newobject = JOptionPane.showInputDialog(null, "Modifica " + campo + ": ","Input",JOptionPane.INFORMATION_MESSAGE, null, tipo.getEnumConstants(),LavoroEnum.valueOf(info));
+        if(newobject == null){
+            return newobject;
         } else {
+            HashMap campoutente = new HashMap();
+            campoutente.put(campo, newobject.toString());
             UtenteModel utentemodel = new UtenteModel();
-            utentemodel.updateInfoUtente(username, dati);
-            return newvalue;
+            utentemodel.updateInfoUtente(username, campoutente);
+            return newobject;
         }
     }
 }
