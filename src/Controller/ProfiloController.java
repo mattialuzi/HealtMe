@@ -199,7 +199,7 @@ public class ProfiloController {
     }
 
     public <T extends Enum<T>> Object modificaInfoUtenteEnum(String campo, String info, Class<T> tipo, String username){
-        Object newobject = JOptionPane.showInputDialog(null, "Modifica " + campo + ": ","Input",JOptionPane.INFORMATION_MESSAGE, null, tipo.getEnumConstants(),LavoroEnum.valueOf(info));
+        Object newobject = JOptionPane.showInputDialog(null, "Modifica " + campo + ": ","Input",JOptionPane.INFORMATION_MESSAGE, null, tipo.getEnumConstants(),);
         if(newobject == null){
             return newobject;
         } else {
