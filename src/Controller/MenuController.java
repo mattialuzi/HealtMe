@@ -45,6 +45,7 @@ public class MenuController {
                 cardLayout.show(variablePanel, "AlimentazioneView");
                 JPanel subMenu = menu.getSubMenuAlimPanel();
                 SubMenuVisibility(subMenu);
+                new AlimentazioneController(alimentazione);
             }
         });
 

@@ -80,9 +80,7 @@ public class Menu {
         menuButton.addActionListener(listener);
     }
 
-    public void addAlimentazioneButtonListener(ActionListener listener){
-        alimentazioneButton.addActionListener(listener);
-    }
+    public void addAlimentazioneButtonListener(ActionListener listener){ alimentazioneButton.addActionListener(listener); }
 
     public void addAllenamentoButtonListener(ActionListener listener){
         allenamentoButton.addActionListener(listener);
