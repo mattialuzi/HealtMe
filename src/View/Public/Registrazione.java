@@ -163,7 +163,7 @@ public class Registrazione extends View {
         return utente;
     }
 
-    public float calcoloPesoForma(float altezza, int sesso){
+    /*public float calcoloPesoForma(float altezza, int sesso){
         float peso_forma;
         //per indicare un numero float si mette una f alla fine
         if(sesso == 1) {
@@ -173,7 +173,7 @@ public class Registrazione extends View {
             peso_forma = 20.6f * altezza * altezza;
         }
         return peso_forma;
-    }
+    }*/
 
         /*
         completaRegistrazioneButton.addActionListener(new ActionListener() {

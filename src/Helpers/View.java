@@ -91,4 +91,16 @@ public class View {
             ritorno=true;
         return ritorno;
     }
+
+    public float calcoloPesoForma(float altezza, int sesso){
+        float peso_forma;
+        //per indicare un numero float si mette una f alla fine
+        if(sesso == 1) {
+            peso_forma = 22.1f * altezza * altezza;
+        }
+        else {
+            peso_forma = 20.6f * altezza * altezza;
+        }
+        return peso_forma;
+    }
 }

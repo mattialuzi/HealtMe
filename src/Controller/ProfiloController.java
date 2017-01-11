@@ -85,10 +85,21 @@ public class ProfiloController {
             public void actionPerformed(ActionEvent e) {
                 String altezza = String.valueOf(utente.getAltezza());
                 String campo = "altezza";
-                String nuovaAltezza = modificaInfoUtente(campo,altezza, utente.getUsername(), "virgola");
-                if(!nuovaAltezza.equals(altezza)) {
-                    utente.setAltezza(Float.parseFloat(nuovaAltezza));
-                    profilo.setInfoUtente(utente);
+                int replay = JOptionPane.showConfirmDialog(null,"Modificando l'altezza anche il peso forma subirà variazioni.\n" +
+                        " I programmi attuali creati da Health Me! non terranno conto della nuova modifica.\n" +
+                        "Se vorrai un programma aggiornato potrai crearne uno nuovo dal menù laterale.","Attenzione",JOptionPane.YES_NO_OPTION);
+                if (replay == JOptionPane.YES_OPTION) {
+                    String nuovaAltezza = modificaInfoUtente(campo, altezza, utente.getUsername(), "virgola");
+                    if (!nuovaAltezza.equals(altezza)) {
+                        float nuovoPesoforma = profilo.calcoloPesoForma(Float.parseFloat(nuovaAltezza), utente.getSesso());
+                        UtenteModel utentemodel = new UtenteModel();
+                        HashMap hashmap = new HashMap();
+                        hashmap.put(campo,Float.toString(nuovoPesoforma));
+                        utentemodel.updateInfoUtente(utente.getUsername(),hashmap);
+                        utente.setPeso_forma(nuovoPesoforma);
+                        utente.setAltezza(Float.parseFloat(nuovaAltezza));
+                        profilo.setInfoUtente(utente);
+                    }
                 }
             }
         });
@@ -110,11 +121,16 @@ public class ProfiloController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String lavoro = String.valueOf(utente.getLavoro());
+                int replay = JOptionPane.showConfirmDialog(null,"Modificando il lavoro il programma alimentare "+
+                        "attuale creato da Health Me! non terrà conto della nuova modifica.\n" +
+                        "Se vorrai un programma aggiornato potrai crearne uno nuovo dal menù laterale.","Attenzione",JOptionPane.YES_NO_OPTION);
+                if (replay == JOptionPane.YES_OPTION) {
                 Object nuovoLavoro = JOptionPane.showInputDialog(null, "Modifica lavoro :" ,"Input",JOptionPane.INFORMATION_MESSAGE, null, LavoroEnum.values(),LavoroEnum.valueOf(lavoro) );
                 if( nuovoLavoro!=null && !nuovoLavoro.toString().equals(lavoro)) {
                     modificaInfoUtenteEnum("lavoro", nuovoLavoro.toString(), utente.getUsername());
                     utente.setLavoro((LavoroEnum) nuovoLavoro);
                     profilo.setInfoUtente(utente);
+                    }
                 }
             }
         });
@@ -123,11 +139,16 @@ public class ProfiloController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String attivita = String.valueOf(utente.getLivello_attivita_fisica());
+                int replay = JOptionPane.showConfirmDialog(null,"Modificando il livello di attività fisica " +
+                        "i programmi attuali creati da Health Me! non terranno conto della nuova modifica.\n" +
+                        "Se vorrai un programma aggiornato potrai crearne uno nuovo dal menù laterale.","Attenzione",JOptionPane.YES_NO_OPTION);
+                if (replay == JOptionPane.YES_OPTION) {
                 Object nuovaAttivita = JOptionPane.showInputDialog(null, "Modifica il Livello di Attività Fisica :" ,"Input",JOptionPane.INFORMATION_MESSAGE, null, LivelloAttivitaFisicaEnum.values(),LivelloAttivitaFisicaEnum.valueOf(attivita));
                 if( nuovaAttivita!=null && !nuovaAttivita.toString().equals(attivita)) {
                     modificaInfoUtenteEnum("livello_attivita_fisica", nuovaAttivita.toString(), utente.getUsername());
                     utente.setLivello_attivita_fisica((LivelloAttivitaFisicaEnum) nuovaAttivita);
                     profilo.setInfoUtente(utente);
+                    }
                 }
             }
         });
@@ -136,11 +157,16 @@ public class ProfiloController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String allergia = String.valueOf(utente.getAllergia());
+                int replay = JOptionPane.showConfirmDialog(null,"Modificando l'allergia " +
+                        "il programma alimentare attuale creato da Health Me! non terrà conto della nuova modifica.\n" +
+                        "Se vorrai un programma aggiornato potrai crearne uno nuovo dal menù laterale.","Attenzione",JOptionPane.YES_NO_OPTION);
+                if (replay == JOptionPane.YES_OPTION) {
                 Object nuovaAllergia = JOptionPane.showInputDialog(null, "Modifica allergia :" ,"Input",JOptionPane.INFORMATION_MESSAGE, null, AllergiaEnum.values(),AllergiaEnum.valueOf(allergia) );
                 if( nuovaAllergia!=null && !nuovaAllergia.toString().equals(allergia)) {
                     modificaInfoUtenteEnum("allergia", nuovaAllergia.toString(), utente.getUsername());
                     utente.setAllergia((AllergiaEnum) nuovaAllergia);
                     profilo.setInfoUtente(utente);
+                    }
                 }
             }
         });
