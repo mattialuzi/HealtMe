@@ -72,6 +72,8 @@ public class Menu {
         variablePanel.add(allenamentoPanel, "AllenamentoView");
         variablePanel.add(profiloPanel, "ProfiloView");
         variablePanel.add(riepilogoPanel, "RiepilogoView");
+        frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
     public void addMenuButtonListener(ActionListener listener){

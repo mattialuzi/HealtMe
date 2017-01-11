@@ -110,9 +110,9 @@ public class ProfiloController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String lavoro = String.valueOf(utente.getLavoro());
-                String campo = "lavoro";
-                Object nuovoLavoro = modificaInfoUtenteEnum(campo, lavoro, LavoroEnum.class, utente.getUsername());
+                Object nuovoLavoro = JOptionPane.showInputDialog(null, "Modifica lavoro :" ,"Input",JOptionPane.INFORMATION_MESSAGE, null, LavoroEnum.values(),LavoroEnum.valueOf(lavoro) );
                 if( nuovoLavoro!=null && !nuovoLavoro.toString().equals(lavoro)) {
+                    modificaInfoUtenteEnum("lavoro", nuovoLavoro.toString(), utente.getUsername());
                     utente.setLavoro((LavoroEnum) nuovoLavoro);
                     profilo.setInfoUtente(utente);
                 }
@@ -123,9 +123,9 @@ public class ProfiloController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String attivita = String.valueOf(utente.getLivello_attivita_fisica());
-                String campo = "livello_attivita_fisica";
-                Object nuovaAttivita = modificaInfoUtenteEnum(campo, attivita,LivelloAttivitaFisicaEnum.class, utente.getUsername());
+                Object nuovaAttivita = JOptionPane.showInputDialog(null, "Modifica il Livello di Attività Fisica :" ,"Input",JOptionPane.INFORMATION_MESSAGE, null, LivelloAttivitaFisicaEnum.values(),LivelloAttivitaFisicaEnum.valueOf(attivita));
                 if( nuovaAttivita!=null && !nuovaAttivita.toString().equals(attivita)) {
+                    modificaInfoUtenteEnum("livello_attivita_fisica", nuovaAttivita.toString(), utente.getUsername());
                     utente.setLivello_attivita_fisica((LivelloAttivitaFisicaEnum) nuovaAttivita);
                     profilo.setInfoUtente(utente);
                 }
@@ -136,9 +136,9 @@ public class ProfiloController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String allergia = String.valueOf(utente.getAllergia());
-                String campo = "allergia";
-                Object nuovaAllergia = modificaInfoUtenteEnum(campo, allergia, AllergiaEnum.class, utente.getUsername());
+                Object nuovaAllergia = JOptionPane.showInputDialog(null, "Modifica allergia :" ,"Input",JOptionPane.INFORMATION_MESSAGE, null, AllergiaEnum.values(),AllergiaEnum.valueOf(allergia) );
                 if( nuovaAllergia!=null && !nuovaAllergia.toString().equals(allergia)) {
+                    modificaInfoUtenteEnum("allergia", nuovaAllergia.toString(), utente.getUsername());
                     utente.setAllergia((AllergiaEnum) nuovaAllergia);
                     profilo.setInfoUtente(utente);
                 }
@@ -198,16 +198,11 @@ public class ProfiloController {
 
     }
 
-    public <T extends Enum<T>> Object modificaInfoUtenteEnum(String campo, String info, Class<T> tipo, String username){
-        Object newobject = JOptionPane.showInputDialog(null, "Modifica " + campo + ": ","Input",JOptionPane.INFORMATION_MESSAGE, null, tipo.getEnumConstants(),);
-        if(newobject == null){
-            return newobject;
-        } else {
+    public void modificaInfoUtenteEnum(String campo, String info, String username){
             HashMap campoutente = new HashMap();
-            campoutente.put(campo, newobject.toString());
+            campoutente.put(campo, info);
             UtenteModel utentemodel = new UtenteModel();
             utentemodel.updateInfoUtente(username, campoutente);
-            return newobject;
         }
-    }
+
 }
