@@ -24,11 +24,18 @@ public class AlimentazioneView {
         newCiboPanel = newcibo.getMainPanel();
         mainPanel.add(indexAlimPanel, "IndexAlimentazioneView");
         mainPanel.add(newProgAlimPanel, "NewProgAlimView");
-        mainPanel.add(newCiboPanel, " NewCiboView");
+        mainPanel.add(newCiboPanel, "NewCiboView");
     }
 
     public JPanel getMainPanel() {
         return mainPanel;
     }
 
+    public NewProgAlimView getNewprogalim() {
+        return newprogalim;
+    }
+
+    public NewCiboView getNewcibo() {
+        return newcibo;
+    }
 }

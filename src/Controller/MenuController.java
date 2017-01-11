@@ -1,10 +1,9 @@
 package Controller;
 
-import View.Alimentazione.AlimentazioneView;
-import View.Allenamento.AllenamentoView;
 import View.Auth;
 import View.Menu;
 import Object.UtenteObject;
+import Helpers.Controller;
 import View.Profilo.ProfiloView;
 
 import javax.swing.*;
@@ -15,7 +14,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by lorenzobraconi on 05/01/17.
  */
-public class MenuController {
+public class MenuController extends Controller {
     private Menu menu;
     private CardLayout cardLayout = new CardLayout();
     private JPanel variablePanel;
@@ -28,14 +27,13 @@ public class MenuController {
         variablePanel = menu.getVariablePanel();
         cardLayout = (CardLayout)variablePanel.getLayout();
         cardLayout.show(variablePanel,"AlimentazioneView");
-        AlimentazioneView alimentazione = menu.getAlimentazioneview();
-        AllenamentoView allenamento = menu.getAllenamentoview();
-        ProfiloView profilo = menu.getProfiloview();
+        AlimentazioneController alimentazioneController = new AlimentazioneController(menu);
+        ProfiloController profiloController = new ProfiloController(menu, utente);
 
         menu.addMenuButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MenuVisibility();
+                MenuVisibility(menu.getMenuPanel());
             }
         });
 
@@ -43,9 +41,9 @@ public class MenuController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(variablePanel, "AlimentazioneView");
+                alimentazioneController.showIndex();
                 JPanel subMenu = menu.getSubMenuAlimPanel();
                 SubMenuVisibility(subMenu);
-                new AlimentazioneController(alimentazione);
             }
         });
 
@@ -62,8 +60,7 @@ public class MenuController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(variablePanel, "ProfiloView");
-                MenuVisibility();
-                new ProfiloController(profilo, utente);
+                MenuVisibility(menu.getMenuPanel());
             }
         });
 
@@ -71,7 +68,7 @@ public class MenuController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(variablePanel, "RiepilogoView");
-                MenuVisibility();
+                MenuVisibility(menu.getMenuPanel());
             }
         });
 
@@ -86,21 +83,6 @@ public class MenuController {
             }
         });
 
-    }
-
-    public void MenuVisibility(){
-        JPanel menuPanel = menu.getMenuPanel();
-        if (menuPanel.isVisible()) {
-            menuPanel.setVisible(false);
-        } else
-            menuPanel.setVisible(true);
-    }
-
-    public void SubMenuVisibility(JPanel subPanel){
-        if (subPanel.isVisible()) {
-            subPanel.setVisible(false);
-        } else
-            subPanel.setVisible(true);
     }
 
 }

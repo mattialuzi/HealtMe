@@ -6,15 +6,13 @@ import Object.Enum.LavoroEnum;
 import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.UtenteObject;
 import View.Auth;
+import View.Menu;
 import View.Profilo.ProfiloView;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+
 
 /**
  * Created by lorenzobraconi on 05/01/17.
@@ -23,9 +21,9 @@ public class ProfiloController {
 
     private ProfiloView profilo;
 
-    public ProfiloController(ProfiloView profilo, UtenteObject utente) {
+    public ProfiloController(Menu menu, UtenteObject utente) {
 
-        this.profilo = profilo;
+        this.profilo = menu.getProfiloview();
         profilo.setInfoUtente(utente);
 
         profilo.addUsernameModButtonListener(new ActionListener() {

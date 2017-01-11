@@ -67,7 +67,7 @@
                     </properties>
                     <border type="none"/>
                     <children>
-                      <component id="97492" class="javax.swing.JButton" binding="nuovoProgAlimButton">
+                      <component id="97492" class="javax.swing.JButton" binding="newProgAlimButton">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -75,7 +75,7 @@
                           <text value="&gt; Nuovo Programma"/>
                         </properties>
                       </component>
-                      <component id="ee592" class="javax.swing.JButton" binding="nuovoAlimentoButton">
+                      <component id="ee592" class="javax.swing.JButton" binding="newCiboButton">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -235,7 +235,7 @@
               <grid id="50af3" binding="alimentazionePanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <card name="Card1"/>
+                  <card name="AlimentazioneView"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -244,7 +244,7 @@
               <grid id="8ac89" binding="allenamentoPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <card name="Card2"/>
+                  <card name="AllenamentoView"/>
                 </constraints>
                 <properties>
                   <background color="-12828863"/>
@@ -255,7 +255,7 @@
               <grid id="9b6cd" binding="profiloPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="true" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <card name="Card3"/>
+                  <card name="ProfiloView"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -264,7 +264,7 @@
               <grid id="de1e" binding="riepilogoPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <card name="Card4"/>
+                  <card name="RiepilogoView"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>

@@ -8,7 +8,6 @@ import View.Profilo.ProfiloView;
 import View.Riepilogo.RiepilogoView;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
@@ -35,8 +34,8 @@ public class Menu {
     private JPanel profilobuttonPanel;
     private JPanel allenbuttonPanel;
     private JPanel riepilogobuttonPanel;
-    private JButton nuovoProgAlimButton;
-    private JButton nuovoAlimentoButton;
+    private JButton newProgAlimButton;
+    private JButton newCiboButton;
     private JPanel subMenuAlimPanel;
     private JButton nuovoProgrAllenButton;
     private JButton nuovoEsercizioButton;
@@ -81,6 +80,10 @@ public class Menu {
     }
 
     public void addAlimentazioneButtonListener(ActionListener listener){ alimentazioneButton.addActionListener(listener); }
+
+    public void addNewProgAlimButtonListener(ActionListener listener){ newProgAlimButton.addActionListener(listener); }
+
+    public void addNewCiboButtonListener(ActionListener listener){ newCiboButton.addActionListener(listener); }
 
     public void addAllenamentoButtonListener(ActionListener listener){
         allenamentoButton.addActionListener(listener);
