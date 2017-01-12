@@ -31,6 +31,10 @@ public class AlimentazioneView {
         return mainPanel;
     }
 
+    public IndexAlimentazioneView getIndexalimentazione() {
+        return indexalimentazione;
+    }
+
     public NewProgAlimView getNewprogalim() {
         return newprogalim;
     }

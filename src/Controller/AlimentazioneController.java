@@ -2,8 +2,7 @@ package Controller;
 
 import Helpers.Controller;
 import Model.CiboModel;
-import View.Alimentazione.AlimentazioneView;
-import View.Alimentazione.NewCiboView;
+import View.Alimentazione.*;
 import View.Menu;
 import Object.CiboObject;
 
@@ -28,6 +27,8 @@ public class AlimentazioneController extends Controller {
         cardLayout = (CardLayout)variablePanel.getLayout();
         showIndex();
         NewCiboView newcibo = alimentazione.getNewcibo();
+        IndexAlimentazioneView indexalimentazione = alimentazione.getIndexalimentazione();
+        FormCiboEffettivo dialog = new FormCiboEffettivo();
 
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
@@ -70,6 +71,15 @@ public class AlimentazioneController extends Controller {
                 }
             }
             });
+
+        indexalimentazione.addAggiungiCiboEffettivoButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.pack();
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            }
+        });
 
     }
 

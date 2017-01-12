@@ -1,6 +1,7 @@
 package View.Alimentazione;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 /**
  * Created by lorenzobraconi on 11/01/17.
@@ -15,6 +16,7 @@ public class IndexAlimentazioneView {
     private JPanel venerdiPanel;
     private JPanel sabatoPanel;
     private JPanel domenicaPanel;
+    private JButton aggiungiCiboEffettivo;
 
     public IndexAlimentazioneView() {
     }
@@ -32,6 +34,8 @@ public class IndexAlimentazioneView {
         sabatoPanel = new GiornoAlimView().getMainPanel();
         domenicaPanel = new GiornoAlimView().getMainPanel();
     }
+
+    public void addAggiungiCiboEffettivoButtonListener(ActionListener listener) { aggiungiCiboEffettivo.addActionListener(listener); }
 }
 
 
