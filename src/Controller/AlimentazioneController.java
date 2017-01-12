@@ -24,7 +24,7 @@ public class AlimentazioneController extends Controller {
         this.alimentazione = menu.getAlimentazioneview();
         variablePanel = alimentazione.getMainPanel();
         cardLayout = (CardLayout)variablePanel.getLayout();
-        cardLayout.show(variablePanel,"IndexAlimentazioneView");
+        showIndex();
         NewCiboView newcibo = alimentazione.getNewcibo();
 
         menu.addNewProgAlimButtonListener(new ActionListener() {

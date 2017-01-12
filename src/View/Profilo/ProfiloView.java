@@ -2,7 +2,6 @@ package View.Profilo;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import Helpers.View;
 import Object.UtenteObject;
 

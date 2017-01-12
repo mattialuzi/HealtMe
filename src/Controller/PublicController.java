@@ -7,7 +7,6 @@ import Object.Enum.LavoroEnum;
 import Object.Enum.LivelloAttivitaFisicaEnum;
 import View.Auth;
 import View.Public.*;
-
 import View.Menu;
 
 import javax.swing.*;

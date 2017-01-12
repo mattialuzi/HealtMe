@@ -1,11 +1,6 @@
 package View.Public;
 
-
-
-import Controller.PublicController;
-
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Index {
