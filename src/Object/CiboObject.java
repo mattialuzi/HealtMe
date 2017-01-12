@@ -9,11 +9,11 @@ import Object.Enum.PortataEnum;
 public class CiboObject extends JObject {
 
     private String nome;
-    private int kilocal;
     private GruppoEnum gruppo;
+    private int kilocal;
     private AllergiaEnum allergia;
-    private CompatibilitaEnum compatibilita;
     private PortataEnum portata;
+    private CompatibilitaEnum compatibilita;
 
     public CiboObject() {
         nome=null;

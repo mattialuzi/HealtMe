@@ -1,9 +1,11 @@
 package Controller;
 
 import Helpers.Controller;
+import Model.CiboModel;
 import View.Alimentazione.AlimentazioneView;
 import View.Alimentazione.NewCiboView;
 import View.Menu;
+import Object.CiboObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,6 +51,25 @@ public class AlimentazioneController extends Controller {
                 newcibo.azzeraCampi();
             }
         });
+
+        newcibo.addAggiungiAlimentoButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (newcibo.isValid()) {
+                    CiboObject nuovocibo = newcibo.getNuovoCibo();
+                    CiboModel cibomodel = new CiboModel();
+                    boolean validator = cibomodel.findCiboByName(nuovocibo.getNome());
+                    if (validator) {
+                        JOptionPane.showMessageDialog(null, "Cibo già esistente", "Errore", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        cibomodel.inserisciCibo(nuovocibo);
+                        JOptionPane.showMessageDialog(null, "Cibo registrato con successo", "Operazione riuscita", JOptionPane.INFORMATION_MESSAGE);
+                        newcibo.azzeraCampi();
+                        cardLayout.show(variablePanel, "IndexAlimentazioneView");
+                    }
+                }
+            }
+            });
 
     }
 

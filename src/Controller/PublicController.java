@@ -71,6 +71,7 @@ public class PublicController {
                     else {
                         tabella.inserisciUtente(nuovoutente);
                         JOptionPane.showMessageDialog(null, "Registrazione completata con successo", "Benvenuto in Health Me!", JOptionPane.INFORMATION_MESSAGE);
+                        registrazioneview.azzeraCampi();
                         cardLayout.show(mainPanel, "Login");
                     }
                 }

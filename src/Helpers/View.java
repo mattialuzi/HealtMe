@@ -33,6 +33,8 @@ public class View {
             res = checkData(elemento);
         if(tipo.equals("email"))
             res = checkEmail(elemento);
+        if(tipo.equals("cibo"))
+            res = checkCibo(elemento);
         return res;
     }
 
@@ -87,6 +89,14 @@ public class View {
     public boolean checkEmail(String elemento){
         boolean ritorno = false;
         String regola = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        if (elemento.matches(regola) && elemento.length()>0)
+            ritorno=true;
+        return ritorno;
+    }
+
+    public boolean checkCibo(String elemento){
+        boolean ritorno = false;
+        String regola = "[A-Za-z\\s]*";
         if (elemento.matches(regola) && elemento.length()>0)
             ritorno=true;
         return ritorno;
