@@ -49,6 +49,7 @@ public class Menu {
 
     public Menu(JFrame frame) {
 
+        frame.setContentPane(mainPanel);
         //da finire il bottone
         try {
             Image img = ImageIO.read(getClass().getResource("resources/menu1.png"));
@@ -58,7 +59,6 @@ public class Menu {
         } catch (Exception ex) {
             System.out.println(ex);
         }
-        frame.setContentPane(mainPanel);
         alimentazione = new AlimentazioneView();
         allenamento = new AllenamentoView();
         profilo = new ProfiloView();
@@ -73,6 +73,7 @@ public class Menu {
         variablePanel.add(riepilogoPanel, "RiepilogoView");
         frame.pack();
         frame.setLocationRelativeTo(null);
+
     }
 
     public void addMenuButtonListener(ActionListener listener){
