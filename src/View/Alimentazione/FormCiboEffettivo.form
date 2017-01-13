@@ -93,10 +93,7 @@
             </constraints>
             <properties>
               <enabled value="false"/>
-              <model>
-                <item value="snack"/>
-                <item value="bevanda"/>
-              </model>
+              <model/>
             </properties>
           </component>
         </children>
@@ -144,7 +141,7 @@
               <component id="5692c" class="javax.swing.JList" binding="listaAlimenti">
                 <constraints/>
                 <properties>
-                  <enabled value="false"/>
+                  <enabled value="true"/>
                   <model/>
                   <visible value="true"/>
                 </properties>

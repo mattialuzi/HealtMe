@@ -3,6 +3,8 @@ package Model;
 import Model.Dbtable.Cibo;
 import Object.CiboObject;
 
+import java.sql.ResultSet;
+
 /**
  * Created by lorenzobraconi on 12/01/17.
  */
@@ -30,5 +32,12 @@ public class CiboModel {
         String dati= cibo.valueString(cibo);
         tabella.insert(dati);
         tabella.execute();
+    }
+
+    public ResultSet getCibiByPortata(String portata){
+        tabella.select("nome");
+        tabella.where("portata='" + portata + "'");
+        ResultSet cibo = tabella.fetch();
+        return cibo;
     }
 }

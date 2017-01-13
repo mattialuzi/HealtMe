@@ -3,6 +3,7 @@ package View.Alimentazione;
 import Object.Enum.PastoEnum;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
 
 public class FormCiboEffettivo extends JDialog {
@@ -54,6 +55,10 @@ public class FormCiboEffettivo extends JDialog {
     public void addSetPastoItemListener(ItemListener listener) { pasto.addItemListener(listener);}
 
     public void addSetPortataItemListener(ItemListener listener) { portata.addItemListener(listener);}
+
+    public void addSearchKeyListener(KeyListener listener) { nomeAlimento.addKeyListener(listener);}
+
+    public void addSetCiboListSelectionListener(ListSelectionListener listener) { listaAlimenti.addListSelectionListener(listener);}
 
     private void onOK() {
         // add your code here

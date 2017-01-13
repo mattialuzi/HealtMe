@@ -11,7 +11,9 @@ public class DbTable {
 
     public void select(){
         sql="SELECT * FROM " + name;
-    };
+    }
+
+    public void select(String campo) { sql="SELECT " +campo+ " FROM " + name;}
 
     public void where(String clausola){
         sql=sql + " WHERE " + clausola;

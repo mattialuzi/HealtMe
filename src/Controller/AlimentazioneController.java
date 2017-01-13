@@ -7,11 +7,11 @@ import View.Menu;
 import Object.CiboObject;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
+import java.sql.ResultSet;
 
 /**
  * Created by lorenzobraconi on 05/01/17.
@@ -22,6 +22,7 @@ public class AlimentazioneController extends Controller {
     private FormCiboEffettivo dialog;
     private CardLayout cardLayout = new CardLayout();
     private JPanel variablePanel;
+    private ResultSet alimenti;
 
     public AlimentazioneController(Menu menu) {
 
@@ -95,7 +96,29 @@ public class AlimentazioneController extends Controller {
         dialog.addSetPortataItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange()==e.SELECTED)
                 showAlimenti();
+            }
+        });
+
+        dialog.addSearchKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                filtraAlimenti();
+            }
+        });
+
+        dialog.addSetCiboListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(e.getValueIsAdjusting())
+                dialog.getNomeAlimento().setText(dialog.getListaAlimenti().getSelectedValue().toString());
             }
         });
 
@@ -108,14 +131,15 @@ public class AlimentazioneController extends Controller {
     public void setPortataItems(){
         String pastoscelto = dialog.getPasto().getSelectedItem().toString();
         JComboBox portata =dialog.getPortata();
-        if(pastoscelto != "--scegli pasto--") {
-            dialog.getPasto().removeItem("--scegli pasto--");
-            portata.setEnabled(true);
-            if (pastoscelto == "colazione" || pastoscelto == "spuntino") {
-                portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","snack", "bevanda", "frutta"}));
-            } else {
-                portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","primo", "secondo", "contorno", "dolce", "frutta", "bevanda"}));
-            }
+        dialog.getPasto().removeItem("--scegli pasto--");
+        portata.setEnabled(true);
+        dialog.getNomeAlimento().setEnabled(false);
+        dialog.getNomeAlimento().setText("");
+        dialog.getScrollPane().setVisible(false);
+        if (pastoscelto == "colazione" || pastoscelto == "spuntino") {
+            portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","snack", "bevanda", "frutta"}));
+        } else {
+            portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","primo", "secondo", "contorno", "dolce", "frutta", "bevanda"}));
         }
     }
 
@@ -123,8 +147,38 @@ public class AlimentazioneController extends Controller {
         String pastoscelto = dialog.getPasto().getSelectedItem().toString();
         String portatascelta = dialog.getPortata().getSelectedItem().toString();
         JTextField nomeAlimento = dialog.getNomeAlimento();
+        dialog.getPortata().removeItem("--scegli portata--");
         nomeAlimento.setEnabled(true);
+        nomeAlimento.setText("");
         dialog.getScrollPane().setVisible(true);
+        CiboModel cibomodel = new CiboModel();
+        alimenti = cibomodel.getCibiByPortata(portatascelta);
+        JList lista = dialog.getListaAlimenti();
+        DefaultListModel listmodel = new DefaultListModel();
+        try {
+            while(alimenti.next()){
+                listmodel.addElement(alimenti.getString("nome"));
+            }
+        } catch (Exception e) {
+            System.out.println("C'è un errore:" + e);
+        }
+        lista.setModel(listmodel);
+    }
+
+    public void filtraAlimenti(){
+        String input = dialog.getNomeAlimento().getText();
+        DefaultListModel listafiltrata = new DefaultListModel();
+        try {
+            alimenti.beforeFirst();
+            while(alimenti.next()){
+                if(alimenti.getString("nome").indexOf(input) >= 0){
+                    listafiltrata.addElement(alimenti.getString("nome"));
+                }
+            }
+            dialog.getListaAlimenti().setModel(listafiltrata);
+        } catch (Exception e) {
+            System.out.println("C'è un errore:" + e);
+        }
 
     }
 }
