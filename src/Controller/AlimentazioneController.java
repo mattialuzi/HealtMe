@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * Created by lorenzobraconi on 05/01/17.
@@ -17,6 +19,7 @@ import java.awt.event.ActionListener;
 public class AlimentazioneController extends Controller {
 
     private AlimentazioneView alimentazione;
+    private FormCiboEffettivo dialog;
     private CardLayout cardLayout = new CardLayout();
     private JPanel variablePanel;
 
@@ -28,7 +31,7 @@ public class AlimentazioneController extends Controller {
         showIndex();
         NewCiboView newcibo = alimentazione.getNewcibo();
         IndexAlimentazioneView indexalimentazione = alimentazione.getIndexalimentazione();
-        FormCiboEffettivo dialog = new FormCiboEffettivo();
+        dialog = new FormCiboEffettivo();
 
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
@@ -81,9 +84,48 @@ public class AlimentazioneController extends Controller {
             }
         });
 
+        dialog.addSetPastoItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange()==e.SELECTED)
+                setPortataItems();
+            }
+        });
+
+        dialog.addSetPortataItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                showAlimenti();
+            }
+        });
+
     }
 
     public void showIndex(){
         cardLayout.show(variablePanel, "IndexAlimentazioneView");
+    }
+
+    public void setPortataItems(){
+        String pastoscelto = dialog.getPasto().getSelectedItem().toString();
+        JComboBox portata =dialog.getPortata();
+        if(pastoscelto != "--scegli pasto--") {
+            portata.setEnabled(true);
+            dialog.getPasto().removeItem("--scegli pasto--");
+            if (pastoscelto == "colazione" || pastoscelto == "spuntino") {
+                portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","snack", "bevanda", "frutta"}));
+                DefaultComboBoxModel portataModel = (DefaultComboBoxModel) portata.getModel();
+            } else {
+                portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","primo", "secondo", "contorno", "dolce", "frutta", "bevanda"}));
+            }
+        }
+    }
+
+    public void showAlimenti(){
+        String pastoscelto = dialog.getPasto().getSelectedItem().toString();
+        String portatascelta = dialog.getPortata().getSelectedItem().toString();
+        JTextField nomeAlimento = dialog.getNomeAlimento();
+        nomeAlimento.setEnabled(true);
+        dialog.getScrollPane().setVisible(true);
+
     }
 }

@@ -12,6 +12,9 @@ public class FormCiboEffettivo extends JDialog {
     private JComboBox pasto;
     private JComboBox portata;
     private JTextField textField1;
+    private JTextField nomeAlimento;
+    private JList listaAlimenti;
+    private JScrollPane scrollPane;
 
     public FormCiboEffettivo() {
 
@@ -46,18 +49,11 @@ public class FormCiboEffettivo extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        pasto.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                String pastoscelto = pasto.getSelectedItem().toString();
-                if (pastoscelto == "colazione" || pastoscelto=="spuntino"){
-                    portata.setModel(new DefaultComboBoxModel(new String[]{"snack","bevanda","frutta"}));
-                } else {
-                    portata.setModel(new DefaultComboBoxModel(new String[]{"primo","secondo","contorno","dolce","frutta","bevanda"}));
-                }
-            }
-        });
     }
+
+    public void addSetPastoItemListener(ItemListener listener) { pasto.addItemListener(listener);}
+
+    public void addSetPortataItemListener(ItemListener listener) { portata.addItemListener(listener);}
 
     private void onOK() {
         // add your code here
@@ -67,6 +63,26 @@ public class FormCiboEffettivo extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+    }
+
+    public JComboBox getPasto() {
+        return pasto;
+    }
+
+    public JComboBox getPortata() {
+        return portata;
+    }
+
+    public JTextField getNomeAlimento() {
+        return nomeAlimento;
+    }
+
+    public JList getListaAlimenti() {
+        return listaAlimenti;
+    }
+
+    public JScrollPane getScrollPane() {
+        return scrollPane;
     }
 
 }
