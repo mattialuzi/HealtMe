@@ -109,11 +109,10 @@ public class AlimentazioneController extends Controller {
         String pastoscelto = dialog.getPasto().getSelectedItem().toString();
         JComboBox portata =dialog.getPortata();
         if(pastoscelto != "--scegli pasto--") {
-            portata.setEnabled(true);
             dialog.getPasto().removeItem("--scegli pasto--");
+            portata.setEnabled(true);
             if (pastoscelto == "colazione" || pastoscelto == "spuntino") {
                 portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","snack", "bevanda", "frutta"}));
-                DefaultComboBoxModel portataModel = (DefaultComboBoxModel) portata.getModel();
             } else {
                 portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","primo", "secondo", "contorno", "dolce", "frutta", "bevanda"}));
             }
