@@ -148,6 +148,10 @@ public class AlimentazioneController extends Controller {
         String portatascelta = dialog.getPortata().getSelectedItem().toString();
         JTextField nomeAlimento = dialog.getNomeAlimento();
         dialog.getPortata().removeItem("--scegli portata--");
+        if (portatascelta.equals("bevanda"))
+            dialog.getMisuraLabel().setText("ml");
+        else
+            dialog.getMisuraLabel().setText("grammi");
         nomeAlimento.setEnabled(true);
         nomeAlimento.setText("");
         dialog.getScrollPane().setVisible(true);
@@ -171,7 +175,7 @@ public class AlimentazioneController extends Controller {
         try {
             alimenti.beforeFirst();
             while(alimenti.next()){
-                if(alimenti.getString("nome").indexOf(input) >= 0){
+                if(alimenti.getString("nome").contains(input)){
                     listafiltrata.addElement(alimenti.getString("nome"));
                 }
             }

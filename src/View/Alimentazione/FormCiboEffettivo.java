@@ -16,6 +16,8 @@ public class FormCiboEffettivo extends JDialog {
     private JTextField nomeAlimento;
     private JList listaAlimenti;
     private JScrollPane scrollPane;
+    private JLabel misuraLabel;
+    private JLabel quantitaLabel;
 
     public FormCiboEffettivo() {
 
@@ -90,4 +92,7 @@ public class FormCiboEffettivo extends JDialog {
         return scrollPane;
     }
 
+    public JLabel getMisuraLabel() {
+        return misuraLabel;
+    }
 }
