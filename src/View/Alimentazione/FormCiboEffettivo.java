@@ -60,6 +60,7 @@ public class FormCiboEffettivo extends JDialog {
     private void onCancel() {
         buttonOK.setEnabled(false);
         quantita.setText("");
+        listaAlimenti.removeAll();
         dispose();
     }
 

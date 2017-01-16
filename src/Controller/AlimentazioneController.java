@@ -186,7 +186,6 @@ public class AlimentazioneController extends Controller {
             dialog.getMisuraLabel().setText("grammi");
         nomeAlimento.setEnabled(true);
         nomeAlimento.setText("");
-        dialog.getScrollPane().setVisible(true);
         CiboModel cibomodel = new CiboModel();
         alimenti = cibomodel.getCibiByPortata(portatascelta);
         JList lista = dialog.getListaAlimenti();
@@ -199,6 +198,7 @@ public class AlimentazioneController extends Controller {
             System.out.println("C'è un errore:" + e);
         }
         lista.setModel(listmodel);
+        dialog.getScrollPane().setVisible(true);
     }
 
     public void filtraAlimenti(){
