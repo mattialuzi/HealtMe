@@ -23,4 +23,12 @@ public class Controller {
         } else
             subPanel.setVisible(true);
     }
+
+    public boolean checkIntero(String elemento){
+        boolean ritorno = false;
+        String regola = "[0-9]*";
+        if (elemento.matches(regola) && elemento.length()>0)
+            ritorno=true;
+        return ritorno;
+    }
 }

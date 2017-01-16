@@ -10,9 +10,8 @@ public class FormCiboEffettivo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JComboBox pasto;
     private JComboBox portata;
-    private JTextField textField1;
+    private JTextField quantita;
     private JTextField nomeAlimento;
     private JList listaAlimenti;
     private JScrollPane scrollPane;
@@ -24,12 +23,6 @@ public class FormCiboEffettivo extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -54,26 +47,19 @@ public class FormCiboEffettivo extends JDialog {
 
     }
 
-    public void addSetPastoItemListener(ItemListener listener) { pasto.addItemListener(listener);}
-
     public void addSetPortataItemListener(ItemListener listener) { portata.addItemListener(listener);}
 
     public void addSearchKeyListener(KeyListener listener) { nomeAlimento.addKeyListener(listener);}
 
     public void addSetCiboListSelectionListener(ListSelectionListener listener) { listaAlimenti.addListSelectionListener(listener);}
 
-    private void onOK() {
-        // add your code here
-        dispose();
-    }
+    public void addQuantitaKeyListener(KeyListener listener) { quantita.addKeyListener(listener);}
+
+    public void addPortataEffettivaButtonListener(ActionListener listener) { buttonOK.addActionListener(listener); }
 
     private void onCancel() {
         // add your code here if necessary
         dispose();
-    }
-
-    public JComboBox getPasto() {
-        return pasto;
     }
 
     public JComboBox getPortata() {
@@ -94,5 +80,13 @@ public class FormCiboEffettivo extends JDialog {
 
     public JLabel getMisuraLabel() {
         return misuraLabel;
+    }
+
+    public JTextField getQuantita() {
+        return quantita;
+    }
+
+    public JButton getButtonOK() {
+        return buttonOK;
     }
 }

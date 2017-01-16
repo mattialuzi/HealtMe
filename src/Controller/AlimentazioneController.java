@@ -26,6 +26,7 @@ public class AlimentazioneController extends Controller {
     private CardLayout cardLayout = new CardLayout();
     private JPanel variablePanel;
     private ResultSet alimenti;
+    private String pasto;
 
     public AlimentazioneController(Menu menu) {
 
@@ -88,21 +89,20 @@ public class AlimentazioneController extends Controller {
             public void actionPerformed(ActionEvent e) {
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
+                pasto = e.getActionCommand();
+                setPortataItems();
+                dialog.setTitle("Inserisci alimento a " +pasto);
                 dialog.setVisible(true);
             }
         });
 
-        dialog.addSetPastoItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange()==e.SELECTED)
-                setPortataItems();
-            }
-        });
 
         dialog.addSetPortataItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
+                if(!dialog.getQuantita().getText().equals("")){
+                    dialog.getButtonOK().setEnabled(true);
+                }
                 if(e.getStateChange()==e.SELECTED)
                 showAlimenti();
             }
@@ -129,6 +129,31 @@ public class AlimentazioneController extends Controller {
             }
         });
 
+        dialog.addQuantitaKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (!checkIntero(dialog.getQuantita().getText()))
+                    dialog.getQuantita().setText("");
+                if(!dialog.getListaAlimenti().isSelectionEmpty())
+                    dialog.getButtonOK().setEnabled(true);
+            }
+        });
+
+        dialog.addPortataEffettivaButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiungiPortataEffettiva();
+            }
+        });
+
     }
 
     public void showIndex(){
@@ -136,14 +161,11 @@ public class AlimentazioneController extends Controller {
     }
 
     public void setPortataItems(){
-        String pastoscelto = dialog.getPasto().getSelectedItem().toString();
         JComboBox portata =dialog.getPortata();
-        dialog.getPasto().removeItem("--scegli pasto--");
-        portata.setEnabled(true);
         dialog.getNomeAlimento().setEnabled(false);
         dialog.getNomeAlimento().setText("");
         dialog.getScrollPane().setVisible(false);
-        if (pastoscelto == "colazione" || pastoscelto == "spuntino") {
+        if (pasto == "colazione" || pasto == "spuntino") {
             portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","snack", "bevanda", "frutta"}));
         } else {
             portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","primo", "secondo", "contorno", "dolce", "frutta", "bevanda"}));
@@ -151,7 +173,6 @@ public class AlimentazioneController extends Controller {
     }
 
     public void showAlimenti(){
-        String pastoscelto = dialog.getPasto().getSelectedItem().toString();
         String portatascelta = dialog.getPortata().getSelectedItem().toString();
         JTextField nomeAlimento = dialog.getNomeAlimento();
         dialog.getPortata().removeItem("--scegli portata--");
@@ -190,6 +211,11 @@ public class AlimentazioneController extends Controller {
         } catch (Exception e) {
             System.out.println("C'è un errore:" + e);
         }
+    }
 
+    public void aggiungiPortataEffettiva(){
+        String portata = dialog.getPortata().getSelectedItem().toString();
+        String alimento = dialog.getNomeAlimento().getText();
+        Integer quantita = Integer.parseInt(dialog.getQuantita().getText());
     }
 }
