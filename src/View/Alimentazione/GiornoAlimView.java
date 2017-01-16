@@ -34,7 +34,7 @@ public class GiornoAlimView {
     
     public void setaddButtonsVisible () {
         addColazione.setVisible(true);
-        removeCena.setVisible(true);
+        removeColazione.setVisible(true);
         addPranzo.setVisible(true);
         removePranzo.setVisible(true);
         addCena.setVisible(true);
