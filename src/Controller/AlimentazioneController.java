@@ -100,11 +100,9 @@ public class AlimentazioneController extends Controller {
         dialog.addSetPortataItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if(!dialog.getQuantita().getText().equals("")){
-                    dialog.getButtonOK().setEnabled(true);
+                if(e.getStateChange()==e.SELECTED) {
+                    showAlimenti();
                 }
-                if(e.getStateChange()==e.SELECTED)
-                showAlimenti();
             }
         });
 
@@ -124,8 +122,12 @@ public class AlimentazioneController extends Controller {
         dialog.addSetCiboListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(e.getValueIsAdjusting())
-                dialog.getNomeAlimento().setText(dialog.getListaAlimenti().getSelectedValue().toString());
+                if(e.getValueIsAdjusting()) {
+                    dialog.getNomeAlimento().setText(dialog.getListaAlimenti().getSelectedValue().toString());
+                }
+                if(!dialog.getQuantita().getText().equals("") && !dialog.getListaAlimenti().isSelectionEmpty())
+                    dialog.getButtonOK().setEnabled(true);
+                else dialog.getButtonOK().setEnabled(false);
             }
         });
 
@@ -140,10 +142,12 @@ public class AlimentazioneController extends Controller {
             }
             @Override
             public void keyReleased(KeyEvent e) {
-                if (!checkIntero(dialog.getQuantita().getText()))
+                if (!checkIntero(dialog.getQuantita().getText())) {
                     dialog.getQuantita().setText("");
-                if(!dialog.getListaAlimenti().isSelectionEmpty())
+                }
+                if(!dialog.getQuantita().getText().equals("") && !dialog.getListaAlimenti().isSelectionEmpty())
                     dialog.getButtonOK().setEnabled(true);
+                else dialog.getButtonOK().setEnabled(false);
             }
         });
 

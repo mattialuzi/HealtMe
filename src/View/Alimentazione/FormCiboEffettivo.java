@@ -58,7 +58,8 @@ public class FormCiboEffettivo extends JDialog {
     public void addPortataEffettivaButtonListener(ActionListener listener) { buttonOK.addActionListener(listener); }
 
     private void onCancel() {
-        // add your code here if necessary
+        buttonOK.setEnabled(false);
+        quantita.setText("");
         dispose();
     }
 

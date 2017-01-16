@@ -21,7 +21,6 @@ public class IndexAlimentazioneView {
     private JPanel venerdiPanel;
     private JPanel sabatoPanel;
     private JPanel domenicaPanel;
-    private JButton aggiungiCiboEffettivo;
     private GiornoAlimView giornocorrente;
     private GiornoAlimView lunedi;
     private GiornoAlimView martedi;
