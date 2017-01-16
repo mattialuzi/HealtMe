@@ -1,19 +1,19 @@
 package Object;
 
-import Object.Enum.PastoEnum;
-import Helpers.JObject;
 import java.util.Date;
 
+/**
+ * Created by Mattia on 16/01/2017.
+ */
+public class GiornoAlimEffettivoObject extends GiornoAlimObject {
 
-public class GiornoAlimDinamicoObject extends GiornoAlimObject {
-
+    private String username;
     private Date data;
     private int cal_assunte;
 
-    public GiornoAlimDinamicoObject () {
-
-        data=null;
-        cal_assunte=0;
+    public GiornoAlimEffettivoObject() {
+        data=null ;
+        cal_assunte =0;
     }
 
     public Date getData() {
@@ -32,3 +32,4 @@ public class GiornoAlimDinamicoObject extends GiornoAlimObject {
         this.cal_assunte = cal_assunte;
     }
 }
+

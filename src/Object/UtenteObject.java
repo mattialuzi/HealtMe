@@ -22,6 +22,8 @@ public class UtenteObject extends JObject {
     private AllergiaEnum allergia;
     private float peso_forma;
     private String email;
+    private ProgrammaAlimentareObject programma_alimentare;
+    private ProgrammaAllenamentoObject programma_allenamento;
     private boolean prog_allen_comb;
     private boolean prog_alim_comb;
 
@@ -146,6 +148,22 @@ public class UtenteObject extends JObject {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ProgrammaAlimentareObject getProgramma_alimentare() {
+        return programma_alimentare;
+    }
+
+    public void setProgramma_alimentare(ProgrammaAlimentareObject programma_alimentare) {
+        this.programma_alimentare = programma_alimentare;
+    }
+
+    public ProgrammaAllenamentoObject getProgramma_allenamento() {
+        return programma_allenamento;
+    }
+
+    public void setProgramma_allenamento(ProgrammaAllenamentoObject programma_allenamento) {
+        this.programma_allenamento = programma_allenamento;
     }
 
     public boolean isProg_allen_comb() {
