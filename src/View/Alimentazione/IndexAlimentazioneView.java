@@ -30,7 +30,7 @@ public class IndexAlimentazioneView {
     private GiornoAlimView venerdi;
     private GiornoAlimView sabato;
     private GiornoAlimView domenica;
-    private Map<DayOfWeek,GiornoAlimView> giorni = new HashMap();
+    private HashMap<DayOfWeek,GiornoAlimView> giorni = new HashMap<DayOfWeek,GiornoAlimView>();
 
     public IndexAlimentazioneView() {
         giorni.put(MONDAY,lunedi);
@@ -63,7 +63,7 @@ public class IndexAlimentazioneView {
         domenicaPanel = domenica.getMainPanel();
     }
 
-    public Map getGiorni() {
+    public HashMap<DayOfWeek,GiornoAlimView> getGiorni() {
         return giorni;
     }
 }

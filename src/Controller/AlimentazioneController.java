@@ -14,9 +14,7 @@ import java.awt.event.*;
 import java.sql.ResultSet;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by lorenzobraconi on 05/01/17.
@@ -39,7 +37,7 @@ public class AlimentazioneController extends Controller {
         IndexAlimentazioneView indexalimentazione = alimentazione.getIndexalimentazione();
         LocalDate date = LocalDate.now();
         DayOfWeek giorno = date.getDayOfWeek();
-        Map giorni = indexalimentazione.getGiorni();
+        HashMap<DayOfWeek,GiornoAlimView> giorni = indexalimentazione.getGiorni();
         GiornoAlimView giornoattuale = (GiornoAlimView) giorni.get(giorno);
         dialog = new FormCiboEffettivo();
 
@@ -85,7 +83,7 @@ public class AlimentazioneController extends Controller {
             }
             });
 
-        giornoattuale.addAggiungiCiboEffettivoButtonListener(new ActionListener() {
+        giornoattuale.addListnersAndshowButtons(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dialog.pack();

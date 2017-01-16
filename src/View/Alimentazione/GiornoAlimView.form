@@ -56,6 +56,7 @@
                 </constraints>
                 <properties>
                   <text value="+"/>
+                  <visible value="false"/>
                 </properties>
               </component>
               <component id="87e2c" class="javax.swing.JButton" binding="removeSpuntino">
@@ -64,6 +65,7 @@
                 </constraints>
                 <properties>
                   <text value="-"/>
+                  <visible value="false"/>
                 </properties>
               </component>
             </children>
@@ -100,6 +102,7 @@
                 </constraints>
                 <properties>
                   <text value="+"/>
+                  <visible value="false"/>
                 </properties>
               </component>
               <component id="3da48" class="javax.swing.JButton" binding="removeColazione">
@@ -108,6 +111,7 @@
                 </constraints>
                 <properties>
                   <text value="-"/>
+                  <visible value="false"/>
                 </properties>
               </component>
             </children>
@@ -144,6 +148,7 @@
                 </constraints>
                 <properties>
                   <text value="+"/>
+                  <visible value="false"/>
                 </properties>
               </component>
               <component id="a8485" class="javax.swing.JButton" binding="removeCena">
@@ -152,6 +157,7 @@
                 </constraints>
                 <properties>
                   <text value="-"/>
+                  <visible value="false"/>
                 </properties>
               </component>
             </children>
@@ -188,6 +194,7 @@
                 </constraints>
                 <properties>
                   <text value="+"/>
+                  <visible value="false"/>
                 </properties>
               </component>
               <component id="63aa4" class="javax.swing.JButton" binding="removePranzo">
@@ -196,6 +203,7 @@
                 </constraints>
                 <properties>
                   <text value="-"/>
+                  <visible value="false"/>
                 </properties>
               </component>
             </children>
