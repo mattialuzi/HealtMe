@@ -12,6 +12,11 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lorenzobraconi on 05/01/17.
@@ -32,6 +37,10 @@ public class AlimentazioneController extends Controller {
         showIndex();
         NewCiboView newcibo = alimentazione.getNewcibo();
         IndexAlimentazioneView indexalimentazione = alimentazione.getIndexalimentazione();
+        LocalDate date = LocalDate.now();
+        DayOfWeek giorno = date.getDayOfWeek();
+        Map giorni = indexalimentazione.getGiorni();
+        GiornoAlimView giornoattuale = (GiornoAlimView) giorni.get(giorno);
         dialog = new FormCiboEffettivo();
 
         menu.addNewProgAlimButtonListener(new ActionListener() {
@@ -76,7 +85,7 @@ public class AlimentazioneController extends Controller {
             }
             });
 
-        indexalimentazione.addAggiungiCiboEffettivoButtonListener(new ActionListener() {
+        giornoattuale.addAggiungiCiboEffettivoButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dialog.pack();

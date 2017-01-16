@@ -2,6 +2,11 @@ package View.Alimentazione;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.time.DayOfWeek;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.time.DayOfWeek.*;
 
 /**
  * Created by lorenzobraconi on 11/01/17.
@@ -17,8 +22,24 @@ public class IndexAlimentazioneView {
     private JPanel sabatoPanel;
     private JPanel domenicaPanel;
     private JButton aggiungiCiboEffettivo;
+    private GiornoAlimView giornocorrente;
+    private GiornoAlimView lunedi;
+    private GiornoAlimView martedi;
+    private GiornoAlimView mercoledi;
+    private GiornoAlimView giovedi;
+    private GiornoAlimView venerdi;
+    private GiornoAlimView sabato;
+    private GiornoAlimView domenica;
+    private Map<DayOfWeek,GiornoAlimView> giorni = new HashMap();
 
     public IndexAlimentazioneView() {
+        giorni.put(MONDAY,lunedi);
+        giorni.put(TUESDAY,martedi);
+        giorni.put(WEDNESDAY, mercoledi);
+        giorni.put(THURSDAY,giovedi);
+        giorni.put(FRIDAY,venerdi);
+        giorni.put(SATURDAY,sabato);
+        giorni.put(SUNDAY,domenica);
     }
 
     public JPanel getMainPanel() {
@@ -26,16 +47,25 @@ public class IndexAlimentazioneView {
     }
 
     private void createUIComponents() {
-        lunediPanel =  new GiornoAlimView().getMainPanel();
-        martediPanel = new GiornoAlimView().getMainPanel();
-        mercolediPanel = new GiornoAlimView().getMainPanel();
-        giovediPanel = new GiornoAlimView().getMainPanel();
-        venerdiPanel = new GiornoAlimView().getMainPanel();
-        sabatoPanel = new GiornoAlimView().getMainPanel();
-        domenicaPanel = new GiornoAlimView().getMainPanel();
+        lunedi = new GiornoAlimView();
+        martedi = new GiornoAlimView();
+        mercoledi = new GiornoAlimView();
+        giovedi = new GiornoAlimView();
+        venerdi = new GiornoAlimView();
+        sabato = new GiornoAlimView();
+        domenica = new GiornoAlimView();
+        lunediPanel =  lunedi.getMainPanel();
+        martediPanel = martedi.getMainPanel();
+        mercolediPanel = mercoledi.getMainPanel();
+        giovediPanel = giovedi.getMainPanel();
+        venerdiPanel = venerdi.getMainPanel();
+        sabatoPanel = sabato.getMainPanel();
+        domenicaPanel = domenica.getMainPanel();
     }
 
-    public void addAggiungiCiboEffettivoButtonListener(ActionListener listener) { aggiungiCiboEffettivo.addActionListener(listener); }
+    public Map getGiorni() {
+        return giorni;
+    }
 }
 
 
