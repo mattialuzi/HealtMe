@@ -3,18 +3,18 @@ package Object;
 import java.util.Date;
 
 /**
- * Created by Mattia on 16/01/2017.
+ * Created by lorenzobraconi on 17/01/17.
  */
-public class GiornoAlimEffettivoObject extends GiornoAlimObject {
+public class GiornoAllenEffettivoObject extends GiornoAllenObject{
 
     private String username;
     private Date data;
-    private int cal_assunte;
+    private int cal_consumate;
 
-    public GiornoAlimEffettivoObject() {
+    public GiornoAllenEffettivoObject() {
         username=null;
         data=null ;
-        cal_assunte =0;
+        cal_consumate =0;
     }
 
     public String getUsername() {
@@ -33,12 +33,11 @@ public class GiornoAlimEffettivoObject extends GiornoAlimObject {
         this.data = data;
     }
 
-    public int getCal_assunte() {
-        return cal_assunte;
+    public int getCal_consumate() {
+        return cal_consumate;
     }
 
-    public void setCal_assunte(int cal_assunte) {
-        this.cal_assunte = cal_assunte;
+    public void setCal_consumate(int cal_consumate) {
+        this.cal_consumate = cal_consumate;
     }
 }
-

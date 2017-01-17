@@ -1,6 +1,5 @@
 package Object;
 
-import Helpers.JObject;
 /**
  * Created by lorenzobraconi on 28/12/16.
  */
