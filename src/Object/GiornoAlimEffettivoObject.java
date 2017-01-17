@@ -16,6 +16,14 @@ public class GiornoAlimEffettivoObject extends GiornoAlimObject {
         cal_assunte =0;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Date getData() {
         return data;
     }

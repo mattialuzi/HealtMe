@@ -12,7 +12,7 @@ abstract class GiornoAlimObject extends JObject {
     private PastoObject pranzo;
     private PastoObject cena;
 
-    public GiornoAlimObject() {
+    protected GiornoAlimObject() {
 
         colazione=null;
         pranzo=null;

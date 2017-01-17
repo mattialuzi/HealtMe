@@ -9,11 +9,21 @@ public class GiornoAlimDinamicoObject extends GiornoAlimObject {
 
     private int id_programma ;
     private Date data;
+    private int fabbisogno;
 
     public GiornoAlimDinamicoObject () {
 
+        fabbisogno=0;
         id_programma=0;
         data=null;
+    }
+
+    public int getFabbisogno() {
+        return fabbisogno;
+    }
+
+    public void setFabbisogno(int fabbisogno) {
+        this.fabbisogno = fabbisogno;
     }
 
     public Date getData() {
