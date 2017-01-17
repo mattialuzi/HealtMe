@@ -7,28 +7,29 @@ import java.util.Date;
 
 public class GiornoAlimDinamicoObject extends GiornoAlimObject {
 
+    private int id_programma ;
     private Date data;
-    private int cal_assunte;
 
     public GiornoAlimDinamicoObject () {
 
+        id_programma=0;
         data=null;
-        cal_assunte=0;
     }
 
     public Date getData() {
         return data;
     }
 
+    public int getId_programma() {
+        return id_programma;
+    }
+
+    public void setId_programma(int id_programma) {
+        this.id_programma = id_programma;
+    }
+
     public void setData(Date data) {
         this.data = data;
     }
 
-    public int getCal_assunte() {
-        return cal_assunte;
-    }
-
-    public void setCal_assunte(int cal_assunte) {
-        this.cal_assunte = cal_assunte;
-    }
 }

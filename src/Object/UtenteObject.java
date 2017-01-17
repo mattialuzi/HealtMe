@@ -42,6 +42,8 @@ public class UtenteObject extends JObject {
         allergia=null;
         peso_forma=0;
         email=null;
+        programma_alimentare=null;
+        programma_allenamento=null;
         prog_allen_comb=false;
         prog_alim_comb=false;
     }
