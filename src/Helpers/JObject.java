@@ -19,7 +19,9 @@ public class JObject {
             try{
                 Field f = classe.getDeclaredField(temp_name);
                 f.setAccessible(true);
-                temp_value = f.get(o).toString();
+                if (f.get(o) == null) {
+                    temp_value = "NULL";
+                } else temp_value = f.get(o).toString();
                 if (temp_value=="false") {
                     temp_value = "0";
                 }
@@ -34,7 +36,10 @@ public class JObject {
                 total="'"+temp_value+"'";
             }
             else{
-                total = total + ", '" + temp_value+"'";
+                if (temp_value == "NULL") {
+                    total = total +  ", " + temp_value+" ";
+                }
+                else total = total + ", '" + temp_value+"'";
             }
             i++;
         }
