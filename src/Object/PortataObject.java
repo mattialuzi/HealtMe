@@ -6,7 +6,7 @@ import Object.Enum.PortataEnum;
 public class PortataObject extends JObject {
 
     private int id_pasto;
-    private String cibo;
+    private CiboObject cibo;
     private PortataEnum tipo;
     private int quantita;
 
@@ -25,11 +25,11 @@ public class PortataObject extends JObject {
         this.id_pasto = id_pasto;
     }
 
-    public String getCibo() {
+    public CiboObject getCibo() {
         return cibo;
     }
 
-    public void setCibo(String cibo) {
+    public void setCibo(CiboObject cibo) {
         this.cibo = cibo;
     }
 

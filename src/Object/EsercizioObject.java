@@ -11,10 +11,10 @@ import Object.Enum.UnitaMisuraEnum;
 public class EsercizioObject extends JObject{
 
     private String tipologia;
-    private int consumo_calorico;
     private CategoriaEnum categoria;
     private IntensitaEnum intensita;
     private UnitaMisuraEnum unita_misura;
+    private int consumo_calorico;
 
     public EsercizioObject() {
         tipologia=null;

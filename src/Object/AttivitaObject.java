@@ -5,30 +5,30 @@ import Helpers.JObject;
 public class AttivitaObject extends JObject {
 
 
-    private int id_giorno;
-    private String esercizio;
+    private int id_seduta;
+    private EsercizioObject esercizio;
     private int quantita;
 
     public AttivitaObject()
     {
-        id_giorno=0;
+        id_seduta =0;
         esercizio=null;
         quantita=0;
     }
 
-    public int getId_giorno() {
-        return id_giorno;
+    public int getId_seduta() {
+        return id_seduta;
     }
 
-    public void setId_giorno(int id_giorno) {
-        this.id_giorno = id_giorno;
+    public void setId_seduta(int id_seduta) {
+        this.id_seduta = id_seduta;
     }
 
-    public String getEsercizio() {
+    public EsercizioObject getEsercizio() {
         return esercizio;
     }
 
-    public void setEsercizio(String esercizio) {
+    public void setEsercizio(EsercizioObject esercizio) {
         this.esercizio = esercizio;
     }
 
