@@ -9,9 +9,6 @@ import java.util.Date;
  */
 abstract class ProgrammaAlimentareObject extends JObject {
     private int id;
-    //private String username;
-    //private Date data_inizio;
-    //private Date data_fine;
     private GiornoAlimProgObject lunedi;
     private GiornoAlimProgObject martedi;
     private GiornoAlimProgObject mercoledi;
@@ -23,9 +20,6 @@ abstract class ProgrammaAlimentareObject extends JObject {
     protected ProgrammaAlimentareObject()
     {
         id=0;
-        //username=null;
-        //data_inizio=null;
-        //data_fine=null;
         lunedi=null;
         martedi=null;
         mercoledi=null;
@@ -42,30 +36,6 @@ abstract class ProgrammaAlimentareObject extends JObject {
     public void setId(int id) {
         this.id = id;
     }
-
-    /*public String getUsername() {
-        return username;
-    }*/
-
-    /*public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Date getData_inizio() {
-        return data_inizio;
-    }*/
-
-    /*public void setData_inizio(Date data_inizio) {
-        this.data_inizio = data_inizio;
-    }*/
-
-    /*public Date getData_fine() {
-        return data_fine;
-    }*/
-
-    /*public void setData_fine(Date data_fine) {
-        this.data_fine = data_fine;
-    }*/
 
     public GiornoAlimProgObject getLunedi() {
         return lunedi;
@@ -122,5 +92,6 @@ abstract class ProgrammaAlimentareObject extends JObject {
     public void setDomenica(GiornoAlimProgObject domenica) {
         this.domenica = domenica;
     }
+
 }
 

@@ -28,7 +28,13 @@ public class GiornoAlimModel {
     }
 
     public void inserisciGiornoAlimEff(GiornoAlimEffettivoObject giornoeff){
-        String dati= giornoeff.valueString(giornoeff);
+        String dati= "'"+giornoeff.getUsername()+"'";
+        dati = dati +  ", '" + String.valueOf(giornoeff.getData() +"'");
+        dati = dati +  ", " + String.valueOf(giornoeff.getCal_assunte());
+        dati = dati + ",null";
+        dati = dati + ",null";
+        dati = dati + ",null";
+        dati = dati + ",null";
         effettivo.insert(dati);
         effettivo.execute();
     }
@@ -37,7 +43,7 @@ public class GiornoAlimModel {
         effettivo.select(pasto);
         effettivo.where("username='" + username + "' and data='" + data+"'");
         ResultSet pastoeff = effettivo.fetch();
-        int idpasto = new Integer(null) ;
+        int idpasto = 0;
         try{
             while(pastoeff.next()) {
                 idpasto = pastoeff.getInt(pasto);

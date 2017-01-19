@@ -3,11 +3,14 @@ package Controller;
 import Helpers.Controller;
 import Model.CiboModel;
 import Model.GiornoAlimModel;
+import Model.PastoModel;
+import Object.Enum.PastoEnum;
 import View.Alimentazione.*;
 import View.Menu;
 import Object.CiboObject;
 import Object.UtenteObject;
 import Object.GiornoAlimEffettivoObject;
+import Object.PastoObject;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -173,7 +176,6 @@ public class AlimentazioneController extends Controller {
     public void creaGiornoAlimEff(String username,LocalDate data){
         GiornoAlimModel giorno = new GiornoAlimModel();
         if(!giorno.findGiornoAlimEffByUser(username,data)){
-
             GiornoAlimEffettivoObject giornoeff = new GiornoAlimEffettivoObject();
             giornoeff.setUsername(username);
             giornoeff.setData(Date.valueOf(data));
@@ -236,14 +238,18 @@ public class AlimentazioneController extends Controller {
 
     public void aggiungiPortataEffettiva(){
         GiornoAlimModel giorno = new GiornoAlimModel();
-        int idpasto = giorno.findPastoInserito(pasto,LocalDate.now(),utente.getUsername());
-
-
-
         String portata = dialog.getPortata().getSelectedItem().toString();
         String alimento = dialog.getNomeAlimento().getText();
         Integer quantita = Integer.parseInt(dialog.getQuantita().getText());
+        int idpasto = giorno.findPastoInserito(pasto,LocalDate.now(),utente.getUsername());
+        if(idpasto == 0){
+            PastoObject nuovopasto = new PastoObject();
+            nuovopasto.setTipo(PastoEnum.valueOf(pasto));
+            PastoModel pastomodel = new PastoModel();
+            pastomodel.inserisciPasto(nuovopasto);
 
+
+        }
 
     }
 }
