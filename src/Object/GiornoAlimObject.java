@@ -7,10 +7,10 @@ import Helpers.JObject;
  */
 abstract class GiornoAlimObject extends JObject {
 
-    private PastoObject colazione;
-    private PastoObject spuntino;
-    private PastoObject pranzo;
-    private PastoObject cena;
+    protected PastoObject colazione;
+    protected PastoObject spuntino;
+    protected PastoObject pranzo;
+    protected PastoObject cena;
 
     protected GiornoAlimObject() {
 

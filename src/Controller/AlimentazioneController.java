@@ -2,15 +2,19 @@ package Controller;
 
 import Helpers.Controller;
 import Model.CiboModel;
+import Model.GiornoAlimModel;
 import View.Alimentazione.*;
 import View.Menu;
 import Object.CiboObject;
+import Object.UtenteObject;
+import Object.GiornoAlimEffettivoObject;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -27,10 +31,12 @@ public class AlimentazioneController extends Controller {
     private JPanel variablePanel;
     private ResultSet alimenti;
     private String pasto;
+    private UtenteObject utente;
 
-    public AlimentazioneController(Menu menu) {
+    public AlimentazioneController(Menu menu,UtenteObject utente) {
 
         this.alimentazione = menu.getAlimentazioneview();
+        this.utente = utente;
         variablePanel = alimentazione.getMainPanel();
         cardLayout = (CardLayout)variablePanel.getLayout();
         showIndex();
@@ -41,6 +47,7 @@ public class AlimentazioneController extends Controller {
         HashMap<DayOfWeek,GiornoAlimView> giorni = indexalimentazione.getGiorni();
         GiornoAlimView giornoattuale = (GiornoAlimView) giorni.get(giorno);
         dialog = new FormCiboEffettivo();
+        creaGiornoAlimEff(utente.getUsername(),date);
 
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
@@ -157,11 +164,21 @@ public class AlimentazioneController extends Controller {
                 aggiungiPortataEffettiva();
             }
         });
-
     }
 
     public void showIndex(){
         cardLayout.show(variablePanel, "IndexAlimentazioneView");
+    }
+
+    public void creaGiornoAlimEff(String username,LocalDate data){
+        GiornoAlimModel giorno = new GiornoAlimModel();
+        if(!giorno.findGiornoAlimEffByUser(username,data)){
+
+            GiornoAlimEffettivoObject giornoeff = new GiornoAlimEffettivoObject();
+            giornoeff.setUsername(username);
+            giornoeff.setData(Date.valueOf(data));
+            giorno.inserisciGiornoAlimEff(giornoeff);
+        }
     }
 
     public void setPortataItems(){
@@ -218,8 +235,15 @@ public class AlimentazioneController extends Controller {
     }
 
     public void aggiungiPortataEffettiva(){
+        GiornoAlimModel giorno = new GiornoAlimModel();
+        int idpasto = giorno.findPastoInserito(pasto,LocalDate.now(),utente.getUsername());
+
+
+
         String portata = dialog.getPortata().getSelectedItem().toString();
         String alimento = dialog.getNomeAlimento().getText();
         Integer quantita = Integer.parseInt(dialog.getQuantita().getText());
+
+
     }
 }
