@@ -13,7 +13,6 @@ abstract class GiornoAlimObject extends JObject {
     protected PastoObject cena;
 
     protected GiornoAlimObject() {
-
         colazione=null;
         pranzo=null;
         cena=null;

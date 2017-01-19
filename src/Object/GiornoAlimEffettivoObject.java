@@ -13,7 +13,7 @@ public class GiornoAlimEffettivoObject extends GiornoAlimObject {
 
     public GiornoAlimEffettivoObject() {
         username=null;
-        data=null ;
+        data=null;
         cal_assunte =0;
     }
 
