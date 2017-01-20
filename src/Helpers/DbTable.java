@@ -71,13 +71,10 @@ public class DbTable {
         try {
             Statement query = db.createStatement();
             query.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
-           // PreparedStatement statement = db.prepareStatement(sql,
-              //      Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = query.getGeneratedKeys();
             try {
                 rs.next();
                 generated_key = rs.getInt("GENERATED_KEY");
-                System.out.println(generated_key);
 
             } catch (Exception e) {
                 System.out.println("C'è un errore:" + e);

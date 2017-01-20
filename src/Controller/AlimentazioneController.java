@@ -234,36 +234,26 @@ public class AlimentazioneController extends Controller {
         }
     }
 
-    public void aggiungiPortataEffettiva(){
-        //GiornoAlimModel giorno = new GiornoAlimModel();
+    public void aggiungiPortataEffettiva() {
         String portata = dialog.getPortata().getSelectedItem().toString();
         String alimento = dialog.getNomeAlimento().getText();
         Integer quantita = Integer.parseInt(dialog.getQuantita().getText());
         PastoObject nuovopasto = giornocorrente.getPastoByTipo(pasto);
-        if(nuovopasto.getId() == 0) {
+        if (nuovopasto.getId() == 0) {
             nuovopasto.setTipo(PastoEnum.valueOf(pasto));
             PastoModel pastomodel = new PastoModel();
             pastomodel.inserisciPasto(nuovopasto);
+            //update id pasto su giorno effettivo
         }
-        PortataObject nuovaportata = nuovopasto.
-        nuovaportata.setId_pasto(nuovoid);
         CiboModel cibomodel = new CiboModel();
-        CiboObject cibo = new CiboObject();
-        ResultSet ciborecuperato = cibomodel.getCiboByName(alimento);
-        try{
-            while(ciborecuperato.next()){
-                    cibo.setNome(ciborecuperato.getString("nome"));
-                    cibo.setGruppo(GruppoEnum.valueOf(ciborecuperato.getString("gruppo")));
-                    cibo.setKilocal(ciborecuperato.getInt("kilocal"));
-                    cibo.setAllergia(AllergiaEnum.valueOf(ciborecuperato.getString("allergia")));
-                    cibo.setPortata(PortataEnum.valueOf(ciborecuperato.getString("portata")));
-                    cibo.setCompatibilita(CompatibilitaEnum.valueOf(ciborecuperato.getString("compatibilita")));
-                }
-            } catch (Exception e){
-                System.out.println("C'è un errore:" + e);
-            }
-            nuovaportata.setCibo(); */
-        }
-
+        CiboObject nuovocibo = cibomodel.getCiboByName(alimento);
+        PortataObject nuovaportata = new PortataObject(nuovocibo);
+        nuovaportata.setId_pasto(nuovopasto.getId());
+        nuovaportata.setTipo(PortataEnum.valueOf(portata));
+        nuovaportata.setQuantita(quantita);
+        PortataModel portatamodel = new PortataModel();
+        portatamodel.inserisciPortata(nuovaportata);
+        nuovopasto.addPortata(nuovaportata);
     }
+
 }

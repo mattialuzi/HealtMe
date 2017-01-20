@@ -25,11 +25,10 @@ public class PortataModel {
         ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
         try{
             while(rs.next()){
-                PortataObject portata = new PortataObject();
-                portata.setId_pasto(rs.getInt("id_pasto"));
                 CiboModel cibomodel = new CiboModel();
                 CiboObject cibo = cibomodel.getCiboByName(rs.getString("nome"));
-                portata.setCibo(cibo);
+                PortataObject portata = new PortataObject(cibo);
+                portata.setId_pasto(rs.getInt("id_pasto"));
                 portata.setTipo(PortataEnum.valueOf(rs.getString("tipo")));
                 portata.setQuantita(rs.getInt("quantita"));
                 portate.add(portata);
@@ -38,5 +37,14 @@ public class PortataModel {
             System.out.println("Errore:" + e);
         }
         return portate;
+    }
+
+    public void inserisciPortata (PortataObject portata) {
+        String dati= ""+portata.getId_pasto()+"";
+        dati=dati+",'"+String.valueOf(portata.getCibo().getNome())+"'";
+        dati=dati+",'"+String.valueOf(portata.getTipo())+"'";
+        dati=dati+", "+String.valueOf(portata.getQuantita())+"";
+        tabella.insert(dati);
+        tabella.execute();
     }
 }

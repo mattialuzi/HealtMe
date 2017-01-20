@@ -43,4 +43,8 @@ public class PastoObject extends JObject {
     public void setTipo(PastoEnum tipo) {
         this.tipo = tipo;
     }
+
+    public void addPortata (PortataObject portata) {
+        portate.add(portata);
+    }
 }

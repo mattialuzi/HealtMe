@@ -10,9 +10,9 @@ public class PortataObject extends JObject {
     private PortataEnum tipo;
     private int quantita;
 
-    public PortataObject() {
+    public PortataObject(CiboObject nuovocibo) {
         id_pasto=0;
-        cibo=new CiboObject();
+        cibo=nuovocibo;
         tipo=null;
         quantita=0;
     }

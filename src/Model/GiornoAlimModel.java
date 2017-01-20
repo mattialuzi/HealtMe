@@ -44,17 +44,7 @@ public class GiornoAlimModel {
         return giorno;
     }
 
-    /*public boolean findGiornoAlimEffByUser(String username,LocalDate data){
-        boolean success=false;
-        effettivo.select();
-        effettivo.where("username='" + username + "' and data='" + data+"'");
-        int n = effettivo.count(effettivo.fetch());
-        if (n==1)
-            success=true;
-        else
-            success=false;
-        return success;
-    } */
+   //update id pasto
 
     public void inserisciGiornoAlimEff(GiornoAlimEffettivoObject giornoeff){
         String dati= "'" + giornoeff.getUsername()+"'";
