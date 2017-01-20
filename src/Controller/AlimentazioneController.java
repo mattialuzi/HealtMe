@@ -4,13 +4,14 @@ import Helpers.Controller;
 import Model.CiboModel;
 import Model.GiornoAlimModel;
 import Model.PastoModel;
-import Object.Enum.PastoEnum;
+import Object.Enum.*;
 import View.Alimentazione.*;
 import View.Menu;
 import Object.CiboObject;
 import Object.UtenteObject;
 import Object.GiornoAlimEffettivoObject;
 import Object.PastoObject;
+import Object.PortataObject;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -246,9 +247,25 @@ public class AlimentazioneController extends Controller {
             PastoObject nuovopasto = new PastoObject();
             nuovopasto.setTipo(PastoEnum.valueOf(pasto));
             PastoModel pastomodel = new PastoModel();
-            pastomodel.inserisciPasto(nuovopasto);
-
-
+            int nuovoid = pastomodel.inserisciPasto(nuovopasto);
+            PortataObject nuovaportata = new PortataObject();
+            nuovaportata.setId_pasto(nuovoid);
+            CiboModel cibomodel = new CiboModel();
+            CiboObject cibo = new CiboObject();
+            ResultSet ciborecuperato = cibomodel.getCiboByName(alimento);
+            try{
+                while(ciborecuperato.next()){
+                    cibo.setNome(ciborecuperato.getString("nome"));
+                    cibo.setGruppo(GruppoEnum.valueOf(ciborecuperato.getString("gruppo")));
+                    cibo.setKilocal(ciborecuperato.getInt("kilocal"));
+                    cibo.setAllergia(AllergiaEnum.valueOf(ciborecuperato.getString("allergia")));
+                    cibo.setPortata(PortataEnum.valueOf(ciborecuperato.getString("portata")));
+                    cibo.setCompatibilita(CompatibilitaEnum.valueOf(ciborecuperato.getString("compatibilita")));
+                }
+            } catch (Exception e){
+                System.out.println("C'è un errore:" + e);
+            }
+            nuovaportata.setCibo();
         }
 
     }

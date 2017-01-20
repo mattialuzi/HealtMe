@@ -63,11 +63,11 @@ public class DbTable {
         return check;
     }
 
-    public int executeProva(){
+    public int executeForKey(){
         Connector connector= new Connector();
         Connection db = connector.connect();
         sql = sql + ";";
-        int cacco = 0;
+        int generated_key = 0;
         try {
             Statement query = db.createStatement();
             query.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
@@ -75,10 +75,10 @@ public class DbTable {
               //      Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = query.getGeneratedKeys();
             try {
-                while(rs.next()){
-                     cacco = rs.getInt("GENERATED_KEY");
-                     System.out.println(cacco);
-                }
+                rs.next();
+                generated_key = rs.getInt("GENERATED_KEY");
+                System.out.println(generated_key);
+
             } catch (Exception e) {
                 System.out.println("C'è un errore:" + e);
             }
@@ -86,7 +86,7 @@ public class DbTable {
             System.out.println(e);
         }
         connector.disconnect();
-        return cacco;
+        return generated_key;
     }
 
 
