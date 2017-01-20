@@ -2,9 +2,13 @@ package Model;
 
 import Model.Dbtable.Giorno_alim_eff;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import Object.GiornoAlimEffettivoObject;
 import Object.PastoObject;
 
@@ -17,11 +21,11 @@ public class GiornoAlimModel {
 
     public GiornoAlimModel() { effettivo = new Giorno_alim_eff(); }
 
-    public GiornoAlimEffettivoObject getGiornoAlimEffettivo(String username,LocalDate data){
+    public GiornoAlimEffettivoObject getGiornoAlimEffettivo(String username,Date data){
         effettivo.select();
         effettivo.where("username='" + username + "' and data='" + data+"'");
         ResultSet rs = effettivo.fetch();
-        GiornoAlimEffettivoObject giorno = new GiornoAlimEffettivoObject(username, Date.valueOf(data));
+        GiornoAlimEffettivoObject giorno = new GiornoAlimEffettivoObject(username, data);
         try{
             if(rs.isBeforeFirst()){
                 rs.next();
@@ -44,7 +48,17 @@ public class GiornoAlimModel {
         return giorno;
     }
 
-   //update id pasto
+    public <V> void aggiornaGiornoAlimEff (String username, Date data, Map<String,V> map) {
+        String dati = "";
+        Iterator<Map.Entry<String,V>> iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = iterator.next();
+           dati += entry.getKey()+ "='" + entry.getValue() + "'";
+        }
+        effettivo.update(dati);
+        effettivo.where("username='" + username + "' AND data='" + data + "'");
+        effettivo.execute();
+    }
 
     public void inserisciGiornoAlimEff(GiornoAlimEffettivoObject giornoeff){
         String dati= "'" + giornoeff.getUsername()+"'";
@@ -58,7 +72,7 @@ public class GiornoAlimModel {
         effettivo.execute();
     }
 
-    public int findPastoInserito(String pasto, LocalDate data, String username){
+    /*public int findPastoInserito(String pasto, LocalDate data, String username){
         effettivo.select(pasto);
         effettivo.where("username='" + username + "' and data='" + data+"'");
         ResultSet pastoeff = effettivo.fetch();
@@ -73,5 +87,5 @@ public class GiornoAlimModel {
             System.out.println("Errore "+e);
         }
         return idpasto;
-    }
+    }*/
 }

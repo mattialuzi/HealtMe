@@ -17,6 +17,7 @@ import Object.PortataObject;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Date;
@@ -24,6 +25,7 @@ import java.sql.ResultSet;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lorenzobraconi on 05/01/17.
@@ -243,7 +245,11 @@ public class AlimentazioneController extends Controller {
             nuovopasto.setTipo(PastoEnum.valueOf(pasto));
             PastoModel pastomodel = new PastoModel();
             pastomodel.inserisciPasto(nuovopasto);
-            //update id pasto su giorno effettivo
+            String username = giornocorrente.getUsername();
+            java.util.Date data = giornocorrente.getData();
+            HashMap<String,Integer> mappa = new HashMap<String,Integer>();
+            mappa.put(pasto,nuovopasto.getId());
+            new GiornoAlimModel().aggiornaGiornoAlimEff(username,data,mappa);
         }
         CiboModel cibomodel = new CiboModel();
         CiboObject nuovocibo = cibomodel.getCiboByName(alimento);
