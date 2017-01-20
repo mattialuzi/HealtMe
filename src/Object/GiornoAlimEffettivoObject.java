@@ -1,5 +1,6 @@
 package Object;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -8,10 +9,10 @@ import java.util.Date;
 public class GiornoAlimEffettivoObject extends GiornoAlimObject {
 
     private String username;
-    private Date data;
+    private LocalDate data;
     private int cal_assunte;
 
-    public GiornoAlimEffettivoObject(String username, Date data) {
+    public GiornoAlimEffettivoObject(String username, LocalDate data) {
         this.username = username;
         this.data= data;
         cal_assunte =0;
@@ -25,11 +26,11 @@ public class GiornoAlimEffettivoObject extends GiornoAlimObject {
         this.username = username;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 

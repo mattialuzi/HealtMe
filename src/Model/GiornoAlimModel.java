@@ -21,7 +21,7 @@ public class GiornoAlimModel {
 
     public GiornoAlimModel() { effettivo = new Giorno_alim_eff(); }
 
-    public GiornoAlimEffettivoObject getGiornoAlimEffettivo(String username,Date data){
+    public GiornoAlimEffettivoObject getGiornoAlimEffettivo(String username,LocalDate data){
         effettivo.select();
         effettivo.where("username='" + username + "' and data='" + data+"'");
         ResultSet rs = effettivo.fetch();
@@ -48,7 +48,7 @@ public class GiornoAlimModel {
         return giorno;
     }
 
-    public <V> void aggiornaGiornoAlimEff (String username, Date data, Map<String,V> map) {
+    public <V> void aggiornaGiornoAlimEff (String username, LocalDate data, Map<String,V> map) {
         String dati = "";
         Iterator<Map.Entry<String,V>> iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {

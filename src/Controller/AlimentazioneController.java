@@ -246,7 +246,7 @@ public class AlimentazioneController extends Controller {
             PastoModel pastomodel = new PastoModel();
             pastomodel.inserisciPasto(nuovopasto);
             String username = giornocorrente.getUsername();
-            java.util.Date data = giornocorrente.getData();
+            LocalDate data = giornocorrente.getData();
             HashMap<String,Integer> mappa = new HashMap<String,Integer>();
             mappa.put(pasto,nuovopasto.getId());
             new GiornoAlimModel().aggiornaGiornoAlimEff(username,data,mappa);
