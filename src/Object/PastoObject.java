@@ -11,21 +11,21 @@ public class PastoObject extends JObject {
 
     private int id;
     private PastoEnum tipo;
-    private List<Portata> portate;
+    private List<PortataObject> portate;
 
 
     public PastoObject() {
         id=0;
         tipo=null;
-        portate=new ArrayList<Portata>();
+        portate=new ArrayList<PortataObject>();
     }
 
-    public List<Portata> getColazione() {
+    public List<PortataObject> getPortate() {
         return portate;
     }
 
-    public void setColazione(List<Portata> colazione) {
-        this.portate = colazione;
+    public void setPortate(List<PortataObject> portate) {
+        this.portate = portate;
     }
 
     public int getId() {

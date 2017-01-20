@@ -2,6 +2,10 @@ package Model;
 
 import Model.Dbtable.Cibo;
 import Object.CiboObject;
+import Object.Enum.AllergiaEnum;
+import Object.Enum.CompatibilitaEnum;
+import Object.Enum.GruppoEnum;
+import Object.Enum.PortataEnum;
 
 import java.sql.ResultSet;
 
@@ -14,6 +18,25 @@ public class CiboModel {
 
     public CiboModel() {
         tabella = new Cibo();
+    }
+
+    public CiboObject getCiboByName(String nome){
+        tabella.select();
+        tabella.where("nome ='" + nome + "'");
+        ResultSet rs = tabella.fetch();
+        CiboObject cibo = new CiboObject();
+        try{
+            rs.next();
+            cibo.setNome(rs.getString("nome"));
+            cibo.setCompatibilita(CompatibilitaEnum.valueOf(rs.getString("compatibilita")));
+            cibo.setGruppo(GruppoEnum.valueOf(rs.getString("gruppo")));
+            cibo.setAllergia(AllergiaEnum.valueOf(rs.getString("allergia")));
+            cibo.setPortata(PortataEnum.valueOf(rs.getString("portata")));
+            cibo.setKilocal(rs.getInt("kilocal"));
+        } catch(Exception e){
+            System.out.println("Errore: "+e);
+        }
+        return cibo;
     }
 
     public boolean findCiboByName(String nome){

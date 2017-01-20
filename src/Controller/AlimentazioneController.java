@@ -4,6 +4,7 @@ import Helpers.Controller;
 import Model.CiboModel;
 import Model.GiornoAlimModel;
 import Model.PastoModel;
+import Model.PortataModel;
 import Object.Enum.*;
 import View.Alimentazione.*;
 import View.Menu;
@@ -36,6 +37,7 @@ public class AlimentazioneController extends Controller {
     private ResultSet alimenti;
     private String pasto;
     private UtenteObject utente;
+    private GiornoAlimEffettivoObject giornocorrente;
 
     public AlimentazioneController(Menu menu,UtenteObject utente) {
 
@@ -176,12 +178,7 @@ public class AlimentazioneController extends Controller {
 
     public void creaGiornoAlimEff(String username,LocalDate data){
         GiornoAlimModel giorno = new GiornoAlimModel();
-        if(!giorno.findGiornoAlimEffByUser(username,data)){
-            GiornoAlimEffettivoObject giornoeff = new GiornoAlimEffettivoObject();
-            giornoeff.setUsername(username);
-            giornoeff.setData(Date.valueOf(data));
-            giorno.inserisciGiornoAlimEff(giornoeff);
-        }
+        giornocorrente = giorno.getGiornoAlimEffettivo(username, data);
     }
 
     public void setPortataItems(){
@@ -238,23 +235,23 @@ public class AlimentazioneController extends Controller {
     }
 
     public void aggiungiPortataEffettiva(){
-        GiornoAlimModel giorno = new GiornoAlimModel();
+        //GiornoAlimModel giorno = new GiornoAlimModel();
         String portata = dialog.getPortata().getSelectedItem().toString();
         String alimento = dialog.getNomeAlimento().getText();
         Integer quantita = Integer.parseInt(dialog.getQuantita().getText());
-        int idpasto = giorno.findPastoInserito(pasto,LocalDate.now(),utente.getUsername());
-        if(idpasto == 0){
-            PastoObject nuovopasto = new PastoObject();
+        PastoObject nuovopasto = giornocorrente.getPastoByTipo(pasto);
+        if(nuovopasto.getId() == 0) {
             nuovopasto.setTipo(PastoEnum.valueOf(pasto));
             PastoModel pastomodel = new PastoModel();
-            int nuovoid = pastomodel.inserisciPasto(nuovopasto);
-            PortataObject nuovaportata = new PortataObject();
-            nuovaportata.setId_pasto(nuovoid);
-            CiboModel cibomodel = new CiboModel();
-            CiboObject cibo = new CiboObject();
-            ResultSet ciborecuperato = cibomodel.getCiboByName(alimento);
-            try{
-                while(ciborecuperato.next()){
+            pastomodel.inserisciPasto(nuovopasto);
+        }
+        PortataObject nuovaportata = nuovopasto.
+        nuovaportata.setId_pasto(nuovoid);
+        CiboModel cibomodel = new CiboModel();
+        CiboObject cibo = new CiboObject();
+        ResultSet ciborecuperato = cibomodel.getCiboByName(alimento);
+        try{
+            while(ciborecuperato.next()){
                     cibo.setNome(ciborecuperato.getString("nome"));
                     cibo.setGruppo(GruppoEnum.valueOf(ciborecuperato.getString("gruppo")));
                     cibo.setKilocal(ciborecuperato.getInt("kilocal"));
@@ -265,7 +262,7 @@ public class AlimentazioneController extends Controller {
             } catch (Exception e){
                 System.out.println("C'è un errore:" + e);
             }
-            nuovaportata.setCibo();
+            nuovaportata.setCibo(); */
         }
 
     }

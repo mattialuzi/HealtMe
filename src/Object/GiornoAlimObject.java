@@ -1,6 +1,9 @@
 package Object;
 
 import Helpers.JObject;
+import Model.Dbtable.Pasto;
+
+import java.util.HashMap;
 
 /**
  * Created by Mattia on 16/01/2017.
@@ -49,6 +52,15 @@ abstract class GiornoAlimObject extends JObject {
 
     public void setCena(PastoObject cena) {
         this.cena = cena;
+    }
+
+    public PastoObject getPastoByTipo(String tipo) {
+        HashMap<String, PastoObject> pasti = new HashMap<String, PastoObject>();
+        pasti.put("colazione", this.colazione);
+        pasti.put("spuntino", this.spuntino);
+        pasti.put("pranzo", this.pranzo);
+        pasti.put("cena", this.cena);
+        return pasti.get(tipo);
     }
 }
 

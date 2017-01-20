@@ -2,9 +2,11 @@ package Model;
 
 import Model.Dbtable.Giorno_alim_eff;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import Object.GiornoAlimEffettivoObject;
+import Object.PastoObject;
 
 /**
  * Created by ALLDE on 19/01/2017.
@@ -15,7 +17,34 @@ public class GiornoAlimModel {
 
     public GiornoAlimModel() { effettivo = new Giorno_alim_eff(); }
 
-    public boolean findGiornoAlimEffByUser(String username,LocalDate data){
+    public GiornoAlimEffettivoObject getGiornoAlimEffettivo(String username,LocalDate data){
+        effettivo.select();
+        effettivo.where("username='" + username + "' and data='" + data+"'");
+        ResultSet rs = effettivo.fetch();
+        GiornoAlimEffettivoObject giorno = new GiornoAlimEffettivoObject(username, Date.valueOf(data));
+        try{
+            if(rs.isBeforeFirst()){
+                rs.next();
+                giorno.setCal_assunte(rs.getInt("cal_assunte"));
+                PastoModel pastomodel = new PastoModel();
+                PastoObject colazione = pastomodel.getPastoById(rs.getInt("colazione"));
+                giorno.setColazione(colazione);
+                PastoObject spuntino = pastomodel.getPastoById(rs.getInt("spuntino"));
+                giorno.setSpuntino(spuntino);
+                PastoObject pranzo = pastomodel.getPastoById(rs.getInt("pranzo"));
+                giorno.setPranzo(pranzo);
+                PastoObject cena = pastomodel.getPastoById(rs.getInt("cena"));
+                giorno.setCena(cena);
+            } else {
+                inserisciGiornoAlimEff(giorno);
+            }
+        } catch (Exception e){
+            System.out.println("Errore: " + e);
+        }
+        return giorno;
+    }
+
+    /*public boolean findGiornoAlimEffByUser(String username,LocalDate data){
         boolean success=false;
         effettivo.select();
         effettivo.where("username='" + username + "' and data='" + data+"'");
@@ -25,16 +54,16 @@ public class GiornoAlimModel {
         else
             success=false;
         return success;
-    }
+    } */
 
     public void inserisciGiornoAlimEff(GiornoAlimEffettivoObject giornoeff){
-        String dati= "'"+giornoeff.getUsername()+"'";
+        String dati= "'" + giornoeff.getUsername()+"'";
         dati = dati +  ", '" + String.valueOf(giornoeff.getData() +"'");
         dati = dati +  ", " + String.valueOf(giornoeff.getCal_assunte());
-        dati = dati + ",null";
-        dati = dati + ",null";
-        dati = dati + ",null";
-        dati = dati + ",null";
+        dati = dati + ", " + giornoeff.getColazione().getId();
+        dati = dati + ", " + giornoeff.getSpuntino().getId();
+        dati = dati + ", " + giornoeff.getPranzo().getId();
+        dati = dati + ", " + giornoeff.getCena().getId();
         effettivo.insert(dati);
         effettivo.execute();
     }

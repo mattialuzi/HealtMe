@@ -4,6 +4,7 @@ import Helpers.JObject;
 import Object.Enum.LavoroEnum;
 import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.Enum.AllergiaEnum;
+import Object.ProgrammaAlimentareObject;
 /**
  * Created by lorenzobraconi on 28/12/16.
  */
@@ -42,7 +43,7 @@ public class UtenteObject extends JObject {
         allergia=null;
         peso_forma=0;
         email=null;
-        programma_alimentare=null;
+        programma_alimentare= null;
         programma_allenamento=null;
         prog_allen_comb=false;
         prog_alim_comb=false;

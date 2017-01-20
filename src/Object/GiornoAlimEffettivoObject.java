@@ -11,9 +11,9 @@ public class GiornoAlimEffettivoObject extends GiornoAlimObject {
     private Date data;
     private int cal_assunte;
 
-    public GiornoAlimEffettivoObject() {
-        username=null;
-        data=null;
+    public GiornoAlimEffettivoObject(String username, Date data) {
+        this.username = username;
+        this.data= data;
         cal_assunte =0;
     }
 
