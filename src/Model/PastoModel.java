@@ -14,10 +14,10 @@ public class PastoModel {
         tabella = new Pasto();
     }
 
-    public void inserisciPasto(PastoObject nuovopasto){
+    public int inserisciPasto(PastoObject nuovopasto){
         String dati= String.valueOf(nuovopasto.getId());
         dati = dati +  ", '" + String.valueOf(nuovopasto.getTipo()) +"'";
         tabella.insert(dati);
-        int prova = tabella.executeProva();
+        return tabella.executeForKey();
     }
 }
