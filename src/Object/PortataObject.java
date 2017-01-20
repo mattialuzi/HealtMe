@@ -12,7 +12,7 @@ public class PortataObject extends JObject {
 
     public PortataObject() {
         id_pasto=0;
-        cibo=null;
+        cibo=new CiboObject();
         tipo=null;
         quantita=0;
     }

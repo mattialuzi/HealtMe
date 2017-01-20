@@ -12,7 +12,7 @@ public class AttivitaObject extends JObject {
     public AttivitaObject()
     {
         id_seduta =0;
-        esercizio=null;
+        esercizio=new EsercizioObject();
         quantita=0;
     }
 
