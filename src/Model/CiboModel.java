@@ -29,7 +29,12 @@ public class CiboModel {
     }
 
     public void inserisciCibo(CiboObject cibo){
-        String dati= cibo.valueString(cibo);
+        String dati= "'"+cibo.getNome()+"'";
+        dati=dati+",'"+String.valueOf(cibo.getGruppo())+"'";
+        dati=dati+","+cibo.getKilocal()+"";
+        dati=dati+",'"+String.valueOf(cibo.getAllergia())+"'";
+        dati=dati+",'"+String.valueOf(cibo.getPortata())+"'";
+        dati=dati+",'"+String.valueOf(cibo.getCompatibilita())+"'";
         tabella.insert(dati);
         tabella.execute();
     }

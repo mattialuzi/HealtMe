@@ -54,7 +54,6 @@ public class DbTable {
         try {
             PreparedStatement query = db.prepareStatement(sql);
             query.executeUpdate();
-
             check=true;
         } catch (Exception e) {
             System.out.println(e);
@@ -63,6 +62,34 @@ public class DbTable {
         connector.disconnect();
         return check;
     }
+
+    public int executeProva(){
+        Connector connector= new Connector();
+        Connection db = connector.connect();
+        sql = sql + ";";
+        int cacco = 0;
+        try {
+            Statement query = db.createStatement();
+            query.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
+           // PreparedStatement statement = db.prepareStatement(sql,
+              //      Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = query.getGeneratedKeys();
+            try {
+                while(rs.next()){
+                     cacco = rs.getInt("GENERATED_KEY");
+                     System.out.println(cacco);
+                }
+            } catch (Exception e) {
+                System.out.println("C'è un errore:" + e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        connector.disconnect();
+        return cacco;
+    }
+
+
 
     public ResultSet fetch(){
 
@@ -73,7 +100,6 @@ public class DbTable {
         try {
             Statement query = db.createStatement();
             risultato=query.executeQuery(sql);
-
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -17,7 +17,23 @@ public class UtenteModel {
     }
 
     public void inserisciUtente(UtenteObject utente){
-        String dati= utente.valueString(utente);
+        String dati= "'"+utente.getUsername()+"'";
+        dati=dati+",'"+utente.getPassword()+"'";
+        dati=dati+",'"+utente.getNome()+"'";
+        dati=dati+",'"+utente.getCognome()+"'";
+        dati=dati+","+String.valueOf(utente.getEta())+"";
+        dati=dati+","+String.valueOf(utente.getSesso())+"";
+        dati=dati+","+String.valueOf(utente.getAltezza())+"";
+        dati=dati+","+String.valueOf(utente.getPeso())+"";
+        dati=dati+",'"+String.valueOf(utente.getLavoro())+"'";
+        dati=dati+",'"+String.valueOf(utente.getLivello_attivita_fisica())+"'";
+        dati=dati+",'"+String.valueOf(utente.getAllergia())+"'";
+        dati=dati+","+String.valueOf(utente.getPeso_forma())+"";
+        dati=dati+",'"+utente.getEmail()+"'";
+        dati=dati+",null";
+        dati=dati+",null";
+        dati=dati+",null";
+        dati=dati+",null";
         tabella.insert(dati);
         tabella.execute();
     }

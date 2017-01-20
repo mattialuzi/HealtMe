@@ -16,8 +16,8 @@ public class PastoModel {
 
     public void inserisciPasto(PastoObject nuovopasto){
         String dati= String.valueOf(nuovopasto.getId());
-        dati = dati +  ", '" + String.valueOf(nuovopasto.getTipo() +"'");
+        dati = dati +  ", '" + String.valueOf(nuovopasto.getTipo()) +"'";
         tabella.insert(dati);
-        tabella.execute();
+        int prova = tabella.executeProva();
     }
 }

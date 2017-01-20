@@ -105,7 +105,7 @@ public class Registrazione extends View {
             validator=false;
         }
         if(!validate(eta.getText(),"eta")){
-            JOptionPane.showMessageDialog(null, "Eta non valida: l'età deve essere compresa tra 0 e 99", "ERRORE", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Eta non valida: l'età deve essere compresa tra 10 e 99", "ERRORE", JOptionPane.ERROR_MESSAGE);
             nome.requestFocus();
             validator=false;
         }
