@@ -67,59 +67,59 @@ abstract class ProgrammaAllenamentoObject extends JObject {
         this.data_fine = data_fine;
     }*/
 
-    public int getLunedi() {
+    public GiornoAlimProgObject getLunedi() {
         return lunedi;
     }
 
-    public void setLunedi(int lunedi) {
+    public void setLunedi(GiornoAlimProgObject lunedi) {
         this.lunedi = lunedi;
     }
 
-    public int getMartedi() {
+    public GiornoAlimProgObject getMartedi() {
         return martedi;
     }
 
-    public void setMartedi(int martedi) {
+    public void setMartedi(GiornoAlimProgObject martedi) {
         this.martedi = martedi;
     }
 
-    public int getMercoledi() {
+    public GiornoAlimProgObject getMercoledi() {
         return mercoledi;
     }
 
-    public void setMercoledi(int mercoledi) {
+    public void setMercoledi(GiornoAlimProgObject mercoledi) {
         this.mercoledi = mercoledi;
     }
 
-    public int getGiovedi() {
+    public GiornoAlimProgObject getGiovedi() {
         return giovedi;
     }
 
-    public void setGiovedi(int giovedi) {
+    public void setGiovedi(GiornoAlimProgObject giovedi) {
         this.giovedi = giovedi;
     }
 
-    public int getVenerdi() {
+    public GiornoAlimProgObject getVenerdi() {
         return venerdi;
     }
 
-    public void setVenerdi(int venerdi) {
+    public void setVenerdi(GiornoAlimProgObject venerdi) {
         this.venerdi = venerdi;
     }
 
-    public int getSabato() {
+    public GiornoAlimProgObject getSabato() {
         return sabato;
     }
 
-    public void setSabato(int sabato) {
+    public void setSabato(GiornoAlimProgObject sabato) {
         this.sabato = sabato;
     }
 
-    public int getDomenica() {
+    public GiornoAlimProgObject getDomenica() {
         return domenica;
     }
 
-    public void setDomenica(int domenica) {
+    public void setDomenica(GiornoAlimProgObject domenica) {
         this.domenica = domenica;
     }
 
