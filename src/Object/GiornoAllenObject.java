@@ -15,7 +15,7 @@ abstract class GiornoAllenObject extends JObject {
 
     protected GiornoAllenObject()
     {
-        seduta=null;
+        seduta= new SedutaObject();
     }
 
     public SedutaObject getSeduta() {

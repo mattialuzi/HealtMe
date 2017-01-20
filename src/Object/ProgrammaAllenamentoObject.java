@@ -13,26 +13,26 @@ abstract class ProgrammaAllenamentoObject extends JObject {
     //private String username;
     //private Date data_inizio;
     //private Date data_fine;
-    private int lunedi;
-    private int martedi;
-    private int mercoledi;
-    private int giovedi;
-    private int venerdi;
-    private int sabato;
-    private int domenica;
+    private GiornoAlimProgObject lunedi;
+    private GiornoAlimProgObject martedi;
+    private GiornoAlimProgObject mercoledi;
+    private GiornoAlimProgObject giovedi;
+    private GiornoAlimProgObject venerdi;
+    private GiornoAlimProgObject sabato;
+    private GiornoAlimProgObject domenica;
 
     protected ProgrammaAllenamentoObject() {
         id=0;
         //username=null;
         //data_inizio=null;
         //data_fine=null;
-        lunedi=0;
-        martedi=0;
-        mercoledi=0;
-        giovedi=0;
-        venerdi=0;
-        sabato=0;
-        domenica=0;
+        lunedi= new GiornoAlimProgObject();
+        martedi= new GiornoAlimProgObject();
+        mercoledi= new GiornoAlimProgObject();
+        giovedi= new GiornoAlimProgObject();
+        venerdi= new GiornoAlimProgObject();
+        sabato= new GiornoAlimProgObject();
+        domenica= new GiornoAlimProgObject();
     }
 
     public int getId() {

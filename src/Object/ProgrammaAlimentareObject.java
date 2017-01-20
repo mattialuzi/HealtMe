@@ -20,13 +20,13 @@ abstract class ProgrammaAlimentareObject extends JObject {
     protected ProgrammaAlimentareObject()
     {
         id=0;
-        lunedi=null;
-        martedi=null;
-        mercoledi=null;
-        giovedi=null;
-        venerdi=null;
-        sabato=null;
-        domenica=null;
+        lunedi= new GiornoAlimProgObject();
+        martedi=new GiornoAlimProgObject();
+        mercoledi=new GiornoAlimProgObject();
+        giovedi=new GiornoAlimProgObject();
+        venerdi=new GiornoAlimProgObject();
+        sabato=new GiornoAlimProgObject();
+        domenica=new GiornoAlimProgObject();
     }
 
     public int getId() {

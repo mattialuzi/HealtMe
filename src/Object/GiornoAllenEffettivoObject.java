@@ -40,4 +40,5 @@ public class GiornoAllenEffettivoObject extends GiornoAllenObject{
     public void setCal_consumate(int cal_consumate) {
         this.cal_consumate = cal_consumate;
     }
+    
 }

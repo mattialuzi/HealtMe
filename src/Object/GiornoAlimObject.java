@@ -13,10 +13,10 @@ abstract class GiornoAlimObject extends JObject {
     protected PastoObject cena;
 
     protected GiornoAlimObject() {
-        colazione=null;
-        pranzo=null;
-        cena=null;
-        spuntino=null;
+        colazione= new PastoObject();
+        pranzo= new PastoObject();
+        cena= new PastoObject();
+        spuntino= new PastoObject();
     }
 
     public PastoObject getColazione() {
