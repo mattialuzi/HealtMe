@@ -59,14 +59,6 @@ public class Menu {
         } catch (Exception ex) {
             System.out.println(ex);
         }
-        alimentazione = new AlimentazioneView();
-        allenamento = new AllenamentoView();
-        profilo = new ProfiloView();
-        riepilogo = new RiepilogoView();
-        alimentazionePanel = alimentazione.getMainPanel();
-        allenamentoPanel = allenamento.getMainPanel();
-        profiloPanel = profilo.getMainPanel();
-        riepilogoPanel = riepilogo.getMainPanel();
         variablePanel.add(alimentazionePanel, "AlimentazioneView");
         variablePanel.add(allenamentoPanel, "AllenamentoView");
         variablePanel.add(profiloPanel, "ProfiloView");
@@ -128,5 +120,16 @@ public class Menu {
 
     public ProfiloView getProfiloview() {
         return profilo;
+    }
+
+    private void createUIComponents() {
+        alimentazione = new AlimentazioneView();
+        allenamento = new AllenamentoView();
+        profilo = new ProfiloView();
+        riepilogo = new RiepilogoView();
+        alimentazionePanel = alimentazione.getMainPanel();
+        allenamentoPanel = allenamento.getMainPanel();
+        profiloPanel = profilo.getMainPanel();
+        riepilogoPanel = riepilogo.getMainPanel();
     }
 }

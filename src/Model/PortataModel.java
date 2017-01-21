@@ -26,7 +26,7 @@ public class PortataModel {
         try{
             while(rs.next()){
                 CiboModel cibomodel = new CiboModel();
-                CiboObject cibo = cibomodel.getCiboByName(rs.getString("nome"));
+                CiboObject cibo = cibomodel.getCiboByName(rs.getString("cibo"));
                 PortataObject portata = new PortataObject(cibo);
                 portata.setId_pasto(rs.getInt("id_pasto"));
                 portata.setTipo(PortataEnum.valueOf(rs.getString("tipo")));
@@ -45,6 +45,13 @@ public class PortataModel {
         dati=dati+",'"+String.valueOf(portata.getTipo())+"'";
         dati=dati+", "+String.valueOf(portata.getQuantita())+"";
         tabella.insert(dati);
+        tabella.execute();
+    }
+
+    public  void updatePortata (int id_pasto, String cibo, int quantita) {
+        String dati= "quantita = "+quantita;
+        tabella.update(dati);
+        tabella.where("id_pasto='" + id_pasto + "' AND cibo='" + cibo + "'");
         tabella.execute();
     }
 }

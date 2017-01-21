@@ -15,13 +15,6 @@ public class AlimentazioneView {
     private NewCiboView newcibo;
 
     public AlimentazioneView() {
-
-        indexalimentazione = new IndexAlimentazioneView();
-        newprogalim = new NewProgAlimView();
-        newcibo = new NewCiboView();
-        indexAlimPanel = indexalimentazione.getMainPanel();
-        newProgAlimPanel = newprogalim.getMainPanel();
-        newCiboPanel = newcibo.getMainPanel();
         mainPanel.add(indexAlimPanel, "IndexAlimentazioneView");
         mainPanel.add(newProgAlimPanel, "NewProgAlimView");
         mainPanel.add(newCiboPanel, "NewCiboView");
@@ -41,5 +34,14 @@ public class AlimentazioneView {
 
     public NewCiboView getNewcibo() {
         return newcibo;
+    }
+
+    private void createUIComponents() {
+        indexalimentazione = new IndexAlimentazioneView();
+        newprogalim = new NewProgAlimView();
+        newcibo = new NewCiboView();
+        indexAlimPanel = indexalimentazione.getMainPanel();
+        newProgAlimPanel = newprogalim.getMainPanel();
+        newCiboPanel = newcibo.getMainPanel();
     }
 }

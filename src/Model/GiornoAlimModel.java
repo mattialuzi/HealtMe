@@ -48,7 +48,7 @@ public class GiornoAlimModel {
         return giorno;
     }
 
-    public <V> void aggiornaGiornoAlimEff (String username, LocalDate data, Map<String,V> map) {
+    public <V> void updateGiornoAlimEff(String username, LocalDate data, Map<String,V> map) {
         String dati = "";
         Iterator<Map.Entry<String,V>> iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {

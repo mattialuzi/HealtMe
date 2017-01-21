@@ -17,15 +17,13 @@ import Object.PortataObject;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Iterator;
 
 /**
  * Created by lorenzobraconi on 05/01/17.
@@ -37,7 +35,7 @@ public class AlimentazioneController extends Controller {
     private CardLayout cardLayout = new CardLayout();
     private JPanel variablePanel;
     private ResultSet alimenti;
-    private String pasto;
+    private String nuovopasto;
     private UtenteObject utente;
     private GiornoAlimEffettivoObject giornocorrente;
 
@@ -47,7 +45,6 @@ public class AlimentazioneController extends Controller {
         this.utente = utente;
         variablePanel = alimentazione.getMainPanel();
         cardLayout = (CardLayout)variablePanel.getLayout();
-        showIndex();
         NewCiboView newcibo = alimentazione.getNewcibo();
         IndexAlimentazioneView indexalimentazione = alimentazione.getIndexalimentazione();
         LocalDate date = LocalDate.now();
@@ -57,6 +54,7 @@ public class AlimentazioneController extends Controller {
         dialog = new FormCiboEffettivo();
         creaGiornoAlimEff(utente.getUsername(),date);
 
+        showIndex();
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,9 +102,9 @@ public class AlimentazioneController extends Controller {
             public void actionPerformed(ActionEvent e) {
                 dialog.pack();
                 dialog.setLocationRelativeTo(null);
-                pasto = e.getActionCommand();
+                nuovopasto = e.getActionCommand();
                 setPortataItems();
-                dialog.setTitle("Inserisci alimento a " +pasto);
+                dialog.setTitle("Inserisci alimento a " +nuovopasto);
                 dialog.setVisible(true);
             }
         });
@@ -170,6 +168,7 @@ public class AlimentazioneController extends Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 aggiungiPortataEffettiva();
+                dialog.onCancel();
             }
         });
     }
@@ -188,7 +187,7 @@ public class AlimentazioneController extends Controller {
         dialog.getNomeAlimento().setEnabled(false);
         dialog.getNomeAlimento().setText("");
         dialog.getScrollPane().setVisible(false);
-        if (pasto == "colazione" || pasto == "spuntino") {
+        if (nuovopasto == "colazione" || nuovopasto == "spuntino") {
             portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","snack", "bevanda", "frutta"}));
         } else {
             portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","primo", "secondo", "contorno", "dolce", "frutta", "bevanda"}));
@@ -239,27 +238,43 @@ public class AlimentazioneController extends Controller {
     public void aggiungiPortataEffettiva() {
         String portata = dialog.getPortata().getSelectedItem().toString();
         String alimento = dialog.getNomeAlimento().getText();
-        Integer quantita = Integer.parseInt(dialog.getQuantita().getText());
-        PastoObject nuovopasto = giornocorrente.getPastoByTipo(pasto);
-        if (nuovopasto.getId() == 0) {
-            nuovopasto.setTipo(PastoEnum.valueOf(pasto));
+        int quantita = Integer.parseInt(dialog.getQuantita().getText());
+        PastoObject pasto = giornocorrente.getPastoByTipo(nuovopasto);
+        if (pasto.getId() == 0) {
+            pasto.setTipo(PastoEnum.valueOf(nuovopasto));
             PastoModel pastomodel = new PastoModel();
-            pastomodel.inserisciPasto(nuovopasto);
+            pastomodel.inserisciPasto(pasto);
             String username = giornocorrente.getUsername();
             LocalDate data = giornocorrente.getData();
             HashMap<String,Integer> mappa = new HashMap<String,Integer>();
-            mappa.put(pasto,nuovopasto.getId());
-            new GiornoAlimModel().aggiornaGiornoAlimEff(username,data,mappa);
+            mappa.put(nuovopasto,pasto.getId());
+            new GiornoAlimModel().updateGiornoAlimEff(username,data,mappa);
         }
-        CiboModel cibomodel = new CiboModel();
-        CiboObject nuovocibo = cibomodel.getCiboByName(alimento);
-        PortataObject nuovaportata = new PortataObject(nuovocibo);
-        nuovaportata.setId_pasto(nuovopasto.getId());
-        nuovaportata.setTipo(PortataEnum.valueOf(portata));
-        nuovaportata.setQuantita(quantita);
-        PortataModel portatamodel = new PortataModel();
-        portatamodel.inserisciPortata(nuovaportata);
-        nuovopasto.addPortata(nuovaportata);
+        if (!aggiornaPortata(pasto, alimento, quantita)) {
+            CiboModel cibomodel = new CiboModel();
+            CiboObject nuovocibo = cibomodel.getCiboByName(alimento);
+            PortataObject nuovaportata = new PortataObject(nuovocibo);
+            nuovaportata.setId_pasto(pasto.getId());
+            nuovaportata.setTipo(PortataEnum.valueOf(portata));
+            nuovaportata.setQuantita(quantita);
+            PortataModel portatamodel = new PortataModel();
+            portatamodel.inserisciPortata(nuovaportata);
+            pasto.addPortata(nuovaportata);
+        }
+    }
+
+    private boolean aggiornaPortata(PastoObject pasto, String alimento, int quantita) {
+        Iterator<PortataObject> portateiterator = pasto.getPortate().iterator();
+        while ( portateiterator.hasNext() ) {
+            PortataObject portata = portateiterator.next();
+            if (alimento.equals(portata.getCibo().getNome())) {
+                int nuovaquantita = portata.getQuantita() + quantita;
+                portata.setQuantita(nuovaquantita);
+                new PortataModel().updatePortata(portata.getId_pasto(), alimento, nuovaquantita);
+                return true;
+            }
+        }
+        return false;
     }
 
 }

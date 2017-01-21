@@ -57,7 +57,7 @@ public class FormCiboEffettivo extends JDialog {
 
     public void addPortataEffettivaButtonListener(ActionListener listener) { buttonOK.addActionListener(listener); }
 
-    private void onCancel() {
+    public void onCancel() {
         buttonOK.setEnabled(false);
         quantita.setText("");
         listaAlimenti.removeAll();

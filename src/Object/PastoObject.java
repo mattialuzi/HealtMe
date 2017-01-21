@@ -11,7 +11,7 @@ public class PastoObject extends JObject {
 
     private int id;
     private PastoEnum tipo;
-    private List<PortataObject> portate;
+    private ArrayList<PortataObject> portate;
 
 
     public PastoObject() {
@@ -20,11 +20,11 @@ public class PastoObject extends JObject {
         portate=new ArrayList<PortataObject>();
     }
 
-    public List<PortataObject> getPortate() {
+    public ArrayList<PortataObject> getPortate() {
         return portate;
     }
 
-    public void setPortate(List<PortataObject> portate) {
+    public void setPortate(ArrayList<PortataObject> portate) {
         this.portate = portate;
     }
 
