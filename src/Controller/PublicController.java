@@ -24,10 +24,10 @@ public class PublicController {
     public PublicController(Auth view) {
 
         this.view = view;
-        view.setVisible(true);
         mainPanel = view.getMainPanel();
         cardLayout = (CardLayout)mainPanel.getLayout();
         cardLayout.show(mainPanel, "Index");
+        Auth.setVisible(true);
         Index indexview = view.getIndexview();
         Login loginview = view.getLoginview();
         Registrazione registrazioneview = view.getRegistrazioneview();
@@ -119,8 +119,9 @@ public class PublicController {
             } catch (Exception e) {
                 System.out.println("C'è un errore:" + e);
             }
-            Menu welcome = new Menu(view.getFrame());
+            Menu welcome = new Menu();
             new MenuController(welcome, utentecorrente);
+            Auth.getFrame().pack();
         }
     }
 

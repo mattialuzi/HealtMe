@@ -47,8 +47,9 @@ public class Menu {
     private ProfiloView profilo;
     private RiepilogoView riepilogo;
 
-    public Menu(JFrame frame) {
-
+    public Menu() {
+        JFrame frame = Auth.getFrame();
+        frame.getContentPane().removeAll();
         frame.setContentPane(mainPanel);
         //da finire il bottone
         try {
@@ -63,8 +64,6 @@ public class Menu {
         variablePanel.add(allenamentoPanel, "AllenamentoView");
         variablePanel.add(profiloPanel, "ProfiloView");
         variablePanel.add(riepilogoPanel, "RiepilogoView");
-        frame.pack();
-        frame.setLocationRelativeTo(null);
 
     }
 

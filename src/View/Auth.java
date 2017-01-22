@@ -20,18 +20,10 @@ public class Auth {
     private Registrazione registrazioneview;
 
     public Auth() {
-
         frame.setContentPane(mainPanel);
         frame.setMinimumSize(new Dimension(500,300));
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        indexview = new Index();
-        loginview = new Login();
-        registrazioneview = new Registrazione();
-        indexPanel = indexview.getMainPanel();
-        loginPanel = loginview.getMainPanel();
-        registrazionePanel = registrazioneview.getMainPanel();
-
         mainPanel.add(indexPanel,"Index");
         mainPanel.add(loginPanel, "Login");
         mainPanel.add(registrazionePanel,"Registrazione");
@@ -45,7 +37,6 @@ public class Auth {
         return mainPanel;
     }
 
-
     public Index getIndexview() {
         return indexview;
     }
@@ -56,5 +47,14 @@ public class Auth {
 
     public static JFrame getFrame() {
         return frame;
+    }
+
+    private void createUIComponents() {
+        indexview = new Index();
+        loginview = new Login();
+        registrazioneview = new Registrazione();
+        indexPanel = indexview.getMainPanel();
+        loginPanel = loginview.getMainPanel();
+        registrazionePanel = registrazioneview.getMainPanel();
     }
 }
