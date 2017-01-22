@@ -100,11 +100,12 @@ public class AlimentazioneController extends Controller {
         giornoattuale.addListnersAndshowButtons(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dialog.pack();
+
                 dialog.setLocationRelativeTo(null);
                 nuovopasto = e.getActionCommand();
                 setPortataItems();
                 dialog.setTitle("Inserisci alimento a " +nuovopasto);
+                dialog.pack();
                 dialog.setVisible(true);
             }
         });
@@ -115,7 +116,11 @@ public class AlimentazioneController extends Controller {
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange()==e.SELECTED) {
                     showAlimenti();
+                    dialog.getScrollPane().setVisible(true);
+                    dialog.pack();
+
                 }
+
             }
         });
 
@@ -216,7 +221,8 @@ public class AlimentazioneController extends Controller {
             System.out.println("C'è un errore:" + e);
         }
         lista.setModel(listmodel);
-        dialog.getScrollPane().setVisible(true);
+
+
     }
 
     public void filtraAlimenti(){
