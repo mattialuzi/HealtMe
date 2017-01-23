@@ -198,8 +198,32 @@ public class AlimentazioneController extends Controller {
             GiornoAlimObject giornodopo = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
             showPasti(giornodopo,giornodopoview);
             data = data.plusDays(1);
-
         }
+    }
+
+    private void showPasti(GiornoAlimObject giorno,GiornoAlimView giornoview) {
+        ArrayList<JTable> tabelle = giornoview.getTables(giorno.getTipo());
+        String[] tipipasto = new String[] {"colazione","pranzo","cena","spuntino"};
+        for (int i=0; i<4; i++) {
+            PastoObject pasto = giorno.getPastoByTipo(tipipasto[i]);
+            Iterator<PortataObject> portateiterator = pasto.getPortate().iterator();
+            String[] columnnames = {"Portata", "Alimento", "Quantita"};
+            DefaultTableModel tablemodel = new DefaultTableModel(columnnames, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            while (portateiterator.hasNext()) {
+                PortataObject portata = portateiterator.next();
+                String tipoportata = String.valueOf(portata.getTipo());
+                String alimento = portata.getCibo().getNome();
+                String quantita = Integer.toString(portata.getQuantita());
+                tablemodel.addRow(new String[]{tipoportata, alimento, quantita});
+            }
+            tabelle.get(i).setModel(tablemodel);
+        }
+
     }
 
     public void setPortataItems(){
@@ -298,25 +322,6 @@ public class AlimentazioneController extends Controller {
         return false;
     }
 
-    private void showPasti(GiornoAlimObject giorno,GiornoAlimView giornoview) {
-        ArrayList<JTable> tabelle = giornoview.getTables(giorno.getTipo());
-        String[] tipipasto = new String[] {"colazione","pranzo","cena","spuntino"};
-        for (int i=0; i<4; i++) {
-            PastoObject pasto = giorno.getPastoByTipo(tipipasto[i]);
-            Iterator<PortataObject> portateiterator = pasto.getPortate().iterator();
-            String[] columnnames = {"Portata", "Alimento", "Quantita"};
-            DefaultTableModel tablemodel = new DefaultTableModel(columnnames, 0);
-            while (portateiterator.hasNext()) {
-                PortataObject portata = portateiterator.next();
-                String tipoportata = String.valueOf(portata.getTipo());
-                String alimento = portata.getCibo().getNome();
-                String quantita = Integer.toString(portata.getQuantita());
-                tablemodel.addRow(new String[]{tipoportata, alimento, quantita});
-            }
-            tabelle.get(i).setModel(tablemodel);
-        }
-
-    }
 
 
 }
