@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by Mattia on 16/01/2017.
  */
-abstract class ProgrammaAllenamentoObject extends JObject {
+public abstract class ProgrammaAllenamentoObject extends JObject {
 
     private int id;
     //private String username;

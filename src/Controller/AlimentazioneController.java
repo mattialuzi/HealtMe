@@ -1,6 +1,7 @@
 package Controller;
 
 import Helpers.Controller;
+import Helpers.JObject;
 import Model.CiboModel;
 import Model.GiornoAlimModel;
 import Model.PastoModel;
@@ -8,12 +9,7 @@ import Model.PortataModel;
 import Object.Enum.*;
 import View.Alimentazione.*;
 import View.Menu;
-import Object.CiboObject;
-import Object.UtenteObject;
-import Object.GiornoAlimEffettivoObject;
-import Object.PastoObject;
-import Object.PortataObject;
-
+import Object.*;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -53,7 +49,6 @@ public class AlimentazioneController extends Controller {
         GiornoAlimView giornoattuale = (GiornoAlimView) giorni.get(giorno);
         dialog = new FormCiboEffettivo();
         creaGiornoAlimEff(utente.getUsername(),date);
-
         showIndex();
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
@@ -282,5 +277,12 @@ public class AlimentazioneController extends Controller {
         }
         return false;
     }
+
+    private void showPasti(GiornoAlimObject giorno,GiornoAlimView giornoview) {
+        if (giorno instanceof GiornoAlimEffettivoObject) {
+            giornoview.
+        }
+    }
+
 
 }

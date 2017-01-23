@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by lorenzobraconi on 28/12/16.
  */
-abstract class GiornoAllenObject extends JObject {
+public abstract class GiornoAllenObject extends JObject {
 
     private SedutaObject seduta;
 

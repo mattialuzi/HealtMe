@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * Created by Mattia on 16/01/2017.
  */
-abstract class GiornoAlimObject extends JObject {
+public abstract class GiornoAlimObject extends JObject {
 
     protected PastoObject colazione;
     protected PastoObject spuntino;

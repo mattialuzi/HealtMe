@@ -2,6 +2,7 @@ package View.Alimentazione;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by lorenzobraconi on 12/01/17.
@@ -16,6 +17,7 @@ public class GiornoAlimView {
     private JButton removeCena;
     private JButton addSpuntino;
     private JButton removeSpuntino;
+    private JTable pranzotable;
 
     public GiornoAlimView() {
     }
@@ -42,5 +44,9 @@ public class GiornoAlimView {
         addSpuntino.setVisible(true);
         removeSpuntino.setVisible(true);
     }
+
+    //public ArrayList<JTable> getTabelleEffettive
+
+
 }
 

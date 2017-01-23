@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by Mattia on 16/01/2017.
  */
-abstract class ProgrammaAlimentareObject extends JObject {
+public abstract class ProgrammaAlimentareObject extends JObject {
     private int id;
     private GiornoAlimProgObject lunedi;
     private GiornoAlimProgObject martedi;
