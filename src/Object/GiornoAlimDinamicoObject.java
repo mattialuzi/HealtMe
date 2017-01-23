@@ -1,5 +1,6 @@
 package Object;
 
+import Object.Enum.GiornoEnum;
 import Object.Enum.PastoEnum;
 import Helpers.JObject;
 import java.util.Date;
@@ -16,6 +17,7 @@ public class GiornoAlimDinamicoObject extends GiornoAlimObject {
         fabbisogno=0;
         id_programma=0;
         data=null;
+        tipo= GiornoEnum.dinamico;
     }
 
     public int getFabbisogno() {

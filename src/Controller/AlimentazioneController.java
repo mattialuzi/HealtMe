@@ -13,11 +13,14 @@ import Object.*;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -49,6 +52,7 @@ public class AlimentazioneController extends Controller {
         GiornoAlimView giornoattuale = (GiornoAlimView) giorni.get(giorno);
         dialog = new FormCiboEffettivo();
         creaGiornoAlimEff(utente.getUsername(),date);
+        showPasti(giornocorrente,giornoattuale);
         showIndex();
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
@@ -279,9 +283,23 @@ public class AlimentazioneController extends Controller {
     }
 
     private void showPasti(GiornoAlimObject giorno,GiornoAlimView giornoview) {
-        if (giorno instanceof GiornoAlimEffettivoObject) {
-            giornoview.
+        ArrayList<JTable> tabelle = giornoview.getTables(giorno.getTipo());
+        String[] tipipasto = new String[] {"colazione","pranzo","cena","spuntino"};
+        for (int i=0; i<4; i++) {
+            PastoObject pasto = giorno.getPastoByTipo(tipipasto[i]);
+            Iterator<PortataObject> portateiterator = pasto.getPortate().iterator();
+            String[] columnnames = {"Portata", "Alimento", "Quantita"};
+            DefaultTableModel tablemodel = new DefaultTableModel(columnnames, 0);
+            while (portateiterator.hasNext()) {
+                PortataObject portata = portateiterator.next();
+                String tipoportata = String.valueOf(portata.getTipo());
+                String alimento = portata.getCibo().getNome();
+                String quantita = Integer.toString(portata.getQuantita());
+                tablemodel.addRow(new String[]{tipoportata, alimento, quantita});
+            }
+            tabelle.get(i).setModel(tablemodel);
         }
+
     }
 
 

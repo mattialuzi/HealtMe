@@ -2,6 +2,7 @@ package Object;
 
 import Helpers.JObject;
 import Model.Dbtable.Pasto;
+import Object.Enum.GiornoEnum;
 
 import java.util.HashMap;
 
@@ -14,6 +15,7 @@ public abstract class GiornoAlimObject extends JObject {
     protected PastoObject spuntino;
     protected PastoObject pranzo;
     protected PastoObject cena;
+    protected GiornoEnum tipo;
 
     protected GiornoAlimObject() {
         colazione= new PastoObject();
@@ -54,6 +56,10 @@ public abstract class GiornoAlimObject extends JObject {
         this.cena = cena;
     }
 
+    public GiornoEnum getTipo() {
+        return tipo;
+    }
+
     public PastoObject getPastoByTipo(String tipo) {
         HashMap<String, PastoObject> pasti = new HashMap<String, PastoObject>();
         pasti.put("colazione", this.colazione);
@@ -62,6 +68,8 @@ public abstract class GiornoAlimObject extends JObject {
         pasti.put("cena", this.cena);
         return pasti.get(tipo);
     }
+
+
 }
 
 

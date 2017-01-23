@@ -1,5 +1,7 @@
 package Object;
 
+import Object.Enum.GiornoEnum;
+
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -16,6 +18,7 @@ public class GiornoAlimEffettivoObject extends GiornoAlimObject {
         this.username = username;
         this.data= data;
         cal_assunte =0;
+        tipo= GiornoEnum.effettivo;
     }
 
     public String getUsername() {

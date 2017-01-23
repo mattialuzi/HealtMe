@@ -1,5 +1,7 @@
 package Object;
 
+import Object.Enum.GiornoEnum;
+
 /**
  * Created by lorenzobraconi on 28/12/16.
  */
@@ -11,6 +13,7 @@ public class GiornoAlimProgObject extends GiornoAlimObject {
     public GiornoAlimProgObject() {
         id_giorno=0;
         fabbisogno=0;
+        tipo= GiornoEnum.programmato;
     }
 
     public int getId_giorno() {
