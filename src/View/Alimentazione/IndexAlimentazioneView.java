@@ -61,8 +61,8 @@ public class IndexAlimentazioneView {
         domenicaPanel = domenica.getMainPanel();
     }
 
-    public HashMap<DayOfWeek,GiornoAlimView> getGiorni() {
-        return giorni;
+    public GiornoAlimView getGiorni(DayOfWeek giornosettimana) {
+            return giorni.get(giornosettimana);
     }
 }
 

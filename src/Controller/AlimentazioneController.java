@@ -1,7 +1,6 @@
 package Controller;
 
 import Helpers.Controller;
-import Helpers.JObject;
 import Model.CiboModel;
 import Model.GiornoAlimModel;
 import Model.PastoModel;
@@ -14,7 +13,6 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
@@ -37,6 +35,8 @@ public class AlimentazioneController extends Controller {
     private String nuovopasto;
     private UtenteObject utente;
     private GiornoAlimEffettivoObject giornocorrente;
+    private GiornoAlimView giornocorrenteview;
+    private IndexAlimentazioneView indexalimentazione;
 
     public AlimentazioneController(Menu menu,UtenteObject utente) {
 
@@ -45,14 +45,9 @@ public class AlimentazioneController extends Controller {
         variablePanel = alimentazione.getMainPanel();
         cardLayout = (CardLayout)variablePanel.getLayout();
         NewCiboView newcibo = alimentazione.getNewcibo();
-        IndexAlimentazioneView indexalimentazione = alimentazione.getIndexalimentazione();
-        LocalDate date = LocalDate.now();
-        DayOfWeek giorno = date.getDayOfWeek();
-        HashMap<DayOfWeek,GiornoAlimView> giorni = indexalimentazione.getGiorni();
-        GiornoAlimView giornoattuale = (GiornoAlimView) giorni.get(giorno);
+        indexalimentazione = alimentazione.getIndexalimentazione();
+        setGiorni();
         dialog = new FormCiboEffettivo();
-        creaGiornoAlimEff(utente.getUsername(),date);
-        showPasti(giornocorrente,giornoattuale);
         showIndex();
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
@@ -96,7 +91,7 @@ public class AlimentazioneController extends Controller {
             }
             });
 
-        giornoattuale.addListnersAndshowButtons(new ActionListener() {
+        giornocorrenteview.addListnersAndshowButtons(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -181,9 +176,30 @@ public class AlimentazioneController extends Controller {
         cardLayout.show(variablePanel, "IndexAlimentazioneView");
     }
 
-    public void creaGiornoAlimEff(String username,LocalDate data){
-        GiornoAlimModel giorno = new GiornoAlimModel();
-        giornocorrente = giorno.getGiornoAlimEffettivo(username, data);
+    public void setGiorni() {
+        LocalDate data = LocalDate.now();
+        DayOfWeek giornosettimana = data.getDayOfWeek();
+        giornocorrenteview = indexalimentazione.getGiorni(giornosettimana);
+        GiornoAlimModel giornomodel = new GiornoAlimModel();
+        giornocorrente = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
+        showPasti(giornocorrente, giornocorrenteview);
+        data = data.minusDays(1);
+        while (!data.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+            DayOfWeek giornodoposettimana = data.getDayOfWeek();
+            GiornoAlimView giornodopoview = indexalimentazione.getGiorni(giornodoposettimana);
+            GiornoAlimObject giornodopo = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
+            showPasti(giornodopo,giornodopoview);
+            data = data.minusDays(1);
+        }
+        data = LocalDate.now().plusDays(1);
+        while (!data.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
+            DayOfWeek giornodoposettimana = data.getDayOfWeek();
+            GiornoAlimView giornodopoview = indexalimentazione.getGiorni(giornodoposettimana);
+            GiornoAlimObject giornodopo = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
+            showPasti(giornodopo,giornodopoview);
+            data = data.plusDays(1);
+
+        }
     }
 
     public void setPortataItems(){
