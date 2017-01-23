@@ -27,6 +27,7 @@ public class GiornoAlimView {
     private JTable cenaProgTable;
     private JTable pranzoProgTable;
     private JTable colazioneProgTable;
+    private JScrollPane Cena;
 
     public GiornoAlimView() {
     }
