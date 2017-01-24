@@ -9,7 +9,6 @@ import Object.Enum.*;
 import View.Alimentazione.*;
 import View.Menu;
 import Object.*;
-import javafx.scene.control.TableSelectionModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -51,6 +50,7 @@ public class AlimentazioneController extends Controller {
         setGiorni();
         dialog = new FormCiboEffettivo();
         showIndex();
+
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -125,7 +125,7 @@ public class AlimentazioneController extends Controller {
         dialog.addSetPortataItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange()==e.SELECTED) {
+                if(e.getStateChange()== ItemEvent.SELECTED) {
                     showAlimenti();
                     dialog.getScrollPane().setVisible(true);
                     dialog.pack();
@@ -201,6 +201,7 @@ public class AlimentazioneController extends Controller {
         giornocorrenteview.setButtonFromTable();
         giornocorrenteview.setTableFromButton();
         showPasti(giornocorrente, giornocorrenteview);
+        indexalimentazione.setTodayTab(giornosettimana);
         data = data.minusDays(1);
         while (!data.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
             DayOfWeek giornoprimasettimana = data.getDayOfWeek();
@@ -344,7 +345,7 @@ public class AlimentazioneController extends Controller {
         String cibo = tabella.getModel().getValueAt(tabella.getSelectedRow(), 2).toString();
         PastoObject pasto = giornocorrente.getPastoByTipo(nomepasto);
         pasto.removePortata(cibo);
-        new PortataModel().removePortata(pasto.getId(), cibo);
+        //new PortataModel().removePortata(pasto.getId(), cibo);
     }
 
 }

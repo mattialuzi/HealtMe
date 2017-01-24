@@ -64,6 +64,10 @@ public class IndexAlimentazioneView {
     public GiornoAlimView getGiorni(DayOfWeek giornosettimana) {
             return giorni.get(giornosettimana);
     }
+
+    public void setTodayTab (DayOfWeek today) {
+        tabbedPane1.setSelectedComponent(giorni.get(today).getMainPanel());
+    }
 }
 
 
