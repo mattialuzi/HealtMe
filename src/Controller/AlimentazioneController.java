@@ -50,7 +50,7 @@ public class AlimentazioneController extends Controller {
         indexalimentazione = alimentazione.getIndexalimentazione();
         setGiorni();
         dialog = new FormCiboEffettivo();
-        showIndex();
+        //showIndex();
 
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override

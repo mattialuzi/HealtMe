@@ -26,8 +26,9 @@ public class MenuController extends Controller {
         variablePanel = menu.getVariablePanel();
         cardLayout = (CardLayout)variablePanel.getLayout();
         cardLayout.show(variablePanel,"AlimentazioneView");
-        AlimentazioneController alimentazioneController = new AlimentazioneController(menu,utente);
         ProfiloController profiloController = new ProfiloController(menu, utente);
+        AlimentazioneController alimentazioneController = new AlimentazioneController(menu,utente);
+        //Auth.getFrame().pack();
 
         menu.addMenuButtonListener(new ActionListener() {
             @Override

@@ -79,7 +79,9 @@ public class PublicController {
         });
         loginview.addAccediButtonListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {completaloginAction();}
+            public void actionPerformed(ActionEvent e) {
+                completaloginAction();
+            }
         });
         loginview.addIndietroButtonListener(new ActionListener() {
             @Override
