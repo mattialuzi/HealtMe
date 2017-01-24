@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
@@ -100,6 +101,7 @@ public class AlimentazioneController extends Controller {
                 nuovopasto = e.getActionCommand();
                 setPortataItems();
                 dialog.setTitle("Inserisci alimento a " +nuovopasto);
+                dialog.getButtonOK().setActionCommand(nuovopasto);
                 dialog.pack();
                 dialog.setVisible(true);
             }
@@ -108,8 +110,10 @@ public class AlimentazioneController extends Controller {
         giornocorrenteview.addTableSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                JButton bottonescelto = giornocorrenteview.getButtonFromTable((ListSelectionModel)e.getSource());
-                bottonescelto.setEnabled(true);
+                if(e.getValueIsAdjusting()) {
+                    JButton bottonescelto = giornocorrenteview.getButtonFromTable((ListSelectionModel) e.getSource());
+                    bottonescelto.setEnabled(true);
+                }
             }
         });
 
@@ -119,6 +123,8 @@ public class AlimentazioneController extends Controller {
                 JTable tabellascelta = giornocorrenteview.getTableFromButton(e.getActionCommand());
                 removePortata(tabellascelta, e.getActionCommand());
                 ((DefaultTableModel)tabellascelta.getModel()).removeRow(tabellascelta.getSelectedRow());
+                JButton bottone = (JButton)e.getSource();
+                bottone.setEnabled(false);
             }
         });
 
@@ -181,7 +187,8 @@ public class AlimentazioneController extends Controller {
         dialog.addPortataEffettivaButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                aggiungiPortataEffettiva();
+                JTable tabellascelta = giornocorrenteview.getTableFromButton(e.getActionCommand());
+                aggiungiPortataEffettiva((DefaultTableModel)tabellascelta.getModel());
                 dialog.onCancel();
             }
         });
@@ -210,14 +217,14 @@ public class AlimentazioneController extends Controller {
             showPasti(giornoprima,giornoprimaview);
             data = data.minusDays(1);
         }
-        data = LocalDate.now().plusDays(1);
+        /*data = LocalDate.now().plusDays(1);
         while (!data.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
             DayOfWeek giornodoposettimana = data.getDayOfWeek();
             GiornoAlimView giornodopoview = indexalimentazione.getGiorni(giornodoposettimana);
             GiornoAlimObject giornodopo = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
             showPasti(giornodopo,giornodopoview);
             data = data.plusDays(1);
-        }
+        }*/
     }
 
     private void showPasti(GiornoAlimObject giorno,GiornoAlimView giornoview) {
@@ -279,8 +286,6 @@ public class AlimentazioneController extends Controller {
             System.out.println("C'è un errore:" + e);
         }
         lista.setModel(listmodel);
-
-
     }
 
     public void filtraAlimenti(){
@@ -299,7 +304,7 @@ public class AlimentazioneController extends Controller {
         }
     }
 
-    public void aggiungiPortataEffettiva() {
+    public void aggiungiPortataEffettiva(DefaultTableModel tabellamodel) {
         String portata = dialog.getPortata().getSelectedItem().toString();
         String alimento = dialog.getNomeAlimento().getText();
         int quantita = Integer.parseInt(dialog.getQuantita().getText());
@@ -314,7 +319,7 @@ public class AlimentazioneController extends Controller {
             mappa.put(nuovopasto,pasto.getId());
             new GiornoAlimModel().updateGiornoAlimEff(username,data,mappa);
         }
-        if (!aggiornaPortata(pasto, alimento, quantita)) {
+        if (!aggiornaPortata(pasto, alimento, quantita, tabellamodel)) {
             CiboModel cibomodel = new CiboModel();
             CiboObject nuovocibo = cibomodel.getCiboByName(alimento);
             PortataObject nuovaportata = new PortataObject(nuovocibo);
@@ -324,10 +329,12 @@ public class AlimentazioneController extends Controller {
             PortataModel portatamodel = new PortataModel();
             portatamodel.inserisciPortata(nuovaportata);
             pasto.addPortata(nuovaportata);
+            tabellamodel.addRow(new String[]{portata,alimento,Integer.toString(quantita)});
         }
+
     }
 
-    private boolean aggiornaPortata(PastoObject pasto, String alimento, int quantita) {
+    private boolean aggiornaPortata(PastoObject pasto, String alimento, int quantita, DefaultTableModel tabellamodel) {
         Iterator<PortataObject> portateiterator = pasto.getPortate().iterator();
         while ( portateiterator.hasNext() ) {
             PortataObject portata = portateiterator.next();
@@ -335,6 +342,14 @@ public class AlimentazioneController extends Controller {
                 int nuovaquantita = portata.getQuantita() + quantita;
                 portata.setQuantita(nuovaquantita);
                 new PortataModel().updatePortata(portata.getId_pasto(), alimento, nuovaquantita);
+                int rowcount = tabellamodel.getRowCount();
+                boolean exit = true;
+                for(int indexrow = 0; indexrow != rowcount && exit; indexrow ++){
+                    if(tabellamodel.getValueAt(indexrow,1).equals(alimento)) {
+                        tabellamodel.setValueAt(nuovaquantita, indexrow, 2);
+                        exit = false;
+                    }
+                }
                 return true;
             }
         }
