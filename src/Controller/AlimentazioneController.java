@@ -342,10 +342,10 @@ public class AlimentazioneController extends Controller {
     }
 
     public void removePortata(JTable tabella, String nomepasto){
-        String cibo = tabella.getModel().getValueAt(tabella.getSelectedRow(), 2).toString();
+        String cibo = tabella.getModel().getValueAt(tabella.getSelectedRow(), 1).toString();
         PastoObject pasto = giornocorrente.getPastoByTipo(nomepasto);
         pasto.removePortata(cibo);
-        //new PortataModel().removePortata(pasto.getId(), cibo);
+        new PortataModel().eliminaPortata(pasto.getId(), cibo);
     }
 
 }

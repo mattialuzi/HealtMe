@@ -54,4 +54,10 @@ public class PortataModel {
         tabella.where("id_pasto='" + id_pasto + "' AND cibo='" + cibo + "'");
         tabella.execute();
     }
+
+    public void eliminaPortata (int id_pasto, String cibo) {
+        tabella.delete();
+        tabella.where("id_pasto='" + id_pasto + "' AND cibo='" + cibo + "'");
+        tabella.execute();
+    }
 }
