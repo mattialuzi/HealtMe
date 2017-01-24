@@ -5,6 +5,7 @@ import Model.Dbtable.Portata;
 import Object.Enum.PastoEnum;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PastoObject extends JObject {
@@ -46,5 +47,17 @@ public class PastoObject extends JObject {
 
     public void addPortata (PortataObject portata) {
         portate.add(portata);
+    }
+
+    public void removePortata(String cibo){
+        Iterator<PortataObject> portateiterator = portate.iterator();
+        boolean exit = true;
+        while(portateiterator.hasNext() && exit){
+            PortataObject portata = portateiterator.next();
+            if(portata.getCibo().getNome().equals(cibo)) {
+                portate.remove(portata);
+                exit = false;
+            }
+        }
     }
 }

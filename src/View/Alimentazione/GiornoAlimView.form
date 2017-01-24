@@ -48,6 +48,7 @@
                 </constraints>
                 <properties>
                   <actionCommand value="spuntino"/>
+                  <enabled value="false"/>
                   <text value="-"/>
                   <visible value="false"/>
                 </properties>
@@ -94,6 +95,7 @@
                 </constraints>
                 <properties>
                   <actionCommand value="colazione"/>
+                  <enabled value="false"/>
                   <text value="-"/>
                   <visible value="false"/>
                 </properties>
@@ -139,6 +141,7 @@
                 </constraints>
                 <properties>
                   <actionCommand value="cena"/>
+                  <enabled value="false"/>
                   <text value="-"/>
                   <visible value="false"/>
                 </properties>
@@ -184,6 +187,7 @@
                 </constraints>
                 <properties>
                   <actionCommand value="pranzo"/>
+                  <enabled value="false"/>
                   <text value="-"/>
                   <visible value="false"/>
                 </properties>

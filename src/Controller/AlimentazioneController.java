@@ -9,6 +9,8 @@ import Object.Enum.*;
 import View.Alimentazione.*;
 import View.Menu;
 import Object.*;
+import javafx.scene.control.TableSelectionModel;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -94,7 +96,6 @@ public class AlimentazioneController extends Controller {
         giornocorrenteview.addListnersAndshowButtons(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 dialog.setLocationRelativeTo(null);
                 nuovopasto = e.getActionCommand();
                 setPortataItems();
@@ -104,6 +105,22 @@ public class AlimentazioneController extends Controller {
             }
         });
 
+        giornocorrenteview.addTableSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                JButton bottonescelto = giornocorrenteview.getButtonFromTable((ListSelectionModel)e.getSource());
+                bottonescelto.setEnabled(true);
+            }
+        });
+
+        giornocorrenteview.addListenersForRemoveButtons(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JTable tabellascelta = giornocorrenteview.getTableFromButton(e.getActionCommand());
+                removePortata(tabellascelta, e.getActionCommand());
+                ((DefaultTableModel)tabellascelta.getModel()).removeRow(tabellascelta.getSelectedRow());
+            }
+        });
 
         dialog.addSetPortataItemListener(new ItemListener() {
             @Override
@@ -112,9 +129,7 @@ public class AlimentazioneController extends Controller {
                     showAlimenti();
                     dialog.getScrollPane().setVisible(true);
                     dialog.pack();
-
                 }
-
             }
         });
 
@@ -170,6 +185,7 @@ public class AlimentazioneController extends Controller {
                 dialog.onCancel();
             }
         });
+
     }
 
     public void showIndex(){
@@ -182,13 +198,15 @@ public class AlimentazioneController extends Controller {
         giornocorrenteview = indexalimentazione.getGiorni(giornosettimana);
         GiornoAlimModel giornomodel = new GiornoAlimModel();
         giornocorrente = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
+        giornocorrenteview.setButtonFromTable();
+        giornocorrenteview.setTableFromButton();
         showPasti(giornocorrente, giornocorrenteview);
         data = data.minusDays(1);
         while (!data.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
-            DayOfWeek giornodoposettimana = data.getDayOfWeek();
-            GiornoAlimView giornodopoview = indexalimentazione.getGiorni(giornodoposettimana);
-            GiornoAlimObject giornodopo = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
-            showPasti(giornodopo,giornodopoview);
+            DayOfWeek giornoprimasettimana = data.getDayOfWeek();
+            GiornoAlimView giornoprimaview = indexalimentazione.getGiorni(giornoprimasettimana);
+            GiornoAlimObject giornoprima = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
+            showPasti(giornoprima,giornoprimaview);
             data = data.minusDays(1);
         }
         data = LocalDate.now().plusDays(1);
@@ -322,6 +340,11 @@ public class AlimentazioneController extends Controller {
         return false;
     }
 
-
+    public void removePortata(JTable tabella, String nomepasto){
+        String cibo = tabella.getModel().getValueAt(tabella.getSelectedRow(), 2).toString();
+        PastoObject pasto = giornocorrente.getPastoByTipo(nomepasto);
+        pasto.removePortata(cibo);
+        new PortataModel().removePortata(pasto.getId(), cibo);
+    }
 
 }
