@@ -36,7 +36,7 @@ public class ProgAlimController extends Controller {
         indexprog.addNewProgManButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(mainPanel, "ProgAlimManView");
+                cardLayout.show(mainPanel, "View.Alimentazione.GiornoAlimForm");
             }
         });
 

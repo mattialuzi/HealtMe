@@ -17,7 +17,7 @@ public class NewProgAlimView {
     public NewProgAlimView() {
         mainPanel.add(indexprogalimPanel,"IndexProgAlimView");
         mainPanel.add(progalimcombPanel, "ProgAlimCombView");
-        mainPanel.add(progalimmanPanel,"ProgAlimManView");
+        mainPanel.add(progalimmanPanel,"View.Alimentazione.GiornoAlimForm");
     }
 
     public JPanel getMainPanel() {
