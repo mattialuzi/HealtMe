@@ -47,9 +47,11 @@ public class AlimentazioneController extends Controller {
         variablePanel = alimentazione.getMainPanel();
         cardLayout = (CardLayout)variablePanel.getLayout();
         NewCiboView newcibo = alimentazione.getNewcibo();
+        NewProgAlimView newprogalim = alimentazione.getNewprogalim();
         indexalimentazione = alimentazione.getIndexalimentazione();
         setGiorni();
         dialog = new FormCiboEffettivo();
+        new ProgAlimController(newprogalim,utente);
         //showIndex();
 
         menu.addNewProgAlimButtonListener(new ActionListener() {
