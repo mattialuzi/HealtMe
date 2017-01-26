@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.sql.ResultSet;
 
 /**
  * Created by Lorenzo on 26/01/17.
@@ -18,6 +19,7 @@ public abstract class BaseAlimController extends Controller {
 
     protected String nuovopasto;
     protected FormCiboEffettivo dialog;
+    protected ResultSet alimenti;
 
 
     public class SetPortataItemAction implements ItemListener {
