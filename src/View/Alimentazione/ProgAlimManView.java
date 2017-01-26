@@ -1,13 +1,16 @@
 package View.Alimentazione;
 
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Mattia on 25/01/2017.
  */
 public class ProgAlimManView {
     private JPanel mainPanel;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane settimanaPane;
     private JButton annullaProgrammaButton;
     private JButton confermaProgrammaButton;
     private JPanel lunediPanel;
@@ -24,14 +27,31 @@ public class ProgAlimManView {
     private GiornoAlimForm venerdimanuale;
     private GiornoAlimForm sabatomanuale;
     private GiornoAlimForm domenicamanuale;
+    private ArrayList<GiornoAlimForm> giornimanuali;
 
     public ProgAlimManView() {
-
+        giornimanuali = new ArrayList<GiornoAlimForm>(7);
+        giornimanuali.add(lunedimanuale);
+        giornimanuali.add(martedimanuale);
+        giornimanuali.add(mercoledimanuale);
+        giornimanuali.add(giovedimanuale);
+        giornimanuali.add(venerdimanuale);
+        giornimanuali.add(sabatomanuale);
+        giornimanuali.add(domenicamanuale);
     }
 
     public JPanel getMainPanel() {
         return mainPanel;
     }
+
+    public void addTabbedSelectionListener (ChangeListener listener) {
+        settimanaPane.addChangeListener(listener);
+    }
+
+    public GiornoAlimForm getTabView (int panel) {
+        return giornimanuali.get(panel);
+    }
+
 
     private void createUIComponents() {
         lunedimanuale = new GiornoAlimForm("Cosa vuoi mangiare il lunedi");

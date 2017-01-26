@@ -5,6 +5,8 @@ import View.Alimentazione.*;
 import Object.UtenteObject;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +21,7 @@ public class ProgAlimController extends Controller {
     private JPanel mainPanel;
     private NewProgAlimView progalim;
     private ProgAlimManView progalimman;
+    private GiornoAlimForm giornoselezionato;
 
     public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente) {
 
@@ -40,6 +43,15 @@ public class ProgAlimController extends Controller {
                 progalimman = new ProgAlimManView();
                 mainPanel.add(progalimman.getMainPanel(),"ProgAlimManView");
                 cardLayout.show(mainPanel, "ProgAlimManView");
+                giornoselezionato = progalimman.getTabView(0);
+
+                progalimman.addTabbedSelectionListener(new ChangeListener() {
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        JTabbedPane pane = (JTabbedPane) e.getSource();
+                        giornoselezionato = progalimman.getTabView(pane.getSelectedIndex());
+                    }
+                });
             }
         });
 
@@ -49,8 +61,6 @@ public class ProgAlimController extends Controller {
                 cardLayout.show(mainPanel, "ProgAlimCombView");
             }
         });
-
-
 
     }
 }
