@@ -1,6 +1,6 @@
 package Controller;
 
-import Helpers.Controller;
+
 import Model.CiboModel;
 import Model.GiornoAlimModel;
 import Model.PastoModel;
@@ -27,7 +27,7 @@ import java.util.Iterator;
 /**
  * Created by lorenzobraconi on 05/01/17.
  */
-public class AlimentazioneController extends Controller {
+public class AlimentazioneController extends BaseAlimController {
 
     private AlimentazioneView alimentazione;
     private FormCiboEffettivo dialog;

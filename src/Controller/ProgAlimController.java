@@ -1,6 +1,6 @@
 package Controller;
 
-import Helpers.Controller;
+
 import View.Alimentazione.*;
 import Object.UtenteObject;
 
@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by lorenzobraconi on 25/01/17.
  */
-public class ProgAlimController extends Controller {
+public class ProgAlimController extends BaseAlimController {
 
     private UtenteObject utente;
     private CardLayout cardLayout;
