@@ -41,7 +41,7 @@ public class GiornoAlimView {
     }
 
     public void setaddButtonsVisible () {
-       giornoeffettivo.setaddButtonsVisible();
+       giornoeffettivo.setButtonsVisible();
     }
 
     public ArrayList<JTable> getTables (GiornoEnum tipogiorno) {

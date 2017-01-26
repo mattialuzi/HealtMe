@@ -37,7 +37,7 @@ public class GiornoAlimForm {
         return mainPanel;
     }
 
-    public void setaddButtonsVisible () {
+    public void setButtonsVisible () {
         addColazione.setVisible(true);
         removeColazione.setVisible(true);
         addPranzo.setVisible(true);
@@ -53,7 +53,7 @@ public class GiornoAlimForm {
         addPranzo.addActionListener(listener);
         addCena.addActionListener(listener);
         addSpuntino.addActionListener(listener);
-        setaddButtonsVisible();
+        setButtonsVisible();
     }
 
     public void addListenersForRemoveButtons(ActionListener listener){
