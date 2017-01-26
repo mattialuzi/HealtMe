@@ -9,15 +9,15 @@ public class NewProgAlimView {
     private JPanel mainPanel;
     private JPanel indexprogalimPanel;
     private JPanel progalimcombPanel;
-    private JPanel progalimmanPanel;
+    //private JPanel progalimmanPanel;
     private IndexProgAlimView indexprogalimview;
     private ProgAlimCombView progalimcombview;
-    private ProgAlimManView progalimmanview;
+    //private ProgAlimManView progalimmanview;
 
     public NewProgAlimView() {
         mainPanel.add(indexprogalimPanel,"IndexProgAlimView");
         mainPanel.add(progalimcombPanel, "ProgAlimCombView");
-        mainPanel.add(progalimmanPanel,"View.Alimentazione.GiornoAlimForm");
+        //mainPanel.add(progalimmanPanel,"ProgAlimManView");
     }
 
     public JPanel getMainPanel() {
@@ -32,16 +32,16 @@ public class NewProgAlimView {
         return progalimcombview;
     }
 
-    public ProgAlimManView getProgalimmanview() {
+    /*public ProgAlimManView getProgalimmanview() {
         return progalimmanview;
-    }
+    }*/
 
     private void createUIComponents() {
         indexprogalimview = new IndexProgAlimView();
         progalimcombview = new ProgAlimCombView();
-        progalimmanview = new ProgAlimManView();
+        //progalimmanview = new ProgAlimManView();
         indexprogalimPanel = indexprogalimview.getMainPanel();
         progalimcombPanel = progalimcombview.getMainPanel();
-        progalimmanPanel = progalimmanview.getMainPanel();
+        //progalimmanPanel = progalimmanview.getMainPanel();
     }
 }

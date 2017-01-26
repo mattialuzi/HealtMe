@@ -7,8 +7,12 @@ import javax.swing.*;
  */
 public class ProgAlimManView {
     private JPanel mainPanel;
+    private JTabbedPane tabbedPane1;
+    private JButton button1;
+    private JButton button2;
 
     public ProgAlimManView() {
+
     }
 
     public JPanel getMainPanel() {

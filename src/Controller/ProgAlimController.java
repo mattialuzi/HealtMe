@@ -1,11 +1,8 @@
 package Controller;
 
 import Helpers.Controller;
-import View.Alimentazione.IndexProgAlimView;
-import View.Alimentazione.NewProgAlimView;
+import View.Alimentazione.*;
 import Object.UtenteObject;
-import View.Alimentazione.ProgAlimCombView;
-import View.Alimentazione.ProgAlimManView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,26 +14,32 @@ import java.awt.event.ActionListener;
  */
 public class ProgAlimController extends Controller {
 
-    private NewProgAlimView progalim;
     private UtenteObject utente;
-    private CardLayout cardLayout = new CardLayout();
+    private CardLayout cardLayout;
     private JPanel mainPanel;
+    private NewProgAlimView progalim;
+    private ProgAlimManView progalimman;
 
-    public ProgAlimController(NewProgAlimView progalim, UtenteObject utente) {
+    public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente) {
 
-        this.progalim = progalim;
         this.utente = utente;
+        progalim = new NewProgAlimView();
         mainPanel = progalim.getMainPanel();
+        JPanel alimMainPanel =  alimentazione.getMainPanel();
+        alimMainPanel.add(mainPanel,"NewProgAlimView");
+        CardLayout alimCardLayout = (CardLayout)alimMainPanel.getLayout();
+        alimCardLayout.show(alimMainPanel, "NewProgAlimView");;
         cardLayout = (CardLayout)mainPanel.getLayout();
-        cardLayout.show(mainPanel, "IndexProgAlimView");
         IndexProgAlimView indexprog = progalim.getIndexprogalimview();
         ProgAlimCombView progcomb = progalim.getProgalimcombview();
-        ProgAlimManView progman = progalim.getProgalimmanview();
+        //ProgAlimManView progman = progalim.getProgalimmanview();
 
         indexprog.addNewProgManButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(mainPanel, "View.Alimentazione.GiornoAlimForm");
+                progalimman = new ProgAlimManView();
+                mainPanel.add(progalimman.getMainPanel(),"ProgAlimManView");
+                cardLayout.show(mainPanel, "ProgAlimManView");
             }
         });
 
@@ -46,6 +49,8 @@ public class ProgAlimController extends Controller {
                 cardLayout.show(mainPanel, "ProgAlimCombView");
             }
         });
+
+
 
     }
 }

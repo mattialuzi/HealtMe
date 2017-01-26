@@ -8,15 +8,12 @@ import javax.swing.*;
 public class AlimentazioneView {
     private JPanel mainPanel;
     private JPanel indexAlimPanel;
-    private JPanel newProgAlimPanel;
     private JPanel newCiboPanel;
     private IndexAlimentazioneView indexalimentazione;
-    private NewProgAlimView newprogalim;
     private NewCiboView newcibo;
 
     public AlimentazioneView() {
         mainPanel.add(indexAlimPanel, "IndexAlimentazioneView");
-        mainPanel.add(newProgAlimPanel, "NewProgAlimView");
         mainPanel.add(newCiboPanel, "NewCiboView");
     }
 
@@ -28,20 +25,14 @@ public class AlimentazioneView {
         return indexalimentazione;
     }
 
-    public NewProgAlimView getNewprogalim() {
-        return newprogalim;
-    }
-
     public NewCiboView getNewcibo() {
         return newcibo;
     }
 
     private void createUIComponents() {
         indexalimentazione = new IndexAlimentazioneView();
-        newprogalim = new NewProgAlimView();
         newcibo = new NewCiboView();
         indexAlimPanel = indexalimentazione.getMainPanel();
-        newProgAlimPanel = newprogalim.getMainPanel();
         newCiboPanel = newcibo.getMainPanel();
     }
 }
