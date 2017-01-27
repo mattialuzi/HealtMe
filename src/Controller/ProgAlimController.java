@@ -34,7 +34,7 @@ public class ProgAlimController extends BaseAlimController {
         JPanel alimMainPanel =  alimentazione.getMainPanel();
         alimMainPanel.add(mainPanel,"NewProgAlimView");
         CardLayout alimCardLayout = (CardLayout)alimMainPanel.getLayout();
-        alimCardLayout.show(alimMainPanel, "NewProgAlimView");;
+        alimCardLayout.show(alimMainPanel, "NewProgAlimView");
         cardLayout = (CardLayout)mainPanel.getLayout();
         IndexProgAlimView indexprog = progalim.getIndexprogalimview();
         ProgAlimCombView progcomb = progalim.getProgalimcombview();
@@ -64,6 +64,7 @@ public class ProgAlimController extends BaseAlimController {
                     public void stateChanged(ChangeEvent e) {
                         JTabbedPane pane = (JTabbedPane) e.getSource();
                         giornoselezionato = progalimman.getTabView(pane.getSelectedIndex());
+                        dialog.removePortataEffettivaButtonListener();
                         dialog.addPortataEffettivaButtonListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
