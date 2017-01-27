@@ -4,6 +4,7 @@ import Object.Enum.GiornoEnum;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +32,37 @@ public class GiornoAlimForm {
 
     public GiornoAlimForm(String Title) {
         Titlelabel.setText(Title);
+        String[] columnnames = {"Portata", "Alimento", "Quantita"};
+        DefaultTableModel tablemodel = new DefaultTableModel(columnnames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        colazioneEffTable.setModel(new DefaultTableModel(columnnames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        pranzoEffTable.setModel( new DefaultTableModel(columnnames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        cenaEffTable.setModel( new DefaultTableModel(columnnames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        spuntiniEffTable.setModel( new DefaultTableModel(columnnames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
     }
 
     public JPanel getMainPanel() {

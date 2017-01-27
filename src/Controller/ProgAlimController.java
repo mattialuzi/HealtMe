@@ -9,6 +9,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,12 +48,31 @@ public class ProgAlimController extends BaseAlimController {
                 mainPanel.add(progalimman.getMainPanel(),"ProgAlimManView");
                 cardLayout.show(mainPanel, "ProgAlimManView");
                 giornoselezionato = progalimman.getTabView(0);
+                dialog.addPortataEffettivaButtonListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        giornoselezionato.setTableFromButton();
+                        JTable tabellascelta = giornoselezionato.getTableFromButton(e.getActionCommand());
+                        aggiungiPortataManuale((DefaultTableModel)tabellascelta.getModel());
+                        dialog.onCancel();
+                    }
+                });
+
 
                 progalimman.addTabbedSelectionListener(new ChangeListener() {
                     @Override
                     public void stateChanged(ChangeEvent e) {
                         JTabbedPane pane = (JTabbedPane) e.getSource();
                         giornoselezionato = progalimman.getTabView(pane.getSelectedIndex());
+                        dialog.addPortataEffettivaButtonListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                giornoselezionato.setTableFromButton();
+                                JTable tabellascelta = giornoselezionato.getTableFromButton(e.getActionCommand());
+                                aggiungiPortataManuale((DefaultTableModel)tabellascelta.getModel());
+                                dialog.onCancel();
+                            }
+                        });
                     }
                 });
 
@@ -64,6 +84,7 @@ public class ProgAlimController extends BaseAlimController {
                         @Override
                         public void valueChanged(ListSelectionEvent e) {
                             if (e.getValueIsAdjusting()) {
+                                giorno.setButtonFromTable();
                                 JButton bottonescelto = giorno.getButtonFromTable((ListSelectionModel) e.getSource());
                                 bottonescelto.setEnabled(true);
                             }
@@ -86,12 +107,7 @@ public class ProgAlimController extends BaseAlimController {
 
                 dialog.addQuantitaKeyListener(new QuantitaKeyAction());
 
-                dialog.addPortataEffettivaButtonListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
 
-                    }
-                });
             }
         });
 
@@ -101,6 +117,26 @@ public class ProgAlimController extends BaseAlimController {
                 cardLayout.show(mainPanel, "ProgAlimCombView");
             }
         });
+    }
+        public void aggiungiPortataManuale(DefaultTableModel tabellamodel) {
+            String portata = dialog.getPortata().getSelectedItem().toString();
+            String alimento = dialog.getNomeAlimento().getText();
+            int quantita = Integer.parseInt(dialog.getQuantita().getText());
+            if (aggiornaPortataManuale(tabellamodel,alimento,quantita)) {
+            tabellamodel.addRow(new Object[]{portata, alimento, quantita});
+            }
+        }
 
+        public boolean aggiornaPortataManuale(DefaultTableModel tabellamodel,String alimento,int quantita){
+            boolean exit = true;
+            int rowcount = tabellamodel.getRowCount();
+            for(int indexrow = 0; indexrow != rowcount && exit; indexrow ++){
+                if(tabellamodel.getValueAt(indexrow,1).equals(alimento)) {
+                    int nuovaquantita = quantita+(Integer)tabellamodel.getValueAt(indexrow,2);
+                    tabellamodel.setValueAt(nuovaquantita, indexrow, 2);
+                    exit = false;
+                }
+            }
+            return exit;
     }
 }

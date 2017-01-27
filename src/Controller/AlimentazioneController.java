@@ -172,21 +172,14 @@ public class AlimentazioneController extends BaseAlimController {
         for (int i=0; i<4; i++) {
             PastoObject pasto = giorno.getPastoByTipo(tipipasto[i]);
             Iterator<PortataObject> portateiterator = pasto.getPortate().iterator();
-            String[] columnnames = {"Portata", "Alimento", "Quantita"};
-            DefaultTableModel tablemodel = new DefaultTableModel(columnnames, 0) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
+            DefaultTableModel model = (DefaultTableModel)tabelle.get(i).getModel();
             while (portateiterator.hasNext()) {
                 PortataObject portata = portateiterator.next();
                 String tipoportata = String.valueOf(portata.getTipo());
                 String alimento = portata.getCibo().getNome();
-                String quantita = Integer.toString(portata.getQuantita());
-                tablemodel.addRow(new String[]{tipoportata, alimento, quantita});
+                int quantita = portata.getQuantita();
+                model.addRow(new Object[]{tipoportata, alimento, quantita});
             }
-            tabelle.get(i).setModel(tablemodel);
         }
 
     }
