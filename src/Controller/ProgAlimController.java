@@ -1,8 +1,15 @@
 package Controller;
 
 
+import Model.CiboModel;
+import Model.UtenteModel;
 import View.Alimentazione.*;
 import Object.UtenteObject;
+import Object.ProgAlimManObject;
+import Object.GiornoAlimProgObject;
+import Object.PastoObject;
+import Object.PortataObject;
+import Object.CiboObject;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -13,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by lorenzobraconi on 25/01/17.
@@ -38,7 +47,6 @@ public class ProgAlimController extends BaseAlimController {
         cardLayout = (CardLayout)mainPanel.getLayout();
         IndexProgAlimView indexprog = progalim.getIndexprogalimview();
         ProgAlimCombView progcomb = progalim.getProgalimcombview();
-        //ProgAlimManView progman = progalim.getProgalimmanview();
         dialog = new FormCiboEffettivo();
 
         indexprog.addNewProgManButtonListener(new ActionListener() {
@@ -95,7 +103,10 @@ public class ProgAlimController extends BaseAlimController {
                     giorno.addListenersForRemoveButtons(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-
+                            JTable tabellascelta = giorno.getTableFromButton(e.getActionCommand());
+                            ((DefaultTableModel)tabellascelta.getModel()).removeRow(tabellascelta.getSelectedRow());
+                            JButton bottone = (JButton)e.getSource();
+                            bottone.setEnabled(false);
                         }
                     });
                 }
@@ -108,6 +119,20 @@ public class ProgAlimController extends BaseAlimController {
 
                 dialog.addQuantitaKeyListener(new QuantitaKeyAction());
 
+                progalimman.addAnnullaProgrammaButtonListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dialog.removePortataEffettivaButtonListener();
+                        cardLayout.show(mainPanel, "IndexProgAlimView");
+                    }
+                });
+
+                progalimman.addConfermaProgrammaButtonListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        aggiungiProgrammaManuale();
+                    }
+                });
 
             }
         });
@@ -139,5 +164,35 @@ public class ProgAlimController extends BaseAlimController {
                 }
             }
             return exit;
-    }
+        }
+
+        public void aggiungiProgrammaManuale(){
+            ProgAlimManObject nuovoprogmanuale = new ProgAlimManObject();
+            for(int i = 0; i<7 ; i++) {
+                GiornoAlimProgObject giornosettimana = nuovoprogmanuale.getSettimanaalimentare(i);
+                GiornoAlimForm giornosettimanaview = progalimman.getTabView(i);
+                ArrayList<JTable> tabellegiorno = giornosettimanaview.getEffTables();
+                for (int j = 0; j < 4; j++) {
+                    PastoObject pasto = giornosettimana.getPasti(j);
+                    DefaultTableModel tabellamodel = (DefaultTableModel) tabellegiorno.get(j).getModel();
+                    int rowcount = tabellamodel.getRowCount();
+                    for(int indexrow = 0; indexrow < rowcount ; indexrow++){
+                        CiboObject cibo = new CiboModel().getCiboByName(tabellamodel.getValueAt(indexrow,0).toString());
+                        PortataObject portata = new PortataObject(cibo);
+                        pasto.getPortate().add(portata);
+                    }
+                }
+            }
+            utente.setProgramma_alimentare(nuovoprogmanuale);
+            utente.setProg_alim_comb(false);
+
+            //inserimento nel db
+
+            UtenteModel utentemodel = new UtenteModel();
+            HashMap<String, Object> campo = new HashMap<String, Object>();
+            campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
+            campo.put("prog_alim_comb", 0);
+            utentemodel.updateInfoUtente(utente.getUsername(), campo);
+        }
+
 }

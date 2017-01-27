@@ -2,6 +2,7 @@ package View.Alimentazione;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,6 +47,14 @@ public class ProgAlimManView {
 
     public void addTabbedSelectionListener (ChangeListener listener) {
         settimanaPane.addChangeListener(listener);
+    }
+
+    public void addAnnullaProgrammaButtonListener(ActionListener listener) {
+        annullaProgrammaButton.addActionListener(listener);
+    }
+
+    public void addConfermaProgrammaButtonListener(ActionListener listener){
+        confermaProgrammaButton.addActionListener(listener);
     }
 
     public GiornoAlimForm getTabView (int panel) {

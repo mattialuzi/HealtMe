@@ -214,7 +214,7 @@ public class ProfiloController {
                 return info;
             }
         }
-        HashMap campoutente = new HashMap();
+        HashMap<String,Object> campoutente = new HashMap<String,Object>();
         campoutente.put(campo, newvalue);
         UtenteModel utentemodel = new UtenteModel();
         utentemodel.updateInfoUtente(username, campoutente);
@@ -223,7 +223,7 @@ public class ProfiloController {
     }
 
     public void modificaInfoUtenteEnum(String campo, String info, String username){
-            HashMap campoutente = new HashMap();
+            HashMap<String,Object> campoutente = new HashMap<String,Object>();
             campoutente.put(campo, info);
             UtenteModel utentemodel = new UtenteModel();
             utentemodel.updateInfoUtente(username, campoutente);

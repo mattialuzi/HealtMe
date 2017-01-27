@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class UtenteModel {
@@ -32,8 +33,8 @@ public class UtenteModel {
         dati=dati+",'"+utente.getEmail()+"'";
         dati=dati+",null";
         dati=dati+",null";
-        dati=dati+",null";
-        dati=dati+",null";
+        dati=dati+",0";
+        dati=dati+",0";
         tabella.insert(dati);
         tabella.execute();
     }
@@ -69,12 +70,13 @@ public class UtenteModel {
         return utente;
     }
 
-    public void updateInfoUtente(String username, HashMap campoutente){
-        Set keys = campoutente.keySet();
-        Iterator i= keys.iterator();
-        String key = (String) i.next();
-        String value = (String) campoutente.get(key);
-        String dati = key+"='" + value+ "'";
+    public void updateInfoUtente(String username, Map<String,Object> campoutente){
+        String dati = "";
+        Iterator<Map.Entry<String,Object>> iterator = campoutente.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = iterator.next();
+            dati += entry.getKey()+ "='" + entry.getValue() + "'";
+        }
         tabella.update(dati);
         tabella.where("username='" + username + "'");
         tabella.execute();

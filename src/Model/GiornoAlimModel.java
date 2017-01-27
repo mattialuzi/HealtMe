@@ -32,13 +32,13 @@ public class GiornoAlimModel {
                 giorno.setCal_assunte(rs.getInt("cal_assunte"));
                 PastoModel pastomodel = new PastoModel();
                 PastoObject colazione = pastomodel.getPastoById(rs.getInt("colazione"));
-                giorno.setColazione(colazione);
-                PastoObject spuntino = pastomodel.getPastoById(rs.getInt("spuntino"));
-                giorno.setSpuntino(spuntino);
+                giorno.setPasti(0,colazione);
                 PastoObject pranzo = pastomodel.getPastoById(rs.getInt("pranzo"));
-                giorno.setPranzo(pranzo);
+                giorno.setPasti(1,pranzo);
                 PastoObject cena = pastomodel.getPastoById(rs.getInt("cena"));
-                giorno.setCena(cena);
+                giorno.setPasti(2,cena);
+                PastoObject spuntino = pastomodel.getPastoById(rs.getInt("spuntino"));
+                giorno.setPasti(3,spuntino);
             } else {
                 inserisciGiornoAlimEff(giorno);
             }
@@ -64,10 +64,10 @@ public class GiornoAlimModel {
         String dati= "'" + giornoeff.getUsername()+"'";
         dati = dati +  ", '" + String.valueOf(giornoeff.getData() +"'");
         dati = dati +  ", " + String.valueOf(giornoeff.getCal_assunte());
-        dati = dati + ", " + giornoeff.getColazione().getId();
-        dati = dati + ", " + giornoeff.getSpuntino().getId();
-        dati = dati + ", " + giornoeff.getPranzo().getId();
-        dati = dati + ", " + giornoeff.getCena().getId();
+        dati = dati + ", " + giornoeff.getPasti(0).getId();
+        dati = dati + ", " + giornoeff.getPasti(3).getId();
+        dati = dati + ", " + giornoeff.getPasti(1).getId();
+        dati = dati + ", " + giornoeff.getPasti(2).getId();
         effettivo.insert(dati);
         effettivo.execute();
     }

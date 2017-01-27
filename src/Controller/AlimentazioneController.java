@@ -276,7 +276,7 @@ public class AlimentazioneController extends BaseAlimController {
                 new PortataModel().updatePortata(portata.getId_pasto(), alimento, nuovaquantita);
                 int rowcount = tabellamodel.getRowCount();
                 boolean exit = true;
-                for(int indexrow = 0; indexrow != rowcount && exit; indexrow ++){
+                for(int indexrow = 0; indexrow < rowcount && exit; indexrow ++){
                     if(tabellamodel.getValueAt(indexrow,1).equals(alimento)) {
                         tabellamodel.setValueAt(nuovaquantita, indexrow, 2);
                         exit = false;
