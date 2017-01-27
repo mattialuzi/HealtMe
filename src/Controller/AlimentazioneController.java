@@ -1,6 +1,5 @@
 package Controller;
 
-
 import Model.CiboModel;
 import Model.GiornoAlimModel;
 import Model.PastoModel;
@@ -9,7 +8,6 @@ import Object.Enum.*;
 import View.Alimentazione.*;
 import View.Menu;
 import Object.*;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -30,11 +28,10 @@ import java.util.Iterator;
 public class AlimentazioneController extends BaseAlimController {
 
     private AlimentazioneView alimentazione;
-    private FormCiboEffettivo dialog;
     private CardLayout cardLayout = new CardLayout();
     private JPanel variablePanel;
-    private ResultSet alimenti;
-    private String nuovopasto;
+    //private ResultSet alimenti;
+    //private String nuovopasto;
     private UtenteObject utente;
     private GiornoAlimEffettivoObject giornocorrente;
     private GiornoAlimView giornocorrenteview;
@@ -95,18 +92,7 @@ public class AlimentazioneController extends BaseAlimController {
             }
             });
 
-        giornocorrenteview.addListnersAndshowButtons(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.setLocationRelativeTo(null);
-                nuovopasto = e.getActionCommand();
-                setPortataItems();
-                dialog.setTitle("Inserisci alimento a " +nuovopasto);
-                dialog.getButtonOK().setActionCommand(nuovopasto);
-                dialog.pack();
-                dialog.setVisible(true);
-            }
-        });
+        giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
 
         giornocorrenteview.addTableSelectionListener(new ListSelectionListener() {
             @Override
@@ -129,61 +115,13 @@ public class AlimentazioneController extends BaseAlimController {
             }
         });
 
-        dialog.addSetPortataItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange()== ItemEvent.SELECTED) {
-                    showAlimenti();
-                    dialog.getScrollPane().setVisible(true);
-                    dialog.pack();
-                }
-            }
-        });
+        dialog.addSetPortataItemListener(new SetPortataItemAction());
 
-        dialog.addSearchKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {
-                filtraAlimenti();
-            }
-        });
+        dialog.addSearchKeyListener(new SearchKeyAction());
 
-        dialog.addSetCiboListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if(e.getValueIsAdjusting()) {
-                    dialog.getNomeAlimento().setText(dialog.getListaAlimenti().getSelectedValue().toString());
-                }
-                if(!dialog.getQuantita().getText().equals("") && !dialog.getListaAlimenti().isSelectionEmpty())
-                    dialog.getButtonOK().setEnabled(true);
-                else dialog.getButtonOK().setEnabled(false);
-            }
-        });
+        dialog.addSetCiboListSelectionListener(new SetCiboListSelectionAction());
 
-        dialog.addQuantitaKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (!checkIntero(dialog.getQuantita().getText())) {
-                    dialog.getQuantita().setText("");
-                }
-                if(!dialog.getQuantita().getText().equals("") && !dialog.getListaAlimenti().isSelectionEmpty())
-                    dialog.getButtonOK().setEnabled(true);
-                else dialog.getButtonOK().setEnabled(false);
-            }
-        });
+        dialog.addQuantitaKeyListener(new QuantitaKeyAction());
 
         dialog.addPortataEffettivaButtonListener(new ActionListener() {
             @Override
@@ -253,8 +191,8 @@ public class AlimentazioneController extends BaseAlimController {
 
     }
 
-    public void setPortataItems(){
-        JComboBox portata =dialog.getPortata();
+    /*public void setPortataItems(){
+        JComboBox portata = dialog.getPortata();
         dialog.getNomeAlimento().setEnabled(false);
         dialog.getNomeAlimento().setText("");
         dialog.getScrollPane().setVisible(false);
@@ -303,7 +241,7 @@ public class AlimentazioneController extends BaseAlimController {
         } catch (Exception e) {
             System.out.println("C'è un errore:" + e);
         }
-    }
+    }*/
 
     public void aggiungiPortataEffettiva(DefaultTableModel tabellamodel) {
         String portata = dialog.getPortata().getSelectedItem().toString();

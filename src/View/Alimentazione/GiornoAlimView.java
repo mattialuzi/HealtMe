@@ -28,8 +28,8 @@ public class GiornoAlimView {
         return mainPanel;
     }
 
-    public void addListnersAndshowButtons(ActionListener listener) {
-        giornoeffettivo.addListnersAndshowButtons(listener);
+    public void addListenersAndshowButtons(ActionListener listener) {
+        giornoeffettivo.addListenersAndshowButtons(listener);
     }
 
     public void addListenersForRemoveButtons(ActionListener listener){

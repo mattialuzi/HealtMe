@@ -22,6 +22,19 @@ public abstract class BaseAlimController extends Controller {
     protected ResultSet alimenti;
 
 
+    public class ListenersAndShowButtonsAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dialog.setLocationRelativeTo(null);
+            nuovopasto = e.getActionCommand();
+            setPortataItems();
+            dialog.setTitle("Inserisci alimento per " + nuovopasto);
+            dialog.getButtonOK().setActionCommand(nuovopasto);
+            dialog.pack();
+            dialog.setVisible(true);
+        }
+    }
+
     public class SetPortataItemAction implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent e) {
@@ -63,14 +76,10 @@ public abstract class BaseAlimController extends Controller {
     public class QuantitaKeyAction implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
-
         }
-
         @Override
         public void keyPressed(KeyEvent e) {
-
         }
-
         @Override
         public void keyReleased(KeyEvent e) {
             if (!checkIntero(dialog.getQuantita().getText())) {
@@ -79,6 +88,18 @@ public abstract class BaseAlimController extends Controller {
             if (!dialog.getQuantita().getText().equals("") && !dialog.getListaAlimenti().isSelectionEmpty())
                 dialog.getButtonOK().setEnabled(true);
             else dialog.getButtonOK().setEnabled(false);
+        }
+    }
+
+    public void setPortataItems(){
+        JComboBox portata = dialog.getPortata();
+        dialog.getNomeAlimento().setEnabled(false);
+        dialog.getNomeAlimento().setText("");
+        dialog.getScrollPane().setVisible(false);
+        if (nuovopasto == "colazione" || nuovopasto == "spuntino") {
+            portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","snack", "bevanda", "frutta"}));
+        } else {
+            portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","primo", "secondo", "contorno", "dolce", "frutta", "bevanda"}));
         }
     }
 

@@ -48,7 +48,7 @@ public class GiornoAlimForm {
         removeSpuntino.setVisible(true);
     }
 
-    public void addListnersAndshowButtons(ActionListener listener) {
+    public void addListenersAndshowButtons(ActionListener listener) {
         addColazione.addActionListener(listener);
         addPranzo.addActionListener(listener);
         addCena.addActionListener(listener);
