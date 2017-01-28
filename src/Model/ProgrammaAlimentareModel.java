@@ -22,7 +22,7 @@ public class ProgrammaAlimentareModel {
         PastoModel pastomodel = new PastoModel();
         PortataModel portatamodel = new PortataModel();
         GiornoAlimModel giornomodel = new GiornoAlimModel();
-        String dati = String.valueOf(progmanuale.getId());
+        String dati =String.valueOf(progmanuale.getId());
         for (int i = 0; i < 7; i++) {
             GiornoAlimProgObject giorno = progmanuale.getSettimanaalimentare(i);
             for (int j = 0; j < 4; j++) {
@@ -37,7 +37,7 @@ public class ProgrammaAlimentareModel {
                 }
             }
             giornomodel.inserisciGiornoAlimProg(giorno);
-            dati = dati + "'" + giorno.getId_giorno()+"'";
+            dati = dati + ",'" + giorno.getId_giorno()+"'";
         }
         manuale.insert(dati);
         int nuovoid = manuale.executeForKey();

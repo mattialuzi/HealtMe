@@ -16,7 +16,9 @@ public abstract class ProgrammaAlimentareObject extends JObject {
     protected ProgrammaAlimentareObject()
     {
         id=0;
-        settimanaalimentare = new ArrayList<GiornoAlimProgObject>(Collections.nCopies(7, new GiornoAlimProgObject()));
+        settimanaalimentare = new ArrayList<GiornoAlimProgObject>();
+        for (int i=0; i<7; i++)
+            settimanaalimentare.add(i, new GiornoAlimProgObject());
     }
 
     public int getId() {

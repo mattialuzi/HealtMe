@@ -46,7 +46,7 @@ public class GiornoAlimModel {
                 return nuovogiorno;
             }
         } catch (Exception e){
-            System.out.println("Errore: pippoooooo" + e);
+            System.out.println("Errore:" + e);
             return null;
         }
     }
@@ -54,9 +54,11 @@ public class GiornoAlimModel {
     public <V> void updateGiornoAlimEff(String username, LocalDate data, Map<String,V> map) {
         String dati = "";
         Iterator<Map.Entry<String,V>> iterator = map.entrySet().iterator();
+        Map.Entry entry = iterator.next();
+        dati += entry.getKey()+ "='" + entry.getValue() + "'";
         while (iterator.hasNext()) {
-            Map.Entry entry = iterator.next();
-           dati += entry.getKey()+ "='" + entry.getValue() + "'";
+            entry = iterator.next();
+           dati += ","+entry.getKey()+ "='" + entry.getValue() + "'";
         }
         effettivo.update(dati);
         effettivo.where("username='" + username + "' AND data='" + data + "'");
@@ -83,7 +85,9 @@ public class GiornoAlimModel {
         dati = dati + ", " + giornoprog.getPasti(1).getId();
         dati = dati + ", " + giornoprog.getPasti(2).getId();
         programmato.insert(dati);
-        programmato.execute();
+        int idgiorno = programmato.executeForKey();
+        giornoprog.setId_giorno(idgiorno);
+
     }
 
     /*public int findPastoInserito(String pasto, LocalDate data, String username){

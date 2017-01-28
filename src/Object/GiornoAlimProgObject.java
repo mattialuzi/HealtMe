@@ -17,7 +17,9 @@ public class GiornoAlimProgObject extends GiornoAlimObject {
         id_giorno=0;
         fabbisogno=0;
         tipo= GiornoEnum.programmato;
-        pasti = new ArrayList<PastoObject>(Collections.nCopies(4, new PastoObject()));
+        pasti = new ArrayList<PastoObject>();
+        for (int i=0; i<4; i++)
+            pasti.add(i, new PastoObject());
     }
 
     public int getId_giorno() {

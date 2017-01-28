@@ -73,9 +73,11 @@ public class UtenteModel {
     public void updateInfoUtente(String username, Map<String,Object> campoutente){
         String dati = "";
         Iterator<Map.Entry<String,Object>> iterator = campoutente.entrySet().iterator();
+        Map.Entry entry = iterator.next();
+        dati += entry.getKey()+ "='" + entry.getValue() + "'";
         while (iterator.hasNext()) {
-            Map.Entry entry = iterator.next();
-            dati += entry.getKey()+ "='" + entry.getValue() + "'";
+            entry = iterator.next();
+            dati += ", "+entry.getKey()+ "='" + entry.getValue() + "'";
         }
         tabella.update(dati);
         tabella.where("username='" + username + "'");
