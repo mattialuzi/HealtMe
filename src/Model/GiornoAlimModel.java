@@ -9,7 +9,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import Model.Dbtable.Giorno_alim_prog;
 import Object.GiornoAlimEffettivoObject;
+import Object.GiornoAlimProgObject;
 import Object.PastoObject;
 
 /**
@@ -17,9 +19,13 @@ import Object.PastoObject;
  */
 public class GiornoAlimModel {
     protected Giorno_alim_eff effettivo;
+    protected Giorno_alim_prog programmato;
 
 
-    public GiornoAlimModel() { effettivo = new Giorno_alim_eff(); }
+    public GiornoAlimModel() {
+        effettivo = new Giorno_alim_eff();
+        programmato = new Giorno_alim_prog();
+    }
 
     public GiornoAlimEffettivoObject getGiornoAlimEffettivo(String username,LocalDate data){
         effettivo.select();
@@ -70,6 +76,17 @@ public class GiornoAlimModel {
         dati = dati + ", " + giornoeff.getPasti(2).getId();
         effettivo.insert(dati);
         effettivo.execute();
+    }
+
+    public void inserisciGiornoAlimProg(GiornoAlimProgObject giornoprog){
+        String dati= "'" + giornoprog.getId_giorno()+"'";
+        dati = dati +  ", '" + giornoprog.getFabbisogno() +"'";
+        dati = dati + ", " + giornoprog.getPasti(0).getId();
+        dati = dati + ", " + giornoprog.getPasti(3).getId();
+        dati = dati + ", " + giornoprog.getPasti(1).getId();
+        dati = dati + ", " + giornoprog.getPasti(2).getId();
+        programmato.insert(dati);
+        programmato.execute();
     }
 
     /*public int findPastoInserito(String pasto, LocalDate data, String username){

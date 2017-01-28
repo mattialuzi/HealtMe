@@ -2,7 +2,9 @@ package Controller;
 
 
 import Model.CiboModel;
+import Model.ProgrammaAlimentareModel;
 import Model.UtenteModel;
+import Object.Enum.PortataEnum;
 import View.Alimentazione.*;
 import Object.UtenteObject;
 import Object.ProgAlimManObject;
@@ -172,27 +174,37 @@ public class ProgAlimController extends BaseAlimController {
                 GiornoAlimProgObject giornosettimana = nuovoprogmanuale.getSettimanaalimentare(i);
                 GiornoAlimForm giornosettimanaview = progalimman.getTabView(i);
                 ArrayList<JTable> tabellegiorno = giornosettimanaview.getEffTables();
+                int fabbisogno = 0;
                 for (int j = 0; j < 4; j++) {
                     PastoObject pasto = giornosettimana.getPasti(j);
+                    pasto.setTipoByIndex(j);
                     DefaultTableModel tabellamodel = (DefaultTableModel) tabellegiorno.get(j).getModel();
                     int rowcount = tabellamodel.getRowCount();
                     for(int indexrow = 0; indexrow < rowcount ; indexrow++){
                         CiboObject cibo = new CiboModel().getCiboByName(tabellamodel.getValueAt(indexrow,0).toString());
                         PortataObject portata = new PortataObject(cibo);
+                        portata.setQuantita((Integer)tabellamodel.getValueAt(indexrow,2));
+                        portata.setTipo(PortataEnum.valueOf(tabellamodel.getValueAt(indexrow,1).toString()));
                         pasto.getPortate().add(portata);
+                        fabbisogno += calcolaCalorie(portata);
                     }
                 }
+                giornosettimana.setFabbisogno(fabbisogno);
             }
             utente.setProgramma_alimentare(nuovoprogmanuale);
             utente.setProg_alim_comb(false);
 
-            //inserimento nel db
+            new ProgrammaAlimentareModel().inserisciProgManuale(nuovoprogmanuale);
 
             UtenteModel utentemodel = new UtenteModel();
             HashMap<String, Object> campo = new HashMap<String, Object>();
             campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
             campo.put("prog_alim_comb", 0);
             utentemodel.updateInfoUtente(utente.getUsername(), campo);
+        }
+
+        private int calcolaCalorie(PortataObject portata){
+            return portata.getQuantita()*(portata.getCibo().getKilocal())/100;
         }
 
 }
