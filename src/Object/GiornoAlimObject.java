@@ -17,7 +17,6 @@ public abstract class GiornoAlimObject extends JObject {
     protected ArrayList<PastoObject> pasti;
 
     protected GiornoAlimObject() {
-        pasti = new ArrayList<PastoObject>(Collections.nCopies(4, new PastoObject()));
     }
 
     public GiornoEnum getTipo() {
@@ -33,12 +32,12 @@ public abstract class GiornoAlimObject extends JObject {
     }
 
     public PastoObject getPastoByTipo(String tipo) {
-        HashMap<String, PastoObject> pasti = new HashMap<String, PastoObject>();
-        pasti.put("colazione", pasti.get(0));
-        pasti.put("pranzo", pasti.get(1));
-        pasti.put("cena", pasti.get(2));
-        pasti.put("spuntino", pasti.get(3));
-        return pasti.get(tipo);
+        HashMap<String, PastoObject> pastimap = new HashMap<String, PastoObject>();
+        pastimap.put("colazione", pasti.get(0));
+        pastimap.put("pranzo", pasti.get(1));
+        pastimap.put("cena", pasti.get(2));
+        pastimap.put("spuntino", pasti.get(3));
+        return pastimap.get(tipo);
     }
 }
 

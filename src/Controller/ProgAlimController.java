@@ -181,10 +181,10 @@ public class ProgAlimController extends BaseAlimController {
                     DefaultTableModel tabellamodel = (DefaultTableModel) tabellegiorno.get(j).getModel();
                     int rowcount = tabellamodel.getRowCount();
                     for(int indexrow = 0; indexrow < rowcount ; indexrow++){
-                        CiboObject cibo = new CiboModel().getCiboByName(tabellamodel.getValueAt(indexrow,0).toString());
+                        CiboObject cibo = new CiboModel().getCiboByName(tabellamodel.getValueAt(indexrow,1).toString());
                         PortataObject portata = new PortataObject(cibo);
                         portata.setQuantita((Integer)tabellamodel.getValueAt(indexrow,2));
-                        portata.setTipo(PortataEnum.valueOf(tabellamodel.getValueAt(indexrow,1).toString()));
+                        portata.setTipo(PortataEnum.valueOf(tabellamodel.getValueAt(indexrow,0).toString()));
                         pasto.getPortate().add(portata);
                         fabbisogno += calcolaCalorie(portata);
                     }

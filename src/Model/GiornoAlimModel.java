@@ -2,12 +2,9 @@ package Model;
 
 import Model.Dbtable.Giorno_alim_eff;
 
-import java.util.Date;
+import java.util.*;
 import java.sql.ResultSet;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import Model.Dbtable.Giorno_alim_prog;
 import Object.GiornoAlimEffettivoObject;
@@ -31,27 +28,27 @@ public class GiornoAlimModel {
         effettivo.select();
         effettivo.where("username='" + username + "' and data='" + data+"'");
         ResultSet rs = effettivo.fetch();
-        GiornoAlimEffettivoObject giorno = new GiornoAlimEffettivoObject(username, data);
+        ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
         try{
             if(rs.isBeforeFirst()){
                 rs.next();
-                giorno.setCal_assunte(rs.getInt("cal_assunte"));
                 PastoModel pastomodel = new PastoModel();
-                PastoObject colazione = pastomodel.getPastoById(rs.getInt("colazione"));
-                giorno.setPasti(0,colazione);
-                PastoObject pranzo = pastomodel.getPastoById(rs.getInt("pranzo"));
-                giorno.setPasti(1,pranzo);
-                PastoObject cena = pastomodel.getPastoById(rs.getInt("cena"));
-                giorno.setPasti(2,cena);
-                PastoObject spuntino = pastomodel.getPastoById(rs.getInt("spuntino"));
-                giorno.setPasti(3,spuntino);
+                for(int i =3; i<7; i++){
+                    PastoObject pasto = pastomodel.getPastoById(rs.getInt(i));
+                    pasti.add(pasto);
+                }
+                GiornoAlimEffettivoObject giorno = new GiornoAlimEffettivoObject(username, data, pasti);
+                giorno.setCal_assunte(rs.getInt("cal_assunte"));
+                return giorno;
             } else {
-                inserisciGiornoAlimEff(giorno);
+                GiornoAlimEffettivoObject nuovogiorno = new GiornoAlimEffettivoObject(username, data);
+                inserisciGiornoAlimEff(nuovogiorno);
+                return nuovogiorno;
             }
         } catch (Exception e){
-            System.out.println("Errore: " + e);
+            System.out.println("Errore: pippoooooo" + e);
+            return null;
         }
-        return giorno;
     }
 
     public <V> void updateGiornoAlimEff(String username, LocalDate data, Map<String,V> map) {

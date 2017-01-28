@@ -2,6 +2,9 @@ package Object;
 
 import Object.Enum.GiornoEnum;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Created by lorenzobraconi on 28/12/16.
  */
@@ -14,6 +17,7 @@ public class GiornoAlimProgObject extends GiornoAlimObject {
         id_giorno=0;
         fabbisogno=0;
         tipo= GiornoEnum.programmato;
+        pasti = new ArrayList<PastoObject>(Collections.nCopies(4, new PastoObject()));
     }
 
     public int getId_giorno() {
