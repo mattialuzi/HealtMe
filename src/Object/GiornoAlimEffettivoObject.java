@@ -21,7 +21,9 @@ public class GiornoAlimEffettivoObject extends GiornoAlimObject {
         this.data= data;
         cal_assunte =0;
         tipo= GiornoEnum.effettivo;
-        pasti = new ArrayList<PastoObject>(Collections.nCopies(4, new PastoObject()));
+        pasti = new ArrayList<PastoObject>();
+        for (int i=0; i<4; i++)
+            pasti.add(i,new PastoObject());
     }
 
     public GiornoAlimEffettivoObject(String username, LocalDate data, ArrayList<PastoObject> pastigiorno){
