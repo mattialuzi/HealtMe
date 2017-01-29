@@ -4,13 +4,15 @@ import Model.CiboModel;
 import View.Alimentazione.FormCiboEffettivo;
 import View.Alimentazione.GiornoAlimForm;
 import View.Alimentazione.GiornoAlimView;
-
+import Object.*;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Lorenzo on 26/01/17.
@@ -141,5 +143,23 @@ public abstract class BaseAlimController extends Controller {
         } catch (Exception e) {
             System.out.println("C'è un errore:" + e);
         }
+    }
+
+    protected void showPasti(GiornoAlimObject giorno, GiornoAlimView giornoview) {
+        ArrayList<JTable> tabelle = giornoview.getTables(giorno.getTipo());
+        String[] tipipasto = new String[] {"colazione","pranzo","cena","spuntino"};
+        for (int i=0; i<4; i++) {
+            PastoObject pasto = giorno.getPastoByTipo(tipipasto[i]);
+            Iterator<PortataObject> portateiterator = pasto.getPortate().iterator();
+            DefaultTableModel model = (DefaultTableModel)tabelle.get(i).getModel();
+            while (portateiterator.hasNext()) {
+                PortataObject portata = portateiterator.next();
+                String tipoportata = String.valueOf(portata.getTipo());
+                String alimento = portata.getCibo().getNome();
+                int quantita = portata.getQuantita();
+                model.addRow(new Object[]{tipoportata, alimento, quantita});
+            }
+        }
+
     }
 }

@@ -6,12 +6,7 @@ import Model.ProgrammaAlimentareModel;
 import Model.UtenteModel;
 import Object.Enum.PortataEnum;
 import View.Alimentazione.*;
-import Object.UtenteObject;
-import Object.ProgAlimManObject;
-import Object.GiornoAlimProgObject;
-import Object.PastoObject;
-import Object.PortataObject;
-import Object.CiboObject;
+import Object.*;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -22,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -36,11 +32,13 @@ public class ProgAlimController extends BaseAlimController {
     private NewProgAlimView progalim;
     private ProgAlimManView progalimman;
     private GiornoAlimForm giornoselezionato;
+    private AlimentazioneView alimentazione;
 
     public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente) {
 
         this.utente = utente;
         progalim = new NewProgAlimView();
+        this.alimentazione = alimentazione;
         mainPanel = progalim.getMainPanel();
         JPanel alimMainPanel =  alimentazione.getMainPanel();
         alimMainPanel.add(mainPanel,"NewProgAlimView");
@@ -133,6 +131,8 @@ public class ProgAlimController extends BaseAlimController {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         aggiungiProgrammaManuale();
+                        showNewProg();
+                        alimCardLayout.show(alimMainPanel,"IndexAlimentazioneView");
                     }
                 });
 
@@ -206,5 +206,15 @@ public class ProgAlimController extends BaseAlimController {
         private int calcolaCalorie(PortataObject portata){
             return portata.getQuantita()*(portata.getCibo().getKilocal())/100;
         }
+
+        private void showNewProg () {
+            IndexAlimentazioneView indexalim = alimentazione.getIndexalimentazione();
+             ProgrammaAlimentareObject progalim = utente.getProgramma_alimentare();
+            for (int i=1; i<=7; i++) {
+                GiornoAlimView giornoview = indexalim.getGiorni(DayOfWeek.of(i));
+                GiornoAlimObject giorno = progalim.getSettimanaalimentare(i-1);
+                showPasti(giorno,giornoview);
+            }
+    }
 
 }
