@@ -70,9 +70,9 @@ public class GiornoAlimModel {
         dati = dati +  ", '" + String.valueOf(giornoeff.getData() +"'");
         dati = dati +  ", " + String.valueOf(giornoeff.getCal_assunte());
         dati = dati + ", " + giornoeff.getPasti(0).getId();
-        dati = dati + ", " + giornoeff.getPasti(3).getId();
         dati = dati + ", " + giornoeff.getPasti(1).getId();
         dati = dati + ", " + giornoeff.getPasti(2).getId();
+        dati = dati + ", " + giornoeff.getPasti(3).getId();
         effettivo.insert(dati);
         effettivo.execute();
     }
@@ -81,9 +81,9 @@ public class GiornoAlimModel {
         String dati= "'" + giornoprog.getId_giorno()+"'";
         dati = dati +  ", '" + giornoprog.getFabbisogno() +"'";
         dati = dati + ", " + giornoprog.getPasti(0).getId();
-        dati = dati + ", " + giornoprog.getPasti(3).getId();
         dati = dati + ", " + giornoprog.getPasti(1).getId();
         dati = dati + ", " + giornoprog.getPasti(2).getId();
+        dati = dati + ", " + giornoprog.getPasti(3).getId();
         programmato.insert(dati);
         int idgiorno = programmato.executeForKey();
         giornoprog.setId_giorno(idgiorno);
