@@ -141,31 +141,24 @@ public class AlimentazioneController extends BaseAlimController {
     public void setGiorni() {
         LocalDate data = LocalDate.now();
         DayOfWeek giornosettimana = data.getDayOfWeek();
-        giornocorrenteview = indexalimentazione.getGiorni(giornosettimana);
         GiornoAlimModel giornomodel = new GiornoAlimModel();
-        giornocorrente = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
-        giornocorrenteview.setButtonFromTable();
-        giornocorrenteview.setTableFromButton();
-        showPasti(giornocorrente, giornocorrenteview);
         indexalimentazione.setTodayTab(giornosettimana);
-        data = data.minusDays(1);
-        while (!data.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
-            DayOfWeek giornoprimasettimana = data.getDayOfWeek();
-            GiornoAlimView giornoprimaview = indexalimentazione.getGiorni(giornoprimasettimana);
+        int i = giornosettimana.getValue();
+        ProgrammaAlimentareObject progalim = utente.getProgramma_alimentare();
+        for (int j = i; j > 0; j--) {
+            GiornoAlimView giornoprimaview = indexalimentazione.getGiorni(DayOfWeek.of(j));
             GiornoAlimObject giornoprima = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
-            showPasti(giornoprima,giornoprimaview);
+            showPasti(giornoprima, giornoprimaview);
             data = data.minusDays(1);
         }
 
-        //if(utente.getProgramma_alimentare())
-        /*data = LocalDate.now().plusDays(1);
-        while (!data.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
-            DayOfWeek giornodoposettimana = data.getDayOfWeek();
-            GiornoAlimView giornodopoview = indexalimentazione.getGiorni(giornodoposettimana);
-            GiornoAlimObject giornodopo = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
-            showPasti(giornodopo,giornodopoview);
-            data = data.plusDays(1);
-        }*/
+        if (progalim != null) {
+            for (int j = 1; j <= 7; j++) {
+                GiornoAlimView giornodopoview = indexalimentazione.getGiorni(DayOfWeek.of(j));
+                GiornoAlimObject giornodopo = progalim.getSettimanaalimentare(j-1);
+                showPasti(giornodopo, giornodopoview);
+            }
+        }
     }
 
     public void aggiungiPortataEffettiva(DefaultTableModel tabellamodel) {
