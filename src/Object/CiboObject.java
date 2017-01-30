@@ -1,10 +1,7 @@
 package Object;
 
 import Helpers.JObject;
-import Object.Enum.GruppoEnum;
-import Object.Enum.AllergiaEnum;
-import Object.Enum.CompatibilitaEnum;
-import Object.Enum.PortataEnum;
+import Object.Enum.*;
 
 public class CiboObject extends JObject {
 
@@ -14,6 +11,7 @@ public class CiboObject extends JObject {
     private AllergiaEnum allergia;
     private PortataEnum portata;
     private CompatibilitaEnum compatibilita;
+    private IdoneitaEnum idoneita;
 
     public CiboObject() {
         nome=null;
@@ -22,6 +20,7 @@ public class CiboObject extends JObject {
         allergia=null;
         compatibilita=null;
         portata=null;
+        idoneita=null;
     }
 
     public String getNome() {
@@ -70,5 +69,13 @@ public class CiboObject extends JObject {
 
     public void setPortata(PortataEnum portata) {
         this.portata = portata;
+    }
+
+    public IdoneitaEnum getIdoneita() {
+        return idoneita;
+    }
+
+    public void setIdoneita(IdoneitaEnum idoneita) {
+        this.idoneita = idoneita;
     }
 }

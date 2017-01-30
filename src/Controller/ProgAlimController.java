@@ -4,6 +4,8 @@ package Controller;
 import Model.CiboModel;
 import Model.ProgrammaAlimentareModel;
 import Model.UtenteModel;
+import Object.Enum.LavoroEnum;
+import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.Enum.PortataEnum;
 import View.Alimentazione.*;
 import Object.*;
@@ -20,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Created by lorenzobraconi on 25/01/17.
@@ -31,6 +34,7 @@ public class ProgAlimController extends BaseAlimController {
     private JPanel mainPanel;
     private NewProgAlimView progalim;
     private ProgAlimManView progalimman;
+    private ProgAlimCombView progalimcomb;
     private GiornoAlimForm giornoselezionato;
     private AlimentazioneView alimentazione;
 
@@ -142,7 +146,23 @@ public class ProgAlimController extends BaseAlimController {
         indexprog.addNewProgCombButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                progalimcomb = new ProgAlimCombView();
+                mainPanel.add(progalimcomb.getMainPanel(),"ProgAlimCombView");
                 cardLayout.show(mainPanel, "ProgAlimCombView");
+
+                progalimcomb.addIndietroButtonListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cardLayout.show(mainPanel, "IndexProgAlimView");
+                    }
+                });
+
+                progalimcomb.addGeneraProgrammaButtonListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        generaProgramma();
+                    }
+                });
             }
         });
     }
@@ -193,14 +213,52 @@ public class ProgAlimController extends BaseAlimController {
             }
             utente.setProgramma_alimentare(nuovoprogmanuale);
             utente.setProg_alim_comb(false);
-
             new ProgrammaAlimentareModel().inserisciProgManuale(nuovoprogmanuale);
-
             UtenteModel utentemodel = new UtenteModel();
             HashMap<String, Object> campo = new HashMap<String, Object>();
             campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
             campo.put("prog_alim_comb", 0);
             utentemodel.updateInfoUtente(utente.getUsername(), campo);
+        }
+
+        private void generaProgramma(){
+            int fabbisogno = calcolaFabbisogno();
+        }
+
+        private int calcolaFabbisogno(){
+            Float pesoforma = utente.getPeso_forma();
+            int sesso = utente.getSesso();
+            int eta = utente.getEta();
+            LavoroEnum lavoro = utente.getLavoro();
+            LivelloAttivitaFisicaEnum attivitafisica = utente.getLivello_attivita_fisica();
+            float mb;
+            float laf;
+            if(sesso == 1) {
+                TreeMap<Integer, Float> uomomap = new TreeMap<Integer, Float>();
+                uomomap.put(10, (15.3f * pesoforma) + 679);
+                uomomap.put(30, (11.6f * pesoforma) + 879);
+                uomomap.put(60, (11.9f * pesoforma) + 700);
+                uomomap.put(74, (8.4f * pesoforma) + 819);
+                mb = uomomap.floorEntry(eta).getValue();
+                if(attivitafisica.equals(LivelloAttivitaFisicaEnum.assente) || attivitafisica.equals(LivelloAttivitaFisicaEnum.leggero)){
+                    // mappa laf uomo NO attivita
+                } else {
+                    // mappa laf uomo SI attivita
+                }
+            } else {
+                TreeMap<Integer, Float> donnamap = new TreeMap<Integer, Float>();
+                donnamap.put(10, (14.7f * pesoforma) + 496);
+                donnamap.put(30, (8.7f * pesoforma) + 829);
+                donnamap.put(60, (9.2f * pesoforma) + 688);
+                donnamap.put(74, (9.8f * pesoforma) + 624);
+                mb = donnamap.floorEntry(eta).getValue();
+                if(attivitafisica.equals(LivelloAttivitaFisicaEnum.assente) || attivitafisica.equals(LivelloAttivitaFisicaEnum.leggero)){
+                    // mappa laf donna NO attivita
+                } else {
+                    // mappa laf donna SI attivita
+                }
+            }
+            return mb*laf;
         }
 
         private int calcolaCalorie(PortataObject portata){

@@ -16,7 +16,7 @@ public class NewProgAlimView {
 
     public NewProgAlimView() {
         mainPanel.add(indexprogalimPanel,"IndexProgAlimView");
-        mainPanel.add(progalimcombPanel, "ProgAlimCombView");
+        //mainPanel.add(progalimcombPanel, "ProgAlimCombView");
         //mainPanel.add(progalimmanPanel,"ProgAlimManView");
     }
 
@@ -38,10 +38,10 @@ public class NewProgAlimView {
 
     private void createUIComponents() {
         indexprogalimview = new IndexProgAlimView();
-        progalimcombview = new ProgAlimCombView();
+        //progalimcombview = new ProgAlimCombView();
         //progalimmanview = new ProgAlimManView();
         indexprogalimPanel = indexprogalimview.getMainPanel();
-        progalimcombPanel = progalimcombview.getMainPanel();
+        //progalimcombPanel = progalimcombview.getMainPanel();
         //progalimmanPanel = progalimmanview.getMainPanel();
     }
 }

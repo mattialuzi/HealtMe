@@ -2,10 +2,7 @@ package Model;
 
 import Model.Dbtable.Cibo;
 import Object.CiboObject;
-import Object.Enum.AllergiaEnum;
-import Object.Enum.CompatibilitaEnum;
-import Object.Enum.GruppoEnum;
-import Object.Enum.PortataEnum;
+import Object.Enum.*;
 
 import java.sql.ResultSet;
 
@@ -33,6 +30,7 @@ public class CiboModel {
             cibo.setAllergia(AllergiaEnum.valueOf(rs.getString("allergia")));
             cibo.setPortata(PortataEnum.valueOf(rs.getString("portata")));
             cibo.setKilocal(rs.getInt("kilocal"));
+            cibo.setIdoneita(IdoneitaEnum.valueOf(rs.getString("idoneita")));
         } catch(Exception e){
             System.out.println("Errore: "+e);
         }
@@ -58,6 +56,7 @@ public class CiboModel {
         dati=dati+",'"+String.valueOf(cibo.getAllergia())+"'";
         dati=dati+",'"+String.valueOf(cibo.getPortata())+"'";
         dati=dati+",'"+String.valueOf(cibo.getCompatibilita())+"'";
+        dati=dati+",'"+String.valueOf(cibo.getIdoneita())+"'";
         tabella.insert(dati);
         tabella.execute();
     }
