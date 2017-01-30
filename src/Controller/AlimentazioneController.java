@@ -153,9 +153,9 @@ public class AlimentazioneController extends BaseAlimController {
         }
 
         if (progalim != null) {
-            for (int j = 1; j <= 7; j++) {
+            for (int j = 1; j <= 7; j++) { //perchè DayOfWeek.of(j) ritorna Lunedì se j=1 .... Domenica se j=7
                 GiornoAlimView giornodopoview = indexalimentazione.getGiorni(DayOfWeek.of(j));
-                GiornoAlimObject giornodopo = progalim.getSettimanaalimentare(j-1);
+                GiornoAlimObject giornodopo = progalim.getSettimanaalimentare(j-1); //perchè DayOfWeek.of(j) ritorna Lunedì se j=1 .... Domenica se j=7
                 showPasti(giornodopo, giornodopoview);
             }
         }
