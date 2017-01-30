@@ -209,12 +209,13 @@ public class ProgAlimController extends BaseAlimController {
 
         private void showNewProg () {
             IndexAlimentazioneView indexalim = alimentazione.getIndexalimentazione();
-             ProgrammaAlimentareObject progalim = utente.getProgramma_alimentare();
+            ProgrammaAlimentareObject progalim = utente.getProgramma_alimentare();
             for (int i=1; i<=7; i++) {
                 GiornoAlimView giornoview = indexalim.getGiorni(DayOfWeek.of(i));
                 GiornoAlimObject giorno = progalim.getSettimanaalimentare(i-1);
+                removePasti(giornoview, giorno.getTipo());
                 showPasti(giorno,giornoview);
             }
-    }
+        }
 
 }

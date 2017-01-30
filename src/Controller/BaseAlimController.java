@@ -1,6 +1,7 @@
 package Controller;
 import Helpers.Controller;
 import Model.CiboModel;
+import Object.Enum.GiornoEnum;
 import View.Alimentazione.FormCiboEffettivo;
 import View.Alimentazione.GiornoAlimForm;
 import View.Alimentazione.GiornoAlimView;
@@ -161,5 +162,13 @@ public abstract class BaseAlimController extends Controller {
             }
         }
 
+    }
+
+    protected void removePasti(GiornoAlimView giornoview, GiornoEnum tipogiorno){
+        ArrayList<JTable> tabelle = giornoview.getTables(tipogiorno);
+        for (int i=0; i<4; i++){
+            DefaultTableModel model = (DefaultTableModel)tabelle.get(i).getModel();
+            model.setRowCount(0);
+        }
     }
 }
