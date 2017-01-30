@@ -100,29 +100,9 @@ public class PublicController {
         if (!validator) {
             JOptionPane.showMessageDialog(null, "Username o Password errati", "Errore", JOptionPane.ERROR_MESSAGE);
         } else {
-            ResultSet risultato = utentemodel.getUserByUsername(username);
-            UtenteObject utentecorrente = new UtenteObject();
-            try {
-                while(risultato.next()) {
-                    utentecorrente.setUsername(risultato.getString("username"));
-                    utentecorrente.setPassword(risultato.getString("password"));
-                    utentecorrente.setNome(risultato.getString("nome"));
-                    utentecorrente.setCognome(risultato.getString("cognome"));
-                    utentecorrente.setEta(risultato.getInt("eta"));
-                    utentecorrente.setAltezza(risultato.getFloat("altezza"));
-                    utentecorrente.setPeso(risultato.getFloat("peso"));
-                    utentecorrente.setPeso_forma(risultato.getFloat("peso_forma"));
-                    utentecorrente.setAllergia(AllergiaEnum.valueOf(risultato.getString("allergia")));
-                    utentecorrente.setLavoro(LavoroEnum.valueOf(risultato.getString("lavoro")));
-                    utentecorrente.setLivello_attivita_fisica(LivelloAttivitaFisicaEnum.valueOf(risultato.getString("livello_attivita_fisica")));
-                    utentecorrente.setEmail(risultato.getString("email"));
-                    utentecorrente.setSesso(risultato.getInt("sesso"));
-                }
-            } catch (Exception e) {
-                System.out.println("C'è un errore:" + e);
-            }
+            UtenteObject utente = utentemodel.getUserByUsername(username);
             Menu welcome = new Menu();
-            new MenuController(welcome, utentecorrente);
+            new MenuController(welcome, utente);
             Auth.getFrame().pack();
         }
     }

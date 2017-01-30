@@ -2,6 +2,9 @@ package Model;
 
 
 import Model.Dbtable.Utente;
+import Object.Enum.AllergiaEnum;
+import Object.Enum.LavoroEnum;
+import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.UtenteObject;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
@@ -63,11 +66,34 @@ public class UtenteModel {
         return success;
     }
 
-    public ResultSet getUserByUsername(String user){
+    public UtenteObject getUserByUsername(String user){
         tabella.select();
         tabella.where("username='" + user + "'");
-        ResultSet utente= tabella.fetch();
-        return utente;
+        ResultSet risultato= tabella.fetch();
+        UtenteObject utentecorrente = new UtenteObject();
+        try {
+            risultato.next();
+            utentecorrente.setUsername(risultato.getString("username"));
+            utentecorrente.setPassword(risultato.getString("password"));
+            utentecorrente.setNome(risultato.getString("nome"));
+            utentecorrente.setCognome(risultato.getString("cognome"));
+            utentecorrente.setEta(risultato.getInt("eta"));
+            utentecorrente.setAltezza(risultato.getFloat("altezza"));
+            utentecorrente.setPeso(risultato.getFloat("peso"));
+            utentecorrente.setPeso_forma(risultato.getFloat("peso_forma"));
+            utentecorrente.setAllergia(AllergiaEnum.valueOf(risultato.getString("allergia")));
+            utentecorrente.setLavoro(LavoroEnum.valueOf(risultato.getString("lavoro")));
+            utentecorrente.setLivello_attivita_fisica(LivelloAttivitaFisicaEnum.valueOf(risultato.getString("livello_attivita_fisica")));
+            utentecorrente.setEmail(risultato.getString("email"));
+            utentecorrente.setSesso(risultato.getInt("sesso"));
+            utentecorrente.setProgramma_alimentare(new ProgrammaAlimentareModel().getProgrammaAlimentare(risultato.getBoolean("prog_alim_comb"),risultato.getInt("programma_alimentare")));
+            utentecorrente.setProg_alim_comb(risultato.getBoolean("prog_alim_comb"));
+            //manca set programma allenamento
+            utentecorrente.setProg_alim_comb(risultato.getBoolean("prog_allen_comb"));
+        } catch (Exception e) {
+            System.out.println("C'è un errore:" + e);
+        }
+        return utentecorrente;
     }
 
     public void updateInfoUtente(String username, Map<String,Object> campoutente){

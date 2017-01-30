@@ -1,11 +1,13 @@
 package Model;
 
+import Helpers.DbTable;
+import Model.Dbtable.Prog_alim_comb;
 import Model.Dbtable.Prog_alim_manu;
-import Object.ProgAlimManObject;
-import Object.GiornoAlimProgObject;
-import Object.PastoObject;
-import Object.PortataObject;
+import Object.*;
+import Object.Enum.AlimentazioneEnum;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -13,9 +15,11 @@ import java.util.Iterator;
  */
 public class ProgrammaAlimentareModel {
     protected Prog_alim_manu manuale;
+    protected Prog_alim_comb combinato;
 
     public ProgrammaAlimentareModel() {
         manuale = new Prog_alim_manu();
+        combinato = new Prog_alim_comb();
     }
 
     public void inserisciProgManuale(ProgAlimManObject progmanuale) {
@@ -42,5 +46,41 @@ public class ProgrammaAlimentareModel {
         manuale.insert(dati);
         int nuovoid = manuale.executeForKey();
         progmanuale.setId(nuovoid);
+    }
+
+    public ProgrammaAlimentareObject getProgrammaAlimentare(boolean comb, Integer progalim) {
+        if (progalim == null) return null;
+        int i = 3;
+        DbTable tipoprogramma;
+        if (comb) tipoprogramma = combinato;
+        else {
+            tipoprogramma = manuale;
+            i = 1;
+        }
+        tipoprogramma.select();
+        tipoprogramma.where("id='" + progalim + "'");
+        ResultSet rs = tipoprogramma.fetch();
+        ArrayList<GiornoAlimProgObject> giorniprogrammati = new ArrayList<GiornoAlimProgObject>();
+        try {
+            rs.next();
+            GiornoAlimModel giornomodel = new GiornoAlimModel();
+            for (int j = i; j < i + 7; j++) {
+                giorniprogrammati.add(giornomodel.getGiornoProgrammato(rs.getInt(j)));
+            }
+            if (comb) {
+                ProgAlimCombObject progcomb = new ProgAlimCombObject(giorniprogrammati);
+                progcomb.setId(progalim);
+                progcomb.setFabbisogno(rs.getInt("fabbisogno"));
+                progcomb.setTipo_alimentazione(AlimentazioneEnum.valueOf(rs.getString("tipo_alimentazione")));
+                return progcomb;
+            } else {
+                ProgAlimManObject progman = new ProgAlimManObject(giorniprogrammati);
+                progman.setId(progalim);
+                return progman;
+            }
+        } catch (Exception e) {
+            System.out.println("C'è un errore grave" + e);
+            return null;
+        }
     }
 }

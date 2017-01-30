@@ -90,6 +90,29 @@ public class GiornoAlimModel {
 
     }
 
+    public GiornoAlimProgObject getGiornoProgrammato(int idgiorno){
+        programmato.select();
+        programmato.where("id_giorno='" + idgiorno + "'");
+        ResultSet rs = programmato.fetch();
+        ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
+        try{
+            rs.next();
+            PastoModel pastomodel = new PastoModel();
+            for(int i=2;i<6;i++){
+                PastoObject pasto = pastomodel.getPastoById(rs.getInt(i));
+                pasti.add(pasto);
+            }
+            GiornoAlimProgObject giornoprog = new GiornoAlimProgObject(pasti);
+            giornoprog.setId_giorno(idgiorno);
+            giornoprog.setFabbisogno(rs.getInt("fabbisogno"));
+            return giornoprog;
+        }
+        catch (Exception e){
+            System.out.println("C'è un errore" +e );
+            return null;
+        }
+    }
+
     /*public int findPastoInserito(String pasto, LocalDate data, String username){
         effettivo.select(pasto);
         effettivo.where("username='" + username + "' and data='" + data+"'");

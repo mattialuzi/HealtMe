@@ -156,6 +156,8 @@ public class AlimentazioneController extends BaseAlimController {
             showPasti(giornoprima,giornoprimaview);
             data = data.minusDays(1);
         }
+
+        //if(utente.getProgramma_alimentare())
         /*data = LocalDate.now().plusDays(1);
         while (!data.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
             DayOfWeek giornodoposettimana = data.getDayOfWeek();
