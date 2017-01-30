@@ -50,12 +50,12 @@ public class ProgrammaAlimentareModel {
 
     public ProgrammaAlimentareObject getProgrammaAlimentare(boolean comb, Integer progalim) {
         if (progalim == null) return null;
-        int i = 3;
+        int i = 4;
         DbTable tipoprogramma;
         if (comb) tipoprogramma = combinato;
         else {
             tipoprogramma = manuale;
-            i = 1;
+            i = 2;
         }
         tipoprogramma.select();
         tipoprogramma.where("id='" + progalim + "'");

@@ -142,16 +142,21 @@ public class AlimentazioneController extends BaseAlimController {
         LocalDate data = LocalDate.now();
         DayOfWeek giornosettimana = data.getDayOfWeek();
         GiornoAlimModel giornomodel = new GiornoAlimModel();
+        giornocorrenteview = indexalimentazione.getGiorni(giornosettimana);
+        giornocorrenteview.setButtonFromTable();
+        giornocorrenteview.setTableFromButton();
         indexalimentazione.setTodayTab(giornosettimana);
         int i = giornosettimana.getValue();
         ProgrammaAlimentareObject progalim = utente.getProgramma_alimentare();
-        for (int j = i; j > 0; j--) {
+        giornocorrente = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
+        showPasti(giornocorrente, giornocorrenteview);
+        data = data.minusDays(1);
+        for (int j = i-1; j > 0; j--) {
             GiornoAlimView giornoprimaview = indexalimentazione.getGiorni(DayOfWeek.of(j));
             GiornoAlimObject giornoprima = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
             showPasti(giornoprima, giornoprimaview);
             data = data.minusDays(1);
         }
-
         if (progalim != null) {
             for (int j = 1; j <= 7; j++) { //perchè DayOfWeek.of(j) ritorna Lunedì se j=1 .... Domenica se j=7
                 GiornoAlimView giornodopoview = indexalimentazione.getGiorni(DayOfWeek.of(j));

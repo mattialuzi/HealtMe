@@ -33,7 +33,7 @@ public class GiornoAlimModel {
             if(rs.isBeforeFirst()){
                 rs.next();
                 PastoModel pastomodel = new PastoModel();
-                for(int i =3; i<7; i++){
+                for(int i =4; i<8; i++){
                     PastoObject pasto = pastomodel.getPastoById(rs.getInt(i));
                     pasti.add(pasto);
                 }
@@ -98,7 +98,7 @@ public class GiornoAlimModel {
         try{
             rs.next();
             PastoModel pastomodel = new PastoModel();
-            for(int i=2;i<6;i++){
+            for(int i=3;i<7;i++){
                 PastoObject pasto = pastomodel.getPastoById(rs.getInt(i));
                 pasti.add(pasto);
             }
