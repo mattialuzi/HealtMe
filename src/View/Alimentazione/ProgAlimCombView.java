@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
  */
 public class ProgAlimCombView {
     private JPanel mainPanel;
-    private JComboBox comboBox1;
+    private JComboBox tipoalimBox;
     private JButton indietroButton;
     private JButton generaProgrammaButton;
 
@@ -25,5 +25,9 @@ public class ProgAlimCombView {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public JComboBox getTipoalimBox() {
+        return tipoalimBox;
     }
 }

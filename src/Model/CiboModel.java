@@ -5,6 +5,7 @@ import Object.CiboObject;
 import Object.Enum.*;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  * Created by lorenzobraconi on 12/01/17.
@@ -66,5 +67,22 @@ public class CiboModel {
         tabella.where("portata='" + portata + "'");
         ResultSet cibo = tabella.fetch();
         return cibo;
+    }
+
+    public ArrayList<String> getCiboForUser (String allergia,String tipoalimentazione,String portata,String[] idoneita){
+        tabella.select("nome");
+        String dati = "portata=' " + portata + "' and allergia != '" + allergia + "' and (idoneita = '" + idoneita[0] + "'";
+        int i=idoneita.length;
+        for (int j=1; j<i; j++) {
+            dati += " or idoneita = '" + idoneita[j] + "'";
+        }
+        dati += ") and ( compatibilita = 'vegana' ";
+        if (tipoalimentazione.equals("onnivora"))
+            dati += "or compatibilita = 'onnivora' or compatibilita = 'vegeteriana'";
+        else if (tipoalimentazione.equals("vegetariana"))
+            dati += "or compatibilita = 'vegeteriana'";
+        dati += ")";
+        tabella.where(dati);
+        ResultSet rs = tabella.fetch();
     }
 }

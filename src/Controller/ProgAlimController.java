@@ -4,6 +4,7 @@ package Controller;
 import Model.CiboModel;
 import Model.ProgrammaAlimentareModel;
 import Model.UtenteModel;
+import Object.Enum.IdoneitaEnum;
 import Object.Enum.LavoroEnum;
 import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.Enum.PortataEnum;
@@ -223,6 +224,23 @@ public class ProgAlimController extends BaseAlimController {
 
         private void generaProgramma(){
             int fabbisogno = calcolaFabbisogno();
+            int colazione = (fabbisogno*25)/100;
+            int spuntino = (fabbisogno*10)/100;
+            int pranzo = (fabbisogno*35)/100;
+            int cena = (fabbisogno*30)/100;
+            CiboModel cibomodel = new CiboModel();
+            String tipoalim = progalimcomb.getTipoalimBox().getSelectedItem().toString();
+            String allergia = utente.getAllergia().toString();
+            ArrayList<String> snackcolazione = cibomodel.getCiboForUser(allergia,tipoalim,"snack", new String[] {"colazione","colazione_spuntino"});
+            ArrayList<String> snackspuntino = cibomodel.getCiboForUser(allergia,tipoalim,"snack", new String[] {"spuntino","colazione_spuntino"});
+            ArrayList<String> frutta = cibomodel.getCiboForUser(allergia,tipoalim,"frutta", new String[] {"tutti"});
+            ArrayList<String> primopranzo = cibomodel.getCiboForUser(allergia,tipoalim,"primo", new String[] {"pranzo","pranzo_cena"});
+            ArrayList<String> primocena = cibomodel.getCiboForUser(allergia,tipoalim,"primo", new String[] {"cena","pranzo_cena"});
+            ArrayList<String> secondo = cibomodel.getCiboForUser(allergia,tipoalim,"secondo", new String[] {"pranzo_cena"});
+            ArrayList<String> contorno = cibomodel.getCiboForUser(allergia,tipoalim,"contorno", new String[] {"pranzo_cena"});
+            ArrayList<String> dolci = cibomodel.getCiboForUser(allergia,tipoalim,"dolce", new String[] {"pranzo_cena"});
+            ArrayList<String> bevandapranzocena = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"pranzo_cena","tutti"});
+            ArrayList<String> bevandacolazionespuntino = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"colazione_spuntino","tutti"});
         }
 
         private int calcolaFabbisogno(){
@@ -241,9 +259,17 @@ public class ProgAlimController extends BaseAlimController {
                 uomomap.put(74, (8.4f * pesoforma) + 819);
                 mb = uomomap.floorEntry(eta).getValue();
                 if(attivitafisica.equals(LivelloAttivitaFisicaEnum.assente) || attivitafisica.equals(LivelloAttivitaFisicaEnum.leggero)){
-                    // mappa laf uomo NO attivita
+                    HashMap<LavoroEnum,Float> uomohash = new HashMap<LavoroEnum,Float>();
+                    uomohash.put(LavoroEnum.leggero,1.41f);
+                    uomohash.put(LavoroEnum.moderato,1.70f);
+                    uomohash.put(LavoroEnum.pesante,2.01f);
+                    laf=uomohash.get(lavoro);
                 } else {
-                    // mappa laf uomo SI attivita
+                    HashMap<LavoroEnum,Float> uomohash = new HashMap<LavoroEnum,Float>();
+                    uomohash.put(LavoroEnum.leggero,1.55f);
+                    uomohash.put(LavoroEnum.moderato,1.78f);
+                    uomohash.put(LavoroEnum.pesante,2.10f);
+                    laf=uomohash.get(lavoro);
                 }
             } else {
                 TreeMap<Integer, Float> donnamap = new TreeMap<Integer, Float>();
@@ -253,12 +279,20 @@ public class ProgAlimController extends BaseAlimController {
                 donnamap.put(74, (9.8f * pesoforma) + 624);
                 mb = donnamap.floorEntry(eta).getValue();
                 if(attivitafisica.equals(LivelloAttivitaFisicaEnum.assente) || attivitafisica.equals(LivelloAttivitaFisicaEnum.leggero)){
-                    // mappa laf donna NO attivita
+                    HashMap<LavoroEnum,Float> donnahash = new HashMap<LavoroEnum,Float>();
+                    donnahash.put(LavoroEnum.leggero,1.42f);
+                    donnahash.put(LavoroEnum.moderato,1.56f);
+                    donnahash.put(LavoroEnum.pesante,1.73f);
+                    laf=donnahash.get(lavoro);
                 } else {
-                    // mappa laf donna SI attivita
+                    HashMap<LavoroEnum,Float> donnahash = new HashMap<LavoroEnum,Float>();
+                    donnahash.put(LavoroEnum.leggero,1.56f);
+                    donnahash.put(LavoroEnum.moderato,1.64f);
+                    donnahash.put(LavoroEnum.pesante,1.82f);
+                    laf=donnahash.get(lavoro);
                 }
             }
-            return 0;//mb*laf;
+            return Math.round(mb*laf);
         }
 
         private int calcolaCalorie(PortataObject portata){
