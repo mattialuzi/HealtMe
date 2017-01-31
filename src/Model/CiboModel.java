@@ -84,5 +84,16 @@ public class CiboModel {
         dati += ")";
         tabella.where(dati);
         ResultSet rs = tabella.fetch();
+        ArrayList<String> cibi = new ArrayList<String>();
+        try{
+            while(rs.next()){
+                cibi.add(rs.getString("nome"));
+            }
+
+        } catch(Exception e){
+            System.out.println("Errore: "+e);
+        }
+
+        return cibi;
     }
 }
