@@ -21,6 +21,7 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by lorenzobraconi on 25/01/17.
@@ -214,7 +215,7 @@ public class ProgAlimController extends BaseAlimController {
             }
             utente.setProgramma_alimentare(nuovoprogmanuale);
             utente.setProg_alim_comb(false);
-            new ProgrammaAlimentareModel().inserisciProgManuale(nuovoprogmanuale);
+            new ProgrammaAlimentareModel().inserisciProgramma(nuovoprogmanuale, false);
             UtenteModel utentemodel = new UtenteModel();
             HashMap<String, Object> campo = new HashMap<String, Object>();
             campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
@@ -249,7 +250,7 @@ public class ProgAlimController extends BaseAlimController {
             ProgAlimCombObject nuovoprogcombinato = new ProgAlimCombObject(giorniProgComb, fabbisogno, AlimentazioneEnum.valueOf(tipoalim));
             utente.setProgramma_alimentare(nuovoprogcombinato);
             utente.setProg_alim_comb(true);
-            new ProgrammaAlimentareModel().inserisciProgCombinato(nuovoprogcombinato);
+            new ProgrammaAlimentareModel().inserisciProgramma(nuovoprogcombinato, true);
             UtenteModel utentemodel = new UtenteModel();
             HashMap<String, Object> campo = new HashMap<String, Object>();
             campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
@@ -339,88 +340,95 @@ public class ProgAlimController extends BaseAlimController {
         private PastoObject generaColazione(ArrayList<String> snack, ArrayList<String> frutta, ArrayList<String> bevanda){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabsnack = (fabbisogno*10)/100;
-            portate.add(generaSnack(snack, fabsnack));
+            portate.add(generaPortata(snack, fabsnack, PortataEnum.snack));
             int fabfrutta = (fabbisogno*10)/100;
-            portate.add(generaFrutta(frutta,fabfrutta));
+            portate.add(generaPortata(frutta,fabfrutta, PortataEnum.frutta));
             int fabbevanda = (fabbisogno*5)/100;
-            portate.add(generaBevanda(bevanda,fabbevanda));
+            portate.add(generaPortata(bevanda,fabbevanda, PortataEnum.bevanda));
             return new PastoObject(portate, PastoEnum.colazione);
         }
 
         private PastoObject generaPranzo(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevanda, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabprimo = (fabbisogno*15)/100;
-            portate.add(generaPrimo(primo, fabprimo));
+            portate.add(generaPortata(primo, fabprimo, PortataEnum.primo));
             int fabsecondo = (fabbisogno*10)/100;
-            portate.add(generaSecondo(secondo,fabsecondo));
+            portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
             int fabcontorno = (fabbisogno*5)/100;
-            portate.add(generaContorno(contorno,fabcontorno));
+            portate.add(generaPortata(contorno,fabcontorno, PortataEnum.contorno));
             int fabbevanda = (fabbisogno*2)/100;
-            portate.add(generaBevanda(bevanda, fabbevanda));
+            portate.add(generaPortata(bevanda, fabbevanda, PortataEnum.bevanda));
             int fabfrutta = (fabbisogno*3)/100;
-            portate.add(generaFrutta(frutta, fabfrutta));
+            portate.add(generaPortata(frutta, fabfrutta, PortataEnum.frutta));
             return new PastoObject(portate, PastoEnum.pranzo);
         }
 
         private PastoObject generaPranzoDolce(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevanda, ArrayList<String> dolce){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabprimo = (fabbisogno*13)/100;
-            portate.add(generaPrimo(primo, fabprimo));
+            portate.add(generaPortata(primo, fabprimo, PortataEnum.primo));
             int fabsecondo = (fabbisogno*9)/100;
-            portate.add(generaSecondo(secondo,fabsecondo));
+            portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
             int fabcontorno = (fabbisogno*4)/100;
-            portate.add(generaContorno(contorno,fabcontorno));
+            portate.add(generaPortata(contorno,fabcontorno, PortataEnum.contorno));
             int fabbevanda = (fabbisogno*2)/100;
-            portate.add(generaBevanda(bevanda, fabbevanda));
+            portate.add(generaPortata(bevanda, fabbevanda, PortataEnum.bevanda));
             int fabdolce = (fabbisogno*7)/100;
-            portate.add(generaDolce(dolce, fabdolce));
+            portate.add(generaPortata(dolce, fabdolce, PortataEnum.dolce));
             return new PastoObject(portate, PastoEnum.pranzo);
         }
 
         private PastoObject generaCenaDispari(ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> frutta, ArrayList<String> bevanda){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabsecondo = (fabbisogno*15)/100;
-            portate.add(generaSecondo(secondo,fabsecondo));
+            portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
             int fabcontorno = (fabbisogno*10)/100;
-            portate.add(generaContorno(contorno,fabcontorno));
+            portate.add(generaPortata(contorno,fabcontorno, PortataEnum.contorno));
             int fabfrutta = (fabbisogno*3)/100;
-            portate.add(generaFrutta(frutta, fabfrutta));
+            portate.add(generaPortata(frutta, fabfrutta, PortataEnum.frutta));
             int fabbevanda = (fabbisogno*2)/100;
-            portate.add(generaBevanda(bevanda, fabbevanda));
+            portate.add(generaPortata(bevanda, fabbevanda, PortataEnum.bevanda));
             return new PastoObject(portate, PastoEnum.cena);
         }
 
         private PastoObject generaCenaPari(ArrayList<String> secondo, ArrayList<String> primo, ArrayList<String> frutta, ArrayList<String> bevanda){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabsecondo = (fabbisogno*15)/100;
-            portate.add(generaSecondo(secondo,fabsecondo));
+            portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
             int fabprimo = (fabbisogno*10)/100;
-            portate.add(generaPrimo(primo,fabprimo));
+            portate.add(generaPortata(primo,fabprimo, PortataEnum.primo));
             int fabfrutta = (fabbisogno*3)/100;
-            portate.add(generaFrutta(frutta, fabfrutta));
+            portate.add(generaPortata(frutta, fabfrutta, PortataEnum.frutta));
             int fabbevanda = (fabbisogno*2)/100;
-            portate.add(generaBevanda(bevanda, fabbevanda));
+            portate.add(generaPortata(bevanda, fabbevanda, PortataEnum.bevanda));
             return new PastoObject(portate, PastoEnum.cena);
         }
 
         private PastoObject generaSpuntino(ArrayList<String> snack, ArrayList<String> frutta, ArrayList<String> bevanda){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabsnack = (fabbisogno*5)/100;
-            portate.add(generaSnack(snack, fabsnack));
+            portate.add(generaPortata(snack, fabsnack, PortataEnum.snack));
             int fabfrutta = (fabbisogno*3)/100;
-            portate.add(generaFrutta(frutta,fabfrutta));
+            portate.add(generaPortata(frutta,fabfrutta, PortataEnum.frutta));
             int fabbevanda = (fabbisogno*2)/100;
-            portate.add(generaBevanda(bevanda,fabbevanda));
+            portate.add(generaPortata(bevanda,fabbevanda, PortataEnum.bevanda));
             return new PastoObject(portate, PastoEnum.spuntino);
         }
 
-        private PortataObject generaSnack(ArrayList<String> snack, int calorie){
-            CiboObject cibo = new CiboModel().getCiboByName();
+        private PortataObject generaPortata(ArrayList<String> portate, int calorie, PortataEnum tipoportata){
+            int randomindex = randomPortata(portate.size());
+            CiboObject cibo = new CiboModel().getCiboByName(portate.get(randomindex));
             int quantita = calcolaQuantita(calorie, cibo.getKilocal());
-            return new PortataObject(cibo, PortataEnum.snack, quantita);
+            return new PortataObject(cibo, tipoportata, quantita);
         }
 
+        private int randomPortata(int size){
+            return ThreadLocalRandom.current().nextInt(0, size);
+        }
 
+        private int calcolaQuantita(int calorie, int kilocal){
+            return (calorie*100)/kilocal;
+        }
 
         private int calcolaCalorie(PortataObject portata){
             return portata.getQuantita()*(portata.getCibo().getKilocal())/100;

@@ -1,6 +1,7 @@
 package Object;
 
 import Helpers.JObject;
+import Object.Enum.AlimentazioneEnum;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,5 +34,13 @@ public abstract class ProgrammaAlimentareObject extends JObject {
     public void setSettimanaalimentare(int index, GiornoAlimProgObject giorno) {
         settimanaalimentare.set(index, giorno);
     }
+
+    public abstract void setFabbisogno(int fabbisogno);
+
+    public abstract int getFabbisogno();
+
+    public abstract void setTipo_alimentazione(AlimentazioneEnum tipo_alimentazione);
+
+    public abstract AlimentazioneEnum getTipo_alimentazione();
 }
 
