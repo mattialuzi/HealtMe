@@ -1,16 +1,19 @@
 package View.Alimentazione;
 
+import Helpers.ComboItem;
 import Helpers.View;
 import Object.Enum.*;
 import Object.CiboObject;
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.util.Enumeration;
+import java.util.HashMap;
 
 /**
  * Created by lorenzobraconi on 11/01/17.
  */
-public class NewCiboView extends View{
+public class NewCiboView extends View {
     private JPanel mainPanel;
     private JButton azzeraCampiButton;
     private JButton aggiungiAlimentoButton;
@@ -27,40 +30,47 @@ public class NewCiboView extends View{
         allergia.setModel(new DefaultComboBoxModel(AllergiaEnum.values()));
         portata.setModel(new DefaultComboBoxModel(PortataEnum.values()));
         compatibilita.setModel(new DefaultComboBoxModel(CompatibilitaEnum.values()));
-        ComboItem[] items = new ComboItem[] {new ComboItem("tutti", "Tutti i pasti"), new ComboItem("pranzo_cena","Pranzo e Cena"), new ComboItem("colazione_spuntino","Colazione e Spuntino"), new ComboItem("pranzo","Pranzo"), new ComboItem("cena","Cena"), new ComboItem("colazione","Colazione"), new ComboItem("spuntino","Spuntino")};
+        ComboItem[] items = new ComboItem[]{new ComboItem("pranzo_cena", "Pranzo e Cena"), new ComboItem("pranzo", "Pranzo"), new ComboItem("cena", "Cena")};
         idoneita.setModel(new DefaultComboBoxModel(items));
     }
 
-    public void addAzzeraCampiButtonListener(ActionListener listener) { azzeraCampiButton.addActionListener(listener); }
+    public void addAzzeraCampiButtonListener(ActionListener listener) {
+        azzeraCampiButton.addActionListener(listener);
+    }
 
-    public void addAggiungiAlimentoButtonListener(ActionListener listener){ aggiungiAlimentoButton.addActionListener(listener);}
+    public void addAggiungiAlimentoButtonListener(ActionListener listener) {
+        aggiungiAlimentoButton.addActionListener(listener);
+    }
 
-    public void azzeraCampi(){
+    public void addSetIdoneitaItemListener (ItemListener listener) {
+        portata.addItemListener(listener);
+    }
+
+    public void azzeraCampi() {
         nome.setText("");
         kcal.setText("");
         gruppo.setSelectedIndex(0);
         portata.setSelectedIndex(0);
         allergia.setSelectedIndex(0);
         compatibilita.setSelectedIndex(0);
-        idoneita.setSelectedIndex(0);
     }
 
-    public boolean isValid(){
-        boolean validator= true;
-        if(!validate(nome.getText(),"cibo")){
+    public boolean isValid() {
+        boolean validator = true;
+        if (!validate(nome.getText(), "cibo")) {
             JOptionPane.showMessageDialog(null, "Nome non valido", "ERRORE", JOptionPane.ERROR_MESSAGE);
             nome.requestFocus();
-            validator=false;
+            validator = false;
         }
-        if(!validate(kcal.getText(),"intero")){
+        if (!validate(kcal.getText(), "intero")) {
             JOptionPane.showMessageDialog(null, "Valore di kcal non valido", "ERRORE", JOptionPane.ERROR_MESSAGE);
             kcal.requestFocus();
-            validator=false;
+            validator = false;
         }
         return validator;
     }
 
-    public CiboObject getNuovoCibo(){
+    public CiboObject getNuovoCibo() {
         CiboObject nuovocibo = new CiboObject();
         nuovocibo.setNome(nome.getText());
         nuovocibo.setKilocal(Integer.parseInt(kcal.getText()));
@@ -68,7 +78,7 @@ public class NewCiboView extends View{
         nuovocibo.setCompatibilita((CompatibilitaEnum) compatibilita.getSelectedItem());
         nuovocibo.setGruppo((GruppoEnum) gruppo.getSelectedItem());
         nuovocibo.setPortata((PortataEnum) portata.getSelectedItem());
-        ComboItem combo = (ComboItem)idoneita.getSelectedItem();
+        ComboItem combo = (ComboItem) idoneita.getSelectedItem();
         nuovocibo.setIdoneita(IdoneitaEnum.valueOf(combo.getValue()));
         return nuovocibo;
     }
@@ -77,28 +87,38 @@ public class NewCiboView extends View{
         return mainPanel;
     }
 
-    private class ComboItem {
-        private String value;
-        private String label;
-
-        public ComboItem(String value, String label) {
-            this.value = value;
-            this.label = label;
+    public void setIdoneita(PortataEnum tipoportata) {
+        ComboItem[] items;
+        if (tipoportata.equals(PortataEnum.secondo) || tipoportata.equals(PortataEnum.dolce) || tipoportata.equals(PortataEnum.contorno)) {
+            items = new ComboItem[]{new ComboItem("pranzo_cena", "Pranzo e Cena")};
         }
-
-        public String getValue() {
-            return value;
+        else {
+            if (tipoportata.equals(PortataEnum.primo)) {
+                items = new ComboItem[]{new ComboItem("pranzo_cena", "Pranzo e Cena"), new ComboItem("pranzo", "Pranzo"), new ComboItem("cena", "Cena")};
+            }
+            else {
+                if (tipoportata.equals(PortataEnum.snack)) {
+                    items = new ComboItem[]{new ComboItem("colazione_spuntino", "Colazione e Spuntino"), new ComboItem("colazione", "Colazione"), new ComboItem("spuntino", "Spuntino")};
+                }
+                else {
+                    if (tipoportata.equals(PortataEnum.bevanda)) {
+                        items = new ComboItem[] {new ComboItem("tutti", "Tutti i Pasti"), new ComboItem("pranzo_cena", "Pranzo e Cena"), new ComboItem("colazione_spuntino", "Colazione e Spuntino")};
+                    }
+                    else {
+                        items = new ComboItem[] {new ComboItem("tutti", "Tutti i Pasti") }; //tipoportata = PortataEnum.frutta
+                    }
+                }
+            }
         }
-
-        public String getLabel() {
-            return label;
-        }
-
-        @Override
-        public String toString(){
-            return label;
-        }
+        idoneita.setModel(new DefaultComboBoxModel(items));
     }
+
+
+
+
+
+
+
 }
 
 

@@ -258,7 +258,7 @@ public class ProgAlimController extends BaseAlimController {
                     // mappa laf donna SI attivita
                 }
             }
-            return mb*laf;
+            return 0;//mb*laf;
         }
 
         private int calcolaCalorie(PortataObject portata){

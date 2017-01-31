@@ -1,6 +1,8 @@
 package Controller;
 
+import Helpers.ComboItem;
 import Model.CiboModel;
+import Model.Dbtable.Portata;
 import Model.GiornoAlimModel;
 import Model.PastoModel;
 import Model.PortataModel;
@@ -90,7 +92,17 @@ public class AlimentazioneController extends BaseAlimController {
                     }
                 }
             }
-            });
+        });
+
+        newcibo.addSetIdoneitaItemListener(new ItemListener () {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange()== ItemEvent.SELECTED) {
+                    JComboBox portatacombo =(JComboBox) e.getSource();
+                    newcibo.setIdoneita((PortataEnum)portatacombo.getSelectedItem());
+                }
+            }
+        });
 
         giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
 
