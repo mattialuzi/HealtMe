@@ -17,6 +17,13 @@ public class PortataObject extends JObject {
         quantita=0;
     }
 
+    public PortataObject(CiboObject nuovocibo, PortataEnum tipo, int quantita) {
+        id_pasto=0;
+        cibo=nuovocibo;
+        this.tipo=tipo;
+        this.quantita=quantita;
+    }
+
     public int getId_pasto() {
         return id_pasto;
     }

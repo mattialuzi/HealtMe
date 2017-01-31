@@ -4,10 +4,7 @@ package Controller;
 import Model.CiboModel;
 import Model.ProgrammaAlimentareModel;
 import Model.UtenteModel;
-import Object.Enum.IdoneitaEnum;
-import Object.Enum.LavoroEnum;
-import Object.Enum.LivelloAttivitaFisicaEnum;
-import Object.Enum.PortataEnum;
+import Object.Enum.*;
 import View.Alimentazione.*;
 import Object.*;
 
@@ -38,6 +35,7 @@ public class ProgAlimController extends BaseAlimController {
     private ProgAlimCombView progalimcomb;
     private GiornoAlimForm giornoselezionato;
     private AlimentazioneView alimentazione;
+    private int fabbisogno;
 
     public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente) {
 
@@ -162,6 +160,8 @@ public class ProgAlimController extends BaseAlimController {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         generaProgramma();
+                        showNewProg();
+                        alimCardLayout.show(alimMainPanel,"IndexAlimentazioneView");
                     }
                 });
             }
@@ -223,11 +223,7 @@ public class ProgAlimController extends BaseAlimController {
         }
 
         private void generaProgramma(){
-            int fabbisogno = calcolaFabbisogno();
-            int colazione = (fabbisogno*25)/100;
-            int spuntino = (fabbisogno*10)/100;
-            int pranzo = (fabbisogno*35)/100;
-            int cena = (fabbisogno*30)/100;
+            fabbisogno = calcolaFabbisogno();
             CiboModel cibomodel = new CiboModel();
             String tipoalim = progalimcomb.getTipoalimBox().getSelectedItem().toString();
             String allergia = utente.getAllergia().toString();
@@ -240,7 +236,25 @@ public class ProgAlimController extends BaseAlimController {
             ArrayList<String> contorno = cibomodel.getCiboForUser(allergia,tipoalim,"contorno", new String[] {"pranzo_cena"});
             ArrayList<String> dolci = cibomodel.getCiboForUser(allergia,tipoalim,"dolce", new String[] {"pranzo_cena"});
             ArrayList<String> bevandapranzocena = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"pranzo_cena","tutti"});
-            ArrayList<String> bevandacolazionespuntino = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"colazione_spuntino","tutti"});
+            ArrayList<String> bevandacolazione = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"colazione","colazione_spuntino","tutti"});
+            ArrayList<String> bevandaspuntino = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"spuntino","colazione_spuntino","tutti"});
+            ArrayList<GiornoAlimProgObject> giorniProgComb = new ArrayList<GiornoAlimProgObject>();
+            for (int i=1; i<7; i++) {
+                if (i % 2 == 0)
+                    giorniProgComb.add(generaGiorniPari(snackcolazione, snackspuntino, frutta, primopranzo, secondo, contorno, bevandapranzocena, bevandacolazione, bevandaspuntino, primocena));
+                else
+                    giorniProgComb.add(generaGiorniDispari(snackcolazione, snackspuntino, frutta, primopranzo, secondo, contorno, bevandapranzocena, bevandacolazione, bevandaspuntino));
+            }
+            giorniProgComb.add(generaDomenica(snackcolazione, snackspuntino, frutta, primopranzo, secondo, contorno, bevandapranzocena, bevandacolazione, bevandaspuntino, dolci));
+            ProgAlimCombObject nuovoprogcombinato = new ProgAlimCombObject(giorniProgComb, fabbisogno, AlimentazioneEnum.valueOf(tipoalim));
+            utente.setProgramma_alimentare(nuovoprogcombinato);
+            utente.setProg_alim_comb(true);
+            new ProgrammaAlimentareModel().inserisciProgCombinato(nuovoprogcombinato);
+            UtenteModel utentemodel = new UtenteModel();
+            HashMap<String, Object> campo = new HashMap<String, Object>();
+            campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
+            campo.put("prog_alim_comb", 1);
+            utentemodel.updateInfoUtente(utente.getUsername(), campo);
         }
 
         private int calcolaFabbisogno(){
@@ -294,6 +308,119 @@ public class ProgAlimController extends BaseAlimController {
             }
             return Math.round(mb*laf);
         }
+
+        private GiornoAlimProgObject generaGiorniDispari(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandapranzocena, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino){
+            ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
+            pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
+            pasti.add(generaPranzo(primopranzo, secondo, contorno, bevandapranzocena, frutta));
+            pasti.add(generaCenaDispari(secondo, contorno, frutta, bevandapranzocena));
+            pasti.add(generaSpuntino(snackspuntino, frutta, bevandaspuntino));
+            return new GiornoAlimProgObject(pasti, fabbisogno);
+        }
+
+        private GiornoAlimProgObject generaGiorniPari(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandapranzocena, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino, ArrayList<String> primocena){
+            ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
+            pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
+            pasti.add(generaPranzo(primopranzo, secondo, contorno, bevandapranzocena, frutta));
+            pasti.add(generaCenaPari(secondo, primocena, frutta, bevandapranzocena));
+            pasti.add(generaSpuntino(snackspuntino, frutta, bevandaspuntino));
+            return new GiornoAlimProgObject(pasti, fabbisogno);
+        }
+
+        private GiornoAlimProgObject generaDomenica(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandapranzocena, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino, ArrayList<String> dolci){
+            ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
+            pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
+            pasti.add(generaPranzoDolce(primopranzo, secondo, contorno, bevandapranzocena, dolci));
+            pasti.add(generaCenaDispari(secondo, contorno, frutta, bevandapranzocena));
+            pasti.add(generaSpuntino(snackspuntino, frutta, bevandaspuntino));
+            return new GiornoAlimProgObject(pasti, fabbisogno);
+        }
+
+        private PastoObject generaColazione(ArrayList<String> snack, ArrayList<String> frutta, ArrayList<String> bevanda){
+            ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
+            int fabsnack = (fabbisogno*10)/100;
+            portate.add(generaSnack(snack, fabsnack));
+            int fabfrutta = (fabbisogno*10)/100;
+            portate.add(generaFrutta(frutta,fabfrutta));
+            int fabbevanda = (fabbisogno*5)/100;
+            portate.add(generaBevanda(bevanda,fabbevanda));
+            return new PastoObject(portate, PastoEnum.colazione);
+        }
+
+        private PastoObject generaPranzo(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevanda, ArrayList<String> frutta){
+            ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
+            int fabprimo = (fabbisogno*15)/100;
+            portate.add(generaPrimo(primo, fabprimo));
+            int fabsecondo = (fabbisogno*10)/100;
+            portate.add(generaSecondo(secondo,fabsecondo));
+            int fabcontorno = (fabbisogno*5)/100;
+            portate.add(generaContorno(contorno,fabcontorno));
+            int fabbevanda = (fabbisogno*2)/100;
+            portate.add(generaBevanda(bevanda, fabbevanda));
+            int fabfrutta = (fabbisogno*3)/100;
+            portate.add(generaFrutta(frutta, fabfrutta));
+            return new PastoObject(portate, PastoEnum.pranzo);
+        }
+
+        private PastoObject generaPranzoDolce(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevanda, ArrayList<String> dolce){
+            ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
+            int fabprimo = (fabbisogno*13)/100;
+            portate.add(generaPrimo(primo, fabprimo));
+            int fabsecondo = (fabbisogno*9)/100;
+            portate.add(generaSecondo(secondo,fabsecondo));
+            int fabcontorno = (fabbisogno*4)/100;
+            portate.add(generaContorno(contorno,fabcontorno));
+            int fabbevanda = (fabbisogno*2)/100;
+            portate.add(generaBevanda(bevanda, fabbevanda));
+            int fabdolce = (fabbisogno*7)/100;
+            portate.add(generaDolce(dolce, fabdolce));
+            return new PastoObject(portate, PastoEnum.pranzo);
+        }
+
+        private PastoObject generaCenaDispari(ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> frutta, ArrayList<String> bevanda){
+            ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
+            int fabsecondo = (fabbisogno*15)/100;
+            portate.add(generaSecondo(secondo,fabsecondo));
+            int fabcontorno = (fabbisogno*10)/100;
+            portate.add(generaContorno(contorno,fabcontorno));
+            int fabfrutta = (fabbisogno*3)/100;
+            portate.add(generaFrutta(frutta, fabfrutta));
+            int fabbevanda = (fabbisogno*2)/100;
+            portate.add(generaBevanda(bevanda, fabbevanda));
+            return new PastoObject(portate, PastoEnum.cena);
+        }
+
+        private PastoObject generaCenaPari(ArrayList<String> secondo, ArrayList<String> primo, ArrayList<String> frutta, ArrayList<String> bevanda){
+            ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
+            int fabsecondo = (fabbisogno*15)/100;
+            portate.add(generaSecondo(secondo,fabsecondo));
+            int fabprimo = (fabbisogno*10)/100;
+            portate.add(generaPrimo(primo,fabprimo));
+            int fabfrutta = (fabbisogno*3)/100;
+            portate.add(generaFrutta(frutta, fabfrutta));
+            int fabbevanda = (fabbisogno*2)/100;
+            portate.add(generaBevanda(bevanda, fabbevanda));
+            return new PastoObject(portate, PastoEnum.cena);
+        }
+
+        private PastoObject generaSpuntino(ArrayList<String> snack, ArrayList<String> frutta, ArrayList<String> bevanda){
+            ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
+            int fabsnack = (fabbisogno*5)/100;
+            portate.add(generaSnack(snack, fabsnack));
+            int fabfrutta = (fabbisogno*3)/100;
+            portate.add(generaFrutta(frutta,fabfrutta));
+            int fabbevanda = (fabbisogno*2)/100;
+            portate.add(generaBevanda(bevanda,fabbevanda));
+            return new PastoObject(portate, PastoEnum.spuntino);
+        }
+
+        private PortataObject generaSnack(ArrayList<String> snack, int calorie){
+            CiboObject cibo = new CiboModel().getCiboByName();
+            int quantita = calcolaQuantita(calorie, cibo.getKilocal());
+            return new PortataObject(cibo, PortataEnum.snack, quantita);
+        }
+
+
 
         private int calcolaCalorie(PortataObject portata){
             return portata.getQuantita()*(portata.getCibo().getKilocal())/100;

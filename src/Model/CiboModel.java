@@ -71,16 +71,22 @@ public class CiboModel {
 
     public ArrayList<String> getCiboForUser (String allergia,String tipoalimentazione,String portata,String[] idoneita){
         tabella.select("nome");
-        String dati = "portata=' " + portata + "' and allergia != '" + allergia + "' and (idoneita = '" + idoneita[0] + "'";
+        String dati = "portata='" + portata;
+        if(!allergia.equals("nessuna")){
+            dati += "' and allergia != '" + allergia;
+        }
+        dati += "' and (idoneita = '" + idoneita[0] + "'";
         int i=idoneita.length;
         for (int j=1; j<i; j++) {
             dati += " or idoneita = '" + idoneita[j] + "'";
         }
         dati += ") and ( compatibilita = 'vegana' ";
-        if (tipoalimentazione.equals("onnivora"))
-            dati += "or compatibilita = 'onnivora' or compatibilita = 'vegeteriana'";
-        else if (tipoalimentazione.equals("vegetariana"))
-            dati += "or compatibilita = 'vegeteriana'";
+        if (tipoalimentazione.equals("onnivora")){
+            dati += "or compatibilita = 'onnivora' or compatibilita = 'vegetariana'";
+        }
+        else if (tipoalimentazione.equals("vegetariana")) {
+            dati += "or compatibilita = 'vegetariana'";
+        }
         dati += ")";
         tabella.where(dati);
         ResultSet rs = tabella.fetch();
@@ -89,11 +95,9 @@ public class CiboModel {
             while(rs.next()){
                 cibi.add(rs.getString("nome"));
             }
-
         } catch(Exception e){
             System.out.println("Errore: "+e);
         }
-
         return cibi;
     }
 }

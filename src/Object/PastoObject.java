@@ -28,6 +28,17 @@ public class PastoObject extends JObject {
         tipipasti.add(3,PastoEnum.spuntino);
     }
 
+    public PastoObject(ArrayList<PortataObject> portate, PastoEnum tipo) {
+        id=0;
+        this.tipo=tipo;
+        this.portate=portate;
+        tipipasti = new ArrayList<PastoEnum>();
+        tipipasti.add(0,PastoEnum.colazione);
+        tipipasti.add(1,PastoEnum.pranzo);
+        tipipasti.add(2,PastoEnum.cena);
+        tipipasti.add(3,PastoEnum.spuntino);
+    }
+
     public ArrayList<PortataObject> getPortate() {
         return portate;
     }

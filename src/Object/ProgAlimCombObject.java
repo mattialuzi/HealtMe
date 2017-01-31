@@ -1,6 +1,7 @@
 package Object;
 
 import Object.Enum.AlimentazioneEnum;
+import View.Alimentazione.AlimentazioneView;
 
 import java.util.ArrayList;
 
@@ -20,9 +21,9 @@ public class ProgAlimCombObject extends ProgrammaAlimentareObject {
             settimanaalimentare.add(i, new GiornoAlimProgObject());
     }
 
-    public ProgAlimCombObject(ArrayList<GiornoAlimProgObject> giorniprogrammati) {
-        fabbisogno=0;
-        tipo_alimentazione=null;
+    public ProgAlimCombObject(ArrayList<GiornoAlimProgObject> giorniprogrammati, int fabbisogno, AlimentazioneEnum tipoalim) {
+        this.fabbisogno=fabbisogno;
+        this.tipo_alimentazione=tipoalim;
         settimanaalimentare = giorniprogrammati;
     }
 

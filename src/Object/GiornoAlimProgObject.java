@@ -29,6 +29,13 @@ public class GiornoAlimProgObject extends GiornoAlimObject {
         pasti = listapasti;
     }
 
+    public GiornoAlimProgObject(ArrayList<PastoObject> listapasti, int fabbisogno){
+        id_giorno=0;
+        this.fabbisogno=fabbisogno;
+        tipo= GiornoEnum.programmato;
+        pasti = listapasti;
+    }
+
     public int getId_giorno() {
         return id_giorno;
     }
