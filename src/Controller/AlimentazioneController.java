@@ -101,6 +101,13 @@ public class AlimentazioneController extends BaseAlimController {
 
         giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
 
+        giornocorrenteview.addListenersAndShowConfermaButtons(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         giornocorrenteview.addTableSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {

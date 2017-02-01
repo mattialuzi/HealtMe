@@ -27,6 +27,10 @@ public class GiornoAlimForm {
     private JButton removePranzo;
     private JTable pranzoEffTable;
     private JLabel Titlelabel;
+    private JButton confermaColazione;
+    private JButton confermaPranzo;
+    private JButton confermaCena;
+    private JButton confermaSpuntino;
     private HashMap<ListSelectionModel, JButton> tabelle;
     private HashMap<String, JTable> bottoni;
 
@@ -80,6 +84,13 @@ public class GiornoAlimForm {
         removeSpuntino.setVisible(true);
     }
 
+    public void setConfermaButtonVisible(){
+        confermaColazione.setVisible(true);
+        confermaCena.setVisible(true);
+        confermaPranzo.setVisible(true);
+        confermaSpuntino.setVisible(true);
+    }
+
     public void addListenersAndshowButtons(ActionListener listener) {
         addColazione.addActionListener(listener);
         addPranzo.addActionListener(listener);
@@ -93,6 +104,14 @@ public class GiornoAlimForm {
         removePranzo.addActionListener(listener);
         removeCena.addActionListener(listener);
         removeSpuntino.addActionListener(listener);
+    }
+
+    public void addListenersAndShowConfermaButtons(ActionListener listener){
+        confermaColazione.addActionListener(listener);
+        confermaPranzo.addActionListener(listener);
+        confermaCena.addActionListener(listener);
+        confermaSpuntino.addActionListener(listener);
+        setConfermaButtonVisible();
     }
 
     public void addTableSelectionListener(ListSelectionListener listener) {

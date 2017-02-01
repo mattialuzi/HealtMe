@@ -20,10 +20,6 @@ public class GiornoAlimView {
     private JTable pranzoProgTable;
     private JTable colazioneProgTable;
     private JPanel effettivopanel;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
     private GiornoAlimForm giornoeffettivo;
 
     public GiornoAlimView() {
@@ -70,6 +66,10 @@ public class GiornoAlimView {
 
     public void addListenersForRemoveButtons(ActionListener listener){
         giornoeffettivo.addListenersForRemoveButtons(listener);
+    }
+
+    public void addListenersAndShowConfermaButtons(ActionListener listener){
+        giornoeffettivo.addListenersAndShowConfermaButtons(listener);
     }
 
     public void addTableSelectionListener(ListSelectionListener listener) {
