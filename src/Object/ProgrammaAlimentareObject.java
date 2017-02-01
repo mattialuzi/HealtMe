@@ -35,12 +35,6 @@ public abstract class ProgrammaAlimentareObject extends JObject {
         settimanaalimentare.set(index, giorno);
     }
 
-    public abstract void setFabbisogno(int fabbisogno);
 
-    public abstract int getFabbisogno();
-
-    public abstract void setTipo_alimentazione(AlimentazioneEnum tipo_alimentazione);
-
-    public abstract AlimentazioneEnum getTipo_alimentazione();
 }
 

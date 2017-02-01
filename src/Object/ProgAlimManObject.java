@@ -19,17 +19,4 @@ public class ProgAlimManObject extends ProgrammaAlimentareObject {
         settimanaalimentare = giorniprogrammati;
     }
 
-    public int getFabbisogno() { return 0;
-    }
-
-    public void setFabbisogno(int fabbisogno){
-    }
-
-    public AlimentazioneEnum getTipo_alimentazione(){
-        return null;
-    }
-
-    public void setTipo_alimentazione(AlimentazioneEnum tipo_alimentazione){
-    }
-
 }

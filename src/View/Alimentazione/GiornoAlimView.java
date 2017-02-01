@@ -20,6 +20,10 @@ public class GiornoAlimView {
     private JTable pranzoProgTable;
     private JTable colazioneProgTable;
     private JPanel effettivopanel;
+    private JButton button1;
+    private JButton button2;
+    private JButton button3;
+    private JButton button4;
     private GiornoAlimForm giornoeffettivo;
 
     public GiornoAlimView() {

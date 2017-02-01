@@ -39,6 +39,10 @@ public abstract class GiornoAlimObject extends JObject {
         pastimap.put("spuntino", pasti.get(3));
         return pastimap.get(tipo);
     }
+
+    public abstract int getCalorie();
+
+    public abstract void setCalorie(int calorie);
 }
 
 

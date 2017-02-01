@@ -50,11 +50,11 @@ public class GiornoAlimEffettivoObject extends GiornoAlimObject {
         this.data = data;
     }
 
-    public int getCal_assunte() {
+    public int getCalorie() {
         return cal_assunte;
     }
 
-    public void setCal_assunte(int cal_assunte) {
+    public void setCalorie(int cal_assunte) {
         this.cal_assunte = cal_assunte;
     }
 }

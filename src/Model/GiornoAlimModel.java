@@ -38,7 +38,7 @@ public class GiornoAlimModel {
                     pasti.add(pasto);
                 }
                 GiornoAlimEffettivoObject giorno = new GiornoAlimEffettivoObject(username, data, pasti);
-                giorno.setCal_assunte(rs.getInt("cal_assunte"));
+                giorno.setCalorie(rs.getInt("cal_assunte"));
                 return giorno;
             } else {
                 GiornoAlimEffettivoObject nuovogiorno = new GiornoAlimEffettivoObject(username, data);
@@ -68,7 +68,7 @@ public class GiornoAlimModel {
     public void inserisciGiornoAlimEff(GiornoAlimEffettivoObject giornoeff){
         String dati= "'" + giornoeff.getUsername()+"'";
         dati = dati +  ", '" + String.valueOf(giornoeff.getData() +"'");
-        dati = dati +  ", " + String.valueOf(giornoeff.getCal_assunte());
+        dati = dati +  ", " + String.valueOf(giornoeff.getCalorie());
         dati = dati + ", " + giornoeff.getPasti(0).getId();
         dati = dati + ", " + giornoeff.getPasti(1).getId();
         dati = dati + ", " + giornoeff.getPasti(2).getId();
@@ -79,7 +79,7 @@ public class GiornoAlimModel {
 
     public void inserisciGiornoAlimProg(GiornoAlimProgObject giornoprog){
         String dati= "'" + giornoprog.getId_giorno()+"'";
-        dati = dati +  ", '" + giornoprog.getFabbisogno() +"'";
+        dati = dati +  ", '" + giornoprog.getCalorie() +"'";
         dati = dati + ", " + giornoprog.getPasti(0).getId();
         dati = dati + ", " + giornoprog.getPasti(1).getId();
         dati = dati + ", " + giornoprog.getPasti(2).getId();
@@ -104,7 +104,7 @@ public class GiornoAlimModel {
             }
             GiornoAlimProgObject giornoprog = new GiornoAlimProgObject(pasti);
             giornoprog.setId_giorno(idgiorno);
-            giornoprog.setFabbisogno(rs.getInt("fabbisogno"));
+            giornoprog.setCalorie(rs.getInt("fabbisogno"));
             return giornoprog;
         }
         catch (Exception e){

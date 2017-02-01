@@ -211,11 +211,11 @@ public class ProgAlimController extends BaseAlimController {
                         fabbisogno += calcolaCalorie(portata);
                     }
                 }
-                giornosettimana.setFabbisogno(fabbisogno);
+                giornosettimana.setCalorie(fabbisogno);
             }
             utente.setProgramma_alimentare(nuovoprogmanuale);
             utente.setProg_alim_comb(false);
-            new ProgrammaAlimentareModel().inserisciProgramma(nuovoprogmanuale, false);
+            new ProgrammaAlimentareModel().inserisciProgrammaManuale(nuovoprogmanuale);
             UtenteModel utentemodel = new UtenteModel();
             HashMap<String, Object> campo = new HashMap<String, Object>();
             campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
@@ -250,7 +250,7 @@ public class ProgAlimController extends BaseAlimController {
             ProgAlimCombObject nuovoprogcombinato = new ProgAlimCombObject(giorniProgComb, fabbisogno, AlimentazioneEnum.valueOf(tipoalim));
             utente.setProgramma_alimentare(nuovoprogcombinato);
             utente.setProg_alim_comb(true);
-            new ProgrammaAlimentareModel().inserisciProgramma(nuovoprogcombinato, true);
+            new ProgrammaAlimentareModel().inserisciProgrammaCombinato(nuovoprogcombinato);
             UtenteModel utentemodel = new UtenteModel();
             HashMap<String, Object> campo = new HashMap<String, Object>();
             campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
@@ -430,10 +430,6 @@ public class ProgAlimController extends BaseAlimController {
             return (calorie*100)/kilocal;
         }
 
-        private int calcolaCalorie(PortataObject portata){
-            return portata.getQuantita()*(portata.getCibo().getKilocal())/100;
-        }
-
         private void showNewProg () {
             IndexAlimentazioneView indexalim = alimentazione.getIndexalimentazione();
             ProgrammaAlimentareObject progalim = utente.getProgramma_alimentare();
@@ -444,5 +440,4 @@ public class ProgAlimController extends BaseAlimController {
                 showPasti(giorno,giornoview);
             }
         }
-
 }

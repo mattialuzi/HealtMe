@@ -1,8 +1,6 @@
 package Controller;
 
-import Helpers.ComboItem;
 import Model.CiboModel;
-import Model.Dbtable.Portata;
 import Model.GiornoAlimModel;
 import Model.PastoModel;
 import Model.PortataModel;
@@ -14,13 +12,10 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.ResultSet;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -203,6 +198,11 @@ public class AlimentazioneController extends BaseAlimController {
             PortataModel portatamodel = new PortataModel();
             portatamodel.inserisciPortata(nuovaportata);
             pasto.addPortata(nuovaportata);
+            int caloriecorrenti = giornocorrente.getCalorie()+calcolaCalorie(nuovaportata);
+            giornocorrente.setCalorie(caloriecorrenti);
+            HashMap<String,Integer> mappa = new HashMap<String,Integer>();
+            mappa.put("cal_assunte",giornocorrente.getCalorie());
+            new GiornoAlimModel().updateGiornoAlimEff(giornocorrente.getUsername(),giornocorrente.getData(),mappa);
             tabellamodel.addRow(new String[]{portata,alimento,Integer.toString(quantita)});
         }
 
@@ -213,6 +213,10 @@ public class AlimentazioneController extends BaseAlimController {
         while ( portateiterator.hasNext() ) {
             PortataObject portata = portateiterator.next();
             if (alimento.equals(portata.getCibo().getNome())) {
+                giornocorrente.setCalorie(giornocorrente.getCalorie()+calcolaCalorie(portata.getCibo(),quantita));
+                HashMap<String,Integer> mappa = new HashMap<String,Integer>();
+                mappa.put("cal_assunte",giornocorrente.getCalorie());
+                new GiornoAlimModel().updateGiornoAlimEff(giornocorrente.getUsername(),giornocorrente.getData(),mappa);
                 int nuovaquantita = portata.getQuantita() + quantita;
                 portata.setQuantita(nuovaquantita);
                 new PortataModel().updatePortata(portata.getId_pasto(), alimento, nuovaquantita);
@@ -235,6 +239,10 @@ public class AlimentazioneController extends BaseAlimController {
         PastoObject pasto = giornocorrente.getPastoByTipo(nomepasto);
         pasto.removePortata(cibo);
         new PortataModel().eliminaPortata(pasto.getId(), cibo);
+    }
+
+    private int calcolaCalorie(CiboObject cibo,int quantita){
+        return quantita*(cibo.getKilocal())/100;
     }
 
 }

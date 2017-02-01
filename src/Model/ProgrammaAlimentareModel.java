@@ -22,16 +22,25 @@ public class ProgrammaAlimentareModel {
         combinato = new Prog_alim_comb();
     }
 
-    public void inserisciProgramma(ProgrammaAlimentareObject programma, boolean comb) {
+    public void inserisciProgrammaManuale(ProgAlimManObject programma){
+        String dati =String.valueOf(programma.getId());
+        manuale.insert(aggiungiGiorni(programma,dati));
+        int nuovoid = manuale.executeForKey();
+        programma.setId(nuovoid);
+    }
+
+    public void inserisciProgrammaCombinato(ProgAlimCombObject programma){
+        String dati =String.valueOf(programma.getId());
+        dati += "," +  programma.getFabbisogno() + ",'" + programma.getTipo_alimentazione() + "'";
+        combinato.insert(aggiungiGiorni(programma,dati));
+        int nuovoid = combinato.executeForKey();
+        programma.setId(nuovoid);
+    }
+
+    private String aggiungiGiorni (ProgrammaAlimentareObject programma,String dati) {
         PastoModel pastomodel = new PastoModel();
         PortataModel portatamodel = new PortataModel();
         GiornoAlimModel giornomodel = new GiornoAlimModel();
-        String dati =String.valueOf(programma.getId());
-        DbTable tipoprogramma;
-        if(comb){
-            tipoprogramma = combinato;
-            dati += "," +  programma.getFabbisogno() + ",'" + programma.getTipo_alimentazione() + "'";
-        } else tipoprogramma = manuale;
         for (int i = 0; i < 7; i++) {
             GiornoAlimProgObject giorno = programma.getSettimanaalimentare(i);
             for (int j = 0; j < 4; j++) {
@@ -48,9 +57,7 @@ public class ProgrammaAlimentareModel {
             giornomodel.inserisciGiornoAlimProg(giorno);
             dati = dati + ",'" + giorno.getId_giorno()+"'";
         }
-        tipoprogramma.insert(dati);
-        int nuovoid = tipoprogramma.executeForKey();
-        programma.setId(nuovoid);
+        return dati;
     }
 
     public ProgrammaAlimentareObject getProgrammaAlimentare(boolean comb, Integer progalim) {

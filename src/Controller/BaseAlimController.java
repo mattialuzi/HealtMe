@@ -171,4 +171,8 @@ public abstract class BaseAlimController extends Controller {
             model.setRowCount(0);
         }
     }
+
+    protected int calcolaCalorie(PortataObject portata){
+        return portata.getQuantita()*(portata.getCibo().getKilocal())/100;
+    }
 }

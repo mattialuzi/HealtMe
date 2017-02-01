@@ -44,11 +44,11 @@ public class GiornoAlimProgObject extends GiornoAlimObject {
         this.id_giorno = id_giorno;
     }
 
-    public int getFabbisogno() {
+    public int getCalorie() {
         return fabbisogno;
     }
 
-    public void setFabbisogno(int fabbisogno) {
+    public void setCalorie(int fabbisogno) {
         this.fabbisogno = fabbisogno;
     }
 }
