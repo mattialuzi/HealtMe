@@ -91,7 +91,7 @@ public class ProgAlimController extends BaseAlimController {
 
                 for (int i = 0; i < 7; i++) {
                     GiornoAlimForm giorno = progalimman.getTabView(i);
-                    giorno.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
+                    giorno.addListenersAndShowButtons(new ListenersAndShowButtonsAction());
 
                     giorno.addTableSelectionListener(new ListSelectionListener() {
                         @Override

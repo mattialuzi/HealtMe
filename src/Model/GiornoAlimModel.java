@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 
 import Model.Dbtable.Giorno_alim_prog;
+import Object.Enum.StatusEnum;
 import Object.GiornoAlimEffettivoObject;
 import Object.GiornoAlimProgObject;
 import Object.PastoObject;
@@ -37,11 +38,11 @@ public class GiornoAlimModel {
                     PastoObject pasto = pastomodel.getPastoById(rs.getInt(i));
                     pasti.add(pasto);
                 }
-                GiornoAlimEffettivoObject giorno = new GiornoAlimEffettivoObject(username, data, pasti);
+                GiornoAlimEffettivoObject giorno = new GiornoAlimEffettivoObject(username, data, pasti, StatusEnum.valueOf(rs.getString("status")));
                 giorno.setCalorie(rs.getInt("cal_assunte"));
                 return giorno;
             } else {
-                GiornoAlimEffettivoObject nuovogiorno = new GiornoAlimEffettivoObject(username, data);
+                GiornoAlimEffettivoObject nuovogiorno = new GiornoAlimEffettivoObject(username, data, StatusEnum.colazione);
                 inserisciGiornoAlimEff(nuovogiorno);
                 return nuovogiorno;
             }
@@ -73,6 +74,7 @@ public class GiornoAlimModel {
         dati = dati + ", " + giornoeff.getPasti(1).getId();
         dati = dati + ", " + giornoeff.getPasti(2).getId();
         dati = dati + ", " + giornoeff.getPasti(3).getId();
+        dati = dati + ",'" + giornoeff.getStatus() + "'";
         effettivo.insert(dati);
         effettivo.execute();
     }

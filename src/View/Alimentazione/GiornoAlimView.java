@@ -1,14 +1,13 @@
 package View.Alimentazione;
 
 import Object.Enum.GiornoEnum;
+import Object.Enum.StatusEnum;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by lorenzobraconi on 12/01/17.
@@ -61,15 +60,19 @@ public class GiornoAlimView {
     }
 
     public void addListenersAndshowButtons(ActionListener listener) {
-        giornoeffettivo.addListenersAndshowButtons(listener);
+        giornoeffettivo.addListenersAndShowButtons(listener);
     }
 
     public void addListenersForRemoveButtons(ActionListener listener){
         giornoeffettivo.addListenersForRemoveButtons(listener);
     }
 
-    public void addListenersAndShowConfermaButtons(ActionListener listener){
-        giornoeffettivo.addListenersAndShowConfermaButtons(listener);
+    public void addListenersAndShowConfermaButton(ActionListener listener){
+        giornoeffettivo.addListenersAndShowConfermaButton(listener);
+    }
+
+    public void enableConfermaButton(StatusEnum status){
+        giornoeffettivo.enableConfermaButton(status);
     }
 
     public void addTableSelectionListener(ListSelectionListener listener) {

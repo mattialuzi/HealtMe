@@ -64,7 +64,7 @@
                 </constraints>
                 <properties>
                   <actionCommand value="colazione"/>
-                  <enabled value="true"/>
+                  <enabled value="false"/>
                   <text value="Conferma"/>
                   <visible value="false"/>
                 </properties>

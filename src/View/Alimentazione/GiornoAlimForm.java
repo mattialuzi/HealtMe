@@ -1,6 +1,7 @@
 package View.Alimentazione;
 
 import Object.Enum.GiornoEnum;
+import Object.Enum.StatusEnum;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -33,6 +34,7 @@ public class GiornoAlimForm {
     private JButton confermaSpuntino;
     private HashMap<ListSelectionModel, JButton> tabelle;
     private HashMap<String, JTable> bottoni;
+    //private HashMap<StatusEnum, JButton> statusmap;
 
     public GiornoAlimForm(String Title) {
         Titlelabel.setText(Title);
@@ -84,6 +86,43 @@ public class GiornoAlimForm {
         removeSpuntino.setVisible(true);
     }
 
+    public void enableConfermaButton(StatusEnum status){
+        if(status.equals(StatusEnum.colazione)) {
+            confermaColazione.setEnabled(true);
+        } else if(status.equals(StatusEnum.pranzo)) {
+            confermaColazione.setEnabled(false);
+            confermaPranzo.setEnabled(true);
+            colazioneEffTable.setEnabled(false);
+            addColazione.setEnabled(false);
+        } else if(status.equals(StatusEnum.spuntino)) {
+            confermaPranzo.setEnabled(false);
+            confermaSpuntino.setEnabled(true);
+            colazioneEffTable.setEnabled(false);
+            pranzoEffTable.setEnabled(false);
+            addColazione.setEnabled(false);
+            addPranzo.setEnabled(false);
+        } else if(status.equals(StatusEnum.cena)) {
+            confermaSpuntino.setEnabled(false);
+            confermaCena.setEnabled(true);
+            colazioneEffTable.setEnabled(false);
+            pranzoEffTable.setEnabled(false);
+            spuntiniEffTable.setEnabled(false);
+            addColazione.setEnabled(false);
+            addPranzo.setEnabled(false);
+            addSpuntino.setEnabled(false);
+        } else {
+            confermaCena.setEnabled(false);
+            colazioneEffTable.setEnabled(false);
+            pranzoEffTable.setEnabled(false);
+            spuntiniEffTable.setEnabled(false);
+            cenaEffTable.setEnabled(false);
+            addColazione.setEnabled(false);
+            addPranzo.setEnabled(false);
+            addSpuntino.setEnabled(false);
+            addCena.setEnabled(false);
+        }
+    }
+
     public void setConfermaButtonVisible(){
         confermaColazione.setVisible(true);
         confermaCena.setVisible(true);
@@ -91,7 +130,7 @@ public class GiornoAlimForm {
         confermaSpuntino.setVisible(true);
     }
 
-    public void addListenersAndshowButtons(ActionListener listener) {
+    public void addListenersAndShowButtons(ActionListener listener) {
         addColazione.addActionListener(listener);
         addPranzo.addActionListener(listener);
         addCena.addActionListener(listener);
@@ -106,7 +145,7 @@ public class GiornoAlimForm {
         removeSpuntino.addActionListener(listener);
     }
 
-    public void addListenersAndShowConfermaButtons(ActionListener listener){
+    public void addListenersAndShowConfermaButton(ActionListener listener){
         confermaColazione.addActionListener(listener);
         confermaPranzo.addActionListener(listener);
         confermaCena.addActionListener(listener);
@@ -153,5 +192,13 @@ public class GiornoAlimForm {
     public JTable getTableFromButton(String nomebottone){
         return bottoni.get(nomebottone);
     }
+
+    /*public void setConfermaFromStatus(){
+        this.statusmap = new HashMap<StatusEnum, JButton>();
+        statusmap.put(StatusEnum.colazione, confermaColazione);
+        statusmap.put(StatusEnum.pranzo, confermaPranzo);
+        statusmap.put(StatusEnum.spuntino, confermaSpuntino);
+        statusmap.put(StatusEnum.cena, confermaCena);
+    }*/
 }
 

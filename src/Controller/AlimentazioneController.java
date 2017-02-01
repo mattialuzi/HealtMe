@@ -16,6 +16,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -101,10 +102,20 @@ public class AlimentazioneController extends BaseAlimController {
 
         giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
 
-        giornocorrenteview.addListenersAndShowConfermaButtons(new ActionListener() {
+        giornocorrenteview.enableConfermaButton(giornocorrente.getStatus());
+
+        giornocorrenteview.addListenersAndShowConfermaButton(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                StatusEnum status = StatusEnum.valueOf(e.getActionCommand());
+                int index = status.ordinal();
+                StatusEnum nuovostatus = StatusEnum.values()[index + 1];
+                giornocorrenteview.enableConfermaButton(nuovostatus);
+                ricombina();
+                giornocorrente.setStatus(nuovostatus);
+                HashMap<String, StatusEnum> campogiorno = new HashMap<String, StatusEnum>();
+                campogiorno.put("status", nuovostatus);
+                new GiornoAlimModel().updateGiornoAlimEff(utente.getUsername(),giornocorrente.getData(), campogiorno);
             }
         });
 
@@ -250,6 +261,24 @@ public class AlimentazioneController extends BaseAlimController {
 
     private int calcolaCalorie(CiboObject cibo,int quantita){
         return quantita*(cibo.getKilocal())/100;
+    }
+
+    private void ricombina() {
+        int indexstatus = giornocorrente.getStatus().ordinal();
+        int indexoggi = giornocorrente.getData().getDayOfWeek().getValue();
+        GiornoAlimObject giornoprog = utente.getProgramma_alimentare().getSettimanaalimentare(indexoggi - 1);
+        ArrayList<PortataObject> portateeff = giornocorrente.getPasti(indexstatus).getPortate();
+        ArrayList<PortataObject> portateprog = giornoprog.getPasti(indexstatus).getPortate();
+        ArrayList<PortataObject> portatediverse = new ArrayList<PortataObject>();
+        int numportateprog = portateprog.size();
+        int j = 0;
+        for (int i = 0; i<numportateprog; i++){
+            while(portateprog.get(i).getTipo() == portateeff.get(j).getTipo()){
+                if(portateprog.get(i).getCibo().getNome().equals(portateeff.get(j).getCibo().getNome())){
+                    portatediverse.add(portateeff.get(j));
+                }
+            }
+        }
     }
 
 }
