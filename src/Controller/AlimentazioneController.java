@@ -265,20 +265,53 @@ public class AlimentazioneController extends BaseAlimController {
 
     private void ricombina() {
         int indexstatus = giornocorrente.getStatus().ordinal();
-        int indexoggi = giornocorrente.getData().getDayOfWeek().getValue();
-        GiornoAlimObject giornoprog = utente.getProgramma_alimentare().getSettimanaalimentare(indexoggi - 1);
+        int indexoggi = giornocorrente.getData().getDayOfWeek().ordinal();
+        GiornoAlimObject oggiprog = utente.getProgramma_alimentare().getSettimanaalimentare(indexoggi);
+        GiornoAlimObject domaniprog = utente.getProgramma_alimentare().getSettimanaalimentare(indexoggi+1);
         ArrayList<PortataObject> portateeff = giornocorrente.getPasti(indexstatus).getPortate();
-        ArrayList<PortataObject> portateprog = giornoprog.getPasti(indexstatus).getPortate();
+        ArrayList<PortataObject> portateprog = oggiprog.getPasti(indexstatus).getPortate();
         ArrayList<PortataObject> portatediverse = new ArrayList<PortataObject>();
-        int numportateprog = portateprog.size();
-        int j = 0;
-        for (int i = 0; i<numportateprog; i++){
-            while(portateprog.get(i).getTipo() == portateeff.get(j).getTipo()){
-                if(portateprog.get(i).getCibo().getNome().equals(portateeff.get(j).getCibo().getNome())){
-                    portatediverse.add(portateeff.get(j));
+        int calorieprog = 0;
+        for (PortataObject portataprog : portateprog){
+           for (PortataObject portataeff : portateeff) {
+                if (portataprog.getTipo() == portataeff.getTipo() && !portataprog.getCibo().getNome().equals(portataeff.getCibo().getNome())) {
+                    portatediverse.add(portataeff);
                 }
+           }
+           calorieprog += calcolaCalorie(portataprog);
+        }
+        int calorieeff =0;
+        for (PortataObject portataeff : portateeff) {
+            calorieeff += calcolaCalorie(portataeff);
+        }
+        int tolleranza = (calorieprog/100)*10;
+        boolean limitecalorie = false;
+        if (calorieeff < calorieprog-tolleranza || calorieeff > calorieprog+tolleranza) {
+            limitecalorie = true;
+        }
+        ArrayList<PortataObject> portatapresenteoggi = new ArrayList<PortataObject>();
+        ArrayList<PortataObject> portatapresentedomani = new ArrayList<PortataObject>();
+        if (portatediverse.size() != 0) {
+            if (indexstatus < 2) {
+                portatapresenteoggi = controllaportate(portatediverse, oggiprog.getPasti(indexstatus+2).getPortate());
+                portatapresentedomani = controllaportate(portatediverse, domaniprog.getPasti(indexstatus).getPortate());
+            } else {
+                portatapresentedomani = controllaportate(portatediverse, domaniprog.getPasti(indexstatus).getPortate());
             }
         }
+
     }
+
+    private ArrayList<PortataObject> controllaportate (ArrayList<PortataObject> portatediverse, ArrayList<PortataObject> portate) {
+        ArrayList<PortataObject> portatedaricombinare = new ArrayList<PortataObject>();
+        for (PortataObject portata : portate) {
+            for (PortataObject portatadiversa : portatediverse ) {
+                if (portata.getCibo().getNome().equals(portatadiversa.getCibo().getNome()))
+                    portatedaricombinare.add(portatadiversa);
+            }
+        }
+        return portatedaricombinare;
+
+    };
 
 }
