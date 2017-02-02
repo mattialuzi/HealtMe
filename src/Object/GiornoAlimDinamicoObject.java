@@ -3,13 +3,15 @@ package Object;
 import Object.Enum.GiornoEnum;
 import Object.Enum.PastoEnum;
 import Helpers.JObject;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 
 public class GiornoAlimDinamicoObject extends GiornoAlimObject {
 
     private int id_programma ;
-    private Date data;
+    private LocalDate data;
     private int fabbisogno;
 
     public GiornoAlimDinamicoObject () {
@@ -28,7 +30,7 @@ public class GiornoAlimDinamicoObject extends GiornoAlimObject {
         this.fabbisogno = fabbisogno;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
@@ -40,7 +42,7 @@ public class GiornoAlimDinamicoObject extends GiornoAlimObject {
         this.id_programma = id_programma;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 

@@ -35,6 +35,7 @@ public class AlimentazioneController extends BaseAlimController {
     private GiornoAlimView giornocorrenteview;
     private IndexAlimentazioneView indexalimentazione;
 
+
     public AlimentazioneController(Menu menu,UtenteObject utente) {
 
         this.alimentazione = menu.getAlimentazioneview();
@@ -289,29 +290,88 @@ public class AlimentazioneController extends BaseAlimController {
         if (calorieeff < calorieprog-tolleranza || calorieeff > calorieprog+tolleranza) {
             limitecalorie = true;
         }
-        ArrayList<PortataObject> portatapresenteoggi = new ArrayList<PortataObject>();
-        ArrayList<PortataObject> portatapresentedomani = new ArrayList<PortataObject>();
+        ArrayList<Integer> indiciricombinaoggi = new ArrayList<Integer>();
+        ArrayList<Integer> indiciricombinadomani = new ArrayList<Integer>();
+        ArrayList<PortataObject> portatediversedomani = new ArrayList<PortataObject>(portatediverse);
         if (portatediverse.size() != 0) {
             if (indexstatus < 2) {
-                portatapresenteoggi = controllaportate(portatediverse, oggiprog.getPasti(indexstatus+2).getPortate());
-                portatapresentedomani = controllaportate(portatediverse, domaniprog.getPasti(indexstatus).getPortate());
+                indiciricombinaoggi = controllaPortate(portatediverse, oggiprog.getPasti(indexstatus+2).getPortate());
+                indiciricombinadomani = controllaPortate(portatediversedomani, domaniprog.getPasti(indexstatus).getPortate());
             } else {
-                portatapresentedomani = controllaportate(portatediverse, domaniprog.getPasti(indexstatus).getPortate());
+                indiciricombinadomani = controllaPortate(portatediversedomani, domaniprog.getPasti(indexstatus).getPortate());
             }
         }
+
 
     }
 
-    private ArrayList<PortataObject> controllaportate (ArrayList<PortataObject> portatediverse, ArrayList<PortataObject> portate) {
-        ArrayList<PortataObject> portatedaricombinare = new ArrayList<PortataObject>();
-        for (PortataObject portata : portate) {
-            for (PortataObject portatadiversa : portatediverse ) {
-                if (portata.getCibo().getNome().equals(portatadiversa.getCibo().getNome()))
-                    portatedaricombinare.add(portatadiversa);
+    private GiornoAlimObject getGiornoDinamico (GiornoAlimObject giorno, int indexgiorno, int indexstatus){
+        if (giorno.getTipo().equals(GiornoEnum.programmato)) {
+            GiornoAlimDinamicoObject oggidinamico = new GiornoAlimDinamicoObject();
+            oggidinamico.setData(giornocorrente.getData());
+            oggidinamico.setCalorie(giorno.getCalorie());
+            oggidinamico.setId_programma(utente.getProgramma_alimentare().getId());
+            utente.getProgramma_alimentare().setSettimanaalimentare(indexgiorno,oggidinamico);
+            for (int i=0; i<=indexstatus; i++){
+                oggidinamico.setPasti(i,giornocorrente.getPasti(i));
             }
+            return oggidinamico;
+        } else {
+            return giorno;
         }
-        return portatedaricombinare;
+    }
 
-    };
+    private ArrayList<Integer> controllaPortate (ArrayList<PortataObject> portatediverse, ArrayList<PortataObject> portateprog) {
+        ArrayList<Integer> indiciportatedaricombinare = new ArrayList<Integer>();
+        int portateprogsize = portateprog.size();
+        int i=0;
+        while (i<portatediverse.size()) {
+            boolean flag = true;
+            for (int j=0; j<portateprogsize && flag; j++) {
+                if (portateprog.get(j).getCibo().getNome().equals(portatediverse.get(i).getCibo().getNome())) {
+                    flag = false;
+                    indiciportatedaricombinare.add(j);
+                }
+            }
+            if (flag) portatediverse.remove(i);
+            else i++;
+        }
+        return indiciportatedaricombinare;
+    }
+
+
+    private void ricombinaCaloriaPasto (PastoObject pasto,int fabbisogno,int indicegiorno){
+        PastoEnum tipopasto = pasto.getTipo();
+        ArrayList<PortataObject> portate = pasto.getPortate();
+        if (tipopasto.equals(PastoEnum.pranzo)) {
+            if(indicegiorno != 6) {
+                aggiornaQuantita(portate.get(0), (fabbisogno*45)/100);
+                aggiornaQuantita(portate.get(1), (fabbisogno*32)/100);
+                aggiornaQuantita(portate.get(2), (fabbisogno*18)/100);
+                aggiornaQuantita(portate.get(3), (fabbisogno*5)/100);
+            } else {
+                aggiornaQuantita(portate.get(0), (fabbisogno*38)/100);
+                aggiornaQuantita(portate.get(1), (fabbisogno*28)/100);
+                aggiornaQuantita(portate.get(2), (fabbisogno*11)/100);
+                aggiornaQuantita(portate.get(3), (fabbisogno*23)/100);
+            }
+        }else if ((indicegiorno+1)%2 == 0) {
+            aggiornaQuantita(portate.get(0), (fabbisogno*40)/100);
+            aggiornaQuantita(portate.get(1), (fabbisogno*53)/100);
+            aggiornaQuantita(portate.get(2), (fabbisogno*7)/100);
+        } else {
+            aggiornaQuantita(portate.get(0), (fabbisogno*53)/100);
+            aggiornaQuantita(portate.get(1), (fabbisogno*40)/100);
+            aggiornaQuantita(portate.get(2), (fabbisogno*7)/100);
+        }
+    }
+
+
+    private void aggiornaQuantita (PortataObject portata, int fabportata){
+        int nuovaquantita = (fabportata*100)/(portata.getCibo().getKilocal());
+        portata.setQuantita(nuovaquantita);
+    }
+
+
 
 }

@@ -51,4 +51,5 @@ public class GiornoAlimProgObject extends GiornoAlimObject {
     public void setCalorie(int fabbisogno) {
         this.fabbisogno = fabbisogno;
     }
+
 }

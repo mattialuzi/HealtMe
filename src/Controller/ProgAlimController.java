@@ -386,10 +386,10 @@ public class ProgAlimController extends BaseAlimController {
 
         private PastoObject generaCenaPari(ArrayList<String> secondo, ArrayList<String> primo, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
-            int fabsecondo = (fabbisogno*16)/100;
-            portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
             int fabprimo = (fabbisogno*12)/100;
             portate.add(generaPortata(primo,fabprimo, PortataEnum.primo));
+            int fabsecondo = (fabbisogno*16)/100;
+            portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
             int fabfrutta = (fabbisogno*2)/100;
             portate.add(generaPortata(frutta, fabfrutta, PortataEnum.frutta));
             return new PastoObject(portate, PastoEnum.cena);
@@ -417,9 +417,6 @@ public class ProgAlimController extends BaseAlimController {
             return ThreadLocalRandom.current().nextInt(0, size);
         }
 
-        private int calcolaQuantita(int calorie, int kilocal){
-            return (calorie*100)/kilocal;
-        }
 
         private void showNewProg () {
             IndexAlimentazioneView indexalim = alimentazione.getIndexalimentazione();

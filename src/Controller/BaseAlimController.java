@@ -175,4 +175,8 @@ public abstract class BaseAlimController extends Controller {
     protected int calcolaCalorie(PortataObject portata){
         return portata.getQuantita()*(portata.getCibo().getKilocal())/100;
     }
+
+    protected int calcolaQuantita(int calorie, int kilocal){
+        return (calorie*100)/kilocal;
+    }
 }
