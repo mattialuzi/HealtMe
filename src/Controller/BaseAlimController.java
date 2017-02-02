@@ -102,7 +102,7 @@ public abstract class BaseAlimController extends Controller {
         if (nuovopasto == "colazione" || nuovopasto == "spuntino") {
             portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","snack", "bevanda", "frutta"}));
         } else {
-            portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","primo", "secondo", "contorno", "dolce", "frutta", "bevanda"}));
+            portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","primo", "secondo", "contorno", "dolce", "frutta"}));
         }
     }
 

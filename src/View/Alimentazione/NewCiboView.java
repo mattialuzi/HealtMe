@@ -102,7 +102,7 @@ public class NewCiboView extends View {
                 }
                 else {
                     if (tipoportata.equals(PortataEnum.bevanda)) {
-                        items = new ComboItem[] {new ComboItem("tutti", "Tutti i Pasti"), new ComboItem("colazione_spuntino", "Colazione e Spuntino"), new ComboItem("colazione", "Colazione"), new ComboItem("spuntino", "Spuntino"),new ComboItem("pranzo_cena", "Pranzo e Cena")};
+                        items = new ComboItem[] {new ComboItem("colazione_spuntino", "Colazione e Spuntino"), new ComboItem("colazione", "Colazione"), new ComboItem("spuntino", "Spuntino")};
                     }
                     else {
                         items = new ComboItem[] {new ComboItem("tutti", "Tutti i Pasti") }; //tipoportata = PortataEnum.frutta

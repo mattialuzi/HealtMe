@@ -236,17 +236,16 @@ public class ProgAlimController extends BaseAlimController {
             ArrayList<String> secondo = cibomodel.getCiboForUser(allergia,tipoalim,"secondo", new String[] {"pranzo_cena"});
             ArrayList<String> contorno = cibomodel.getCiboForUser(allergia,tipoalim,"contorno", new String[] {"pranzo_cena"});
             ArrayList<String> dolci = cibomodel.getCiboForUser(allergia,tipoalim,"dolce", new String[] {"pranzo_cena"});
-            ArrayList<String> bevandapranzocena = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"pranzo_cena","tutti"});
             ArrayList<String> bevandacolazione = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"colazione","colazione_spuntino","tutti"});
             ArrayList<String> bevandaspuntino = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"spuntino","colazione_spuntino","tutti"});
             ArrayList<GiornoAlimProgObject> giorniProgComb = new ArrayList<GiornoAlimProgObject>();
             for (int i=1; i<7; i++) {
                 if (i % 2 == 0)
-                    giorniProgComb.add(generaGiorniPari(snackcolazione, snackspuntino, frutta, primopranzo, secondo, contorno, bevandapranzocena, bevandacolazione, bevandaspuntino, primocena));
+                    giorniProgComb.add(generaGiorniPari(snackcolazione, snackspuntino, frutta, primopranzo, secondo, contorno, bevandacolazione, bevandaspuntino, primocena));
                 else
-                    giorniProgComb.add(generaGiorniDispari(snackcolazione, snackspuntino, frutta, primopranzo, secondo, contorno, bevandapranzocena, bevandacolazione, bevandaspuntino));
+                    giorniProgComb.add(generaGiorniDispari(snackcolazione, snackspuntino, frutta, primopranzo, secondo, contorno, bevandacolazione, bevandaspuntino));
             }
-            giorniProgComb.add(generaDomenica(snackcolazione, snackspuntino, frutta, primopranzo, secondo, contorno, bevandapranzocena, bevandacolazione, bevandaspuntino, dolci));
+            giorniProgComb.add(generaDomenica(snackcolazione, snackspuntino, frutta, primopranzo, secondo, contorno, bevandacolazione, bevandaspuntino, dolci));
             ProgAlimCombObject nuovoprogcombinato = new ProgAlimCombObject(giorniProgComb, fabbisogno, AlimentazioneEnum.valueOf(tipoalim));
             utente.setProgramma_alimentare(nuovoprogcombinato);
             utente.setProg_alim_comb(true);
@@ -310,29 +309,29 @@ public class ProgAlimController extends BaseAlimController {
             return Math.round(mb*laf);
         }
 
-        private GiornoAlimProgObject generaGiorniDispari(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandapranzocena, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino){
+        private GiornoAlimProgObject generaGiorniDispari(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino){
             ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
             pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
-            pasti.add(generaPranzo(primopranzo, secondo, contorno, bevandapranzocena, frutta));
-            pasti.add(generaCenaDispari(secondo, contorno, frutta, bevandapranzocena));
+            pasti.add(generaPranzo(primopranzo, secondo, contorno, frutta));
+            pasti.add(generaCenaDispari(secondo, contorno, frutta));
             pasti.add(generaSpuntino(snackspuntino, frutta, bevandaspuntino));
             return new GiornoAlimProgObject(pasti, fabbisogno);
         }
 
-        private GiornoAlimProgObject generaGiorniPari(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandapranzocena, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino, ArrayList<String> primocena){
+        private GiornoAlimProgObject generaGiorniPari(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino, ArrayList<String> primocena){
             ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
             pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
-            pasti.add(generaPranzo(primopranzo, secondo, contorno, bevandapranzocena, frutta));
-            pasti.add(generaCenaPari(secondo, primocena, frutta, bevandapranzocena));
+            pasti.add(generaPranzo(primopranzo, secondo, contorno, frutta));
+            pasti.add(generaCenaPari(secondo, primocena, frutta));
             pasti.add(generaSpuntino(snackspuntino, frutta, bevandaspuntino));
             return new GiornoAlimProgObject(pasti, fabbisogno);
         }
 
-        private GiornoAlimProgObject generaDomenica(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandapranzocena, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino, ArrayList<String> dolci){
+        private GiornoAlimProgObject generaDomenica(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino, ArrayList<String> dolci){
             ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
             pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
-            pasti.add(generaPranzoDolce(primopranzo, secondo, contorno, bevandapranzocena, dolci));
-            pasti.add(generaCenaDispari(secondo, contorno, frutta, bevandapranzocena));
+            pasti.add(generaPranzoDolce(primopranzo, secondo, contorno, dolci));
+            pasti.add(generaCenaDispari(secondo, contorno, frutta));
             pasti.add(generaSpuntino(snackspuntino, frutta, bevandaspuntino));
             return new GiornoAlimProgObject(pasti, fabbisogno);
         }
@@ -348,7 +347,7 @@ public class ProgAlimController extends BaseAlimController {
             return new PastoObject(portate, PastoEnum.colazione);
         }
 
-        private PastoObject generaPranzo(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevanda, ArrayList<String> frutta){
+        private PastoObject generaPranzo(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabprimo = (fabbisogno*15)/100;
             portate.add(generaPortata(primo, fabprimo, PortataEnum.primo));
@@ -363,7 +362,7 @@ public class ProgAlimController extends BaseAlimController {
             return new PastoObject(portate, PastoEnum.pranzo);
         }
 
-        private PastoObject generaPranzoDolce(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevanda, ArrayList<String> dolce){
+        private PastoObject generaPranzoDolce(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> dolce){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabprimo = (fabbisogno*13)/100;
             portate.add(generaPortata(primo, fabprimo, PortataEnum.primo));
@@ -378,7 +377,7 @@ public class ProgAlimController extends BaseAlimController {
             return new PastoObject(portate, PastoEnum.pranzo);
         }
 
-        private PastoObject generaCenaDispari(ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> frutta, ArrayList<String> bevanda){
+        private PastoObject generaCenaDispari(ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabsecondo = (fabbisogno*15)/100;
             portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
@@ -391,7 +390,7 @@ public class ProgAlimController extends BaseAlimController {
             return new PastoObject(portate, PastoEnum.cena);
         }
 
-        private PastoObject generaCenaPari(ArrayList<String> secondo, ArrayList<String> primo, ArrayList<String> frutta, ArrayList<String> bevanda){
+        private PastoObject generaCenaPari(ArrayList<String> secondo, ArrayList<String> primo, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabsecondo = (fabbisogno*15)/100;
             portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
