@@ -105,20 +105,22 @@ public class AlimentazioneController extends BaseAlimController {
 
         giornocorrenteview.enableConfermaButton(giornocorrente.getStatus());
 
-        giornocorrenteview.addListenersAndShowConfermaButton(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                StatusEnum status = StatusEnum.valueOf(e.getActionCommand());
-                int index = status.ordinal();
-                StatusEnum nuovostatus = StatusEnum.values()[index + 1];
-                giornocorrenteview.enableConfermaButton(nuovostatus);
-                ricombina();
-                giornocorrente.setStatus(nuovostatus);
-                HashMap<String, StatusEnum> campogiorno = new HashMap<String, StatusEnum>();
-                campogiorno.put("status", nuovostatus);
-                new GiornoAlimModel().updateGiornoAlimEff(utente.getUsername(),giornocorrente.getData(), campogiorno);
-            }
-        });
+        if ( utente.isProg_alim_comb()) {
+            giornocorrenteview.addListenersAndShowConfermaButton(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    StatusEnum status = StatusEnum.valueOf(e.getActionCommand());
+                    int index = status.ordinal();
+                    StatusEnum nuovostatus = StatusEnum.values()[index + 1];
+                    giornocorrenteview.enableConfermaButton(nuovostatus);
+                    ricombina();
+                    giornocorrente.setStatus(nuovostatus);
+                    HashMap<String, StatusEnum> campogiorno = new HashMap<String, StatusEnum>();
+                    campogiorno.put("status", nuovostatus);
+                    new GiornoAlimModel().updateGiornoAlimEff(utente.getUsername(), giornocorrente.getData(), campogiorno);
+                }
+            });
+        }
 
         giornocorrenteview.addTableSelectionListener(new ListSelectionListener() {
             @Override
