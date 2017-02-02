@@ -8,26 +8,16 @@ import java.time.LocalDate;
 import java.util.Date;
 
 
-public class GiornoAlimDinamicoObject extends GiornoAlimObject {
+public class GiornoAlimDinamicoObject extends GiornoAlimProgObject {
 
     private int id_programma ;
     private LocalDate data;
-    private int fabbisogno;
 
     public GiornoAlimDinamicoObject () {
 
-        fabbisogno=0;
         id_programma=0;
         data=null;
         tipo= GiornoEnum.dinamico;
-    }
-
-    public int getCalorie() {
-        return fabbisogno;
-    }
-
-    public void setCalorie(int fabbisogno) {
-        this.fabbisogno = fabbisogno;
     }
 
     public LocalDate getData() {

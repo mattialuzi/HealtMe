@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public abstract class ProgrammaAlimentareObject extends JObject {
     protected int id;
-    protected ArrayList<GiornoAlimObject> settimanaalimentare;
+    protected ArrayList<GiornoAlimProgObject> settimanaalimentare;
 
     protected ProgrammaAlimentareObject()
     {
@@ -27,11 +27,11 @@ public abstract class ProgrammaAlimentareObject extends JObject {
         this.id = id;
     }
 
-    public GiornoAlimObject getSettimanaalimentare(int index) {
+    public GiornoAlimProgObject getSettimanaalimentare(int index) {
         return settimanaalimentare.get(index);
     }
 
-    public void setSettimanaalimentare(int index, GiornoAlimObject giorno) {
+    public void setSettimanaalimentare(int index, GiornoAlimProgObject giorno) {
         settimanaalimentare.set(index, giorno);
     }
 
