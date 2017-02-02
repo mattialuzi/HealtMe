@@ -349,15 +349,13 @@ public class ProgAlimController extends BaseAlimController {
 
         private PastoObject generaPranzo(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
-            int fabprimo = (fabbisogno*15)/100;
+            int fabprimo = (fabbisogno*16)/100;
             portate.add(generaPortata(primo, fabprimo, PortataEnum.primo));
-            int fabsecondo = (fabbisogno*10)/100;
+            int fabsecondo = (fabbisogno*11)/100;
             portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
-            int fabcontorno = (fabbisogno*5)/100;
+            int fabcontorno = (fabbisogno*6)/100;
             portate.add(generaPortata(contorno,fabcontorno, PortataEnum.contorno));
-            int fabbevanda = (fabbisogno*2)/100;
-            portate.add(generaPortata(bevanda, fabbevanda, PortataEnum.bevanda));
-            int fabfrutta = (fabbisogno*3)/100;
+            int fabfrutta = (fabbisogno*2)/100;
             portate.add(generaPortata(frutta, fabfrutta, PortataEnum.frutta));
             return new PastoObject(portate, PastoEnum.pranzo);
         }
@@ -366,40 +364,34 @@ public class ProgAlimController extends BaseAlimController {
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabprimo = (fabbisogno*13)/100;
             portate.add(generaPortata(primo, fabprimo, PortataEnum.primo));
-            int fabsecondo = (fabbisogno*9)/100;
+            int fabsecondo = (fabbisogno*10)/100;
             portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
             int fabcontorno = (fabbisogno*4)/100;
             portate.add(generaPortata(contorno,fabcontorno, PortataEnum.contorno));
-            int fabbevanda = (fabbisogno*2)/100;
-            portate.add(generaPortata(bevanda, fabbevanda, PortataEnum.bevanda));
-            int fabdolce = (fabbisogno*7)/100;
+            int fabdolce = (fabbisogno*8)/100;
             portate.add(generaPortata(dolce, fabdolce, PortataEnum.dolce));
             return new PastoObject(portate, PastoEnum.pranzo);
         }
 
         private PastoObject generaCenaDispari(ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
-            int fabsecondo = (fabbisogno*15)/100;
+            int fabsecondo = (fabbisogno*16)/100;
             portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
-            int fabcontorno = (fabbisogno*10)/100;
+            int fabcontorno = (fabbisogno*12)/100;
             portate.add(generaPortata(contorno,fabcontorno, PortataEnum.contorno));
-            int fabfrutta = (fabbisogno*3)/100;
+            int fabfrutta = (fabbisogno*2)/100;
             portate.add(generaPortata(frutta, fabfrutta, PortataEnum.frutta));
-            int fabbevanda = (fabbisogno*2)/100;
-            portate.add(generaPortata(bevanda, fabbevanda, PortataEnum.bevanda));
             return new PastoObject(portate, PastoEnum.cena);
         }
 
         private PastoObject generaCenaPari(ArrayList<String> secondo, ArrayList<String> primo, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
-            int fabsecondo = (fabbisogno*15)/100;
+            int fabsecondo = (fabbisogno*16)/100;
             portate.add(generaPortata(secondo,fabsecondo, PortataEnum.secondo));
-            int fabprimo = (fabbisogno*10)/100;
+            int fabprimo = (fabbisogno*12)/100;
             portate.add(generaPortata(primo,fabprimo, PortataEnum.primo));
-            int fabfrutta = (fabbisogno*3)/100;
+            int fabfrutta = (fabbisogno*2)/100;
             portate.add(generaPortata(frutta, fabfrutta, PortataEnum.frutta));
-            int fabbevanda = (fabbisogno*2)/100;
-            portate.add(generaPortata(bevanda, fabbevanda, PortataEnum.bevanda));
             return new PastoObject(portate, PastoEnum.cena);
         }
 
