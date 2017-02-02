@@ -305,7 +305,7 @@ public class AlimentazioneController extends BaseAlimController {
 
     }
 
-    private GiornoAlimObject getGiornoDinamico (GiornoAlimObject giorno, int indexgiorno, int indexstatus){
+    private GiornoAlimProgObject getGiornoDinamico (GiornoAlimProgObject giorno, int indexgiorno, int indexstatus){
         if (giorno.getTipo().equals(GiornoEnum.programmato)) {
             GiornoAlimDinamicoObject oggidinamico = new GiornoAlimDinamicoObject();
             oggidinamico.setData(giornocorrente.getData());
