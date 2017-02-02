@@ -13,6 +13,7 @@ import java.util.Date;
 public abstract class ProgrammaAlimentareObject extends JObject {
     protected int id;
     protected ArrayList<GiornoAlimProgObject> settimanaalimentare;
+    protected AlimentazioneEnum tipo_alimentazione;
 
     protected ProgrammaAlimentareObject()
     {
@@ -35,6 +36,12 @@ public abstract class ProgrammaAlimentareObject extends JObject {
         settimanaalimentare.set(index, giorno);
     }
 
+    public AlimentazioneEnum getTipo_alimentazione() {
+        return tipo_alimentazione;
+    }
 
+    public void setTipo_alimentazione(AlimentazioneEnum tipo_alimentazione) {
+        this.tipo_alimentazione = tipo_alimentazione;
+    }
 }
 

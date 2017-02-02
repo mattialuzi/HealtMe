@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class ProgAlimCombObject extends ProgrammaAlimentareObject {
 
     private int fabbisogno;
-    private AlimentazioneEnum tipo_alimentazione;
 
 
     public ProgAlimCombObject () {
@@ -33,14 +32,6 @@ public class ProgAlimCombObject extends ProgrammaAlimentareObject {
 
     public void setFabbisogno(int fabbisogno) {
         this.fabbisogno = fabbisogno;
-    }
-
-    public AlimentazioneEnum getTipo_alimentazione() {
-        return tipo_alimentazione;
-    }
-
-    public void setTipo_alimentazione(AlimentazioneEnum tipo_alimentazione) {
-        this.tipo_alimentazione = tipo_alimentazione;
     }
 
 }

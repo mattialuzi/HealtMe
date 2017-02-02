@@ -2,6 +2,8 @@ package Controller;
 import Helpers.Controller;
 import Model.CiboModel;
 import Object.Enum.GiornoEnum;
+import Object.Enum.PastoEnum;
+import Object.Enum.PortataEnum;
 import View.Alimentazione.FormCiboEffettivo;
 import View.Alimentazione.GiornoAlimForm;
 import View.Alimentazione.GiornoAlimView;
@@ -13,7 +15,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Lorenzo on 26/01/17.
@@ -23,6 +27,7 @@ public abstract class BaseAlimController extends Controller {
     protected String nuovopasto;
     protected FormCiboEffettivo dialog;
     protected ResultSet alimenti;
+    protected HashMap<PastoEnum,HashMap<PortataEnum,String[]>> idoneitamap;
 
 
     public class ListenersAndShowButtonsAction implements ActionListener {
@@ -179,4 +184,42 @@ public abstract class BaseAlimController extends Controller {
     protected int calcolaQuantita(int calorie, int kilocal){
         return (calorie*100)/kilocal;
     }
+
+    protected void generateIdoneitaMap() {
+        if (idoneitamap == null) {
+            idoneitamap = new HashMap<>();
+            HashMap<PortataEnum, String[]> colazionemap = new HashMap<>();
+            colazionemap.put(PortataEnum.snack, new String[]{"colazione", "colazione_spuntino"});
+            colazionemap.put(PortataEnum.bevanda, new String[]{"colazione", "colazione_spuntino", "tutti"});
+            colazionemap.put(PortataEnum.frutta, new String[]{"tutti"});
+            idoneitamap.put(PastoEnum.colazione, colazionemap);
+            HashMap<PortataEnum, String[]> pranzomap = new HashMap<>();
+            pranzomap.put(PortataEnum.primo, new String[]{"pranzo", "pranzo_cena"});
+            pranzomap.put(PortataEnum.secondo, new String[]{"pranzo_cena"});
+            pranzomap.put(PortataEnum.contorno, new String[]{"pranzo_cena"});
+            pranzomap.put(PortataEnum.frutta, new String[]{"tutti"});
+            pranzomap.put(PortataEnum.dolce, new String[]{"pranzo_cena"});
+            idoneitamap.put(PastoEnum.pranzo, pranzomap);
+            HashMap<PortataEnum, String[]> spuntinomap = new HashMap<>();
+            spuntinomap.put(PortataEnum.snack, new String[]{"spuntino", "colazione_spuntino"});
+            spuntinomap.put(PortataEnum.bevanda, new String[]{"spuntino", "colazione_spuntino", "tutti"});
+            spuntinomap.put(PortataEnum.frutta, new String[]{"tutti"});
+            idoneitamap.put(PastoEnum.spuntino, spuntinomap);
+            HashMap<PortataEnum, String[]> cenamap = new HashMap<>();
+            cenamap.put(PortataEnum.primo, new String[]{"cena", "pranzo_cena"});
+            cenamap.put(PortataEnum.secondo, new String[]{"pranzo_cena"});
+            cenamap.put(PortataEnum.contorno, new String[]{"pranzo_cena"});
+            cenamap.put(PortataEnum.frutta, new String[]{"tutti"});
+            idoneitamap.put(PastoEnum.cena, cenamap);
+        }
+    }
+
+    protected String[] getIdoneita (PastoEnum pasto, PortataEnum portata) {
+        return idoneitamap.get(pasto).get(portata);
+    }
+
+    protected int randomPortata(int size){
+        return ThreadLocalRandom.current().nextInt(0, size);
+    }
+
 }

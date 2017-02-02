@@ -10,12 +10,14 @@ import java.util.ArrayList;
 public class ProgAlimManObject extends ProgrammaAlimentareObject {
 
     public ProgAlimManObject () {
+        tipo_alimentazione = AlimentazioneEnum.manuale;
         settimanaalimentare = new ArrayList<GiornoAlimProgObject>();
         for (int i=0; i<7; i++)
             settimanaalimentare.add(i, new GiornoAlimProgObject());
     }
 
     public ProgAlimManObject(ArrayList<GiornoAlimProgObject> giorniprogrammati) {
+        tipo_alimentazione = AlimentazioneEnum.manuale;
         settimanaalimentare = giorniprogrammati;
     }
 

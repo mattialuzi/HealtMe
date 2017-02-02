@@ -228,16 +228,17 @@ public class ProgAlimController extends BaseAlimController {
             CiboModel cibomodel = new CiboModel();
             String tipoalim = progalimcomb.getTipoalimBox().getSelectedItem().toString();
             String allergia = utente.getAllergia().toString();
-            ArrayList<String> snackcolazione = cibomodel.getCiboForUser(allergia,tipoalim,"snack", new String[] {"colazione","colazione_spuntino"});
-            ArrayList<String> snackspuntino = cibomodel.getCiboForUser(allergia,tipoalim,"snack", new String[] {"spuntino","colazione_spuntino"});
-            ArrayList<String> frutta = cibomodel.getCiboForUser(allergia,tipoalim,"frutta", new String[] {"tutti"});
-            ArrayList<String> primopranzo = cibomodel.getCiboForUser(allergia,tipoalim,"primo", new String[] {"pranzo","pranzo_cena"});
-            ArrayList<String> primocena = cibomodel.getCiboForUser(allergia,tipoalim,"primo", new String[] {"cena","pranzo_cena"});
-            ArrayList<String> secondo = cibomodel.getCiboForUser(allergia,tipoalim,"secondo", new String[] {"pranzo_cena"});
-            ArrayList<String> contorno = cibomodel.getCiboForUser(allergia,tipoalim,"contorno", new String[] {"pranzo_cena"});
-            ArrayList<String> dolci = cibomodel.getCiboForUser(allergia,tipoalim,"dolce", new String[] {"pranzo_cena"});
-            ArrayList<String> bevandacolazione = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"colazione","colazione_spuntino","tutti"});
-            ArrayList<String> bevandaspuntino = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", new String[] {"spuntino","colazione_spuntino","tutti"});
+            generateIdoneitaMap();
+            ArrayList<String> snackcolazione = cibomodel.getCiboForUser(allergia,tipoalim,"snack", getIdoneita(PastoEnum.colazione, PortataEnum.snack));
+            ArrayList<String> snackspuntino = cibomodel.getCiboForUser(allergia,tipoalim,"snack", getIdoneita(PastoEnum.spuntino, PortataEnum.snack));
+            ArrayList<String> frutta = cibomodel.getCiboForUser(allergia,tipoalim,"frutta", getIdoneita(PastoEnum.colazione, PortataEnum.frutta));
+            ArrayList<String> primopranzo = cibomodel.getCiboForUser(allergia,tipoalim,"primo", getIdoneita(PastoEnum.pranzo, PortataEnum.primo));
+            ArrayList<String> primocena = cibomodel.getCiboForUser(allergia,tipoalim,"primo", getIdoneita(PastoEnum.cena, PortataEnum.primo));
+            ArrayList<String> secondo = cibomodel.getCiboForUser(allergia,tipoalim,"secondo", getIdoneita(PastoEnum.pranzo, PortataEnum.secondo));
+            ArrayList<String> contorno = cibomodel.getCiboForUser(allergia,tipoalim,"contorno", getIdoneita(PastoEnum.pranzo, PortataEnum.contorno));
+            ArrayList<String> dolci = cibomodel.getCiboForUser(allergia,tipoalim,"dolce", getIdoneita(PastoEnum.pranzo, PortataEnum.dolce));
+            ArrayList<String> bevandacolazione = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", getIdoneita(PastoEnum.colazione, PortataEnum.bevanda));
+            ArrayList<String> bevandaspuntino = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", getIdoneita(PastoEnum.spuntino, PortataEnum.bevanda));
             ArrayList<GiornoAlimProgObject> giorniProgComb = new ArrayList<GiornoAlimProgObject>();
             for (int i=1; i<7; i++) {
                 if (i % 2 == 0)
@@ -412,11 +413,6 @@ public class ProgAlimController extends BaseAlimController {
             int quantita = calcolaQuantita(calorie, cibo.getKilocal());
             return new PortataObject(cibo, tipoportata, quantita);
         }
-
-        private int randomPortata(int size){
-            return ThreadLocalRandom.current().nextInt(0, size);
-        }
-
 
         private void showNewProg () {
             IndexAlimentazioneView indexalim = alimentazione.getIndexalimentazione();

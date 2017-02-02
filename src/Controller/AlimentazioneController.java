@@ -267,8 +267,8 @@ public class AlimentazioneController extends BaseAlimController {
     private void ricombina() {
         int indexstatus = giornocorrente.getStatus().ordinal();
         int indexoggi = giornocorrente.getData().getDayOfWeek().ordinal();
-        GiornoAlimObject oggiprog = utente.getProgramma_alimentare().getSettimanaalimentare(indexoggi);
-        GiornoAlimObject domaniprog = utente.getProgramma_alimentare().getSettimanaalimentare(indexoggi+1);
+        GiornoAlimProgObject oggiprog = utente.getProgramma_alimentare().getSettimanaalimentare(indexoggi);
+        GiornoAlimProgObject domaniprog = utente.getProgramma_alimentare().getSettimanaalimentare(indexoggi+1);
         ArrayList<PortataObject> portateeff = giornocorrente.getPasti(indexstatus).getPortate();
         ArrayList<PortataObject> portateprog = oggiprog.getPasti(indexstatus).getPortate();
         ArrayList<PortataObject> portatediverse = new ArrayList<PortataObject>();
@@ -301,24 +301,55 @@ public class AlimentazioneController extends BaseAlimController {
                 indiciricombinadomani = controllaPortate(portatediversedomani, domaniprog.getPasti(indexstatus).getPortate());
             }
         }
+        if (limitecalorie || portatediverse.size() !=0 || portatediversedomani.size() !=0) {
+            PastoObject pasto = getGiornoDinamico(oggiprog, indexoggi, indexstatus).getPasti(indexstatus+2);
+            AllergiaEnum allergia = utente.getAllergia();
+            AlimentazioneEnum tipoalimentazione = utente.getProgramma_alimentare().getTipo_alimentazione();
+            if (portatediverse.size() !=0) {
+                CiboModel cibomodel = new CiboModel();
+                PortataModel portatamodel = new PortataModel();
+                ArrayList<PortataObject> portate = pasto.getPortate();
+                int i= portatediverse.size();
+                for (int j =0; j<i;j++) {
+                    generateIdoneitaMap();
+                    ArrayList<String> portatedisponibili = cibomodel.getCiboForUser(allergia.toString(),tipoalimentazione.toString(),portatediverse.get(j).getTipo().toString(),getIdoneita(pasto.getTipo(),portatediverse.get(j).getTipo()));
+                    portatedisponibili.remove(portatediverse.get(j).getCibo().getNome());
+                    int fabbisognoportata = calcolaCalorie(portate.get(j));
+                    String nomecibo = portatedisponibili.get(randomPortata(portatedisponibili.size()));
+                    CiboObject nuovocibo = cibomodel.getCiboByName(nomecibo);
+                    portate.get(j).setCibo(nuovocibo);
+                    portate.get(j).setQuantita(calcolaQuantita(fabbisognoportata, nuovocibo.getKilocal()));
+                    portatamodel.updatePortata(pasto.getId(),nuovocibo.getNome(),portate.get(j).getQuantita());
+                }
+            }
+            if (portatediversedomani.size() !=0) {
 
+            }
+            if (limitecalorie) {
+                //utilizza ricombina caloriepasto
+            }
+
+        }
 
     }
 
-    private GiornoAlimProgObject getGiornoDinamico (GiornoAlimProgObject giorno, int indexgiorno, int indexstatus){
+    private GiornoAlimProgObject getGiornoDinamico (GiornoAlimProgObject giorno, int indexgiorno, int indexstatus) {
         if (giorno.getTipo().equals(GiornoEnum.programmato)) {
-            GiornoAlimDinamicoObject oggidinamico = new GiornoAlimDinamicoObject();
-            oggidinamico.setData(giornocorrente.getData());
-            oggidinamico.setCalorie(giorno.getCalorie());
-            oggidinamico.setId_programma(utente.getProgramma_alimentare().getId());
-            utente.getProgramma_alimentare().setSettimanaalimentare(indexgiorno,oggidinamico);
-            for (int i=0; i<=indexstatus; i++){
-                oggidinamico.setPasti(i,giornocorrente.getPasti(i));
+            GiornoAlimDinamicoObject giornodinamico = new GiornoAlimDinamicoObject();
+            giornodinamico.setData(giornocorrente.getData());
+            giornodinamico.setCalorie(giorno.getCalorie());
+            giornodinamico.setId_programma(utente.getProgramma_alimentare().getId());
+            utente.getProgramma_alimentare().setSettimanaalimentare(indexgiorno, giornodinamico);
+            int i = 0;
+            for (int j = i; j <= indexstatus; j++) {
+                giornodinamico.setPasti(i, giornocorrente.getPasti(j));
             }
-            return oggidinamico;
-        } else {
-            return giorno;
+            //copiare quello che resta dal giorno programmato
+            //inserire nel db
+            utente.getProgramma_alimentare().setSettimanaalimentare(indexstatus,giornodinamico);
+            return giornodinamico;
         }
+        return giorno;
     }
 
     private ArrayList<Integer> controllaPortate (ArrayList<PortataObject> portatediverse, ArrayList<PortataObject> portateprog) {
