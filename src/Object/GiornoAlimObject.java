@@ -23,7 +23,7 @@ public abstract class GiornoAlimObject extends JObject {
         return tipo;
     }
 
-    public PastoObject getPasti(int index) {
+    public PastoObject getPasti(int index) { //prendo un pasto dell'arraylist tramite indice
         return pasti.get(index);
     }
 

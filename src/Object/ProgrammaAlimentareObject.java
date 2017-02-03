@@ -28,7 +28,7 @@ public abstract class ProgrammaAlimentareObject extends JObject {
         this.id = id;
     }
 
-    public GiornoAlimProgObject getSettimanaalimentare(int index) {
+    public GiornoAlimProgObject getSettimanaalimentare(int index) { //Funzione che prende un GiornoAlimProject dall'arraylist in base all'indice
         return settimanaalimentare.get(index);
     }
 

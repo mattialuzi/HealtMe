@@ -75,6 +75,10 @@ public class GiornoAlimView {
         giornoeffettivo.enableConfermaButton(status);
     }
 
+    public void visibilityConfermaAndAddButtons(boolean comb){
+        giornoeffettivo.visibilityConfermaAndAddButtons(comb);
+    }
+
     public void addTableSelectionListener(ListSelectionListener listener) {
         giornoeffettivo.addTableSelectionListener(listener);
     }

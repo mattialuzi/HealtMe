@@ -47,6 +47,7 @@ public class AlimentazioneController extends BaseAlimController {
         indexalimentazione = alimentazione.getIndexalimentazione();
         setGiorni();
         dialog = new FormCiboEffettivo();
+        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb());
 
         //showIndex();
 
@@ -106,22 +107,20 @@ public class AlimentazioneController extends BaseAlimController {
 
         giornocorrenteview.enableConfermaButton(giornocorrente.getStatus());
 
-        if ( utente.isProg_alim_comb()) {
-            giornocorrenteview.addListenersAndShowConfermaButton(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    StatusEnum status = StatusEnum.valueOf(e.getActionCommand());
-                    int index = status.ordinal();
-                    StatusEnum nuovostatus = StatusEnum.values()[index + 1];
-                    giornocorrenteview.enableConfermaButton(nuovostatus);
-                    ricombina();
-                    giornocorrente.setStatus(nuovostatus);
-                    HashMap<String, StatusEnum> campogiorno = new HashMap<String, StatusEnum>();
-                    campogiorno.put("status", nuovostatus);
-                    new GiornoAlimModel().updateGiornoAlimEff(utente.getUsername(), giornocorrente.getData(), campogiorno);
-                }
-            });
-        }
+        giornocorrenteview.addListenersAndShowConfermaButton(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StatusEnum status = StatusEnum.valueOf(e.getActionCommand());
+                int index = status.ordinal();
+                StatusEnum nuovostatus = StatusEnum.values()[index + 1];
+                giornocorrenteview.enableConfermaButton(nuovostatus);
+                ricombina();
+                giornocorrente.setStatus(nuovostatus);
+                HashMap<String, StatusEnum> campogiorno = new HashMap<String, StatusEnum>();
+                campogiorno.put("status", nuovostatus);
+                new GiornoAlimModel().updateGiornoAlimEff(utente.getUsername(), giornocorrente.getData(), campogiorno);
+            }
+        });
 
         giornocorrenteview.addTableSelectionListener(new ListSelectionListener() {
             @Override
@@ -303,8 +302,11 @@ public class AlimentazioneController extends BaseAlimController {
             GiornoAlimProgObject giorno = getGiornoDinamico(oggiprog, indexoggi, indexstatus);
             if (portatediverse.size() !=0) ricombinaPortata(giorno.getPasti(indexstatus+2), portatediverse, indiciricombinaoggi);
             if (portatediversedomani.size() !=0){
-                PastoObject pastodomani = getGiornoDinamico(domaniprog, indexoggi +1, -1).getPasti(indexstatus);
+                GiornoAlimProgObject giornodomani = getGiornoDinamico(domaniprog, indexoggi +1, -1);
+                PastoObject pastodomani = giornodomani.getPasti(indexstatus);
                 ricombinaPortata(pastodomani, portatediversedomani, indiciricombinadomani);
+                removePasti(indexalimentazione.getGiorni(DayOfWeek.of(indexoggi+2)),GiornoEnum.dinamico);
+                showPasti(giornodomani,indexalimentazione.getGiorni(DayOfWeek.of(indexoggi+2)));
             }
             if (limitecalorie) {
                 int fabrestante = giorno.getCalorie() - giornocorrente.getCalorie();
@@ -317,7 +319,8 @@ public class AlimentazioneController extends BaseAlimController {
                     ricombinaCaloriaPasto(giorno.getPasti(indexstatus+2), fabrestante * 75/100, indexoggi);
                 } else if (indexstatus == 2) ricombinaCaloriaPasto(giorno.getPasti(indexstatus+1), fabrestante, indexoggi);
             }
-
+            removePasti(giornocorrenteview,giorno.getTipo());
+            showPasti(giorno,giornocorrenteview);
         }
 
     }

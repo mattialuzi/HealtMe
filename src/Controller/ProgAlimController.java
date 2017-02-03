@@ -18,6 +18,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -36,6 +37,7 @@ public class ProgAlimController extends BaseAlimController {
     private ProgAlimCombView progalimcomb;
     private GiornoAlimForm giornoselezionato;
     private AlimentazioneView alimentazione;
+    private GiornoAlimView giornocorrenteview;
     private int fabbisogno;
 
     public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente) {
@@ -52,6 +54,7 @@ public class ProgAlimController extends BaseAlimController {
         IndexProgAlimView indexprog = progalim.getIndexprogalimview();
         ProgAlimCombView progcomb = progalim.getProgalimcombview();
         dialog = new FormCiboEffettivo();
+        giornocorrenteview = alimentazione.getIndexalimentazione().getGiorni(LocalDate.now().getDayOfWeek());
 
         indexprog.addNewProgManButtonListener(new ActionListener() {
             @Override
@@ -136,6 +139,7 @@ public class ProgAlimController extends BaseAlimController {
                     public void actionPerformed(ActionEvent e) {
                         aggiungiProgrammaManuale();
                         showNewProg();
+                        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb());
                         alimCardLayout.show(alimMainPanel,"IndexAlimentazioneView");
                     }
                 });
@@ -162,6 +166,7 @@ public class ProgAlimController extends BaseAlimController {
                     public void actionPerformed(ActionEvent e) {
                         generaProgramma();
                         showNewProg();
+                        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb());
                         alimCardLayout.show(alimMainPanel,"IndexAlimentazioneView");
                     }
                 });

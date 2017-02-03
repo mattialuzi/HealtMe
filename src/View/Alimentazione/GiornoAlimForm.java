@@ -86,15 +86,15 @@ public class GiornoAlimForm {
         removeSpuntino.setVisible(true);
     }
 
-    public void enableConfermaButton(StatusEnum status){
-        if(status.equals(StatusEnum.colazione)) {
+    public void enableConfermaButton(StatusEnum status){ //Funzione che indica quali cose cose abilitare/far vedere in base status
+        if(status.equals(StatusEnum.colazione)) { //Caso iniziale: status è già settato a colazione.
             confermaColazione.setEnabled(true);
-        } else if(status.equals(StatusEnum.pranzo)) {
+        } else if(status.equals(StatusEnum.pranzo)) { //Caso in cui ho cliccato su "Conferma Colazione" e quindi status è a pranzo.
             confermaColazione.setEnabled(false);
             confermaPranzo.setEnabled(true);
             colazioneEffTable.setEnabled(false);
             addColazione.setEnabled(false);
-        } else if(status.equals(StatusEnum.spuntino)) {
+        } else if(status.equals(StatusEnum.spuntino)) { //Caso in cui ho cliccato su "Pranzo" e quindi status è a spuntino.
             confermaPranzo.setEnabled(false);
             confermaSpuntino.setEnabled(true);
             colazioneEffTable.setEnabled(false);
@@ -110,7 +110,7 @@ public class GiornoAlimForm {
             addColazione.setEnabled(false);
             addPranzo.setEnabled(false);
             addSpuntino.setEnabled(false);
-        } else {
+        } else { // Caso in cui lo status è a Completato!
             confermaCena.setEnabled(false);
             colazioneEffTable.setEnabled(false);
             pranzoEffTable.setEnabled(false);
@@ -130,6 +130,25 @@ public class GiornoAlimForm {
         confermaSpuntino.setVisible(true);
     }
 
+    public void visibilityConfermaAndAddButtons(boolean comb){
+        confermaColazione.setVisible(comb);
+        confermaPranzo.setVisible(comb);
+        confermaSpuntino.setVisible(comb);
+        confermaCena.setVisible(comb);
+
+        addColazione.setEnabled(true);
+        if(comb) {
+            addPranzo.setEnabled(false);
+            addSpuntino.setEnabled(false);
+            addCena.setEnabled(false);
+        }
+        else{
+            addPranzo.setEnabled(true);
+            addSpuntino.setEnabled(true);
+            addCena.setEnabled(true);
+        }
+    }
+
     public void addListenersAndShowButtons(ActionListener listener) {
         addColazione.addActionListener(listener);
         addPranzo.addActionListener(listener);
@@ -145,7 +164,7 @@ public class GiornoAlimForm {
         removeSpuntino.addActionListener(listener);
     }
 
-    public void addListenersAndShowConfermaButton(ActionListener listener){
+    public void addListenersAndShowConfermaButton(ActionListener listener){ // Funzione che aggiunge i listener ai bottini di Conferma e li rende visibili
         confermaColazione.addActionListener(listener);
         confermaPranzo.addActionListener(listener);
         confermaCena.addActionListener(listener);
