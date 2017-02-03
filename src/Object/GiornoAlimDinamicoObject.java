@@ -5,6 +5,7 @@ import Object.Enum.PastoEnum;
 import Helpers.JObject;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -18,6 +19,14 @@ public class GiornoAlimDinamicoObject extends GiornoAlimProgObject {
         id_programma=0;
         data=null;
         tipo= GiornoEnum.dinamico;
+    }
+
+    public GiornoAlimDinamicoObject (int idprogramma, LocalDate data, int fabbisogno, ArrayList<PastoObject> pasti) {
+        this.id_programma=idprogramma;
+        this.data=data;
+        this.fabbisogno=fabbisogno;
+        tipo= GiornoEnum.dinamico;
+        this.pasti = pasti;
     }
 
     public LocalDate getData() {

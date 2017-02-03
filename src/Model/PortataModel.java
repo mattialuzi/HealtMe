@@ -55,6 +55,13 @@ public class PortataModel {
         tabella.execute();
     }
 
+    public  void updatePortata (int id_pasto, String vecchiocibo, String nuovocibo, int quantita) {
+        String dati= "quantita = " + quantita + " , cibo =" + nuovocibo;
+        tabella.update(dati);
+        tabella.where("id_pasto='" + id_pasto + "' AND cibo='" + vecchiocibo + "'");
+        tabella.execute();
+    }
+
     public void eliminaPortata (int id_pasto, String cibo) {
         tabella.delete();
         tabella.where("id_pasto='" + id_pasto + "' AND cibo='" + cibo + "'");

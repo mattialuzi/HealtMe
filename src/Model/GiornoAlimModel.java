@@ -1,5 +1,6 @@
 package Model;
 
+import Model.Dbtable.Giorno_alim_dinamico;
 import Model.Dbtable.Giorno_alim_eff;
 
 import java.util.*;
@@ -10,6 +11,7 @@ import Model.Dbtable.Giorno_alim_prog;
 import Object.Enum.StatusEnum;
 import Object.GiornoAlimEffettivoObject;
 import Object.GiornoAlimProgObject;
+import Object.GiornoAlimDinamicoObject;
 import Object.PastoObject;
 
 /**
@@ -18,6 +20,7 @@ import Object.PastoObject;
 public class GiornoAlimModel {
     protected Giorno_alim_eff effettivo;
     protected Giorno_alim_prog programmato;
+    protected Giorno_alim_dinamico dinamico;
 
 
     public GiornoAlimModel() {
@@ -89,10 +92,46 @@ public class GiornoAlimModel {
         programmato.insert(dati);
         int idgiorno = programmato.executeForKey();
         giornoprog.setId_giorno(idgiorno);
+    }
+
+    public void inserisciGiornoAlimDinamico(GiornoAlimDinamicoObject giornodinamico){
+        String dati= "'" + giornodinamico.getId_programma()+"'";
+        dati = dati +  ", '" + giornodinamico.getData() +"'";
+        dati = dati +  ", '" + giornodinamico.getCalorie() +"'";
+        dati = dati + ", " + giornodinamico.getPasti(0).getId();
+        dati = dati + ", " + giornodinamico.getPasti(1).getId();
+        dati = dati + ", " + giornodinamico.getPasti(2).getId();
+        dati = dati + ", " + giornodinamico.getPasti(3).getId();
+        dinamico.insert(dati);
+        dinamico.execute();
+    }
+
+    public GiornoAlimProgObject getGiornoProgrammatoComb(int idgiorno, int idprogramma, LocalDate data){
+        dinamico.select();
+        dinamico.where("id_programma='" + idprogramma + "' and data='" + data+"'");
+        ResultSet rs = dinamico.fetch();
+        ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
+        try {
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                PastoModel pastomodel = new PastoModel();
+                for(int i=4;i<8;i++){
+                    PastoObject pasto = pastomodel.getPastoById(rs.getInt(i));
+                    pasti.add(pasto);
+                }
+                GiornoAlimDinamicoObject giornodinamico = new GiornoAlimDinamicoObject(idprogramma, data, rs.getInt("fabbisogno"), pasti);
+                return giornodinamico;
+            } else {
+                return getGiornoProgrammatoMan(idgiorno);
+            }
+        } catch (Exception e){
+            System.out.println("Errore:" + e);
+            return null;
+        }
 
     }
 
-    public GiornoAlimProgObject getGiornoProgrammato(int idgiorno){
+    public GiornoAlimProgObject getGiornoProgrammatoMan(int idgiorno){
         programmato.select();
         programmato.where("id_giorno='" + idgiorno + "'");
         ResultSet rs = programmato.fetch();

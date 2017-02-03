@@ -7,6 +7,8 @@ import Object.*;
 import Object.Enum.AlimentazioneEnum;
 
 import java.sql.ResultSet;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -76,14 +78,19 @@ public class ProgrammaAlimentareModel {
         try {
             rs.next();
             GiornoAlimModel giornomodel = new GiornoAlimModel();
-            for (int j = i; j < i + 7; j++) {
-                giorniprogrammati.add(giornomodel.getGiornoProgrammato(rs.getInt(j)));
-            }
             if (comb) {
+                LocalDate data = LocalDate.now().with(DayOfWeek.MONDAY);
+                for (int j = i; j < i + 7; j++) {
+                    giorniprogrammati.add(giornomodel.getGiornoProgrammatoComb(rs.getInt(j), progalim, data));
+                    data = data.plusDays(1);
+                }
                 ProgAlimCombObject progcomb = new ProgAlimCombObject(giorniprogrammati,rs.getInt("fabbisogno"), AlimentazioneEnum.valueOf(rs.getString("tipo_alimentazione")));
                 progcomb.setId(progalim);
                 return progcomb;
             } else {
+                for (int j = i; j < i + 7; j++) {
+                    giorniprogrammati.add(giornomodel.getGiornoProgrammatoMan(rs.getInt(j)));
+                }
                 ProgAlimManObject progman = new ProgAlimManObject(giorniprogrammati);
                 progman.setId(progalim);
                 return progman;

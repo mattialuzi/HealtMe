@@ -35,8 +35,8 @@ public abstract class GiornoAlimObject extends JObject {
         HashMap<String, PastoObject> pastimap = new HashMap<String, PastoObject>();
         pastimap.put("colazione", pasti.get(0));
         pastimap.put("pranzo", pasti.get(1));
-        pastimap.put("cena", pasti.get(2));
-        pastimap.put("spuntino", pasti.get(3));
+        pastimap.put("spuntino", pasti.get(2));
+        pastimap.put("cena", pasti.get(3));
         return pastimap.get(tipo);
     }
 

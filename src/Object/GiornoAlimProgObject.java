@@ -11,7 +11,7 @@ import java.util.Collections;
 public class GiornoAlimProgObject extends GiornoAlimObject {
 
     private int id_giorno;
-    private int fabbisogno;
+    protected int fabbisogno;
 
     public GiornoAlimProgObject() {
         id_giorno=0;
