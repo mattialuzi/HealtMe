@@ -67,16 +67,16 @@ public class GiornoAlimView {
         giornoeffettivo.addListenersForRemoveButtons(listener);
     }
 
-    public void addListenersAndShowConfermaButton(ActionListener listener){
-        giornoeffettivo.addListenersAndShowConfermaButton(listener);
+    public void addListenersConfermaButton(ActionListener listener){
+        giornoeffettivo.addListenersConfermaButton(listener);
     }
 
     public void enableConfermaButton(StatusEnum status){
         giornoeffettivo.enableConfermaButton(status);
     }
 
-    public void visibilityConfermaAndAddButtons(boolean comb){
-        giornoeffettivo.visibilityConfermaAndAddButtons(comb);
+    public void visibilityConfermaAndAddButtons(boolean comb, StatusEnum status){
+        giornoeffettivo.visibilityConfermaAndAddButtons(comb, status);
     }
 
     public void addTableSelectionListener(ListSelectionListener listener) {
@@ -94,8 +94,8 @@ public class GiornoAlimView {
             ArrayList<JTable> listatabelle = new ArrayList<JTable>(4);
             listatabelle.add(0, colazioneProgTable);
             listatabelle.add(1, pranzoProgTable);
-            listatabelle.add(2, cenaProgTable);
-            listatabelle.add(3, spuntiniProgTable);
+            listatabelle.add(2, spuntiniProgTable);
+            listatabelle.add(3, cenaProgTable);
             return listatabelle;
         }
     }

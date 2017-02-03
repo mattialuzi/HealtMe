@@ -123,26 +123,17 @@ public class GiornoAlimForm {
         }
     }
 
-    public void setConfermaButtonVisible(){
-        confermaColazione.setVisible(true);
-        confermaCena.setVisible(true);
-        confermaPranzo.setVisible(true);
-        confermaSpuntino.setVisible(true);
-    }
 
-    public void visibilityConfermaAndAddButtons(boolean comb){
+    public void visibilityConfermaAndAddButtons(boolean comb, StatusEnum status){
         confermaColazione.setVisible(comb);
         confermaPranzo.setVisible(comb);
         confermaSpuntino.setVisible(comb);
         confermaCena.setVisible(comb);
-
-        addColazione.setEnabled(true);
         if(comb) {
-            addPranzo.setEnabled(false);
-            addSpuntino.setEnabled(false);
-            addCena.setEnabled(false);
+            enableConfermaButton(status);
         }
         else{
+            addColazione.setEnabled(true);
             addPranzo.setEnabled(true);
             addSpuntino.setEnabled(true);
             addCena.setEnabled(true);
@@ -164,12 +155,11 @@ public class GiornoAlimForm {
         removeSpuntino.addActionListener(listener);
     }
 
-    public void addListenersAndShowConfermaButton(ActionListener listener){ // Funzione che aggiunge i listener ai bottini di Conferma e li rende visibili
+    public void addListenersConfermaButton(ActionListener listener){ // Funzione che aggiunge i listener ai bottini di Conferma e li rende visibili
         confermaColazione.addActionListener(listener);
         confermaPranzo.addActionListener(listener);
         confermaCena.addActionListener(listener);
         confermaSpuntino.addActionListener(listener);
-        setConfermaButtonVisible();
     }
 
     public void addTableSelectionListener(ListSelectionListener listener) {
@@ -181,10 +171,10 @@ public class GiornoAlimForm {
 
     public ArrayList<JTable> getEffTables () {
         ArrayList<JTable> listatabelle = new ArrayList<JTable>(4);
-            listatabelle.add(0, colazioneEffTable);
-            listatabelle.add(1, pranzoEffTable);
-            listatabelle.add(2, cenaEffTable);
-            listatabelle.add(3, spuntiniEffTable);
+        listatabelle.add(0, colazioneEffTable);
+        listatabelle.add(1, pranzoEffTable);
+        listatabelle.add(2, spuntiniEffTable);
+        listatabelle.add(3, cenaEffTable);
         return listatabelle;
     }
 

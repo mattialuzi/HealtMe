@@ -63,7 +63,7 @@ public class ProgrammaAlimentareModel {
     }
 
     public ProgrammaAlimentareObject getProgrammaAlimentare(boolean comb, Integer progalim) {
-        if (progalim == null) return null;
+        if (progalim == 0) return null;
         int i = 4;
         DbTable tipoprogramma;
         if (comb) tipoprogramma = combinato;

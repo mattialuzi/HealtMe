@@ -42,6 +42,10 @@ public class DbTable {
         return i;
     }
 
+    public void order(String clausola){
+        sql = sql + "ORDER BY " + clausola;
+    }
+
     public void delete(){
         sql="delete from "+name;
     }

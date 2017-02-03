@@ -21,6 +21,7 @@ public class PortataModel {
     public ArrayList<PortataObject> getPortateById(int idpasto){
         tabella.select();
         tabella.where("id_pasto ='" + idpasto + "'");
+        tabella.order("tipo");
         ResultSet rs = tabella.fetch();
         ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
         try{
@@ -56,7 +57,7 @@ public class PortataModel {
     }
 
     public  void updatePortata (int id_pasto, String vecchiocibo, String nuovocibo, int quantita) {
-        String dati= "quantita = " + quantita + " , cibo =" + nuovocibo;
+        String dati= "quantita = " + quantita + " , cibo = '" + nuovocibo + "'";
         tabella.update(dati);
         tabella.where("id_pasto='" + id_pasto + "' AND cibo='" + vecchiocibo + "'");
         tabella.execute();

@@ -40,9 +40,10 @@ public class ProgAlimController extends BaseAlimController {
     private GiornoAlimView giornocorrenteview;
     private int fabbisogno;
 
-    public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente) {
+    public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente, StatusEnum status) {
 
         this.utente = utente;
+        this.status = status;
         progalim = new NewProgAlimView();
         this.alimentazione = alimentazione;
         mainPanel = progalim.getMainPanel();
@@ -139,7 +140,7 @@ public class ProgAlimController extends BaseAlimController {
                     public void actionPerformed(ActionEvent e) {
                         aggiungiProgrammaManuale();
                         showNewProg();
-                        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb());
+                        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb(), status);
                         alimCardLayout.show(alimMainPanel,"IndexAlimentazioneView");
                     }
                 });
@@ -166,7 +167,7 @@ public class ProgAlimController extends BaseAlimController {
                     public void actionPerformed(ActionEvent e) {
                         generaProgramma();
                         showNewProg();
-                        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb());
+                        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb(), status);
                         alimCardLayout.show(alimMainPanel,"IndexAlimentazioneView");
                     }
                 });
@@ -319,8 +320,8 @@ public class ProgAlimController extends BaseAlimController {
             ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
             pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
             pasti.add(generaPranzo(primopranzo, secondo, contorno, frutta));
-            pasti.add(generaCenaDispari(secondo, contorno, frutta));
             pasti.add(generaSpuntino(snackspuntino, frutta, bevandaspuntino));
+            pasti.add(generaCenaDispari(secondo, contorno, frutta));
             return new GiornoAlimProgObject(pasti, fabbisogno);
         }
 
@@ -328,8 +329,8 @@ public class ProgAlimController extends BaseAlimController {
             ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
             pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
             pasti.add(generaPranzo(primopranzo, secondo, contorno, frutta));
-            pasti.add(generaCenaPari(secondo, primocena, frutta));
             pasti.add(generaSpuntino(snackspuntino, frutta, bevandaspuntino));
+            pasti.add(generaCenaPari(secondo, primocena, frutta));
             return new GiornoAlimProgObject(pasti, fabbisogno);
         }
 
@@ -337,8 +338,8 @@ public class ProgAlimController extends BaseAlimController {
             ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
             pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
             pasti.add(generaPranzoDolce(primopranzo, secondo, contorno, dolci));
-            pasti.add(generaCenaDispari(secondo, contorno, frutta));
             pasti.add(generaSpuntino(snackspuntino, frutta, bevandaspuntino));
+            pasti.add(generaCenaDispari(secondo, contorno, frutta));
             return new GiornoAlimProgObject(pasti, fabbisogno);
         }
 

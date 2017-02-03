@@ -4,6 +4,7 @@ import Model.CiboModel;
 import Object.Enum.GiornoEnum;
 import Object.Enum.PastoEnum;
 import Object.Enum.PortataEnum;
+import Object.Enum.StatusEnum;
 import View.Alimentazione.FormCiboEffettivo;
 import View.Alimentazione.GiornoAlimForm;
 import View.Alimentazione.GiornoAlimView;
@@ -28,6 +29,7 @@ public abstract class BaseAlimController extends Controller {
     protected FormCiboEffettivo dialog;
     protected ResultSet alimenti;
     protected HashMap<PastoEnum,HashMap<PortataEnum,String[]>> idoneitamap;
+    protected StatusEnum status;
 
 
     public class ListenersAndShowButtonsAction implements ActionListener {
@@ -153,7 +155,7 @@ public abstract class BaseAlimController extends Controller {
 
     protected void showPasti(GiornoAlimObject giorno, GiornoAlimView giornoview) {
         ArrayList<JTable> tabelle = giornoview.getTables(giorno.getTipo());
-        String[] tipipasto = new String[] {"colazione","pranzo","cena","spuntino"};
+        String[] tipipasto = new String[] {"colazione","pranzo","spuntino","cena"};
         for (int i=0; i<4; i++) {
             PastoObject pasto = giorno.getPastoByTipo(tipipasto[i]);
             Iterator<PortataObject> portateiterator = pasto.getPortate().iterator();

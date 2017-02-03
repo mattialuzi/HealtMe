@@ -89,7 +89,7 @@ public class UtenteModel {
             utentecorrente.setProgramma_alimentare(new ProgrammaAlimentareModel().getProgrammaAlimentare(risultato.getBoolean("prog_alim_comb"),risultato.getInt("programma_alimentare")));
             utentecorrente.setProg_alim_comb(risultato.getBoolean("prog_alim_comb"));
             //manca set programma allenamento
-            utentecorrente.setProg_alim_comb(risultato.getBoolean("prog_allen_comb"));
+            utentecorrente.setProg_allen_comb(risultato.getBoolean("prog_allen_comb"));
         } catch (Exception e) {
             System.out.println("C'è un errore:" + e);
         }

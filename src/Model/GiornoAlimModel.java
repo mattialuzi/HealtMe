@@ -26,6 +26,7 @@ public class GiornoAlimModel {
     public GiornoAlimModel() {
         effettivo = new Giorno_alim_eff();
         programmato = new Giorno_alim_prog();
+        dinamico = new Giorno_alim_dinamico();
     }
 
     public GiornoAlimEffettivoObject getGiornoAlimEffettivo(String username,LocalDate data){
