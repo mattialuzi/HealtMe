@@ -40,10 +40,11 @@ public class ProgAlimController extends BaseAlimController {
     private GiornoAlimView giornocorrenteview;
     private int fabbisogno;
 
-    public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente, StatusEnum status) {
+    public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente, GiornoAlimEffettivoObject giornoeffcorrente, StatusEnum status) {
 
         this.utente = utente;
         this.status = status;
+        this.giornoeffcorrente = giornoeffcorrente;
         progalim = new NewProgAlimView();
         this.alimentazione = alimentazione;
         mainPanel = progalim.getMainPanel();
@@ -56,6 +57,7 @@ public class ProgAlimController extends BaseAlimController {
         ProgAlimCombView progcomb = progalim.getProgalimcombview();
         dialog = new FormCiboEffettivo();
         giornocorrenteview = alimentazione.getIndexalimentazione().getGiorni(LocalDate.now().getDayOfWeek());
+        indexoggi = giornoeffcorrente.getData().getDayOfWeek().ordinal();
 
         indexprog.addNewProgManButtonListener(new ActionListener() {
             @Override
@@ -429,5 +431,7 @@ public class ProgAlimController extends BaseAlimController {
                 removePasti(giornoview, giorno.getTipo());
                 showPasti(giorno,giornoview);
             }
+            alimentazione.getIndexalimentazione().showHideCaloriePanel(true);
+            alimentazione.getIndexalimentazione().setCalorieLabel(giornoeffcorrente.getCalorie(), progalim.getSettimanaalimentare(indexoggi).getCalorie());
         }
 }

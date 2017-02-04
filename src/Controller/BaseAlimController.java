@@ -25,11 +25,13 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public abstract class BaseAlimController extends Controller {
 
+    protected GiornoAlimEffettivoObject giornoeffcorrente;
     protected String nuovopasto;
     protected FormCiboEffettivo dialog;
     protected ResultSet alimenti;
     protected HashMap<PastoEnum,HashMap<PortataEnum,String[]>> idoneitamap;
     protected StatusEnum status;
+    protected int indexoggi;
 
 
     public class ListenersAndShowButtonsAction implements ActionListener {

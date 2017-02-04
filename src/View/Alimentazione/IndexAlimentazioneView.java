@@ -85,7 +85,7 @@ public class IndexAlimentazioneView {
     }
 
     public void setCalorieLabel(int effettive){
-        effettivoLabel.setText(effettive+" Kcal");
+        effettivoLabel.setText(String.valueOf(effettive));
         if(obiettivoPanel.isVisible()){
             int obiettivo = Integer.parseInt(obiettivoLabel.getText());
             int rimanenti = obiettivo-effettive;
@@ -94,8 +94,8 @@ public class IndexAlimentazioneView {
     }
 
     public void setCalorieLabel(int effettive,int obiettivo){
-        effettivoLabel.setText(effettive+" Kcal");
-        obiettivoLabel.setText(obiettivo+" Kcal");
+        effettivoLabel.setText(String.valueOf(effettive));
+        obiettivoLabel.setText(String.valueOf(obiettivo));
         int rimanenti = obiettivo-effettive;
         rimanenteLabel.setText(rimanenti+" Kcal");
     }
