@@ -7,12 +7,32 @@ import javax.swing.*;
  */
 public class RiepilogoView {
     private JPanel mainPanel;
+    private JTabbedPane tabbedPane1;
+    private JPanel storiaPanel;
+    private JPanel progressiPanel;
+    private ProgressiView progressi;
+    private StoriaView storia;
 
     public RiepilogoView() {
     }
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public ProgressiView getProgressi() {
+        return progressi;
+    }
+
+    public StoriaView getStoria() {
+        return storia;
+    }
+
+    private void createUIComponents() {
+        progressi = new ProgressiView();
+        storia = new StoriaView();
+        progressiPanel = progressi.getMainPanel();
+        storiaPanel = storia.getMainPanel();
     }
 }
 

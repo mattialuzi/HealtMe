@@ -78,10 +78,10 @@
         </children>
       </tabbedpane>
       <grid id="f8985" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+        <margin top="10" left="20" bottom="10" right="20"/>
         <constraints border-constraint="North"/>
         <properties/>
-        <border type="none"/>
+        <border type="none" title="Riepilogo di Oggi" title-justification="2"/>
         <children>
           <grid id="5fe91" binding="rimanentePanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>

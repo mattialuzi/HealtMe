@@ -30,7 +30,6 @@ public abstract class BaseAlimController extends Controller {
     protected FormCiboEffettivo dialog;
     protected ResultSet alimenti;
     protected HashMap<PastoEnum,HashMap<PortataEnum,String[]>> idoneitamap;
-    protected StatusEnum status;
     protected int indexoggi;
 
 

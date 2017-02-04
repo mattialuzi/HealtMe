@@ -43,8 +43,7 @@ public class AlimentazioneController extends BaseAlimController {
         indexalimentazione = alimentazione.getIndexalimentazione();
         setGiorni();
         dialog = new FormCiboEffettivo();
-        status = giornoeffcorrente.getStatus();
-        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb(), status);
+        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb(), giornoeffcorrente.getStatus());
         if(utente.getProgramma_alimentare() == null){
             indexalimentazione.showHideCaloriePanel(false);
             indexalimentazione.setCalorieLabel(giornoeffcorrente.getCalorie());
@@ -53,6 +52,7 @@ public class AlimentazioneController extends BaseAlimController {
             indexoggi = giornoeffcorrente.getData().getDayOfWeek().ordinal();
             GiornoAlimProgObject giornoprogcorrente = utente.getProgramma_alimentare().getSettimanaalimentare(indexoggi);
             indexalimentazione.setCalorieLabel(giornoeffcorrente.getCalorie(), giornoprogcorrente.getCalorie());
+            if(utente.isProg_alim_comb()) giornocorrenteview.enableConfermaButton(giornoeffcorrente.getStatus());
         }
 
         //showIndex();
@@ -60,7 +60,7 @@ public class AlimentazioneController extends BaseAlimController {
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ProgAlimController(alimentazione, utente, giornoeffcorrente, status);
+                new ProgAlimController(alimentazione, utente, giornoeffcorrente, giornoeffcorrente.getStatus());
                 SubMenuVisibility(menu.getSubMenuAlimPanel());
             }
         });
@@ -110,8 +110,6 @@ public class AlimentazioneController extends BaseAlimController {
         });
 
         giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
-
-        giornocorrenteview.enableConfermaButton(giornoeffcorrente.getStatus());
 
         giornocorrenteview.addListenersConfermaButton(new ActionListener() {
             @Override

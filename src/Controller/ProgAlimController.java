@@ -38,6 +38,7 @@ public class ProgAlimController extends BaseAlimController {
     private GiornoAlimForm giornoselezionato;
     private AlimentazioneView alimentazione;
     private GiornoAlimView giornocorrenteview;
+    private StatusEnum status;
     private int fabbisogno;
 
     public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente, GiornoAlimEffettivoObject giornoeffcorrente, StatusEnum status) {

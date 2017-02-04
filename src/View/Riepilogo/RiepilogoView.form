@@ -8,14 +8,38 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="9d400" class="javax.swing.JLabel">
+      <tabbedpane id="64361" binding="tabbedPane1" default-binding="true">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
         </constraints>
         <properties>
-          <text value="riepilogo"/>
+          <doubleBuffered value="false"/>
+          <focusTraversalPolicyProvider value="false"/>
+          <tabLayoutPolicy value="0"/>
+          <tabPlacement value="1"/>
         </properties>
-      </component>
+        <border type="none"/>
+        <children>
+          <grid id="11df0" binding="storiaPanel" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <tabbedpane title="Storia"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="edfb6" binding="progressiPanel" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <tabbedpane title="Progressi"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </tabbedpane>
     </children>
   </grid>
 </form>

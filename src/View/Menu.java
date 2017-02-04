@@ -121,6 +121,10 @@ public class Menu {
         return profilo;
     }
 
+    public RiepilogoView getRiepilogoview() {
+        return riepilogo;
+    }
+
     private void createUIComponents() {
         alimentazione = new AlimentazioneView();
         allenamento = new AllenamentoView();
