@@ -219,9 +219,12 @@ public class AlimentazioneController extends BaseAlimController {
             PortataModel portatamodel = new PortataModel();
             portatamodel.inserisciPortata(nuovaportata);
             pasto.addPortata(nuovaportata);
+            giornocorrente.setCalorie(giornocorrente.getCalorie() + calcolaCalorie(nuovaportata));
+            HashMap<String,Integer> mappa = new HashMap<String,Integer>();
+            mappa.put("cal_assunte",giornocorrente.getCalorie());
+            new GiornoAlimModel().updateGiornoAlimEff(giornocorrente.getUsername(),giornocorrente.getData(),mappa);
             tabellamodel.addRow(new String[]{portata,alimento,Integer.toString(quantita)});
         }
-
     }
 
     private boolean aggiornaPortata(PastoObject pasto, String alimento, int quantita, DefaultTableModel tabellamodel) {
@@ -229,6 +232,10 @@ public class AlimentazioneController extends BaseAlimController {
         while ( portateiterator.hasNext() ) {
             PortataObject portata = portateiterator.next();
             if (alimento.equals(portata.getCibo().getNome())) {
+                giornocorrente.setCalorie(giornocorrente.getCalorie() + calcolaCalorie(portata.getCibo(),quantita));
+                HashMap<String,Integer> mappa = new HashMap<String,Integer>();
+                mappa.put("cal_assunte",giornocorrente.getCalorie());
+                new GiornoAlimModel().updateGiornoAlimEff(giornocorrente.getUsername(),giornocorrente.getData(),mappa);
                 int nuovaquantita = portata.getQuantita() + quantita;
                 portata.setQuantita(nuovaquantita);
                 new PortataModel().updatePortata(portata.getId_pasto(), alimento, nuovaquantita);
@@ -248,8 +255,17 @@ public class AlimentazioneController extends BaseAlimController {
 
     public void removePortata(JTable tabella, String nomepasto){
         String cibo = tabella.getModel().getValueAt(tabella.getSelectedRow(), 1).toString();
+        int quantita = (Integer)tabella.getModel().getValueAt(tabella.getSelectedRow(),2);
         PastoObject pasto = giornocorrente.getPastoByTipo(nomepasto);
-        pasto.removePortata(cibo);
+        for(PortataObject portata: pasto.getPortate()){
+            if(portata.getCibo().getNome().equals(cibo)) {
+                giornocorrente.setCalorie(giornocorrente.getCalorie() - calcolaCalorie(portata));
+                HashMap<String,Integer> mappa = new HashMap<String,Integer>();
+                mappa.put("cal_assunte",giornocorrente.getCalorie());
+                new GiornoAlimModel().updateGiornoAlimEff(giornocorrente.getUsername(),giornocorrente.getData(),mappa);
+                pasto.removePortata(portata);
+            }
+        }
         new PortataModel().eliminaPortata(pasto.getId(), cibo);
     }
 
@@ -278,10 +294,6 @@ public class AlimentazioneController extends BaseAlimController {
         for (PortataObject portataeff : portateeff) {
             calorieeff += calcolaCalorie(portataeff);
         }
-        giornocorrente.setCalorie(giornocorrente.getCalorie() + calorieeff);
-        HashMap<String,Integer> mappa = new HashMap<String,Integer>();
-        mappa.put("cal_assunte",giornocorrente.getCalorie());
-        new GiornoAlimModel().updateGiornoAlimEff(giornocorrente.getUsername(),giornocorrente.getData(),mappa);
         int tolleranza = (calorieprog/100)*10;
         boolean limitecalorie = false;
         if (calorieeff < calorieprog-tolleranza || calorieeff > calorieprog+tolleranza) {
@@ -444,7 +456,4 @@ public class AlimentazioneController extends BaseAlimController {
         int nuovaquantita = (fabportata*100)/(portata.getCibo().getKilocal());
         portata.setQuantita(nuovaquantita);
     }
-
-
-
 }

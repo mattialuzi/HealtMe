@@ -78,16 +78,8 @@ public class PastoObject extends JObject {
         portate.add(portata);
     }
 
-    public void removePortata(String cibo){
-        Iterator<PortataObject> portateiterator = portate.iterator();
-        boolean exit = true;
-        while(portateiterator.hasNext() && exit){
-            PortataObject portata = portateiterator.next();
-            if(portata.getCibo().getNome().equals(cibo)) {
-                portate.remove(portata);
-                exit = false;
-            }
-        }
+    public void removePortata(PortataObject portata) {
+        portate.remove(portata);
     }
 
     public void setTipoByIndex(int index){
