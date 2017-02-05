@@ -1,8 +1,12 @@
 package View.Riepilogo;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -15,13 +19,21 @@ public class StoriaView {
     private JButton precButton;
     private JButton succButton;
     private JTable giorniTable;
+
+
+
     private JLabel dataLabel;
     private DefaultTableModel model;
     private Calendar cal = new GregorianCalendar();
 
     public StoriaView() {
         String[] columns = {"Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"};
-        model = new DefaultTableModel(null, columns);
+        model = new DefaultTableModel(null, columns){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         giorniTable.setModel(model);
         updateMonth();
     }
@@ -38,8 +50,16 @@ public class StoriaView {
         return mainPanel;
     }
 
+    public JLabel getDataLabel() {
+        return dataLabel;
+    }
+
     public Calendar getCal() {
         return cal;
+    }
+
+    public JTable getGiorniTable() {
+        return giorniTable;
     }
 
     public void updateMonth() {
@@ -72,4 +92,9 @@ public class StoriaView {
         if (i != 0) risultato++;
         return risultato;
     }
+
+    public void addMouseListener(MouseAdapter adapter){
+        giorniTable.addMouseListener(adapter);
+    }
+
 }

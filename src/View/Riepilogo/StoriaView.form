@@ -55,6 +55,7 @@
               <component id="6a203" class="javax.swing.JTable" binding="giorniTable">
                 <constraints/>
                 <properties>
+                  <cellSelectionEnabled value="true"/>
                   <preferredScrollableViewportSize width="300" height="40"/>
                 </properties>
               </component>
