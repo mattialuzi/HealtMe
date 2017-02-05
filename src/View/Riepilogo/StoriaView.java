@@ -43,22 +43,40 @@ public class StoriaView {
     }
 
     public void updateMonth() {
-        cal.set(Calendar.DAY_OF_WEEK, 1);
         String month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ITALY);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
         int year = cal.get(Calendar.YEAR);
         dataLabel.setText(month + " " + year);
 
         int startDay = cal.get(Calendar.DAY_OF_WEEK);
         int numberOfDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        int weeks = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
+        int weeks = calcolaSettimaneMese(numberOfDays, startDay - 1);
 
         model.setRowCount(0);
         model.setRowCount(weeks);
 
-        int i = startDay -1;
+        int i = startDay - 2;
         for (int day = 1; day <= numberOfDays; day++) {
             model.setValueAt(day, i / 7, i % 7);
             i = i + 1;
         }
     }
+
+    public int calcolaSettimaneMese(int numerogiorni, int startday){
+        int i = 7 - startday;
+        int j = numerogiorni - i;
+        int k = j % 7;
+        int risultato = j/7;
+        if (k!=0) risultato++;
+        if (i != 0) risultato++;
+        return risultato;
+    }
+
+    /*public int calcolaSettimaneMese(int numerogiorni, int startday){
+        for(int i= 0; i < numerogiorni; i++){
+            for(int j = startday; j<=7; j++){
+
+            }
+        }
+    }*/
 }
