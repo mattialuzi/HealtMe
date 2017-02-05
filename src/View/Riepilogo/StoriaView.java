@@ -50,15 +50,16 @@ public class StoriaView {
 
         int startDay = cal.get(Calendar.DAY_OF_WEEK);
         int numberOfDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        int weeks = calcolaSettimaneMese(numberOfDays, startDay - 1);
+        startDay = (5+startDay)%7;
+        int weeks = calcolaSettimaneMese(numberOfDays, startDay);
 
         model.setRowCount(0);
         model.setRowCount(weeks);
 
-        int i = startDay - 2;
+        int i = startDay;
         for (int day = 1; day <= numberOfDays; day++) {
             model.setValueAt(day, i / 7, i % 7);
-            i = i + 1;
+            i++;
         }
     }
 
@@ -71,12 +72,4 @@ public class StoriaView {
         if (i != 0) risultato++;
         return risultato;
     }
-
-    /*public int calcolaSettimaneMese(int numerogiorni, int startday){
-        for(int i= 0; i < numerogiorni; i++){
-            for(int j = startday; j<=7; j++){
-
-            }
-        }
-    }*/
 }
