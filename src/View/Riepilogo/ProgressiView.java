@@ -3,6 +3,7 @@ package View.Riepilogo;
 import View.Graph;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -12,18 +13,19 @@ public class ProgressiView {
     private JPanel mainPanel;
     private JPanel graphPanel;
 
+
     public ProgressiView() {
-    }
-
-    public JPanel getMainPanel() {
-        return mainPanel;
-    }
-
-    private void createUIComponents() {
         ArrayList<Integer> test = new ArrayList<>();
         test.add(0);
         test.add(1);
         test.add(2);
-        graphPanel = new Graph(test);
+        JScrollPane scrollGraph = new JScrollPane(new Graph(test));
+        mainPanel.add(scrollGraph);
+
+
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
     }
 }

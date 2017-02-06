@@ -4,7 +4,9 @@ import View.Alimentazione.GiornoAlimForm;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -27,8 +29,10 @@ public class StoriaView {
     private JPanel allenamentoPanel;
     private JScrollPane tableScrollPane;
     private DefaultTableModel model;
-    private Calendar cal = new GregorianCalendar();
+    private Calendar cal = new GregorianCalendar(Locale.ITALY);
     private GiornoAlimForm giornoalimeff;
+    private Integer today;
+    private boolean flag=false;
 
     public StoriaView() {
         String[] columns = {"Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"};
@@ -39,6 +43,7 @@ public class StoriaView {
             }
         };
         giorniTable.setModel(model);
+        giorniTable.setDefaultRenderer(Object.class,new MyCellRender());
         updateMonth();
     }
 
@@ -67,6 +72,15 @@ public class StoriaView {
     }
 
     public void updateMonth() {
+        Calendar nowdate = Calendar.getInstance(Locale.ITALY);
+        if (nowdate.get(Calendar.MONTH)==cal.get(Calendar.MONTH) && nowdate.get(Calendar.YEAR)==cal.get(Calendar.YEAR)) {
+            today = (nowdate.get(Calendar.DAY_OF_MONTH));
+            flag = true;
+        }
+        else {
+            flag = false;
+        }
+
         String month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ITALY);
         cal.set(Calendar.DAY_OF_MONTH, 1);
         int year = cal.get(Calendar.YEAR);
@@ -114,5 +128,21 @@ public class StoriaView {
     public void showEffPanels(){
         alimentarePanel.setVisible(true);
         allenamentoPanel.setVisible(true);
+    }
+
+    private class MyCellRender extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            c.setBackground(table.getBackground());
+            if (value != null) {
+                if (value.equals(today) && flag) {
+                    c.setBackground(Color.RED);
+                }
+            }
+            return c;
+
+        }
     }
 }

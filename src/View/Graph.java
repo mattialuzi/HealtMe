@@ -15,6 +15,7 @@ public class Graph extends JPanel {
         this.punti = punti;
         this.border = 30;
         this.yMax =11;
+        this.setSize(new Dimension(1000,300));
     }
 
     @Override
