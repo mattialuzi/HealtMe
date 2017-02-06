@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.UtenteModel;
+import Model.ProgressiModel;
 import Object.Enum.AllergiaEnum;
 import Object.Enum.LavoroEnum;
 import Object.Enum.LivelloAttivitaFisicaEnum;
@@ -11,6 +12,7 @@ import View.Profilo.ProfiloView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 
@@ -111,6 +113,7 @@ public class ProfiloController {
                 if(!nuovoPeso.equals(peso)) {
                     utente.setPeso(Float.parseFloat(nuovoPeso));
                     profilo.setInfoUtente(utente);
+                    new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),campo,nuovoPeso);
                 }
             }
         });

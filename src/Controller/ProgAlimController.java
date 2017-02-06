@@ -3,6 +3,7 @@ package Controller;
 
 import Model.CiboModel;
 import Model.ProgrammaAlimentareModel;
+import Model.ProgressiModel;
 import Model.UtenteModel;
 import Object.Enum.*;
 import View.Alimentazione.*;
@@ -230,6 +231,7 @@ public class ProgAlimController extends BaseAlimController {
             campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
             campo.put("prog_alim_comb", 0);
             utentemodel.updateInfoUtente(utente.getUsername(), campo);
+            new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"fabbisogno",String.valueOf(nuovoprogmanuale.getSettimanaalimentare(indexoggi).getCalorie()));
         }
 
         private void generaProgramma(){
@@ -265,6 +267,7 @@ public class ProgAlimController extends BaseAlimController {
             campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
             campo.put("prog_alim_comb", 1);
             utentemodel.updateInfoUtente(utente.getUsername(), campo);
+            new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"fabbisogno",String.valueOf(nuovoprogcombinato.getFabbisogno()));
         }
 
         private int calcolaFabbisogno(){
