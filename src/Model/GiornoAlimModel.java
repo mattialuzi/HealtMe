@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 
 import Model.Dbtable.Giorno_alim_prog;
+import Object.Enum.PastoEnum;
 import Object.Enum.StatusEnum;
 import Object.GiornoAlimEffettivoObject;
 import Object.GiornoAlimProgObject;
@@ -155,9 +156,11 @@ public class GiornoAlimModel {
         }
     }
 
-    public void updateGiornoAlimDinamico(int idpastonuovo,int idpastovecchio){
-        String dati =
-        dinamico.update("");
+    public void updateGiornoAlimDinamico(int idpastonuovo,int idpastovecchio, PastoEnum tipopasto){
+        String dati = tipopasto + "=" + idpastonuovo;
+        dinamico.update(dati);
+        dinamico.where(tipopasto + "=" + idpastovecchio);
+        dinamico.execute();
     }
 
     /*public int findPastoInserito(String pasto, LocalDate data, String username){

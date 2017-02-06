@@ -400,8 +400,9 @@ public class AlimentazioneController extends BaseAlimController {
             utente.getProgramma_alimentare().setSettimanaalimentare(indexgiorno, giornodinamico);
             return giornodinamico;
         } else {
-                new GiornoAlimModel().updateGiornoAlimDinamico(giornoeffcorrente.getPasti(indexstatus).getId(),giorno.getPasti(indexstatus).getId());
-                giorno.setPasti(indexstatus,giornoeffcorrente.getPasti(indexstatus));
+            PastoEnum tipopasto = giornoeffcorrente.getPasti(indexstatus).getTipo();
+            new GiornoAlimModel().updateGiornoAlimDinamico(giornoeffcorrente.getPasti(indexstatus).getId(), giorno.getPasti(indexstatus).getId(), tipopasto);
+            giorno.setPasti(indexstatus,giornoeffcorrente.getPasti(indexstatus));
 
             return giorno;
         }
