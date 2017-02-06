@@ -4,6 +4,8 @@ import Model.Dbtable.Progressi;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ALLDE on 06/02/2017.
@@ -42,5 +44,21 @@ public class ProgressiModel {
         tabella.update(dati);
         tabella.where("username='" + username + "' and data='" + data+"'");
         tabella.execute();
+    }
+
+    public HashMap<LocalDate,Float> getValoreProgressi(String username,String campo){
+        tabella.select();
+        tabella.where("username='" +username+"'");
+        ResultSet rs = tabella.fetch();
+        HashMap<LocalDate,Float> mappa = new HashMap<LocalDate, Float>();
+        try{
+            while(rs.next()){
+                mappa.put(rs.getDate("data").toLocalDate(),rs.getFloat(campo));
+            }
+        }
+        catch (Exception e){
+            System.out.println("C'è un errore"+e);
+        }
+        return mappa;
     }
 }
