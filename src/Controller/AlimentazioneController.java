@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.CiboModel;
-import Model.GiornoAlimModel;
-import Model.PastoModel;
-import Model.PortataModel;
+import Model.*;
 import Object.Enum.*;
 import View.Alimentazione.*;
 import View.Menu;
@@ -230,6 +227,7 @@ public class AlimentazioneController extends BaseAlimController {
             tabellamodel.addRow(new String[]{portata,alimento,Integer.toString(quantita)});
         }
         indexalimentazione.setCalorieLabel(giornoeffcorrente.getCalorie());
+        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_assunte",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
     private boolean aggiornaPortata(PastoObject pasto, String alimento, int quantita, DefaultTableModel tabellamodel) {
@@ -275,6 +273,7 @@ public class AlimentazioneController extends BaseAlimController {
         }
         new PortataModel().eliminaPortata(pasto.getId(), cibo);
         indexalimentazione.setCalorieLabel(giornoeffcorrente.getCalorie());
+        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_assunte",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
     private int calcolaCalorie(CiboObject cibo,int quantita){
