@@ -319,8 +319,8 @@ public class AlimentazioneController extends BaseAlimController {
         }
         if (limitecalorie || portatediverse.size() !=0 || portatediversedomani.size() !=0) {
             GiornoAlimProgObject giorno = getGiornoDinamico(oggiprog, indexoggi, indexstatus);
-            if (portatediverse.size() !=0) ricombinaPortata(giorno.getPasti(indexstatus+2), portatediverse, indiciricombinaoggi);
-            if (portatediversedomani.size() !=0){
+            if (indiciricombinaoggi.size() !=0) ricombinaPortata(giorno.getPasti(indexstatus+2), portatediverse, indiciricombinaoggi);
+            if (indiciricombinadomani.size() !=0){
                 GiornoAlimProgObject giornodomani = getGiornoDinamico(domaniprog, indexoggi +1, -1);
                 PastoObject pastodomani = giornodomani.getPasti(indexstatus);
                 ricombinaPortata(pastodomani, portatediversedomani, indiciricombinadomani);
@@ -400,9 +400,9 @@ public class AlimentazioneController extends BaseAlimController {
             utente.getProgramma_alimentare().setSettimanaalimentare(indexgiorno, giornodinamico);
             return giornodinamico;
         } else {
-            for (int j = 0; j <= indexstatus; j++) {
-                giorno.setPasti(j, giornoeffcorrente.getPasti(j));
-            }
+                new GiornoAlimModel().updateGiornoAlimDinamico(giornoeffcorrente.getPasti(indexstatus).getId(),giorno.getPasti(indexstatus).getId());
+                giorno.setPasti(indexstatus,giornoeffcorrente.getPasti(indexstatus));
+
             return giorno;
         }
     }

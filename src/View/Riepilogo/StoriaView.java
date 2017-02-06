@@ -1,5 +1,7 @@
 package View.Riepilogo;
 
+import View.Alimentazione.GiornoAlimForm;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -7,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -19,12 +22,13 @@ public class StoriaView {
     private JButton precButton;
     private JButton succButton;
     private JTable giorniTable;
-
-
-
     private JLabel dataLabel;
+    private JPanel alimentarePanel;
+    private JPanel allenamentoPanel;
+    private JScrollPane tableScrollPane;
     private DefaultTableModel model;
     private Calendar cal = new GregorianCalendar();
+    private GiornoAlimForm giornoalimeff;
 
     public StoriaView() {
         String[] columns = {"Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"};
@@ -97,4 +101,18 @@ public class StoriaView {
         giorniTable.addMouseListener(adapter);
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        giornoalimeff = new GiornoAlimForm("Cosa hai mangiato in quel giorno");
+        alimentarePanel = giornoalimeff.getMainPanel();
+    }
+
+    public ArrayList<JTable> getTables(){
+        return giornoalimeff.getEffTables();
+    }
+
+    public void showEffPanels(){
+        alimentarePanel.setVisible(true);
+        allenamentoPanel.setVisible(true);
+    }
 }

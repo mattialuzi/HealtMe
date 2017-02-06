@@ -155,6 +155,11 @@ public class GiornoAlimModel {
         }
     }
 
+    public void updateGiornoAlimDinamico(int idpastonuovo,int idpastovecchio){
+        String dati =
+        dinamico.update("");
+    }
+
     /*public int findPastoInserito(String pasto, LocalDate data, String username){
         effettivo.select(pasto);
         effettivo.where("username='" + username + "' and data='" + data+"'");

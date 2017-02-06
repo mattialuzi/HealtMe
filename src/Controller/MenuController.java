@@ -28,7 +28,7 @@ public class MenuController extends Controller {
         cardLayout.show(variablePanel,"AlimentazioneView");
         ProfiloController profiloController = new ProfiloController(menu, utente);
         AlimentazioneController alimentazioneController = new AlimentazioneController(menu, utente);
-        RiepilogoController riepilogoController = new RiepilogoController(menu);
+        RiepilogoController riepilogoController = new RiepilogoController(menu,utente);
         //Auth.getFrame().pack();
 
         menu.addMenuButtonListener(new ActionListener() {
