@@ -15,7 +15,7 @@ public class Graph extends JPanel {
         this.punti = punti;
         this.border = 30;
         this.yMax =11;
-        this.setSize(new Dimension(1000,300));
+        this.setPreferredSize(new Dimension(1000,300));
     }
 
     @Override
@@ -41,6 +41,7 @@ public class Graph extends JPanel {
             int x1=x0;
             int y1= getHeight() - border;
             g2.drawLine(x0,y0,x1,y1);
+            g2.drawString(String.valueOf(i),x1,y1+border/2);
         }
         g2.setFont(g2.getFont().deriveFont(yScale));
         for (int i=1; i< yMax; i++) {
@@ -49,7 +50,7 @@ public class Graph extends JPanel {
             int y1=y0;
             int x1= getWidth() - border ;
             g2.drawLine(x0,y0,x1,y1);
-            g2.drawString(String.valueOf(i),border/4,y0+yScale/2);
+            g2.drawString(String.valueOf(i),border/4,y0);
         }
 
 

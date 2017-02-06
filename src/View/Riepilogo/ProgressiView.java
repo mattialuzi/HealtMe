@@ -19,10 +19,11 @@ public class ProgressiView {
         test.add(0);
         test.add(1);
         test.add(2);
-        JScrollPane scrollGraph = new JScrollPane(new Graph(test));
-        mainPanel.add(scrollGraph);
-
-
+        JPanel graph = new Graph(test);
+        JScrollPane scrollGraph = new JScrollPane(graph);
+        graph.setAutoscrolls(true);
+        scrollGraph.setPreferredSize(new Dimension( 100, 300));
+        graphPanel.add(scrollGraph);
     }
 
     public JPanel getMainPanel() {
