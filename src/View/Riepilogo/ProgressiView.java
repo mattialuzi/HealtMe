@@ -4,7 +4,10 @@ import View.Graph;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lorenzobraconi on 04/02/17.
@@ -15,11 +18,15 @@ public class ProgressiView {
 
 
     public ProgressiView() {
-        ArrayList<Integer> test = new ArrayList<>();
-        test.add(0);
-        test.add(1);
-        test.add(2);
-        JPanel graph = new Graph(test);
+        ArrayList<LocalDate> test = new ArrayList<>();
+        test.add(LocalDate.now());
+        test.add(LocalDate.now().plusDays(1));
+        test.add(LocalDate.now().plusDays(2));
+        ArrayList<Float> test2 = new ArrayList<>();
+        test2.add(2f);
+        test2.add(5f);
+        test2.add(7f);
+        JPanel graph = new Graph(test,test2);
         JScrollPane scrollGraph = new JScrollPane(graph);
         graph.setAutoscrolls(true);
         scrollGraph.setPreferredSize(new Dimension( 100, 300));
