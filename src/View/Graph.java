@@ -25,9 +25,15 @@ public class Graph extends JPanel {
             if (max < valore)
                 max = valore;
         }
-        this.yMax =8000 ;
-        this.setPreferredSize(new Dimension(1000,300));
-        this.yFactor = 500;
+        this.yMax = max ;
+        this.setPreferredSize(new Dimension(1000,200));
+
+        int i = 1;
+        while((max=max/10) > 1) i++;
+        double j = (Math.pow(10,i))/2;
+        if (yMax <= j) yMax=(int) j;
+        else yMax = (int) j*2;
+        this.yFactor =(int) yMax/20;
         this.pointdim = 5;
     }
 
@@ -39,34 +45,25 @@ public class Graph extends JPanel {
         //setta la larghezza in pixel di una unita del grafico sia per l'asciss ache per l'ordinata
         double xScale =((double)getWidth() - 2 * border) / (x.size() - 1);
         double yScale = ((double)getHeight() - 2 * border) / (yMax - 1);
-        //disegna asse x e y, (considera che le coordinate hanno riferimento)
-        // 0 ----->
-        // |
-        // |
-        // V
-        g2.drawLine(border, getHeight() - border, border, border);
-        g2.drawLine(border, getHeight() - border, getWidth() - border, getHeight() - border);
-        //disegna la prima data sull'asse x
-        g2.drawString(x.get(0).toString(),border-30, (getHeight() - border/3));
         //disegna quadrettatatura e valori su x e y
-        for(int i=1; i< x.size(); i++) {
+        g2.setFont(new Font("Arial",Font.PLAIN,border/3));
+        for(int i=0; i< x.size(); i++) {
             int x0 = border + i * (getWidth() - 2 * border) / (x.size() - 1) ;
-            int y0 = border;
+            int y0 = (int) (getHeight() - border - yMax * yScale) ;
+            //int y0 = border;
             int x1=x0;
             int y1= getHeight() - border;
             g2.drawLine(x0,y0,x1,y1);
-            g2.drawString(x.get(i).toString(),x1-40,y1+(2*border/3));
+            g2.drawString(x.get(i).toString(),x1-border+1,y1+(2*border/3));
         }
 
-        int yScaleFactor = (int) (yFactor * (getHeight() - 2 * border) / (yMax - 1));
-
-        for (int i=1; i< (yMax+1)/yFactor; i++) {
-            int y0 = getHeight() - border - i * yScaleFactor;
+        for (int i=0; i<= yMax/yFactor; i++) {
+            int y0 =(int) (getHeight() - border - i * yScale * yFactor) ;
             int x0 = border;
             int y1=y0;
             int x1= getWidth() - border ;
             g2.drawLine(x0,y0,x1,y1);
-            g2.drawString(String.valueOf(i*yFactor),border/4,y0);
+            g2.drawString(String.valueOf(i*yFactor),border/5,y0);
         }
         //calcola le coordinate dei punti del grafico corrispondenti ai valori dei due array di dati
         ArrayList<Point> punti = new ArrayList<>();

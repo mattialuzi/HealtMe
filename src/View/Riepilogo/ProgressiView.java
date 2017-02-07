@@ -24,12 +24,12 @@ public class ProgressiView {
         test.add(LocalDate.now().plusDays(2));
         ArrayList<Float> test2 = new ArrayList<>();
         test2.add(2f);
-        test2.add(5f);
-        test2.add(7f);
+        test2.add(50f);
+        test2.add(10000f);
         JPanel graph = new Graph(test,test2);
         JScrollPane scrollGraph = new JScrollPane(graph);
         graph.setAutoscrolls(true);
-        scrollGraph.setPreferredSize(new Dimension( 100, 300));
+        scrollGraph.setPreferredSize(new Dimension( 100, 200));
         graphPanel.add(scrollGraph);
     }
 
