@@ -21,6 +21,10 @@ public class AllenamentoView {
         return mainPanel;
     }
 
+    public NewEsercizioView getNewesercizio() {
+        return newesercizio;
+    }
+
     private void createUIComponents() {
         indexallenamento = new IndexAllenamentoView();
         indexAllenPanel = indexallenamento.getMainPanel();

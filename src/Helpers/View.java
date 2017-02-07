@@ -33,8 +33,8 @@ public class View {
             res = checkData(elemento);
         if(tipo.equals("email"))
             res = checkEmail(elemento);
-        if(tipo.equals("cibo"))
-            res = checkCibo(elemento);
+        if(tipo.equals("eserciziocibo"))
+            res = checkEsercizioCibo(elemento);
         return res;
     }
 
@@ -94,7 +94,7 @@ public class View {
         return ritorno;
     }
 
-    public boolean checkCibo(String elemento){
+    public boolean checkEsercizioCibo(String elemento){
         boolean ritorno = false;
         String regola = "[A-Za-z\\s]*";
         if (elemento.matches(regola) && elemento.length()>0)
