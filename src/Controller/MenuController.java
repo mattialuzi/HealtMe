@@ -28,6 +28,7 @@ public class MenuController extends Controller {
         cardLayout.show(variablePanel,"AlimentazioneView");
         ProfiloController profiloController = new ProfiloController(menu, utente);
         AlimentazioneController alimentazioneController = new AlimentazioneController(menu, utente);
+        AllenamentoController allenamentoController = new AllenamentoController(menu, utente);
         RiepilogoController riepilogoController = new RiepilogoController(menu,utente);
         //Auth.getFrame().pack();
 
@@ -52,6 +53,7 @@ public class MenuController extends Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(variablePanel, "AllenamentoView");
+                allenamentoController.showIndex();
                 JPanel subMenu = menu.getSubMenuAllenPanel();
                 SubMenuVisibility(subMenu);
             }

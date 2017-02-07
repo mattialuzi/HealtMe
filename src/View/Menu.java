@@ -37,8 +37,8 @@ public class Menu {
     private JButton newProgAlimButton;
     private JButton newCiboButton;
     private JPanel subMenuAlimPanel;
-    private JButton nuovoProgrAllenButton;
-    private JButton nuovoEsercizioButton;
+    private JButton newProgAllenButton;
+    private JButton newEsercizioButton;
     private JPanel subMenuAllenPanel;
     private JButton logoutButton;
     private JPanel logoutbuttonPanel;
@@ -80,6 +80,10 @@ public class Menu {
     public void addAllenamentoButtonListener(ActionListener listener){
         allenamentoButton.addActionListener(listener);
     }
+
+    public void addNewProgAllenButtonListener(ActionListener listener) { newProgAllenButton.addActionListener(listener);}
+
+    public void addNewEsercizioButtonListener(ActionListener listener) { newEsercizioButton.addActionListener(listener);}
 
     public void addProfiloButtonListener(ActionListener listener){
         profiloButton.addActionListener(listener);
