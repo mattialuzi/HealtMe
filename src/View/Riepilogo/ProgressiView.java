@@ -26,10 +26,14 @@ public class ProgressiView {
         test2.add(2f);
         test2.add(50f);
         test2.add(10000f);
-        JPanel graph = new Graph(test,test2);
+        ArrayList<Float> test3 = new ArrayList<>();
+        test3.add(10f);
+        test3.add(500f);
+        test3.add(8000f);
+        JPanel graph = new Graph(test,test2,test3);
         JScrollPane scrollGraph = new JScrollPane(graph);
         graph.setAutoscrolls(true);
-        scrollGraph.setPreferredSize(new Dimension( 100, 200));
+        scrollGraph.setPreferredSize(new Dimension( 650, 300));
         graphPanel.add(scrollGraph);
     }
 
