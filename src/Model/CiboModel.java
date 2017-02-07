@@ -65,8 +65,8 @@ public class CiboModel {
     public ResultSet getCibiByPortata(String portata){
         tabella.select("nome");
         tabella.where("portata='" + portata + "'");
-        ResultSet cibo = tabella.fetch();
-        return cibo;
+        ResultSet cibi = tabella.fetch();
+        return cibi;
     }
 
     public ArrayList<String> getCiboForUser (String allergia,String tipoalimentazione,String portata,String[] idoneita){

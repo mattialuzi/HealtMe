@@ -3,6 +3,8 @@ package Model;
 import Model.Dbtable.Esercizio;
 import Object.EsercizioObject;
 
+import java.sql.ResultSet;
+
 /**
  * Created by ALLDE on 07/02/2017.
  */
@@ -11,16 +13,6 @@ public class EsercizioModel {
 
     public EsercizioModel() {
         tabella = new Esercizio();
-    }
-
-    public void inserisciEsercizio(EsercizioObject esercizio){
-        String dati= "'"+esercizio.getTipologia()+"'";
-        dati=dati+",'"+String.valueOf(esercizio.getCategoria())+"'";
-        dati=dati+",'"+String.valueOf(esercizio.getIntensita())+"'";
-        dati=dati+",'"+String.valueOf(esercizio.getUnita_misura())+"'";
-        dati=dati+","+esercizio.getConsumo_calorico()+"";
-        tabella.insert(dati);
-        tabella.execute();
     }
 
     public boolean findEsercizioByName(String nome){
@@ -33,5 +25,22 @@ public class EsercizioModel {
         else
             success=false;
         return success;
+    }
+
+    public void inserisciEsercizio(EsercizioObject esercizio){
+        String dati= "'"+esercizio.getTipologia()+"'";
+        dati=dati+",'"+String.valueOf(esercizio.getCategoria())+"'";
+        dati=dati+",'"+String.valueOf(esercizio.getIntensita())+"'";
+        dati=dati+",'"+String.valueOf(esercizio.getUnita_misura())+"'";
+        dati=dati+","+esercizio.getConsumo_calorico()+"";
+        tabella.insert(dati);
+        tabella.execute();
+    }
+
+    public ResultSet getEserciziByUnita(String unita){
+        tabella.select("tipologia");
+        tabella.where("unita_misura='" + unita + "'");
+        ResultSet esercizi = tabella.fetch();
+        return esercizi;
     }
 }
