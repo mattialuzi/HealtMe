@@ -1,20 +1,28 @@
 package Object;
 
+import Object.Enum.GiornoEnum;
+
+import java.time.LocalDate;
 import java.util.Date;
 
-/**
- * Created by lorenzobraconi on 17/01/17.
- */
-public class GiornoAllenDinamicoObject extends GiornoAllenObject{
+
+public class GiornoAllenDinamicoObject extends GiornoAllenProgObject{
 
     private int id_programma;
-    private Date data;
-    private int calorie_da_consumare;
+    private LocalDate data;
 
     public GiornoAllenDinamicoObject() {
-        calorie_da_consumare=0;
         id_programma=0;
         data=null;
+        tipo = GiornoEnum.dinamico;
+    }
+
+    public GiornoAllenDinamicoObject (int idprogramma, LocalDate data, int caloriedaconsumare, SedutaObject seduta) {
+        this.id_programma=idprogramma;
+        this.data=data;
+        this.calorie_da_consumare = caloriedaconsumare;
+        tipo= GiornoEnum.dinamico;
+        this.seduta = seduta;
     }
 
     public int getId_programma() {
@@ -25,19 +33,11 @@ public class GiornoAllenDinamicoObject extends GiornoAllenObject{
         this.id_programma = id_programma;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
-    }
-
-    public int getCalorie_da_consumare() {
-        return calorie_da_consumare;
-    }
-
-    public void setCalorie_da_consumare(int calorie_da_consumare) {
-        this.calorie_da_consumare = calorie_da_consumare;
     }
 }

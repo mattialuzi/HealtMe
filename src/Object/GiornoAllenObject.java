@@ -11,11 +11,18 @@ import java.util.Date;
  */
 public abstract class GiornoAllenObject extends JObject {
 
-    private SedutaObject seduta;
+    protected GiornoEnum tipo;
+    protected SedutaObject seduta;
 
-    protected GiornoAllenObject()
-    {
-        seduta= new SedutaObject();
+    protected GiornoAllenObject() {
+    }
+
+    public GiornoEnum getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(GiornoEnum tipo) {
+        this.tipo = tipo;
     }
 
     public SedutaObject getSeduta() {
@@ -25,4 +32,8 @@ public abstract class GiornoAllenObject extends JObject {
     public void setSeduta(SedutaObject seduta) {
         this.seduta = seduta;
     }
+
+    public abstract int getCalorie();
+
+    public abstract void setCalorie(int calorie);
 }

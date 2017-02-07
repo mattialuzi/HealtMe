@@ -1,6 +1,9 @@
 package Model;
 
 import Model.Dbtable.Esercizio;
+import Object.Enum.CategoriaEnum;
+import Object.Enum.IntensitaEnum;
+import Object.Enum.UnitaMisuraEnum;
 import Object.EsercizioObject;
 
 import java.sql.ResultSet;
@@ -13,6 +16,24 @@ public class EsercizioModel {
 
     public EsercizioModel() {
         tabella = new Esercizio();
+    }
+
+    public EsercizioObject getEsercizioByTipologia(String tipologia){
+        tabella.select();
+        tabella.where("tipologia ='" + tipologia + "'");
+        ResultSet rs = tabella.fetch();
+        EsercizioObject esercizio = new EsercizioObject();
+        try{
+            rs.next();
+            esercizio.setTipologia(rs.getString("tipologia"));
+            esercizio.setCategoria(CategoriaEnum.valueOf(rs.getString("categoria")));
+            esercizio.setIntensita(IntensitaEnum.valueOf(rs.getString("intensita")));
+            esercizio.setUnita_misura(UnitaMisuraEnum.valueOf(rs.getString("unita_misura")));
+            esercizio.setConsumo_calorico(rs.getInt("consumo_calorico"));
+        } catch(Exception e){
+            System.out.println("Errore: "+e);
+        }
+        return esercizio;
     }
 
     public boolean findEsercizioByName(String nome){

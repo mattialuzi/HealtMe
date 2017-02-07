@@ -76,4 +76,20 @@ public class IndexAllenamentoView {
     public void setTodayTab (DayOfWeek today) {
         tabbedPane1.setSelectedComponent(giorni.get(today).getMainPanel());
     }
+
+    public void setCalorieLabel(int effettive){
+        effettivoLabel.setText(String.valueOf(effettive));
+        if(obiettivoPanel.isVisible()){
+            int obiettivo = Integer.parseInt(obiettivoLabel.getText());
+            int rimanenti = obiettivo-effettive;
+            rimanenteLabel.setText(rimanenti+" Kcal");
+        }
+    }
+
+    public void setCalorieLabel(int effettive,int obiettivo){
+        effettivoLabel.setText(String.valueOf(effettive));
+        obiettivoLabel.setText(String.valueOf(obiettivo));
+        int rimanenti = obiettivo-effettive;
+        rimanenteLabel.setText(rimanenti+" Kcal");
+    }
 }

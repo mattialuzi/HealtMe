@@ -60,6 +60,9 @@ public class FormEsercizioEffettivo extends JDialog{
         buttonOK.setEnabled(false);
         quantita.setText("");
         listaEsercizi.removeAll();
+        nomeEsercizio.setEnabled(false);
+        nomeEsercizio.setText("");
+        scrollPane.setVisible(false);
         dispose();
     }
 

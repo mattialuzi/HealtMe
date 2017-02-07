@@ -1,6 +1,7 @@
 package View.Allenamento;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 
@@ -39,6 +40,10 @@ public class GiornoAllenView {
 
     public void addListenersForRemoveButtons(ActionListener listener){
         giornoeffettivo.addListenersForRemoveButtons(listener);
+    }
+
+    public void addTableSelectionListener(ListSelectionListener listener) {
+        giornoeffettivo.addTableSelectionListener(listener);
     }
 
     public JTable getTable(){

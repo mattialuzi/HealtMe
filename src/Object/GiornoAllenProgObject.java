@@ -1,16 +1,36 @@
 package Object;
 
+import Object.Enum.GiornoEnum;
+
+import java.util.ArrayList;
+
 /**
  * Created by lorenzobraconi on 17/01/17.
  */
 public class GiornoAllenProgObject extends GiornoAllenObject{
 
     private int id_giorno;
-    private int calorie_da_consumare;
+    protected int calorie_da_consumare;
 
     public GiornoAllenProgObject() {
         id_giorno=0;
         calorie_da_consumare=0;
+        tipo= GiornoEnum.programmato;
+        seduta = new SedutaObject();
+    }
+
+    public GiornoAllenProgObject(SedutaObject seduta){
+        id_giorno=0;
+        calorie_da_consumare=0;
+        tipo= GiornoEnum.programmato;
+        this.seduta = seduta;
+    }
+
+    public GiornoAllenProgObject(SedutaObject seduta, int calorie_da_consumare){
+        id_giorno=0;
+        this.calorie_da_consumare=calorie_da_consumare;
+        tipo= GiornoEnum.programmato;
+        this.seduta = seduta;
     }
 
     public int getId_giorno() {
@@ -21,11 +41,11 @@ public class GiornoAllenProgObject extends GiornoAllenObject{
         this.id_giorno = id_giorno;
     }
 
-    public int getCalorie_da_consumare() {
+    public int getCalorie() {
         return calorie_da_consumare;
     }
 
-    public void setCalorie_da_consumare(int calorie_da_consumare) {
+    public void setCalorie(int calorie_da_consumare) {
         this.calorie_da_consumare = calorie_da_consumare;
     }
 }

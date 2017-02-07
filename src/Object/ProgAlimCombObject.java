@@ -12,7 +12,6 @@ public class ProgAlimCombObject extends ProgrammaAlimentareObject {
 
 
     public ProgAlimCombObject () {
-
         fabbisogno=0;
         tipo_alimentazione=null;
         settimanaalimentare = new ArrayList<GiornoAlimProgObject>();

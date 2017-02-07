@@ -1,20 +1,29 @@
 package Controller;
 
 import Helpers.Controller;
+import Model.Dbtable.Attivita;
 import Model.EsercizioModel;
 import View.Allenamento.FormEsercizioEffettivo;
+import Object.GiornoAllenEffettivoObject;
+import Object.GiornoAllenObject;
+import Object.SedutaObject;
+import Object.AttivitaObject;
+import View.Allenamento.GiornoAllenView;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.sql.ResultSet;
+import java.util.Iterator;
 
 /**
  * Created by lorenzobraconi on 06/02/17.
  */
 public abstract class BaseAllenController extends Controller{
 
+    protected GiornoAllenEffettivoObject giornoeffcorrente;
     protected FormEsercizioEffettivo dialog;
     protected ResultSet esercizi;
 
@@ -22,6 +31,7 @@ public abstract class BaseAllenController extends Controller{
         @Override
         public void actionPerformed(ActionEvent e) {
             dialog.setLocationRelativeTo(null);
+            dialog.getUnitamisura().setModel(new DefaultComboBoxModel(new String[]{"--scegli esercizio per svolgimento--","minuti", "kilometri", "ripetizioni"}));
             dialog.setTitle("Inserisci esercizio svolto");
             //dialog.getButtonOK().setActionCommand(nuovopasto);
             dialog.pack();
@@ -124,5 +134,24 @@ public abstract class BaseAllenController extends Controller{
         } catch (Exception e) {
             System.out.println("C'è un errore:" + e);
         }
+    }
+
+    protected void showSeduta(GiornoAllenObject giorno, GiornoAllenView giornoview) {
+        JTable tabella = giornoview.getTable();
+        SedutaObject seduta = giorno.getSeduta();
+        Iterator<AttivitaObject> attivitaiterator = seduta.getAttivita().iterator();
+        DefaultTableModel model = (DefaultTableModel)tabella.getModel();
+        while (attivitaiterator.hasNext()) {
+            AttivitaObject attivita = attivitaiterator.next();
+            String unitamisura = String.valueOf(attivita.getEsercizio().getUnita_misura());
+            String esercizio = attivita.getEsercizio().getTipologia();
+            int quantita = attivita.getQuantita();
+            model.addRow(new Object[]{esercizio, quantita, unitamisura});
+        }
+    }
+
+
+    protected int calcolaCalorie(AttivitaObject attivita){
+        return attivita.getQuantita()*attivita.getEsercizio().getConsumo_calorico();
     }
 }
