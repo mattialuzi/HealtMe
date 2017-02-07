@@ -14,6 +14,7 @@ public class RiepilogoView {
     private StoriaView storia;
 
     public RiepilogoView() {
+
     }
 
     public JPanel getMainPanel() {
