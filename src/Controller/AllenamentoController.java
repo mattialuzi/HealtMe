@@ -30,6 +30,14 @@ public class AllenamentoController extends BaseAllenController{
         cardLayout = (CardLayout)variablePanel.getLayout();
         NewEsercizioView newesercizio = allenamento.getNewesercizio();
 
+        menu.addNewProgAllenButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ProgAllenController(allenamento,utente);
+                SubMenuVisibility(menu.getSubMenuAllenPanel());
+            }
+        });
+
         menu.addNewEsercizioButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
