@@ -25,9 +25,9 @@ public class Graph extends JPanel {
             if (max < valore)
                 max = valore;
         }
-        this.yMax =max ;
+        this.yMax =8000 ;
         this.setPreferredSize(new Dimension(1000,300));
-        this.yFactor = 5;
+        this.yFactor = 500;
         this.pointdim = 5;
     }
 
@@ -46,8 +46,9 @@ public class Graph extends JPanel {
         // V
         g2.drawLine(border, getHeight() - border, border, border);
         g2.drawLine(border, getHeight() - border, getWidth() - border, getHeight() - border);
+        //disegna la prima data sull'asse x
         g2.drawString(x.get(0).toString(),border-30, (getHeight() - border/3));
-        //disegno quadrettatatura
+        //disegna quadrettatatura e valori su x e y
         for(int i=1; i< x.size(); i++) {
             int x0 = border + i * (getWidth() - 2 * border) / (x.size() - 1) ;
             int y0 = border;
@@ -67,14 +68,14 @@ public class Graph extends JPanel {
             g2.drawLine(x0,y0,x1,y1);
             g2.drawString(String.valueOf(i*yFactor),border/4,y0);
         }
-
+        //calcola le coordinate dei punti del grafico corrispondenti ai valori dei due array di dati
         ArrayList<Point> punti = new ArrayList<>();
         for (int i=0; i< y.size(); i++) {
             int x1 = (int) (i*xScale + border);
             int y1 = (int) ((yMax - 1 - y.get(i))* yScale + border);
             punti.add(new Point(x1, y1));
         }
-
+        //disegna le rette che collegano punti consecutivi
         g2.setColor(Color.RED);
         for (int i=0; i< punti.size()-1; i++) {
             int x1 = punti.get(i).x;
@@ -83,6 +84,7 @@ public class Graph extends JPanel {
             int y2 = punti.get(i+1).y;
             g2.drawLine(x1, y1, x2, y2);
         }
+        //disegna i punti
         g2.setColor(Color.BLUE);
         for (int i=0; i< punti.size(); i++) {
             int x1 = punti.get(i).x - pointdim/2;
