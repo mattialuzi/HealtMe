@@ -5,6 +5,5 @@ public enum LivelloAttivitaFisicaEnum {
     leggero,
     moderato,
     intenso
-
 }
 

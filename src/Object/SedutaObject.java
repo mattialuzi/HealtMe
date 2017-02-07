@@ -11,11 +11,16 @@ import java.util.List;
  */
 public class SedutaObject extends JObject {
     private int id;
-    private List<Attivita> attivita;
+    private ArrayList<AttivitaObject> listaattivita;
 
     public SedutaObject() {
         id=0;
-        attivita=new ArrayList<Attivita>();
+        listaattivita= new ArrayList<AttivitaObject>();
+    }
+
+    public SedutaObject(ArrayList<AttivitaObject> attivita) {
+        id=0;
+        this.listaattivita=attivita;
     }
 
     public int getId() {
@@ -26,11 +31,19 @@ public class SedutaObject extends JObject {
         this.id = id;
     }
 
-    public List<Attivita> getAttivita() {
-        return attivita;
+    public ArrayList<AttivitaObject> getAttivita() {
+        return listaattivita;
     }
 
-    public void setAttivita(List<Attivita> attivita) {
-        this.attivita = attivita;
+    public void setAttivita(ArrayList<AttivitaObject> attivita) {
+        this.listaattivita = attivita;
+    }
+
+    public void addAttivita (AttivitaObject attivita) {
+        listaattivita.add(attivita);
+    }
+
+    public void removePortata(AttivitaObject attivita) {
+        listaattivita.remove(attivita);
     }
 }

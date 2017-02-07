@@ -1,6 +1,7 @@
 package View.Allenamento;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 
@@ -48,6 +49,10 @@ public class GiornoAllenForm {
 
     public void addListenersForRemoveButtons(ActionListener listener){
         removeSeduta.addActionListener(listener);
+    }
+
+    public void addTableSelectionListener(ListSelectionListener listener) {
+        sedutaEffTable.getSelectionModel().addListSelectionListener(listener);
     }
 
     public JTable getSedutaEffTable() {

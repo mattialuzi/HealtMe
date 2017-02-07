@@ -15,7 +15,6 @@ public class GiornoAlimDinamicoObject extends GiornoAlimProgObject {
     private LocalDate data;
 
     public GiornoAlimDinamicoObject () {
-
         id_programma=0;
         data=null;
         tipo= GiornoEnum.dinamico;

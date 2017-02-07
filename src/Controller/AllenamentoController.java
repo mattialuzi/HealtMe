@@ -1,19 +1,26 @@
 package Controller;
 
-import Model.EsercizioModel;
-import Model.GiornoAllenModel;
+import Model.*;
 import Object.UtenteObject;
 import Object.EsercizioObject;
+import Object.SedutaObject;
+import Object.AttivitaObject;
+import Object.ProgrammaAllenamentoObject;
+import Object.GiornoAllenObject;
 import View.Allenamento.*;
 import View.Menu;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Created by lorenzobraconi on 05/01/17.
@@ -82,6 +89,16 @@ public class AllenamentoController extends BaseAllenController{
 
         giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
 
+        /*giornocorrenteview.addTableSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(e.getValueIsAdjusting()) {
+                    JButton bottonescelto = giornocorrenteview.getButtonFromTable((ListSelectionModel) e.getSource());
+                    bottonescelto.setEnabled(true);
+                }
+            }
+        });*/
+
         giornocorrenteview.addListenersForRemoveButtons(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,7 +122,7 @@ public class AllenamentoController extends BaseAllenController{
             @Override
             public void actionPerformed(ActionEvent e) {
                 JTable tabella = giornocorrenteview.getTable();
-                //aggiungiEsercizioEffettivo((DefaultTableModel)tabella.getModel());
+                aggiungiEsercizioEffettivo((DefaultTableModel)tabella.getModel());
                 dialog.onCancel();
             }
         });
@@ -123,6 +140,87 @@ public class AllenamentoController extends BaseAllenController{
         //giornocorrenteview.setButtonFromTable();
         //giornocorrenteview.setTableFromButton();
         indexallenamento.setTodayTab(giornosettimana);
+        int i = giornosettimana.getValue();
+        ProgrammaAllenamentoObject progallen = utente.getProgramma_allenamento();
+        giornoeffcorrente = giornomodel.getGiornoAllenEffettivo(utente.getUsername(), data);
+        showSeduta(giornoeffcorrente, giornocorrenteview);
+        data = data.minusDays(1);
+        for (int j = i-1; j > 0; j--) {
+            GiornoAllenView giornoprimaview = indexallenamento.getGiorni(DayOfWeek.of(j));
+            GiornoAllenObject giornoprima = giornomodel.getGiornoAllenEffettivo(utente.getUsername(), data);
+            showSeduta(giornoprima, giornoprimaview);
+            data = data.minusDays(1);
+        }
+        if (progallen != null) {
+            for (int j = 1; j <= 7; j++) { //perchè DayOfWeek.of(j) ritorna Lunedì se j=1 .... Domenica se j=7
+                GiornoAllenView giornodopoview = indexallenamento.getGiorni(DayOfWeek.of(j));
+                GiornoAllenObject giornodopo = progallen.getSettimanaallenamento(j-1); //perchè DayOfWeek.of(j) ritorna Lunedì se j=1 .... Domenica se j=7
+                showSeduta(giornodopo, giornodopoview);
+            }
+        }
+    }
+
+    public void aggiungiEsercizioEffettivo(DefaultTableModel tabellamodel) {
+        String unita = dialog.getUnitamisura().getSelectedItem().toString();
+        String esercizio = dialog.getNomeEsercizio().getText();
+        int quantita = Integer.parseInt(dialog.getQuantita().getText());
+        SedutaObject seduta = giornoeffcorrente.getSeduta();
+        if (seduta.getId() == 0) {
+            SedutaModel sedutamodel = new SedutaModel();
+            sedutamodel.inserisciSeduta(seduta);
+            String username = giornoeffcorrente.getUsername();
+            LocalDate data = giornoeffcorrente.getData();
+            HashMap<String,Integer> mappa = new HashMap<String,Integer>();
+            mappa.put("seduta",seduta.getId());
+            new GiornoAllenModel().updateGiornoAllenEff(username,data,mappa);
+        }
+        if (!aggiornaAttivita(seduta, esercizio, quantita, tabellamodel)) {
+            EsercizioModel eserciziomodel = new EsercizioModel();
+            EsercizioObject nuovoesercizio = eserciziomodel.getEsercizioByTipologia(esercizio);
+            AttivitaObject nuovaattivita = new AttivitaObject(nuovoesercizio);
+            nuovaattivita.setId_seduta(seduta.getId());
+            nuovaattivita.setQuantita(quantita);
+            AttivitaModel attivitamodel = new AttivitaModel();
+            attivitamodel.inserisciAttivita(nuovaattivita);
+            seduta.addAttivita(nuovaattivita);
+            giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() + calcolaCalorie(nuovaattivita));
+            HashMap<String,Integer> mappa = new HashMap<String,Integer>();
+            mappa.put("cal_consumate", giornoeffcorrente.getCalorie());
+            new GiornoAllenModel().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
+            tabellamodel.addRow(new String[]{esercizio, Integer.toString(quantita), unita});
+        }
+        //indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
+        //new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
+    }
+
+    private boolean aggiornaAttivita(SedutaObject seduta, String esercizio, int quantita, DefaultTableModel tabellamodel) {
+        Iterator<AttivitaObject> attivitaiterator = seduta.getAttivita().iterator();
+        while ( attivitaiterator.hasNext() ) {
+            AttivitaObject attivita = attivitaiterator.next();
+            if (esercizio.equals(attivita.getEsercizio().getTipologia())) {
+                giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() + calcolaCalorie(attivita.getEsercizio(),quantita));
+                HashMap<String,Integer> mappa = new HashMap<String,Integer>();
+                mappa.put("cal_consumate", giornoeffcorrente.getCalorie());
+                new GiornoAlimModel().updateGiornoAlimEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
+                int nuovaquantita = attivita.getQuantita() + quantita;
+                attivita.setQuantita(nuovaquantita);
+                new PortataModel().updatePortata(attivita.getId_seduta(), esercizio, nuovaquantita);
+                int rowcount = tabellamodel.getRowCount();
+                boolean exit = true;
+                for(int indexrow = 0; indexrow < rowcount && exit; indexrow ++){
+                    if(tabellamodel.getValueAt(indexrow,1).equals(esercizio)) {
+                        tabellamodel.setValueAt(nuovaquantita, indexrow, 1);
+                        exit = false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int calcolaCalorie(EsercizioObject esercizio, int quantita){
+        return quantita*esercizio.getConsumo_calorico();
     }
 
 }

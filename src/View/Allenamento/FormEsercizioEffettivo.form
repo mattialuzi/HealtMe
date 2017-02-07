@@ -30,12 +30,7 @@
             </constraints>
             <properties>
               <enabled value="true"/>
-              <model>
-                <item value="--scegli esercizio per svolgimento--"/>
-                <item value="minuti"/>
-                <item value="kilometri"/>
-                <item value="ripetizioni"/>
-              </model>
+              <model/>
             </properties>
           </component>
         </children>

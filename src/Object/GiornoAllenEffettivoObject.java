@@ -1,6 +1,8 @@
 package Object;
 
-import java.util.Date;
+import Object.Enum.GiornoEnum;
+
+import java.time.LocalDate;
 
 /**
  * Created by lorenzobraconi on 17/01/17.
@@ -8,13 +10,23 @@ import java.util.Date;
 public class GiornoAllenEffettivoObject extends GiornoAllenObject{
 
     private String username;
-    private Date data;
+    private LocalDate data;
     private int cal_consumate;
 
-    public GiornoAllenEffettivoObject() {
-        username=null;
-        data=null ;
+    public GiornoAllenEffettivoObject(String username, LocalDate data) {
+        this.username = username;
+        this.data= data;
         cal_consumate =0;
+        tipo= GiornoEnum.effettivo;
+        seduta = new SedutaObject();
+    }
+
+    public GiornoAllenEffettivoObject(String username, LocalDate data, SedutaObject seduta){
+        this.username = username;
+        this.data = data;
+        cal_consumate = 0;
+        tipo = GiornoEnum.effettivo;
+        this.seduta = seduta;
     }
 
     public String getUsername() {
@@ -25,19 +37,19 @@ public class GiornoAllenEffettivoObject extends GiornoAllenObject{
         this.username = username;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
-    public int getCal_consumate() {
+    public int getCalorie() {
         return cal_consumate;
     }
 
-    public void setCal_consumate(int cal_consumate) {
+    public void setCalorie(int cal_consumate) {
         this.cal_consumate = cal_consumate;
     }
     
