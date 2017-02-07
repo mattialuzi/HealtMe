@@ -57,7 +57,7 @@ public class NewCiboView extends View {
 
     public boolean isValid() {
         boolean validator = true;
-        if (!validate(nome.getText(), "cibo")) {
+        if (!validate(nome.getText(), "eserciziocibo")) {
             JOptionPane.showMessageDialog(null, "Nome non valido", "ERRORE", JOptionPane.ERROR_MESSAGE);
             nome.requestFocus();
             validator = false;
