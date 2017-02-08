@@ -1,8 +1,14 @@
 package Controller;
 
 import Model.EsercizioModel;
+import Model.ProgressiModel;
+import Model.UtenteModel;
 import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.UtenteObject;
+import Object.ProgAllenCombObject;
+import Object.GiornoAllenProgObject;
+import Object.EsercizioObject;
+import Object.AttivitaObject;
 import View.Allenamento.*;
 
 import javax.swing.*;
@@ -265,6 +271,7 @@ public class ProgAllenController extends BaseAllenController {
         LivelloAttivitaFisicaEnum livello = utente.getLivello_attivita_fisica();
 
         HashMap <LivelloAttivitaFisicaEnum, Integer> livellomap = new HashMap<>();
+        livellomap.put(LivelloAttivitaFisicaEnum.assente,160);
         livellomap.put(LivelloAttivitaFisicaEnum.leggero, 160);
         livellomap.put(LivelloAttivitaFisicaEnum.moderato, 230);
         livellomap.put(LivelloAttivitaFisicaEnum.intenso, 500 );
@@ -275,11 +282,32 @@ public class ProgAllenController extends BaseAllenController {
         if (Math.abs(differenza) > 10)
             caloriegiornaliere -= differenza*pesofactor;
 
-        ArrayList<String> eserciziscelti = new ArrayList<>();
-        for (int i=0; i< disponibilita; i++) {
+        ProgAllenCombObject nuovoprogcombinato = new ProgAllenCombObject();
+        EsercizioModel eserciziomodel = new EsercizioModel();
+        int j= 5;
+        int k= 0;
+        for (int i=0; k < disponibilita; i=(i+2)%j) {
             int randomindex = randomize(esercizipraticati.size());
-            eserciziscelti.add(esercizipraticati.get(randomindex));
+            GiornoAllenProgObject giorno = nuovoprogcombinato.getSettimanaallenamento(i);
+            EsercizioObject nuovoesercizio = eserciziomodel.getEsercizioByTipologia(esercizipraticati.get(randomindex));
+            AttivitaObject nuovaattivita = new AttivitaObject(nuovoesercizio);
+            nuovaattivita.setQuantita(caloriegiornaliere/nuovoesercizio.getConsumo_calorico());
+            giorno.getSeduta().addAttivita(nuovaattivita);
+            if (i==1) j++;
+            k++;
         }
+        utente.setProgramma_allenamento(nuovoprogcombinato);
+        utente.setProg_allen_comb(true);
+        //new ProgrammaAllenModel().inserisciProgrammaCombinato(nuovoprogcombinato);
+        UtenteModel utentemodel = new UtenteModel();
+        HashMap<String, Object> campo = new HashMap<String, Object>();
+        campo.put("programma_alimentare", utente.getProgramma_allenamento().getId());
+        campo.put("prog_allen_comb", 1);
+        utentemodel.updateInfoUtente(utente.getUsername(), campo);
+        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_da_consumare",String.valueOf(nuovoprogcombinato.getCalorie_da_consumare()));
+
+
+
 
 
     }
