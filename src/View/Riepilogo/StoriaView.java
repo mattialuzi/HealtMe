@@ -1,6 +1,7 @@
 package View.Riepilogo;
 
 import View.Alimentazione.GiornoAlimForm;
+import View.Allenamento.GiornoAllenForm;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -31,6 +32,7 @@ public class StoriaView {
     private DefaultTableModel model;
     private Calendar cal = new GregorianCalendar(Locale.ITALY);
     private GiornoAlimForm giornoalimeff;
+    private GiornoAllenForm giornoalleneff;
     private Integer today;
     private boolean flag=false;
 
@@ -119,6 +121,8 @@ public class StoriaView {
         // TODO: place custom component creation code here
         giornoalimeff = new GiornoAlimForm("Cosa hai mangiato in quel giorno");
         alimentarePanel = giornoalimeff.getMainPanel();
+        giornoalleneff = new GiornoAllenForm("Cosa hai praticato in quel giorno");
+        allenamentoPanel = giornoalleneff.getMainPanel();
     }
 
     public ArrayList<JTable> getTables(){
