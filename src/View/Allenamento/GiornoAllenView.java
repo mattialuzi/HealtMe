@@ -50,6 +50,8 @@ public class GiornoAllenView {
         return giornoeffettivo.getSedutaEffTable();
     }
 
+    public JButton getRemoveButton() { return giornoeffettivo.getRemoveSeduta(); }
+
     private void createUIComponents() {
         giornoeffettivo = new GiornoAllenForm("Cosa hai svolto");
         effettivoPanel = giornoeffettivo.getMainPanel();

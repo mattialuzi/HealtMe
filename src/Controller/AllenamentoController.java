@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -89,22 +90,21 @@ public class AllenamentoController extends BaseAllenController{
 
         giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
 
-        /*giornocorrenteview.addTableSelectionListener(new ListSelectionListener() {
+        giornocorrenteview.addTableSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(e.getValueIsAdjusting()) {
-                    JButton bottonescelto = giornocorrenteview.getButtonFromTable((ListSelectionModel) e.getSource());
-                    bottonescelto.setEnabled(true);
+                    giornocorrenteview.getRemoveButton().setEnabled(true);
                 }
             }
-        });*/
+        });
 
         giornocorrenteview.addListenersForRemoveButtons(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //JTable tabellascelta = giornocorrenteview.getTableFromButton(e.getActionCommand());
-                //removePortata(tabellascelta, e.getActionCommand());
-                //((DefaultTableModel)tabellascelta.getModel()).removeRow(tabellascelta.getSelectedRow());
+                JTable tabella = giornocorrenteview.getTable();
+                removeAttivita(tabella);
+                ((DefaultTableModel)tabella.getModel()).removeRow(tabella.getSelectedRow());
                 JButton bottone = (JButton)e.getSource();
                 bottone.setEnabled(false);
             }
@@ -217,6 +217,26 @@ public class AllenamentoController extends BaseAllenController{
             }
         }
         return false;
+    }
+
+    public void removeAttivita(JTable tabella){
+        String esercizio = tabella.getModel().getValueAt(tabella.getSelectedRow(), 0).toString();
+        SedutaObject seduta = giornoeffcorrente.getSeduta();
+        ArrayList<AttivitaObject> listaattivita = seduta.getAttivita();
+        boolean exit = true;
+        for(int i = 0; i < listaattivita.size() && exit; i++){
+            if(listaattivita.get(i).getEsercizio().getTipologia().equals(esercizio)) {
+                giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() - calcolaCalorie(listaattivita.get(i)));
+                HashMap<String,Integer> mappa = new HashMap<String,Integer>();
+                mappa.put("cal_consumate", giornoeffcorrente.getCalorie());
+                new GiornoAllenModel().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
+                seduta.removeAttivita(listaattivita.get(i));
+                exit = false;
+            }
+        }
+        new AttivitaModel().eliminaAttivita(seduta.getId(), esercizio);
+        //indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
+        //new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
     private int calcolaCalorie(EsercizioObject esercizio, int quantita){
