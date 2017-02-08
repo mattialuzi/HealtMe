@@ -14,11 +14,12 @@ public class RiepilogoView {
     private StoriaView storia;
 
     public RiepilogoView() {
-
+        progressiPanel.add(new ProgressiView().getMainPanel());
     }
 
     public JPanel getMainPanel() {
         return mainPanel;
+
     }
 
     public ProgressiView getProgressi() {
@@ -30,9 +31,9 @@ public class RiepilogoView {
     }
 
     private void createUIComponents() {
-        progressi = new ProgressiView();
+        //progressi = new ProgressiView();
         storia = new StoriaView();
-        progressiPanel = progressi.getMainPanel();
+        //progressiPanel = progressi.getMainPanel();
         storiaPanel = storia.getMainPanel();
     }
 }
