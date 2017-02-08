@@ -3,6 +3,7 @@ package Controller;
 import Model.GiornoAlimModel;
 import Model.ProgressiModel;
 import View.Menu;
+import View.Riepilogo.ProgressiView;
 import View.Riepilogo.RiepilogoView;
 import View.Riepilogo.StoriaView;
 import Object.UtenteObject;
@@ -40,6 +41,8 @@ public class RiepilogoController {
         LocalDate oggi = LocalDate.now();
         if(utente.getProgramma_alimentare() == null ) new ProgressiModel().controllaProgresso(utente.getUsername(),oggi,utente.getPeso(),0);
         else new ProgressiModel().controllaProgresso(utente.getUsername(),oggi,utente.getPeso(),utente.getProgramma_alimentare().getSettimanaalimentare(oggi.getDayOfWeek().ordinal()).getCalorie());
+
+        riepilogo.addProgressiView(new ProgressiView());
 
         storiaview.addMesePrecListener(new ActionListener() {
             @Override

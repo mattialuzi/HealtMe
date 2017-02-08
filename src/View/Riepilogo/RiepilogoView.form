@@ -30,7 +30,7 @@
             <border type="none"/>
             <children/>
           </grid>
-          <grid id="edfb6" binding="progressiPanel" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+          <grid id="edfb6" binding="progressiPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
               <tabbedpane title="Progressi"/>
             </constraints>
