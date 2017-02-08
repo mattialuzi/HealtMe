@@ -7,22 +7,22 @@ import java.util.ArrayList;
 
 public class Graph extends JPanel {
     private ArrayList<LocalDate> arrayx1 = new ArrayList<>();
-    private ArrayList<Float> arrayy1 = new ArrayList<>();
-    private ArrayList<Float> arrayy2 = new ArrayList<>();
+    private ArrayList<Double> arrayy1 = new ArrayList<>();
+    private ArrayList<Double> arrayy2 = new ArrayList<>();
     // disyanza dal bordo del pannello in px  (per tutte direzioni)
     private int borderx = 30;
     //massimo valore ordinata
-    private float yMax;
+    private double yMax;
     private int yFactor;
     private int xFactor = 60;
     private int pointdim = 5;
     private int  bordery = 20;
 
-    public Graph (ArrayList<LocalDate> x1,ArrayList<Float> y1){
+    public Graph (ArrayList<LocalDate> x1,ArrayList<Double> y1){
         this.arrayx1 = x1;
         this.arrayy1 = y1;
-        float max = 100;
-        for (Float valore : y1 ) {
+        double max = 100;
+        for (Double valore : y1 ) {
             if (max < valore)
                 max = valore;
         }
@@ -35,27 +35,27 @@ public class Graph extends JPanel {
         else yMax = (int) j*2;
 
         this.yFactor =(int) yMax/20;
-        this.setPreferredSize(new Dimension((x1.size()-1)*xFactor+2*borderx,250));
+        this.setPreferredSize(new Dimension((x1.size()-1)*xFactor+2*borderx,200));
     }
 
-    public Graph (ArrayList<LocalDate> x1,ArrayList<Float> y1,ArrayList<Float> y2){
+    public Graph (ArrayList<LocalDate> x1,ArrayList<Double> y1,ArrayList<Double> y2){
         this.arrayx1 = x1;
         this.arrayy1 = y1;
         this.arrayy2 = y2;
-        float max1 = 100;
-        for (Float valore : y1 ) {
+        double max1 = 100;
+        for (Double valore : y1 ) {
             if (max1 < valore)
                 max1 = valore;
         }
-        float max2 = 100;
-        for (Float valore : y2 ) {
+        double max2 = 100;
+        for (Double valore : y2 ) {
             if (max2 < valore)
                 max2 = valore;
         }
         if (max2 > max1) this.yMax = max2 ;
         else this.yMax = max1;
 
-        float tempmax = yMax;
+        double tempmax = yMax;
 
         int i = 1;
         while((tempmax=tempmax/10) > 1) i++;

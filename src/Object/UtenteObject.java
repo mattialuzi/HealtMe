@@ -17,7 +17,7 @@ public class UtenteObject extends JObject {
     private int eta;
     private int sesso;
     private float altezza;
-    private float peso;
+    private double peso;
     private LavoroEnum lavoro;
     private LivelloAttivitaFisicaEnum livello_attivita_fisica;
     private AllergiaEnum allergia;
@@ -97,7 +97,7 @@ public class UtenteObject extends JObject {
         this.sesso = sesso;
     }
 
-    public float getAltezza() {
+    public double getAltezza() {
         return altezza;
     }
 
@@ -105,7 +105,7 @@ public class UtenteObject extends JObject {
         this.altezza = altezza;
     }
 
-    public float getPeso() {
+    public double getPeso() {
         return peso;
     }
 

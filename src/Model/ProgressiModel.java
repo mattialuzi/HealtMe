@@ -5,6 +5,7 @@ import Model.Dbtable.Progressi;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.HashMap;
+import Object.ProgressiObject;
 import java.util.Map;
 
 /**
@@ -18,7 +19,7 @@ public class ProgressiModel {
     }
 
     //aggiungere attributo caloriedaconsumare
-    public void controllaProgresso(String username, LocalDate data,float peso,int fabbisogno){
+    public void controllaProgresso(String username, LocalDate data,double peso,int fabbisogno){
         tabella.select();
         tabella.where("username='" + username + "' and data='" + data+"'");
         ResultSet rs = tabella.fetch();
@@ -46,19 +47,25 @@ public class ProgressiModel {
         tabella.execute();
     }
 
-    public HashMap<LocalDate,Float> getValoreProgressi(String username,String campo){
+    public ProgressiObject getValoreProgressi(String username){
         tabella.select();
         tabella.where("username='" +username+"'");
+        tabella.order("data");
         ResultSet rs = tabella.fetch();
-        HashMap<LocalDate,Float> mappa = new HashMap<LocalDate, Float>();
+        ProgressiObject progressi = new ProgressiObject(username);
         try{
             while(rs.next()){
-                mappa.put(rs.getDate("data").toLocalDate(),rs.getFloat(campo));
+                progressi.setDate(rs.getDate("data").toLocalDate());
+                progressi.setPesi(rs.getDouble("peso"));
+                progressi.setFabbisogno(rs.getDouble("fabbisogno"));
+                progressi.setCalorie_assunte(rs.getDouble("calorie_assunte"));
+                progressi.setCalorie_da_consumare(rs.getDouble("calorie_da_consumare"));
+                progressi.setCalorie_consumate(rs.getDouble("calorie_consumate"));
             }
         }
         catch (Exception e){
             System.out.println("C'è un errore"+e);
         }
-        return mappa;
+        return progressi;
     }
 }

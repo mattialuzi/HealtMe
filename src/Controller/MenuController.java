@@ -29,7 +29,7 @@ public class MenuController extends Controller {
         ProfiloController profiloController = new ProfiloController(menu, utente);
         AlimentazioneController alimentazioneController = new AlimentazioneController(menu, utente);
         AllenamentoController allenamentoController = new AllenamentoController(menu, utente);
-        RiepilogoController riepilogoController = new RiepilogoController(menu,utente);
+        //RiepilogoController riepilogoController = new RiepilogoController(menu,utente);
         //Auth.getFrame().pack();
 
         menu.addMenuButtonListener(new ActionListener() {
@@ -70,6 +70,7 @@ public class MenuController extends Controller {
         menu.addRiepilogoButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                new RiepilogoController(menu,utente);
                 cardLayout.show(variablePanel, "RiepilogoView");
                 MenuVisibility(menu.getMenuPanel());
             }
