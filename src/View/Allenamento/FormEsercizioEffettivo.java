@@ -56,6 +56,11 @@ public class FormEsercizioEffettivo extends JDialog{
 
     public void addEsercizioEffettivoButtonListener(ActionListener listener) { buttonOK.addActionListener(listener); }
 
+    public void removeAttivitaEffettivaButtonListener () {
+        ActionListener[] oldlistener = buttonOK.getActionListeners();
+        buttonOK.removeActionListener(oldlistener[0]);
+    }
+
     public void onCancel() {
         buttonOK.setEnabled(false);
         quantita.setText("");

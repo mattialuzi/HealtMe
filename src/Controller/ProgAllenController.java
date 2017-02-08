@@ -49,10 +49,43 @@ public class ProgAllenController extends BaseAllenController {
                 cardLayout.show(mainPanel, "ProgAllenManView");
                 giornoselezionato = progallenman.getTabView(0);
 
+
+                for (int i = 0; i < 7; i++) {
+                    GiornoAllenForm giorno = progallenman.getTabView(i);
+                    giorno.addListenersAndShowButtons(new ListenersAndShowButtonsAction());
+                    giorno.addTableSelectionListener(new ListSelectionListener() {
+                        @Override
+                        public void valueChanged(ListSelectionEvent e) {
+                            if (e.getValueIsAdjusting()) {
+                                JButton bottonescelto = giorno.getRemoveSeduta();
+                                bottonescelto.setEnabled(true);
+                            }
+                        }
+                    });
+
+                    giorno.addListenersForRemoveButtons(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            JTable tabella = giorno.getSedutaEffTable();
+                            ((DefaultTableModel)tabella.getModel()).removeRow(tabella.getSelectedRow());
+                            JButton bottone = (JButton)e.getSource();
+                            bottone.setEnabled(false);
+                        }
+                    });
+                }
+
+                dialog.addSetUnitaItemListener(new SetUnitaItemAction());
+
+                dialog.addSearchKeyListener(new SearchKeyAction());
+
+                dialog.addSetEsercizioListSelectionListener(new SetEsercizioListSelectionAction());
+
+                dialog.addQuantitaKeyListener(new QuantitaKeyAction());
+
                 progallenman.addAnnullaProgrammaButtonListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //dialog.removePortataEffettivaButtonListener();
+                        dialog.removeAttivitaEffettivaButtonListener();
                         cardLayout.show(mainPanel, "IndexProgAllenView");
                     }
                 });
@@ -66,26 +99,6 @@ public class ProgAllenController extends BaseAllenController {
                         allenCardLayout.show(allenMainPanel, "IndexAllenamentoView");
                     }
                 });
-
-                for (int i = 0; i < 7; i++) {
-                    GiornoAllenForm giorno = progallenman.getTabView(i);
-                    giorno.addListenersAndShowButtons(new ListenersAndShowButtonsAction());
-                 /*giorno.addTableSelectionListener(new ListSelectionListener() {
-                        @Override
-                        public void valueChanged(ListSelectionEvent e) {
-                            if (e.getValueIsAdjusting()) {
-                                giorno.setButtonFromTable();
-                                JButton bottonescelto = giorno.getButtonFromTable((ListSelectionModel) e.getSource());
-                                bottonescelto.setEnabled(true);
-                            }
-                        }
-                    }); */
-                }
-
-                dialog.addSetUnitaItemListener(new SetUnitaItemAction());
-                dialog.addSearchKeyListener(new SearchKeyAction());
-                dialog.addSetEsercizioListSelectionListener(new SetEsercizioListSelectionAction());
-                dialog.addQuantitaKeyListener(new QuantitaKeyAction());
             }
         });
 
