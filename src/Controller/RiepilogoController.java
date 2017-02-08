@@ -1,6 +1,8 @@
 package Controller;
 
+import Model.Dbtable.Attivita;
 import Model.GiornoAlimModel;
+import Model.GiornoAllenModel;
 import Model.ProgressiModel;
 import View.Menu;
 import View.Riepilogo.ProgressiView;
@@ -8,8 +10,11 @@ import View.Riepilogo.RiepilogoView;
 import View.Riepilogo.StoriaView;
 import Object.UtenteObject;
 import Object.GiornoAlimEffettivoObject;
+import Object.GiornoAllenEffettivoObject;
 import Object.PastoObject;
+import Object.SedutaObject;
 import Object.PortataObject;
+import Object.AttivitaObject;
 import Object.ProgressiObject;
 
 
@@ -62,7 +67,7 @@ public class RiepilogoController {
             }
         });
 
-        storiaview.getGiorniTable().addMouseListener(new java.awt.event.MouseAdapter() {
+        storiaview.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = storiaview.getGiorniTable().rowAtPoint(evt.getPoint());
@@ -76,6 +81,7 @@ public class RiepilogoController {
                         Date data = format.parse(stringofdate);
                         LocalDate localDate = LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(data));
                         showGiornoAlim(localDate);
+                        showGiornoAllen(localDate);
                         storiaview.showEffPanels();
                     } catch (ParseException s) {
                         s.printStackTrace();
@@ -86,7 +92,7 @@ public class RiepilogoController {
     }
 
     public void showGiornoAlim(LocalDate date){
-        ArrayList<JTable> tabelle = storiaview.getTables();
+        ArrayList<JTable> tabelle = storiaview.getAlimTables();
         for (int i=0; i<4; i++){
             DefaultTableModel model = (DefaultTableModel)tabelle.get(i).getModel();
             model.setRowCount(0);
@@ -108,6 +114,19 @@ public class RiepilogoController {
     }
 
     public void showGiornoAllen(LocalDate data){
-
+        JTable tabella = storiaview.getAllenTable();
+        DefaultTableModel model = (DefaultTableModel) tabella.getModel();
+        model.setRowCount(0);
+        GiornoAllenEffettivoObject giorno = new GiornoAllenModel().getGiornoAllenEffettivo(utente.getUsername(),data);
+        SedutaObject seduta = giorno.getSeduta();
+        Iterator<AttivitaObject> attivitaiterator = seduta.getAttivita().iterator();
+        while (attivitaiterator.hasNext()) {
+            AttivitaObject attivita = attivitaiterator.next();
+            String unitamisura = String.valueOf(attivita.getEsercizio().getUnita_misura());
+            String esercizio = attivita.getEsercizio().getTipologia();
+            int quantita = attivita.getQuantita();
+            model.addRow(new Object[]{esercizio, quantita, unitamisura});
+        }
     }
+
 }

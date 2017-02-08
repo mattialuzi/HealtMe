@@ -118,15 +118,18 @@ public class StoriaView {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         giornoalimeff = new GiornoAlimForm("Cosa hai mangiato in quel giorno");
         alimentarePanel = giornoalimeff.getMainPanel();
         giornoalleneff = new GiornoAllenForm("Cosa hai praticato in quel giorno");
         allenamentoPanel = giornoalleneff.getMainPanel();
     }
 
-    public ArrayList<JTable> getTables(){
+    public ArrayList<JTable> getAlimTables(){
         return giornoalimeff.getEffTables();
+    }
+
+    public JTable getAllenTable(){
+        return giornoalleneff.getSedutaEffTable();
     }
 
     public void showEffPanels(){
