@@ -36,13 +36,13 @@ public class ProgressiView {
         JPanel graph3 = new Graph(test,test2,test3);
         JScrollPane scrollGraph1 = new JScrollPane(graph1);
         //graph1.setAutoscrolls(true);
-        scrollGraph1.setPreferredSize(new Dimension( 650, 200));
+        scrollGraph1.setPreferredSize(new Dimension( 650, 250));
         JScrollPane scrollGraph2 = new JScrollPane(graph2);
         //graph2.setAutoscrolls(true);
-        scrollGraph2.setPreferredSize(new Dimension( 650, 200));
+        scrollGraph2.setPreferredSize(new Dimension( 650, 250));
         JScrollPane scrollGraph3 = new JScrollPane(graph3);
         //graph3.setAutoscrolls(true);
-        scrollGraph3.setPreferredSize(new Dimension( 650, 200));
+        scrollGraph3.setPreferredSize(new Dimension( 650, 250));
         graphPanel1.add(scrollGraph1);
         graphPanel2.add(scrollGraph2);
         graphPanel3.add(scrollGraph3);

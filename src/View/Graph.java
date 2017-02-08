@@ -35,7 +35,7 @@ public class Graph extends JPanel {
         else yMax = (int) j*2;
 
         this.yFactor =(int) yMax/20;
-        this.setPreferredSize(new Dimension((x1.size()-1)*xFactor+2*borderx,200));
+        this.setPreferredSize(new Dimension((x1.size()-1)*xFactor+2*borderx,250));
     }
 
     public Graph (ArrayList<LocalDate> x1,ArrayList<Float> y1,ArrayList<Float> y2){
