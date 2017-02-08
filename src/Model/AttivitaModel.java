@@ -45,4 +45,10 @@ public class AttivitaModel {
         tabella.insert(dati);
         tabella.execute();
     }
+
+    public void eliminaAttivita (int id_seduta, String esercizio) {
+        tabella.delete();
+        tabella.where("id_seduta='" + id_seduta + "' AND esercizio='" + esercizio + "'");
+        tabella.execute();
+    }
 }

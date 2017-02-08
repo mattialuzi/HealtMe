@@ -58,4 +58,8 @@ public class GiornoAllenForm {
     public JTable getSedutaEffTable() {
         return sedutaEffTable;
     }
+
+    public JButton getRemoveSeduta() {
+        return removeSeduta;
+    }
 }

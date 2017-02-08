@@ -43,7 +43,7 @@ public class SedutaObject extends JObject {
         listaattivita.add(attivita);
     }
 
-    public void removePortata(AttivitaObject attivita) {
+    public void removeAttivita(AttivitaObject attivita) {
         listaattivita.remove(attivita);
     }
 }
