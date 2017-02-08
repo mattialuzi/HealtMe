@@ -48,6 +48,7 @@ public class RiepilogoController {
         if(utente.getProgramma_alimentare() == null ) new ProgressiModel().controllaProgresso(utente.getUsername(),oggi,utente.getPeso(),0);
         else new ProgressiModel().controllaProgresso(utente.getUsername(),oggi,utente.getPeso(),utente.getProgramma_alimentare().getSettimanaalimentare(oggi.getDayOfWeek().ordinal()).getCalorie());
 
+
         ProgressiObject progressi = new ProgressiModel().getValoreProgressi(utente.getUsername());
         riepilogo.addProgressiView(new ProgressiView(progressi));
 

@@ -357,7 +357,7 @@ public class AlimentazioneController extends BaseAlimController {
             ArrayList<String> portatedisponibili = cibomodel.getCiboForUser(allergia.toString(), tipoalimentazione.toString(), portateuguali.get(j).getTipo().toString(), getIdoneita(pasto.getTipo(), portateuguali.get(j).getTipo()));
             portatedisponibili.remove(portateuguali.get(j).getCibo().getNome());
             int fabbisognoportata = calcolaCalorie(portatadasostituire);
-            String nomecibo = portatedisponibili.get(randomPortata(portatedisponibili.size()));
+            String nomecibo = portatedisponibili.get(randomize(portatedisponibili.size()));
             CiboObject nuovocibo = cibomodel.getCiboByName(nomecibo);
             portatadasostituire.setQuantita(calcolaQuantita(fabbisognoportata, nuovocibo.getKilocal()));
             portatamodel.updatePortata(portatadasostituire.getId_pasto(),portatadasostituire.getCibo().getNome(), nuovocibo.getNome() ,portatadasostituire.getQuantita());

@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.EsercizioModel;
+import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.UtenteObject;
 import View.Allenamento.*;
 
@@ -10,6 +11,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by lorenzobraconi on 06/02/17.
@@ -25,6 +29,9 @@ public class ProgAllenController extends BaseAllenController {
     private ProgAllenCombView progallencomb;
     private GiornoAllenForm giornoselezionato;
     private FormEserciziPraticati dialogpraticati;
+    //private ArrayList<String> esercizipraticati = new ArrayList<>();
+    private GiornoAllenView giornocorrenteview;
+
 
     public ProgAllenController(AllenamentoView allenamento ,UtenteObject utente) {
         this.allenamento = allenamento;
@@ -40,6 +47,7 @@ public class ProgAllenController extends BaseAllenController {
         IndexProgAllenView indexprog = progallen.getIndexprogallenview();
         dialog = new FormEsercizioEffettivo();
         dialogpraticati = new FormEserciziPraticati();
+        giornocorrenteview = allenamento.getIndexallenamento().getGiorni(LocalDate.now().getDayOfWeek());
 
         indexprog.addNewProgManButtonListener(new ActionListener() {
             @Override
@@ -142,6 +150,16 @@ public class ProgAllenController extends BaseAllenController {
                     }
                 });
 
+                progallencomb.addGeneraProgrammaButtonListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        generaProgramma();
+                        //showNewProg();
+                        //giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb());
+                        allenCardLayout.show(allenMainPanel,"IndexAllenamentoView");
+                    }
+                });
+
                 dialogpraticati.addEsercizioEffettivoButtonListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -187,6 +205,8 @@ public class ProgAllenController extends BaseAllenController {
                         else dialogpraticati.getButtonOK().setEnabled(false);
                     }
                 });
+
+
             }
         });
     }
@@ -235,5 +255,46 @@ public class ProgAllenController extends BaseAllenController {
         } catch (Exception e) {
             System.out.println("C'è un errore:" + e);
         }
+    }
+
+    //inizio
+
+    private void generaProgramma () {
+        ArrayList<String> esercizipraticati = getEserciziPraticati();
+        int disponibilita = getDisponibilita();
+        LivelloAttivitaFisicaEnum livello = utente.getLivello_attivita_fisica();
+
+        HashMap <LivelloAttivitaFisicaEnum, Integer> livellomap = new HashMap<>();
+        livellomap.put(LivelloAttivitaFisicaEnum.leggero, 160);
+        livellomap.put(LivelloAttivitaFisicaEnum.moderato, 230);
+        livellomap.put(LivelloAttivitaFisicaEnum.intenso, 500 );
+        int caloriegiornaliere = livellomap.get(livello);
+
+        float pesofactor = 0.07f;
+        double differenza = utente.getPeso() - utente.getPeso_forma();
+        if (Math.abs(differenza) > 10)
+            caloriegiornaliere -= differenza*pesofactor;
+
+        ArrayList<String> eserciziscelti = new ArrayList<>();
+        for (int i=0; i< disponibilita; i++) {
+            int randomindex = randomize(esercizipraticati.size());
+            eserciziscelti.add(esercizipraticati.get(randomindex));
+        }
+
+
+    }
+
+    private ArrayList<String> getEserciziPraticati() {
+        ArrayList<String> esercizipraticati = new ArrayList<>();
+        ListModel listmodel = progallencomb.getListaEsercizi().getModel();
+        int size = listmodel.getSize();
+        for (int i=0; i<size; i++) {
+            esercizipraticati.add(String.valueOf(listmodel.getElementAt(i)));
+        }
+        return esercizipraticati;
+    }
+
+    private int getDisponibilita() {
+        return Integer.parseInt(String.valueOf(progallencomb.getComboDisponibilita().getModel().getSelectedItem()));
     }
 }

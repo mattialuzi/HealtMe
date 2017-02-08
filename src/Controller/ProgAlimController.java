@@ -23,7 +23,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by lorenzobraconi on 25/01/17.
@@ -420,7 +419,7 @@ public class ProgAlimController extends BaseAlimController {
         }
 
         private PortataObject generaPortata(ArrayList<String> portate, int calorie, PortataEnum tipoportata){
-            int randomindex = randomPortata(portate.size());
+            int randomindex = randomize(portate.size());
             CiboObject cibo = new CiboModel().getCiboByName(portate.get(randomindex));
             int quantita = calcolaQuantita(calorie, cibo.getKilocal());
             return new PortataObject(cibo, tipoportata, quantita);

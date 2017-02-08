@@ -221,8 +221,4 @@ public abstract class BaseAlimController extends Controller {
         return idoneitamap.get(pasto).get(portata);
     }
 
-    protected int randomPortata(int size){
-        return ThreadLocalRandom.current().nextInt(0, size);
-    }
-
 }

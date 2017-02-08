@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
  */
 public class ProgAllenCombView {
     private JPanel mainPanel;
-    private JComboBox comboBox1;
+    private JComboBox comboDisponibilita;
     private JList listaEsercizi;
     private JButton addEsercizio;
     private JButton removeEsercizio;
@@ -45,9 +45,15 @@ public class ProgAllenCombView {
         indietroButton.addActionListener(listener);
     }
 
+    public void addGeneraProgrammaButtonListener (ActionListener listener ) {
+        generaProgrammaButton.addActionListener(listener);
+    }
+
     public JList getListaEsercizi() {
         return listaEsercizi;
     }
 
-
+    public JComboBox getComboDisponibilita () {
+        return comboDisponibilita;
+    }
 }

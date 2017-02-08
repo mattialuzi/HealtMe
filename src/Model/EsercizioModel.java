@@ -64,4 +64,5 @@ public class EsercizioModel {
         ResultSet esercizi = tabella.fetch();
         return esercizi;
     }
+
 }

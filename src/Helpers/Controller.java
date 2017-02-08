@@ -1,6 +1,7 @@
 package Helpers;
 
 import javax.swing.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by ALLDE on 29/12/2016.
@@ -30,5 +31,9 @@ public class Controller {
         if (elemento.matches(regola) && elemento.length()>0)
             ritorno=true;
         return ritorno;
+    }
+
+    protected int randomize(int size){
+        return ThreadLocalRandom.current().nextInt(0, size);
     }
 }
