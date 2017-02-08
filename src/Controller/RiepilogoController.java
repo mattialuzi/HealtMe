@@ -106,4 +106,8 @@ public class RiepilogoController {
             }
         }
     }
+
+    public void showGiornoAllen(LocalDate data){
+
+    }
 }
