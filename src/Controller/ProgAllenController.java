@@ -178,14 +178,15 @@ public class ProgAllenController extends BaseAllenController {
         });
     }
 
-        public boolean aggiornaEsercizioPraticato(DefaultListModel listamodel,String esercizio){
+
+    public boolean aggiornaEsercizioPraticato(DefaultListModel listamodel,String esercizio){
         boolean exit = true;
-            if(listamodel.contains(esercizio)) {
-                JOptionPane.showMessageDialog(null,"Esercizio Praticato già inserito");
-                exit = false;
-            }
-        return exit;
+        if(listamodel.contains(esercizio)) {
+            JOptionPane.showMessageDialog(null,"Esercizio Praticato già inserito");
+            exit = false;
         }
+        return exit;
+    }
 
     public void showEserciziPraticati(){
         String unitascelta = dialogpraticati.getUnitadimisuraBox().getSelectedItem().toString();

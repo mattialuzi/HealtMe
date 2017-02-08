@@ -37,6 +37,7 @@ public class RiepilogoView {
     }
 
     public void addProgressiView (ProgressiView Progressi) {
+        progressiPanel.removeAll();
         progressiPanel.add(Progressi.getMainPanel());
     }
 }
