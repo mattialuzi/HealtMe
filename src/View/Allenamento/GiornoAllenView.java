@@ -1,5 +1,7 @@
 package View.Allenamento;
 
+import Object.Enum.GiornoEnum;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -46,8 +48,11 @@ public class GiornoAllenView {
         giornoeffettivo.addTableSelectionListener(listener);
     }
 
-    public JTable getTable(){
-        return giornoeffettivo.getSedutaEffTable();
+    public JTable getTable(GiornoEnum tipogiorno){
+        if(tipogiorno==GiornoEnum.effettivo) {
+            return giornoeffettivo.getSedutaEffTable();
+        }
+        else return sedutaProgTable;
     }
 
     public JButton getRemoveButton() { return giornoeffettivo.getRemoveSeduta(); }

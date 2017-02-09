@@ -26,6 +26,7 @@ public abstract class BaseAllenController extends Controller{
     protected GiornoAllenEffettivoObject giornoeffcorrente;
     protected FormEsercizioEffettivo dialog;
     protected ResultSet esercizi;
+    protected int indexoggi;
 
     public class ListenersAndShowButtonsAction implements ActionListener {
         @Override
@@ -137,7 +138,7 @@ public abstract class BaseAllenController extends Controller{
     }
 
     protected void showSeduta(GiornoAllenObject giorno, GiornoAllenView giornoview) {
-        JTable tabella = giornoview.getTable();
+        JTable tabella = giornoview.getTable(giorno.getTipo());
         SedutaObject seduta = giorno.getSeduta();
         Iterator<AttivitaObject> attivitaiterator = seduta.getAttivita().iterator();
         DefaultTableModel model = (DefaultTableModel)tabella.getModel();

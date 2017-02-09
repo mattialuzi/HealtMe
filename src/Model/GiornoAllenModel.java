@@ -3,13 +3,13 @@ package Model;
 import Model.Dbtable.Giorno_allen_dinamico;
 import Model.Dbtable.Giorno_allen_eff;
 import Model.Dbtable.Giorno_allen_prog;
-import Object.Enum.StatusEnum;
 import Object.GiornoAllenEffettivoObject;
+import Object.GiornoAllenProgObject;
+import Object.GiornoAllenDinamicoObject;
 import Object.SedutaObject;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -74,4 +74,67 @@ public class GiornoAllenModel {
         effettivo.execute();
     }
 
+    public void inserisciGiornoAllenProg(GiornoAllenProgObject giornoprog){
+        String dati = "'" + giornoprog.getId_giorno()+"'";
+        dati = dati + ", '" + giornoprog.getCalorie() + "'";
+        dati = dati + ", " + giornoprog.getSeduta().getId();
+        programmato.insert(dati);
+        int idgiorno = programmato.executeForKey();
+        giornoprog.setId_giorno(idgiorno);
+    }
+
+    public void inserisciGiornoAllenDinamico(GiornoAllenDinamicoObject giornodinamico){
+        String dati = "'" + giornodinamico.getId_programma()+"'" ;
+        dati = dati + ", '" + giornodinamico.getData() + "'";
+        dati = dati + ", '" + giornodinamico.getCalorie() + "'";
+        dati = dati + ", " + giornodinamico.getSeduta().getId();
+        dinamico.insert(dati);
+        dinamico.execute();
+    }
+
+    public GiornoAllenProgObject getGiornoProgrammatoComb(int idgiorno, int idprogramma, LocalDate data){
+        dinamico.select();
+        dinamico.where("id_programma='" + idprogramma + "' and data='" + data+"'");
+        ResultSet rs = dinamico.fetch();
+        try {
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                SedutaModel sedutamodel = new SedutaModel();
+                SedutaObject seduta = sedutamodel.getSedutaById(rs.getInt(4));
+                GiornoAllenDinamicoObject giornodinamico = new GiornoAllenDinamicoObject(idprogramma, data, rs.getInt("calorie_da_consumare"), seduta);
+                return giornodinamico;
+            } else {
+                return getGiornoProgrammatoMan(idgiorno);
+            }
+        } catch (Exception e){
+            System.out.println("Errore:" + e);
+            return null;
+        }
+    }
+
+    public GiornoAllenProgObject getGiornoProgrammatoMan(int idgiorno){
+        programmato.select();
+        programmato.where("id_giorno='" + idgiorno + "'");
+        ResultSet rs = programmato.fetch();
+        try{
+            rs.next();
+            SedutaModel sedutamodel = new SedutaModel();
+            SedutaObject seduta = sedutamodel.getSedutaById(rs.getInt(3));
+            GiornoAllenProgObject giornoprog = new GiornoAllenProgObject(seduta);
+            giornoprog.setId_giorno(idgiorno);
+            giornoprog.setCalorie(rs.getInt("calorie_da_consumare"));
+            return giornoprog;
+        }
+        catch (Exception e){
+            System.out.println("C'è un errore" +e );
+            return null;
+        }
+    }
+
+    public void updateGiornoAllenDinamico(int idsedutanuova,int idsedutavecchia){
+        String dati = "seduta=" + idsedutanuova;
+        dinamico.update(dati);
+        dinamico.where("seduta=" + idsedutavecchia);
+        dinamico.execute();
+    }
 }

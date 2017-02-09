@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Object.Enum.GiornoEnum;
 import Object.UtenteObject;
 import Object.EsercizioObject;
 import Object.SedutaObject;
@@ -45,11 +46,12 @@ public class AllenamentoController extends BaseAllenController{
         indexallenamento = allenamento.getIndexallenamento();
         setGiorni();
         dialog = new FormEsercizioEffettivo();
+        indexoggi = giornoeffcorrente.getData().getDayOfWeek().ordinal();
 
         menu.addNewProgAllenButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ProgAllenController(allenamento,utente);
+                new ProgAllenController(allenamento,utente,giornoeffcorrente);
                 SubMenuVisibility(menu.getSubMenuAllenPanel());
             }
         });
@@ -102,7 +104,7 @@ public class AllenamentoController extends BaseAllenController{
         giornocorrenteview.addListenersForRemoveButtons(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JTable tabella = giornocorrenteview.getTable();
+                JTable tabella = giornocorrenteview.getTable(GiornoEnum.effettivo);
                 removeAttivita(tabella);
                 ((DefaultTableModel)tabella.getModel()).removeRow(tabella.getSelectedRow());
                 JButton bottone = (JButton)e.getSource();
@@ -118,10 +120,10 @@ public class AllenamentoController extends BaseAllenController{
 
         dialog.addQuantitaKeyListener(new QuantitaKeyAction());
 
-        dialog.addEsercizioEffettivoButtonListener(new ActionListener() {
+        dialog.addAttivitaEffettivaButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JTable tabella = giornocorrenteview.getTable();
+                JTable tabella = giornocorrenteview.getTable(GiornoEnum.effettivo);
                 aggiungiEsercizioEffettivo((DefaultTableModel)tabella.getModel());
                 dialog.onCancel();
             }

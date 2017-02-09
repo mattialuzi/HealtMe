@@ -54,7 +54,7 @@ public class FormEsercizioEffettivo extends JDialog{
 
     public void addQuantitaKeyListener(KeyListener listener) { quantita.addKeyListener(listener);}
 
-    public void addEsercizioEffettivoButtonListener(ActionListener listener) { buttonOK.addActionListener(listener); }
+    public void addAttivitaEffettivaButtonListener(ActionListener listener) { buttonOK.addActionListener(listener); }
 
     public void removeAttivitaEffettivaButtonListener () {
         ActionListener[] oldlistener = buttonOK.getActionListeners();
