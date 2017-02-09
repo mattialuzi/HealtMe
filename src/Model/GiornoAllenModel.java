@@ -137,4 +137,11 @@ public class GiornoAllenModel {
         dinamico.where("seduta=" + idsedutavecchia);
         dinamico.execute();
     }
+
+    public void updateQuantitaGiornoAllenDinamico(int idprogramma, LocalDate data, int quantita){
+        String dati = "quantita=" + quantita;
+        dinamico.update(dati);
+        dinamico.where("idprogramma=" + idprogramma + " and data='" + data + "'");
+        dinamico.execute();
+    }
 }

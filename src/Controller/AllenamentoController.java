@@ -194,8 +194,8 @@ public class AllenamentoController extends BaseAllenController{
             new GiornoAllenModel().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
             tabellamodel.addRow(new String[]{esercizio, Double.toString(quantita), unita});
         }
-        //indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
-        //new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
+        indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
+        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
     private boolean aggiornaAttivita(SedutaObject seduta, String esercizio, double quantita, DefaultTableModel tabellamodel) {
@@ -240,8 +240,8 @@ public class AllenamentoController extends BaseAllenController{
             }
         }
         new AttivitaModel().eliminaAttivita(seduta.getId(), esercizio);
-        //indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
-        //new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
+        indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
+        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
     public void ricombina(){
@@ -256,7 +256,7 @@ public class AllenamentoController extends BaseAllenController{
                 limitecalorie = true;
             }
             if (limitecalorie) {
-                creaGiornoDinamico(indexoggi,programma.getSettimanaallenamento(indexoggi))
+                creaGiornoDinamico(indexoggi,programma.getSettimanaallenamento(indexoggi));
                 int eccesso = calorieprog - calorieconsumate;
                 boolean flag = true;
                 int indexgiorno = indexoggi+1;
@@ -269,9 +269,9 @@ public class AllenamentoController extends BaseAllenController{
                             int consumocalorico = attivita.getEsercizio().getConsumo_calorico();
                             attivita.setQuantita((double) Math.round((nuovoobiettivo/consumocalorico)*10d)/10d);
                             giorno.setCalorie(nuovoobiettivo);
-                            flag = false;
                             new AttivitaModel().updateAttivita(attivita.getId_seduta(),attivita.getEsercizio().getTipologia(),attivita.getQuantita());
-                            new GiornoAllenModel().updateGiornoAllenDinamico();
+                            new GiornoAllenModel().updateQuantitaGiornoAllenDinamico(utente.getProgramma_allenamento().getId(), giornoeffcorrente.getData().plusDays(indexgiorno-indexoggi), giorno.getCalorie());
+                            flag = false;
                         }
                         else {
                             eccesso += giorno.getCalorie();
