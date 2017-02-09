@@ -88,7 +88,7 @@ public class UtenteModel {
             utentecorrente.setSesso(risultato.getInt("sesso"));
             utentecorrente.setProgramma_alimentare(new ProgrammaAlimentareModel().getProgrammaAlimentare(risultato.getBoolean("prog_alim_comb"),risultato.getInt("programma_alimentare")));
             utentecorrente.setProg_alim_comb(risultato.getBoolean("prog_alim_comb"));
-            //manca set programma allenamento
+            utentecorrente.setProgramma_allenamento(new ProgrammaAllenamentoModel().getProgrammaAllenamento(risultato.getBoolean("prog_allen_comb"),risultato.getInt("programma_allenamento")));
             utentecorrente.setProg_allen_comb(risultato.getBoolean("prog_allen_comb"));
         } catch (Exception e) {
             System.out.println("C'è un errore:" + e);

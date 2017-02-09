@@ -1,15 +1,29 @@
 package Controller;
 
-import Model.EsercizioModel;
+import Model.*;
+import Object.Enum.GiornoEnum;
 import Object.UtenteObject;
+import Object.GiornoAllenObject;
+import Object.ProgAllenManObject;
+import Object.GiornoAllenProgObject;
+import Object.SedutaObject;
+import Object.EsercizioObject;
+import Object.AttivitaObject;
+import Object.ProgrammaAllenamentoObject;
+import Object.GiornoAllenEffettivoObject;
 import View.Allenamento.*;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.HashMap;
 
 /**
  * Created by lorenzobraconi on 06/02/17.
@@ -26,7 +40,7 @@ public class ProgAllenController extends BaseAllenController {
     private GiornoAllenForm giornoselezionato;
     private FormEserciziPraticati dialogpraticati;
 
-    public ProgAllenController(AllenamentoView allenamento ,UtenteObject utente) {
+    public ProgAllenController(AllenamentoView allenamento , UtenteObject utente,GiornoAllenEffettivoObject giornoeffcorrente) {
         this.allenamento = allenamento;
         this.utente = utente;
         progallen = new NewProgAllenView();
@@ -40,6 +54,7 @@ public class ProgAllenController extends BaseAllenController {
         IndexProgAllenView indexprog = progallen.getIndexprogallenview();
         dialog = new FormEsercizioEffettivo();
         dialogpraticati = new FormEserciziPraticati();
+        indexoggi = giornoeffcorrente.getData().getDayOfWeek().ordinal();
 
         indexprog.addNewProgManButtonListener(new ActionListener() {
             @Override
@@ -48,6 +63,32 @@ public class ProgAllenController extends BaseAllenController {
                 mainPanel.add(progallenman.getMainPanel(), "ProgAllenManView");
                 cardLayout.show(mainPanel, "ProgAllenManView");
                 giornoselezionato = progallenman.getTabView(0);
+                dialog.addAttivitaEffettivaButtonListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JTable tabellascelta = giornoselezionato.getSedutaEffTable();
+                        aggiungiAttivitaManuale((DefaultTableModel)tabellascelta.getModel());
+                        dialog.onCancel();
+                    }
+                });
+
+
+                progallenman.addTabbedSelectionListener(new ChangeListener() {
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        JTabbedPane pane = (JTabbedPane) e.getSource();
+                        giornoselezionato = progallenman.getTabView(pane.getSelectedIndex());
+                        dialog.removeAttivitaEffettivaButtonListener();
+                        dialog.addAttivitaEffettivaButtonListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                JTable tabellascelta = giornoselezionato.getSedutaEffTable();
+                                aggiungiAttivitaManuale((DefaultTableModel)tabellascelta.getModel());
+                                dialog.onCancel();
+                            }
+                        });
+                    }
+                });
 
 
                 for (int i = 0; i < 7; i++) {
@@ -93,8 +134,8 @@ public class ProgAllenController extends BaseAllenController {
                 progallenman.addConfermaProgrammaButtonListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //aggiungiProgrammaManuale();
-                        //showNewProg();
+                        aggiungiProgrammaManuale();
+                        showNewProg();
                         //giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb(), status);
                         allenCardLayout.show(allenMainPanel, "IndexAllenamentoView");
                     }
@@ -191,6 +232,58 @@ public class ProgAllenController extends BaseAllenController {
         });
     }
 
+    public void aggiungiAttivitaManuale(DefaultTableModel tabellamodel){
+        String unita = dialog.getUnitamisura().getSelectedItem().toString();
+        String esercizio = dialog.getNomeEsercizio().getText();
+        int quantita = Integer.parseInt(dialog.getQuantita().getText());
+        if (aggiornaAttivitaManuale(tabellamodel,esercizio,quantita)) {
+            tabellamodel.addRow(new Object[]{esercizio,quantita,unita});
+        }
+    }
+
+    public boolean aggiornaAttivitaManuale(DefaultTableModel tabellamodel,String esercizio,int quantita){
+        boolean exit = true;
+        int rowcount = tabellamodel.getRowCount();
+        for(int indexrow = 0; indexrow != rowcount && exit; indexrow ++){
+            if(tabellamodel.getValueAt(indexrow,0).equals(esercizio)) {
+                int nuovaquantita = quantita+(Integer)tabellamodel.getValueAt(indexrow,1);
+                tabellamodel.setValueAt(nuovaquantita, indexrow, 1);
+                exit = false;
+            }
+        }
+        return exit;
+    }
+
+    public void aggiungiProgrammaManuale(){
+        ProgAllenManObject nuovoprogmanuale = new ProgAllenManObject();
+        for(int i = 0;i<7; i++){
+            GiornoAllenProgObject giornosettimana = nuovoprogmanuale.getSettimanaallenamento(i);
+            GiornoAllenForm giornosettimanaview = progallenman.getTabView(i);
+            JTable tabellagiorno = giornosettimanaview.getSedutaEffTable();
+            int caloriedaconsumare = 0;
+            SedutaObject seduta = giornosettimana.getSeduta();
+            DefaultTableModel tabellamodel = (DefaultTableModel) tabellagiorno.getModel();
+            int rowcount = tabellamodel.getRowCount();
+            for(int indexrow = 0;indexrow < rowcount; indexrow++){
+                EsercizioObject esecizio = new EsercizioModel().getEsercizioByTipologia(tabellamodel.getValueAt(indexrow,0).toString());
+                AttivitaObject attivita = new AttivitaObject(esecizio);
+                attivita.setQuantita((Integer) tabellamodel.getValueAt(indexrow,1));
+                seduta.getAttivita().add(attivita);
+                caloriedaconsumare += calcolaCalorie(attivita);
+            }
+            giornosettimana.setCalorie(caloriedaconsumare);
+        }
+        utente.setProgramma_allenamento(nuovoprogmanuale);
+        utente.setProg_allen_comb(false);
+        new ProgrammaAllenamentoModel().inserisciProgrammaManuale(nuovoprogmanuale);
+        UtenteModel utentemodel = new UtenteModel();
+        HashMap<String, Object> campo = new HashMap<String, Object>();
+        campo.put("programma_allenamento", utente.getProgramma_allenamento().getId());
+        campo.put("prog_allen_comb", 0);
+        utentemodel.updateInfoUtente(utente.getUsername(), campo);
+        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_da_consumare",String.valueOf(nuovoprogmanuale.getSettimanaallenamento(indexoggi).getCalorie()));
+    }
+
 
     public boolean aggiornaEsercizioPraticato(DefaultListModel listamodel,String esercizio){
         boolean exit = true;
@@ -235,5 +328,20 @@ public class ProgAllenController extends BaseAllenController {
         } catch (Exception e) {
             System.out.println("C'è un errore:" + e);
         }
+    }
+
+    private void showNewProg(){
+        IndexAllenamentoView indexallen = allenamento.getIndexallenamento();
+        ProgrammaAllenamentoObject progallen = utente.getProgramma_allenamento();
+        for(int i=1;i<=7;i++){
+            GiornoAllenView giornoview = indexallen.getGiorni(DayOfWeek.of(i));
+            GiornoAllenObject giorno = progallen.getSettimanaallenamento(i-1);
+            JTable tabella = giornoview.getTable(GiornoEnum.programmato);
+            DefaultTableModel model = (DefaultTableModel)tabella.getModel();
+            model.setRowCount(0);
+            showSeduta(giorno,giornoview);
+        }
+        //allenamento.getIndexallenamento().showHideCaloriePanel(true);
+        //allenamento.getIndexallenamento().setCalorieLabel(giornoeffcorrente.getCalorie(),progallen.getSettimanaallenamento(indexoggi).getCalorie());
     }
 }
