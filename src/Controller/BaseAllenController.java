@@ -146,13 +146,13 @@ public abstract class BaseAllenController extends Controller{
             AttivitaObject attivita = attivitaiterator.next();
             String unitamisura = String.valueOf(attivita.getEsercizio().getUnita_misura());
             String esercizio = attivita.getEsercizio().getTipologia();
-            int quantita = attivita.getQuantita();
+            double quantita = attivita.getQuantita();
             model.addRow(new Object[]{esercizio, quantita, unitamisura});
         }
     }
 
 
     protected int calcolaCalorie(AttivitaObject attivita){
-        return attivita.getQuantita()*attivita.getEsercizio().getConsumo_calorico();
+        return (int) attivita.getQuantita()*attivita.getEsercizio().getConsumo_calorico();
     }
 }

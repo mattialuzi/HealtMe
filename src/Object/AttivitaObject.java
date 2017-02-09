@@ -6,7 +6,7 @@ public class AttivitaObject extends JObject {
 
     private int id_seduta;
     private EsercizioObject esercizio;
-    private int quantita;
+    private double quantita;
 
     public AttivitaObject(EsercizioObject nuovoesercizio) {
         id_seduta =0;
@@ -36,11 +36,11 @@ public class AttivitaObject extends JObject {
         this.esercizio = esercizio;
     }
 
-    public int getQuantita() {
+    public double getQuantita() {
         return quantita;
     }
 
-    public void setQuantita(int quantita) {
+    public void setQuantita(double quantita) {
         this.quantita = quantita;
     }
 }

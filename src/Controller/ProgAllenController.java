@@ -373,22 +373,25 @@ public class ProgAllenController extends BaseAllenController {
             caloriegiornaliere -= differenza*pesofactor;
 
         ProgAllenCombObject nuovoprogcombinato = new ProgAllenCombObject();
+        nuovoprogcombinato.setDisponibilita(disponibilita);
+        nuovoprogcombinato.setCalorie_da_consumare(caloriegiornaliere);
         EsercizioModel eserciziomodel = new EsercizioModel();
         int j= 5;
         int k= 0;
         for (int i=0; k < disponibilita; i=(i+2)%j) {
             int randomindex = randomize(esercizipraticati.size());
             GiornoAllenProgObject giorno = nuovoprogcombinato.getSettimanaallenamento(i);
+            giorno.setCalorie(caloriegiornaliere);
             EsercizioObject nuovoesercizio = eserciziomodel.getEsercizioByTipologia(esercizipraticati.get(randomindex));
             AttivitaObject nuovaattivita = new AttivitaObject(nuovoesercizio);
-            nuovaattivita.setQuantita(caloriegiornaliere/nuovoesercizio.getConsumo_calorico());
+            nuovaattivita.setQuantita((double) Math.round((caloriegiornaliere/nuovoesercizio.getConsumo_calorico())*10d)/10d);
             giorno.getSeduta().addAttivita(nuovaattivita);
             if (i==1) j++;
             k++;
         }
         utente.setProgramma_allenamento(nuovoprogcombinato);
         utente.setProg_allen_comb(true);
-        //new ProgrammaAllenModel().inserisciProgrammaCombinato(nuovoprogcombinato);
+        new ProgrammaAllenamentoModel().inserisciProgrammaCombinato(nuovoprogcombinato);
         UtenteModel utentemodel = new UtenteModel();
         HashMap<String, Object> campo = new HashMap<String, Object>();
         campo.put("programma_allenamento", utente.getProgramma_allenamento().getId());

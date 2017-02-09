@@ -165,7 +165,7 @@ public class AllenamentoController extends BaseAllenController{
     public void aggiungiEsercizioEffettivo(DefaultTableModel tabellamodel) {
         String unita = dialog.getUnitamisura().getSelectedItem().toString();
         String esercizio = dialog.getNomeEsercizio().getText();
-        int quantita = Integer.parseInt(dialog.getQuantita().getText());
+        double quantita = Double.parseDouble(dialog.getQuantita().getText());
         SedutaObject seduta = giornoeffcorrente.getSeduta();
         if (seduta.getId() == 0) {
             SedutaModel sedutamodel = new SedutaModel();
@@ -189,24 +189,24 @@ public class AllenamentoController extends BaseAllenController{
             HashMap<String,Integer> mappa = new HashMap<String,Integer>();
             mappa.put("cal_consumate", giornoeffcorrente.getCalorie());
             new GiornoAllenModel().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
-            tabellamodel.addRow(new String[]{esercizio, Integer.toString(quantita), unita});
+            tabellamodel.addRow(new String[]{esercizio, Double.toString(quantita), unita});
         }
         //indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
         //new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
-    private boolean aggiornaAttivita(SedutaObject seduta, String esercizio, int quantita, DefaultTableModel tabellamodel) {
+    private boolean aggiornaAttivita(SedutaObject seduta, String esercizio, double quantita, DefaultTableModel tabellamodel) {
         Iterator<AttivitaObject> attivitaiterator = seduta.getAttivita().iterator();
         while ( attivitaiterator.hasNext() ) {
             AttivitaObject attivita = attivitaiterator.next();
             if (esercizio.equals(attivita.getEsercizio().getTipologia())) {
-                giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() + calcolaCalorie(attivita.getEsercizio(),quantita));
+                giornoeffcorrente.setCalorie((int) (giornoeffcorrente.getCalorie() + calcolaCalorie(attivita.getEsercizio(),quantita)));
                 HashMap<String,Integer> mappa = new HashMap<String,Integer>();
                 mappa.put("cal_consumate", giornoeffcorrente.getCalorie());
                 new GiornoAlimModel().updateGiornoAlimEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
-                int nuovaquantita = attivita.getQuantita() + quantita;
+                double nuovaquantita = attivita.getQuantita() + quantita;
                 attivita.setQuantita(nuovaquantita);
-                new PortataModel().updatePortata(attivita.getId_seduta(), esercizio, nuovaquantita);
+                new AttivitaModel().updateAttivita(attivita.getId_seduta(), esercizio, nuovaquantita);
                 int rowcount = tabellamodel.getRowCount();
                 boolean exit = true;
                 for(int indexrow = 0; indexrow < rowcount && exit; indexrow ++){
@@ -241,8 +241,8 @@ public class AllenamentoController extends BaseAllenController{
         //new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
-    private int calcolaCalorie(EsercizioObject esercizio, int quantita){
-        return quantita*esercizio.getConsumo_calorico();
+    private int calcolaCalorie(EsercizioObject esercizio, double quantita){
+        return (int) quantita*esercizio.getConsumo_calorico();
     }
 
 }

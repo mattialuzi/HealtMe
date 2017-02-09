@@ -125,7 +125,7 @@ public class RiepilogoController {
             AttivitaObject attivita = attivitaiterator.next();
             String unitamisura = String.valueOf(attivita.getEsercizio().getUnita_misura());
             String esercizio = attivita.getEsercizio().getTipologia();
-            int quantita = attivita.getQuantita();
+            double quantita = attivita.getQuantita();
             model.addRow(new Object[]{esercizio, quantita, unitamisura});
         }
     }

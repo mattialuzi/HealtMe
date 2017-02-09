@@ -51,4 +51,11 @@ public class AttivitaModel {
         tabella.where("id_seduta='" + id_seduta + "' AND esercizio='" + esercizio + "'");
         tabella.execute();
     }
+
+    public void updateAttivita (int id_seduta, String esercizio, double quantita ) {
+        String dati = "quantita= "+quantita;
+        tabella.update(dati);
+        tabella.where("id_seduta='"+id_seduta+"' and esercizio='"+esercizio+"'");
+        tabella.execute();
+    }
 }

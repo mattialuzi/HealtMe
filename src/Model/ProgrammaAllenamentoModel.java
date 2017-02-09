@@ -36,6 +36,14 @@ public class ProgrammaAllenamentoModel {
         programma.setId(nuovoid);
     }
 
+    public void inserisciProgrammaCombinato(ProgAllenCombObject programma) {
+        String dati = String.valueOf(programma.getId());
+        dati += ","+programma.getCalorie_da_consumare()+", '"+programma.getDisponibilita()+"'";
+        combinato.insert(aggiungiGiorni(programma,dati));
+        int nuovoid = combinato.executeForKey();
+        programma.setId(nuovoid);
+    }
+
     private String aggiungiGiorni(ProgrammaAllenamentoObject programma,String dati){
         SedutaModel sedutamodel = new SedutaModel();
         AttivitaModel attivitamodel = new AttivitaModel();
