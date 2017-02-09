@@ -58,11 +58,11 @@ public class EsercizioModel {
         tabella.execute();
     }
 
-    public ResultSet getEserciziByUnita(String unita){
-        tabella.select("tipologia");
-        tabella.where("unita_misura='" + unita + "'");
-        ResultSet esercizi = tabella.fetch();
-        return esercizi;
+    public ResultSet getEserciziByIntensita(String intensita){
+        tabella.select();
+        tabella.where("intensita='" + intensita + "'");
+        return tabella.fetch();
+
     }
 
 }

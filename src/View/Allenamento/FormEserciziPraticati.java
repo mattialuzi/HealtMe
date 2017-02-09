@@ -9,7 +9,7 @@ import java.awt.event.*;
  */
 public class FormEserciziPraticati extends JDialog {
     private JPanel contentPane;
-    private JComboBox unitadimisuraBox;
+    private JComboBox Intensita;
     private JTextField nomeEsercizio;
     private JList listaEsercizi;
     private JButton buttonCancel;
@@ -43,7 +43,7 @@ public class FormEserciziPraticati extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    public void addSetUnitaItemListener(ItemListener listener) { unitadimisuraBox.addItemListener(listener);}
+    public void addSetUnitaItemListener(ItemListener listener) { Intensita.addItemListener(listener);}
 
     public void addSearchKeyListener(KeyListener listener) { nomeEsercizio.addKeyListener(listener);}
 
@@ -60,8 +60,8 @@ public class FormEserciziPraticati extends JDialog {
         dispose();
     }
 
-    public JComboBox getUnitadimisuraBox() {
-        return unitadimisuraBox;
+    public JComboBox getIntensita() {
+        return Intensita;
     }
 
     public JTextField getNomeEsercizio() {

@@ -1,5 +1,6 @@
 package Controller;
 
+import Helpers.Item;
 import Model.EsercizioModel;
 import Model.ProgressiModel;
 import Model.UtenteModel;
@@ -13,10 +14,7 @@ import Object.EsercizioObject;
 import Object.AttivitaObject;
 import Object.GiornoAllenObject;
 import Object.ProgAllenManObject;
-import Object.GiornoAllenProgObject;
 import Object.SedutaObject;
-import Object.EsercizioObject;
-import Object.AttivitaObject;
 import Object.ProgrammaAllenamentoObject;
 import Object.GiornoAllenEffettivoObject;
 import View.Allenamento.*;
@@ -128,7 +126,7 @@ public class ProgAllenController extends BaseAllenController {
                     });
                 }
 
-                dialog.addSetUnitaItemListener(new SetUnitaItemAction());
+                dialog.addSetUnitaItemListener(new SetIntensitaItemAction());
 
                 dialog.addSearchKeyListener(new SearchKeyAction());
 
@@ -172,7 +170,7 @@ public class ProgAllenController extends BaseAllenController {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         dialogpraticati.setLocationRelativeTo(null);
-                        dialogpraticati.getUnitadimisuraBox().setModel(new DefaultComboBoxModel(new String[]{"--scegli esercizio per svolgimento--","minuti","kilometri","ripetizioni"}));
+                        dialogpraticati.getIntensita().setModel(new DefaultComboBoxModel(new String[]{"--scegli esercizio--","leggero","moderato","intenso"}));
                         dialogpraticati.setTitle("Inserisci esercizio praticato");
                         dialogpraticati.pack();
                         dialogpraticati.setVisible(true);
@@ -244,7 +242,8 @@ public class ProgAllenController extends BaseAllenController {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         if (e.getValueIsAdjusting()) {
-                            dialogpraticati.getNomeEsercizio().setText(dialogpraticati.getListaEsercizi().getSelectedValue().toString());
+                            Item esercizioscelto = (Item) dialogpraticati.getListaEsercizi().getSelectedValue();
+                            dialogpraticati.getNomeEsercizio().setText(esercizioscelto.getLabel());
                         }
                         if (!dialogpraticati.getListaEsercizi().isSelectionEmpty())
                             dialogpraticati.getButtonOK().setEnabled(true);
@@ -256,7 +255,7 @@ public class ProgAllenController extends BaseAllenController {
     }
 
     public void aggiungiAttivitaManuale(DefaultTableModel tabellamodel){
-        String unita = dialog.getUnitamisura().getSelectedItem().toString();
+        String unita = dialog.getMisuraLabel().getText();
         String esercizio = dialog.getNomeEsercizio().getText();
         int quantita = Integer.parseInt(dialog.getQuantita().getText());
         if (aggiornaAttivitaManuale(tabellamodel,esercizio,quantita)) {
@@ -318,18 +317,18 @@ public class ProgAllenController extends BaseAllenController {
     }
 
     public void showEserciziPraticati(){
-        String unitascelta = dialogpraticati.getUnitadimisuraBox().getSelectedItem().toString();
+        String intensitascelta = dialogpraticati.getIntensita().getSelectedItem().toString();
         JTextField nomeEsercizio = dialogpraticati.getNomeEsercizio();
-        dialogpraticati.getUnitadimisuraBox().removeItem("--scegli esercizio per svolgimento--");
+        dialogpraticati.getIntensita().removeItem("--scegli esercizio--");
         nomeEsercizio.setEnabled(true);
         nomeEsercizio.setText("");
         EsercizioModel eserciziomodel = new EsercizioModel();
-        esercizi = eserciziomodel.getEserciziByUnita(unitascelta);
+        esercizi = eserciziomodel.getEserciziByIntensita(intensitascelta);
         JList lista = dialogpraticati.getListaEsercizi();
         DefaultListModel listmodel = new DefaultListModel();
         try {
             while(esercizi.next()){
-                listmodel.addElement(esercizi.getString("tipologia"));
+                listmodel.addElement(new Item(esercizi.getString("unita_misura"),esercizi.getString("tipologia")));
             }
         } catch (Exception e) {
             System.out.println("C'è un errore:" + e);
@@ -344,7 +343,7 @@ public class ProgAllenController extends BaseAllenController {
             esercizi.beforeFirst();
             while(esercizi.next()){
                 if(esercizi.getString("tipologia").contains(input)){
-                    listafiltrata.addElement(esercizi.getString("tipologia"));
+                    listafiltrata.addElement(new Item(esercizi.getString("unita_misura"),esercizi.getString("tipologia")));
                 }
             }
             dialogpraticati.getListaEsercizi().setModel(listafiltrata);

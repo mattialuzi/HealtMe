@@ -1,6 +1,6 @@
 package View.Alimentazione;
 
-import Helpers.ComboItem;
+import Helpers.Item;
 import Helpers.View;
 import Object.Enum.*;
 import Object.CiboObject;
@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.Enumeration;
-import java.util.HashMap;
 
 /**
  * Created by lorenzobraconi on 11/01/17.
@@ -30,7 +29,7 @@ public class NewCiboView extends View {
         allergia.setModel(new DefaultComboBoxModel(AllergiaEnum.values()));
         portata.setModel(new DefaultComboBoxModel(PortataEnum.values()));
         compatibilita.setModel(new DefaultComboBoxModel(CompatibilitaEnum.values()));
-        ComboItem[] items = new ComboItem[]{new ComboItem("pranzo_cena", "Pranzo e Cena"), new ComboItem("pranzo", "Pranzo"), new ComboItem("cena", "Cena")};
+        Item[] items = new Item[]{new Item("pranzo_cena", "Pranzo e Cena"), new Item("pranzo", "Pranzo"), new Item("cena", "Cena")};
         idoneita.setModel(new DefaultComboBoxModel(items));
     }
 
@@ -78,7 +77,7 @@ public class NewCiboView extends View {
         nuovocibo.setCompatibilita((CompatibilitaEnum) compatibilita.getSelectedItem());
         nuovocibo.setGruppo((GruppoEnum) gruppo.getSelectedItem());
         nuovocibo.setPortata((PortataEnum) portata.getSelectedItem());
-        ComboItem combo = (ComboItem) idoneita.getSelectedItem();
+        Item combo = (Item) idoneita.getSelectedItem();
         nuovocibo.setIdoneita(IdoneitaEnum.valueOf(combo.getValue()));
         return nuovocibo;
     }
@@ -88,24 +87,24 @@ public class NewCiboView extends View {
     }
 
     public void setIdoneita(PortataEnum tipoportata) {
-        ComboItem[] items;
+        Item[] items;
         if (tipoportata.equals(PortataEnum.secondo) || tipoportata.equals(PortataEnum.dolce) || tipoportata.equals(PortataEnum.contorno)) {
-            items = new ComboItem[]{new ComboItem("pranzo_cena", "Pranzo e Cena")};
+            items = new Item[]{new Item("pranzo_cena", "Pranzo e Cena")};
         }
         else {
             if (tipoportata.equals(PortataEnum.primo)) {
-                items = new ComboItem[]{new ComboItem("pranzo_cena", "Pranzo e Cena"), new ComboItem("pranzo", "Pranzo"), new ComboItem("cena", "Cena")};
+                items = new Item[]{new Item("pranzo_cena", "Pranzo e Cena"), new Item("pranzo", "Pranzo"), new Item("cena", "Cena")};
             }
             else {
                 if (tipoportata.equals(PortataEnum.snack)) {
-                    items = new ComboItem[]{new ComboItem("colazione_spuntino", "Colazione e Spuntino"), new ComboItem("colazione", "Colazione"), new ComboItem("spuntino", "Spuntino")};
+                    items = new Item[]{new Item("colazione_spuntino", "Colazione e Spuntino"), new Item("colazione", "Colazione"), new Item("spuntino", "Spuntino")};
                 }
                 else {
                     if (tipoportata.equals(PortataEnum.bevanda)) {
-                        items = new ComboItem[] {new ComboItem("colazione_spuntino", "Colazione e Spuntino"), new ComboItem("colazione", "Colazione"), new ComboItem("spuntino", "Spuntino")};
+                        items = new Item[] {new Item("colazione_spuntino", "Colazione e Spuntino"), new Item("colazione", "Colazione"), new Item("spuntino", "Spuntino")};
                     }
                     else {
-                        items = new ComboItem[] {new ComboItem("tutti", "Tutti i Pasti") }; //tipoportata = PortataEnum.frutta
+                        items = new Item[] {new Item("tutti", "Tutti i Pasti") }; //tipoportata = PortataEnum.frutta
                     }
                 }
             }

@@ -112,7 +112,7 @@ public class AllenamentoController extends BaseAllenController{
             }
         });
 
-        dialog.addSetUnitaItemListener(new SetUnitaItemAction());
+        dialog.addSetUnitaItemListener(new SetIntensitaItemAction());
 
         dialog.addSearchKeyListener(new SearchKeyAction());
 
@@ -163,7 +163,7 @@ public class AllenamentoController extends BaseAllenController{
     }
 
     public void aggiungiEsercizioEffettivo(DefaultTableModel tabellamodel) {
-        String unita = dialog.getUnitamisura().getSelectedItem().toString();
+        String unita = dialog.getMisuraLabel().getText();
         String esercizio = dialog.getNomeEsercizio().getText();
         double quantita = Double.parseDouble(dialog.getQuantita().getText());
         SedutaObject seduta = giornoeffcorrente.getSeduta();
@@ -200,7 +200,7 @@ public class AllenamentoController extends BaseAllenController{
         while ( attivitaiterator.hasNext() ) {
             AttivitaObject attivita = attivitaiterator.next();
             if (esercizio.equals(attivita.getEsercizio().getTipologia())) {
-                giornoeffcorrente.setCalorie((int) (giornoeffcorrente.getCalorie() + calcolaCalorie(attivita.getEsercizio(),quantita)));
+                giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() + calcolaCalorie(attivita.getEsercizio(),quantita));
                 HashMap<String,Integer> mappa = new HashMap<String,Integer>();
                 mappa.put("cal_consumate", giornoeffcorrente.getCalorie());
                 new GiornoAlimModel().updateGiornoAlimEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
