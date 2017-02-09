@@ -160,11 +160,15 @@ public class ProgAllenController extends BaseAllenController {
                 progallencomb = new ProgAllenCombView();
                 mainPanel.add(progallencomb.getMainPanel(), "ProgAllenCombView");
                 cardLayout.show(mainPanel, "ProgAllenCombView");
+                JOptionPane.showMessageDialog(null,"Ricorda che il programma di allenamento verrà calcolato sulla base del tuo livello di attività fisica." +
+                                                                            "\n Il livello di attività fisica \"assente\" è considerato come quello \"leggero\"."+
+                                                                        "\n Puoi cambiare il tuo livello di attivita fisica nella sezione profilo. ","Avviso"
+                                                                            ,JOptionPane.INFORMATION_MESSAGE);
 
                 JList listaesercizi = progallencomb.getListaEsercizi();
                 listaesercizi.setModel(new DefaultListModel());
-                DefaultListModel listamodel =(DefaultListModel)listaesercizi.getModel();
-                listaesercizi.setModel(listamodel);
+                DefaultListModel listamodel =(DefaultListModel) listaesercizi.getModel();
+                //listaesercizi.setModel(listamodel);
 
                 progallencomb.addPlusButtonListener(new ActionListener() {
                     @Override
@@ -184,6 +188,8 @@ public class ProgAllenController extends BaseAllenController {
                         if (selectedIndex != -1) {
                             listamodel.remove(selectedIndex);
                         }
+                        if (listamodel.getSize() == 0)
+                            progallencomb.enableGeneraProgrammaButton(false);
                     }
                 });
 
@@ -211,6 +217,7 @@ public class ProgAllenController extends BaseAllenController {
                         if (aggiornaEsercizioPraticato(listamodel,esercizio)) {
                         listamodel.addElement(esercizio);
                         }
+                        progallencomb.enableGeneraProgrammaButton(true);
                         dialogpraticati.onCancel();
                     }
                 });

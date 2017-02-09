@@ -78,7 +78,7 @@ public abstract class BaseAlimController extends Controller {
             if (e.getValueIsAdjusting()) {
                 dialog.getNomeAlimento().setText(dialog.getListaAlimenti().getSelectedValue().toString());
             }
-            if (!dialog.getQuantita().getText().equals("") && !dialog.getListaAlimenti().isSelectionEmpty())
+            if (!dialog.getQuantita().getText().equals("") && !dialog.getListaAlimenti().isSelectionEmpty() && !dialog.getQuantita().getText().equals("0"))
                 dialog.getButtonOK().setEnabled(true);
             else dialog.getButtonOK().setEnabled(false);
         }
@@ -96,7 +96,7 @@ public abstract class BaseAlimController extends Controller {
             if (!checkIntero(dialog.getQuantita().getText())) {
                 dialog.getQuantita().setText("");
             }
-            if (!dialog.getQuantita().getText().equals("") && !dialog.getListaAlimenti().isSelectionEmpty())
+            if (!dialog.getQuantita().getText().equals("") && !dialog.getListaAlimenti().isSelectionEmpty() && !dialog.getQuantita().getText().equals("0"))
                 dialog.getButtonOK().setEnabled(true);
             else dialog.getButtonOK().setEnabled(false);
         }

@@ -2,6 +2,7 @@ package View.Allenamento;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 
 /**
@@ -53,7 +54,12 @@ public class ProgAllenCombView {
         return listaEsercizi;
     }
 
+    public void enableGeneraProgrammaButton(boolean flag) {
+        generaProgrammaButton.setEnabled(flag);
+    }
+
     public JComboBox getComboDisponibilita () {
         return comboDisponibilita;
     }
+
 }

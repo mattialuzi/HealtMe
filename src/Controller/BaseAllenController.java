@@ -74,7 +74,7 @@ public abstract class BaseAllenController extends Controller{
                 dialog.getNomeEsercizio().setText(esercizioscelto.getLabel());
                 dialog.getMisuraLabel().setText(esercizioscelto.getValue());
             }
-            if (!dialog.getQuantita().getText().equals("") && !dialog.getListaEsercizi().isSelectionEmpty())
+            if (!dialog.getQuantita().getText().equals("") && !dialog.getListaEsercizi().isSelectionEmpty() && !dialog.getQuantita().getText().equals("0"))
                 dialog.getButtonOK().setEnabled(true);
             else dialog.getButtonOK().setEnabled(false);
         }
@@ -92,7 +92,7 @@ public abstract class BaseAllenController extends Controller{
             if (!checkIntero(dialog.getQuantita().getText())) {
                 dialog.getQuantita().setText("");
             }
-            if (!dialog.getQuantita().getText().equals("") && !dialog.getListaEsercizi().isSelectionEmpty())
+            if (!dialog.getQuantita().getText().equals("") && !dialog.getListaEsercizi().isSelectionEmpty() && !dialog.getQuantita().getText().equals("0"))
                 dialog.getButtonOK().setEnabled(true);
             else dialog.getButtonOK().setEnabled(false);
         }
