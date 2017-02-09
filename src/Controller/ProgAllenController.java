@@ -147,7 +147,7 @@ public class ProgAllenController extends BaseAllenController {
                     public void actionPerformed(ActionEvent e) {
                         aggiungiProgrammaManuale();
                         showNewProg();
-                        //giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb(), status);
+                        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_allen_comb(), true, giornoeffcorrente.isCompletato());
                         allenCardLayout.show(allenMainPanel, "IndexAllenamentoView");
                     }
                 });
@@ -205,7 +205,9 @@ public class ProgAllenController extends BaseAllenController {
                     public void actionPerformed(ActionEvent e) {
                         generaProgramma();
                         showNewProg();
-                        //giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb());
+                        boolean giornopieno = false;
+                        if(utente.getProgramma_allenamento().getSettimanaallenamento(indexoggi).getCalorie() > 0) giornopieno = true;
+                        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_allen_comb(), giornopieno, giornoeffcorrente.isCompletato());
                         allenCardLayout.show(allenMainPanel,"IndexAllenamentoView");
                     }
                 });

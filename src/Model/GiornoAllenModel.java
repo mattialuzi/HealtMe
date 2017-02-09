@@ -39,6 +39,7 @@ public class GiornoAllenModel {
                 SedutaObject seduta = sedutamodel.getSedutaById(rs.getInt(4));
                 GiornoAllenEffettivoObject giorno = new GiornoAllenEffettivoObject(username, data, seduta);
                 giorno.setCalorie(rs.getInt("cal_consumate"));
+                giorno.setCompletato(rs.getBoolean("completato"));
                 return giorno;
             } else {
                 GiornoAllenEffettivoObject nuovogiorno = new GiornoAllenEffettivoObject(username, data);
@@ -70,6 +71,7 @@ public class GiornoAllenModel {
         dati = dati +  ", '" + String.valueOf(giornoeff.getData() +"'");
         dati = dati +  ", " + String.valueOf(giornoeff.getCalorie());
         dati = dati + ", " + giornoeff.getSeduta().getId();
+        dati = dati + "," + giornoeff.isCompletato();
         effettivo.insert(dati);
         effettivo.execute();
     }

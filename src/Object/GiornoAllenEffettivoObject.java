@@ -12,6 +12,7 @@ public class GiornoAllenEffettivoObject extends GiornoAllenObject{
     private String username;
     private LocalDate data;
     private int cal_consumate;
+    private boolean completato;
 
     public GiornoAllenEffettivoObject(String username, LocalDate data) {
         this.username = username;
@@ -19,6 +20,7 @@ public class GiornoAllenEffettivoObject extends GiornoAllenObject{
         cal_consumate =0;
         tipo= GiornoEnum.effettivo;
         seduta = new SedutaObject();
+        completato = false;
     }
 
     public GiornoAllenEffettivoObject(String username, LocalDate data, SedutaObject seduta){
@@ -27,6 +29,7 @@ public class GiornoAllenEffettivoObject extends GiornoAllenObject{
         cal_consumate = 0;
         tipo = GiornoEnum.effettivo;
         this.seduta = seduta;
+        completato = false;
     }
 
     public String getUsername() {
@@ -52,5 +55,12 @@ public class GiornoAllenEffettivoObject extends GiornoAllenObject{
     public void setCalorie(int cal_consumate) {
         this.cal_consumate = cal_consumate;
     }
-    
+
+    public boolean isCompletato() {
+        return completato;
+    }
+
+    public void setCompletato(boolean completato) {
+        this.completato = completato;
+    }
 }

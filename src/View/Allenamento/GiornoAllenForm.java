@@ -42,6 +42,17 @@ public class GiornoAllenForm {
         removeSeduta.setVisible(true);
     }
 
+    public void enableConfermaButton(boolean completato){
+        confermaSeduta.setEnabled(!completato);
+    }
+
+    public void visibilityConfermaAndAddButtons(boolean comb, boolean giornopieno, boolean completato){
+        confermaSeduta.setVisible(comb && giornopieno);
+        enableConfermaButton(completato);
+        addSeduta.setVisible(giornopieno);
+        removeSeduta.setVisible(giornopieno);
+    }
+
     public void addListenersAndShowButtons(ActionListener listener) {
         addSeduta.addActionListener(listener);
         setButtonsVisible();

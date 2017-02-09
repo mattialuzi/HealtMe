@@ -49,7 +49,20 @@ public class AllenamentoController extends BaseAllenController{
         indexallenamento = allenamento.getIndexallenamento();
         setGiorni();
         dialog = new FormEsercizioEffettivo();
-        indexoggi = giornoeffcorrente.getData().getDayOfWeek().ordinal();
+        if(utente.getProgramma_allenamento() == null){
+            indexallenamento.showHideCaloriePanel(false);
+            indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
+            giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
+        } else {
+            indexallenamento.showHideCaloriePanel(true);
+            indexoggi = giornoeffcorrente.getData().getDayOfWeek().ordinal();
+            GiornoAllenProgObject giornoprogcorrente = utente.getProgramma_allenamento().getSettimanaallenamento(indexoggi);
+            indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie(), giornoprogcorrente.getCalorie());
+            if(!utente.isProg_allen_comb() || giornoprogcorrente.getCalorie() != 0){
+                giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
+            }
+            if(utente.isProg_allen_comb()) giornocorrenteview.enableConfermaButton(giornoeffcorrente.isCompletato());
+        }
 
         menu.addNewProgAllenButtonListener(new ActionListener() {
             @Override
@@ -92,8 +105,6 @@ public class AllenamentoController extends BaseAllenController{
                 }
             }
         });
-
-        giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
 
         giornocorrenteview.addTableSelectionListener(new ListSelectionListener() {
             @Override

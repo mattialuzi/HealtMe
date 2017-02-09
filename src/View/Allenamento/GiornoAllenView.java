@@ -48,6 +48,14 @@ public class GiornoAllenView {
         giornoeffettivo.addTableSelectionListener(listener);
     }
 
+    public void visibilityConfermaAndAddButtons(boolean comb, boolean giornopieno, boolean completato){
+        giornoeffettivo.visibilityConfermaAndAddButtons(comb, giornopieno, completato);
+    }
+
+    public void enableConfermaButton(boolean completato){
+        giornoeffettivo.enableConfermaButton(completato);
+    }
+
     public JTable getTable(GiornoEnum tipogiorno){
         if(tipogiorno==GiornoEnum.effettivo) {
             return giornoeffettivo.getSedutaEffTable();

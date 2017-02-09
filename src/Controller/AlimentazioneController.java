@@ -52,8 +52,6 @@ public class AlimentazioneController extends BaseAlimController {
             if(utente.isProg_alim_comb()) giornocorrenteview.enableConfermaButton(giornoeffcorrente.getStatus());
         }
 
-        //showIndex();
-
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

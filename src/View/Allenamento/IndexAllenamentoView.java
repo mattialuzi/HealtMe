@@ -77,6 +77,13 @@ public class IndexAllenamentoView {
         tabbedPane1.setSelectedComponent(giorni.get(today).getMainPanel());
     }
 
+    public void showHideCaloriePanel(boolean prog){
+        obiettivoPanel.setVisible(prog);
+        menoPanel.setVisible(prog);
+        ugualePanel.setVisible(prog);
+        rimanentePanel.setVisible(prog);
+    }
+
     public void setCalorieLabel(int effettive){
         effettivoLabel.setText(String.valueOf(effettive));
         if(obiettivoPanel.isVisible()){
