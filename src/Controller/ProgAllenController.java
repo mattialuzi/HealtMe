@@ -200,7 +200,7 @@ public class ProgAllenController extends BaseAllenController {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         generaProgramma();
-                        //showNewProg();
+                        showNewProg();
                         //giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb());
                         allenCardLayout.show(allenMainPanel,"IndexAllenamentoView");
                     }
@@ -391,7 +391,7 @@ public class ProgAllenController extends BaseAllenController {
         //new ProgrammaAllenModel().inserisciProgrammaCombinato(nuovoprogcombinato);
         UtenteModel utentemodel = new UtenteModel();
         HashMap<String, Object> campo = new HashMap<String, Object>();
-        campo.put("programma_alimentare", utente.getProgramma_allenamento().getId());
+        campo.put("programma_allenamento", utente.getProgramma_allenamento().getId());
         campo.put("prog_allen_comb", 1);
         utentemodel.updateInfoUtente(utente.getUsername(), campo);
         new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_da_consumare",String.valueOf(nuovoprogcombinato.getCalorie_da_consumare()));
