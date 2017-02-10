@@ -40,13 +40,13 @@ public class AlimentazioneController extends BaseAlimController {
         indexalimentazione = alimentazione.getIndexalimentazione();
         setGiorni();
         dialog = new FormCiboEffettivo();
+        indexoggi = giornoeffcorrente.getData().getDayOfWeek().ordinal();
         giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_alim_comb(), giornoeffcorrente.getStatus());
         if(utente.getProgramma_alimentare() == null){
             indexalimentazione.showHideCaloriePanel(false);
             indexalimentazione.setCalorieLabel(giornoeffcorrente.getCalorie());
         } else {
             indexalimentazione.showHideCaloriePanel(true);
-            indexoggi = giornoeffcorrente.getData().getDayOfWeek().ordinal();
             GiornoAlimProgObject giornoprogcorrente = utente.getProgramma_alimentare().getSettimanaalimentare(indexoggi);
             indexalimentazione.setCalorieLabel(giornoeffcorrente.getCalorie(), giornoprogcorrente.getCalorie());
             if(utente.isProg_alim_comb()) giornocorrenteview.enableConfermaButton(giornoeffcorrente.getStatus());

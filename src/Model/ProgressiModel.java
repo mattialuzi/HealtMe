@@ -18,8 +18,7 @@ public class ProgressiModel {
         tabella = new Progressi();
     }
 
-    //aggiungere attributo caloriedaconsumare
-    public void controllaProgresso(String username, LocalDate data,double peso,int fabbisogno){
+    public void controllaProgresso(String username, LocalDate data,double peso,int fabbisogno, int caloriedaconsumare){
         tabella.select();
         tabella.where("username='" + username + "' and data='" + data+"'");
         ResultSet rs = tabella.fetch();
@@ -30,8 +29,8 @@ public class ProgressiModel {
                 dati += ","+peso+"";
                 dati += ",0";
                 dati += ",0";
-                dati += ","+fabbisogno+"";
-                dati += ",0";//sostituire con caloriedaconsumare
+                dati += ","+fabbisogno;
+                dati += ","+caloriedaconsumare;
                 tabella.insert(dati);
                 tabella.execute();
             }

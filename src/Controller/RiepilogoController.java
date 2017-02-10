@@ -45,8 +45,11 @@ public class RiepilogoController {
         this.riepilogo = menu.getRiepilogoview();
         storiaview = riepilogo.getStoria();
         LocalDate oggi = LocalDate.now();
-        if(utente.getProgramma_alimentare() == null ) new ProgressiModel().controllaProgresso(utente.getUsername(),oggi,utente.getPeso(),0);
-        else new ProgressiModel().controllaProgresso(utente.getUsername(),oggi,utente.getPeso(),utente.getProgramma_alimentare().getSettimanaalimentare(oggi.getDayOfWeek().ordinal()).getCalorie());
+        int fabbisogno = 0;
+        int caloriedaconsumare = 0;
+        if(utente.getProgramma_alimentare() != null ) fabbisogno= utente.getProgramma_alimentare().getSettimanaalimentare(oggi.getDayOfWeek().ordinal()).getCalorie();
+        if(utente.getProgramma_allenamento() != null ) caloriedaconsumare = utente.getProgramma_allenamento().getSettimanaallenamento(oggi.getDayOfWeek().ordinal()).getCalorie();
+        new ProgressiModel().controllaProgresso(utente.getUsername(),oggi,utente.getPeso(), fabbisogno, caloriedaconsumare);
 
 
         ProgressiObject progressi = new ProgressiModel().getValoreProgressi(utente.getUsername());

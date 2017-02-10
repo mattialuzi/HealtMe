@@ -51,6 +51,7 @@ public class AllenamentoController extends BaseAllenController{
         dialog = new FormEsercizioEffettivo();
         boolean giornopieno = false;
         if(giornoeffcorrente.getCalorie() != 0) giornopieno = true;
+        indexoggi = giornoeffcorrente.getData().getDayOfWeek().ordinal();
         giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_allen_comb(),giornopieno,giornoeffcorrente.isCompletato());
         if(utente.getProgramma_allenamento() == null){
             indexallenamento.showHideCaloriePanel(false);
@@ -58,7 +59,6 @@ public class AllenamentoController extends BaseAllenController{
             giornocorrenteview.addListenersAndshowButtons(new ListenersAndShowButtonsAction());
         } else {
             indexallenamento.showHideCaloriePanel(true);
-            indexoggi = giornoeffcorrente.getData().getDayOfWeek().ordinal();
             GiornoAllenProgObject giornoprogcorrente = utente.getProgramma_allenamento().getSettimanaallenamento(indexoggi);
             indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie(), giornoprogcorrente.getCalorie());
             if(!utente.isProg_allen_comb() || giornoprogcorrente.getCalorie() != 0){
@@ -112,7 +112,7 @@ public class AllenamentoController extends BaseAllenController{
         giornocorrenteview.addListenerConfermaButton(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                giornocorrenteview.enableConfermaButton(true);
+                giornocorrenteview.visibilityConfermaAndAddButtons(true, true, true);
                 ricombina();
                 giornoeffcorrente.setCompletato(true);
                 HashMap<String,Integer> campogiorno = new HashMap<String, Integer>();
@@ -302,10 +302,12 @@ public class AllenamentoController extends BaseAllenController{
                         else {
                             eccesso += giornodopo.getCalorie();
                             giornodopo.setCalorie(0);
+                            new AttivitaModel().eliminaAttivita(giornodopo.getSeduta().getId(), giornodopo.getSeduta().getAttivita().get(0).getEsercizio().getTipologia());
                             giornodopo.getSeduta().getAttivita().remove(0);
+                            new GiornoAllenModel().updateCalorieGiornoAllenDinamico(utente.getProgramma_allenamento().getId(), giornoeffcorrente.getData().plusDays(indexgiorno-indexoggi), giornodopo.getCalorie());
                         }
-                        removeSeduta(indexallenamento.getGiorni(DayOfWeek.of(indexgiorno)),GiornoEnum.dinamico);
-                        showSeduta(giornodopo,indexallenamento.getGiorni(DayOfWeek.of(indexgiorno)));
+                        removeSeduta(indexallenamento.getGiorni(DayOfWeek.of(indexgiorno+1)),GiornoEnum.dinamico);
+                        showSeduta(giornodopo,indexallenamento.getGiorni(DayOfWeek.of(indexgiorno+1)));
                     }
                     indexgiorno++;
                 }
