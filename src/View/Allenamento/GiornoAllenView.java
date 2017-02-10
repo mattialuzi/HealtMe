@@ -44,6 +44,10 @@ public class GiornoAllenView {
         giornoeffettivo.addListenersForRemoveButtons(listener);
     }
 
+    public void addListenerConfermaButton(ActionListener listener){
+        giornoeffettivo.addListenerConfermaButton(listener);
+    }
+
     public void addTableSelectionListener(ListSelectionListener listener) {
         giornoeffettivo.addTableSelectionListener(listener);
     }

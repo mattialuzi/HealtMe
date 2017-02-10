@@ -3,6 +3,7 @@ package Controller;
 import Helpers.Controller;
 import Helpers.Item;
 import Model.EsercizioModel;
+import Object.Enum.GiornoEnum;
 import View.Allenamento.FormEsercizioEffettivo;
 import Object.GiornoAllenEffettivoObject;
 import Object.GiornoAllenObject;
@@ -146,6 +147,12 @@ public abstract class BaseAllenController extends Controller{
             double quantita = attivita.getQuantita();
             model.addRow(new Object[]{esercizio, quantita, unitamisura});
         }
+    }
+
+    protected void removeSeduta(GiornoAllenView giornoview, GiornoEnum tipogiorno){
+        JTable tabella = giornoview.getTable(tipogiorno);
+        DefaultTableModel model = (DefaultTableModel)tabella.getModel();
+        model.setRowCount(0);
     }
 
 

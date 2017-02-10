@@ -140,10 +140,10 @@ public class GiornoAllenModel {
         dinamico.execute();
     }
 
-    public void updateQuantitaGiornoAllenDinamico(int idprogramma, LocalDate data, int quantita){
-        String dati = "quantita=" + quantita;
+    public void updateCalorieGiornoAllenDinamico(int idprogramma, LocalDate data, int calorie){
+        String dati = "calorie_da_consumare=" + calorie;
         dinamico.update(dati);
-        dinamico.where("idprogramma=" + idprogramma + " and data='" + data + "'");
+        dinamico.where("id_programma=" + idprogramma + " and data='" + data + "'");
         dinamico.execute();
     }
 }

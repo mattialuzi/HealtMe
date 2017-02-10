@@ -45,6 +45,7 @@ public class ProgAllenController extends BaseAllenController {
     private ProgAllenManView progallenman;
     private ProgAllenCombView progallencomb;
     private GiornoAllenForm giornoselezionato;
+    private GiornoAllenEffettivoObject giornoeffcorrente;
     private FormEserciziPraticati dialogpraticati;
     //private ArrayList<String> esercizipraticati = new ArrayList<>();
     private GiornoAllenView giornocorrenteview;
@@ -53,6 +54,7 @@ public class ProgAllenController extends BaseAllenController {
     public ProgAllenController(AllenamentoView allenamento , UtenteObject utente,GiornoAllenEffettivoObject giornoeffcorrente) {
         this.allenamento = allenamento;
         this.utente = utente;
+        this.giornoeffcorrente = giornoeffcorrente;
         progallen = new NewProgAllenView();
         mainPanel = progallen.getMainPanel();
         JPanel allenMainPanel = allenamento.getMainPanel();
@@ -428,12 +430,10 @@ public class ProgAllenController extends BaseAllenController {
         for(int i=1;i<=7;i++){
             GiornoAllenView giornoview = indexallen.getGiorni(DayOfWeek.of(i));
             GiornoAllenObject giorno = progallen.getSettimanaallenamento(i-1);
-            JTable tabella = giornoview.getTable(GiornoEnum.programmato);
-            DefaultTableModel model = (DefaultTableModel)tabella.getModel();
-            model.setRowCount(0);
+            removeSeduta(giornoview,giorno.getTipo());
             showSeduta(giorno,giornoview);
         }
-        //allenamento.getIndexallenamento().showHideCaloriePanel(true);
-        //allenamento.getIndexallenamento().setCalorieLabel(giornoeffcorrente.getCalorie(),progallen.getSettimanaallenamento(indexoggi).getCalorie());
+        allenamento.getIndexallenamento().showHideCaloriePanel(true);
+        allenamento.getIndexallenamento().setCalorieLabel(giornoeffcorrente.getCalorie(),progallen.getSettimanaallenamento(indexoggi).getCalorie());
     }
 }

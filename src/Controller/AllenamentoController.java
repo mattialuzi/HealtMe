@@ -49,6 +49,9 @@ public class AllenamentoController extends BaseAllenController{
         indexallenamento = allenamento.getIndexallenamento();
         setGiorni();
         dialog = new FormEsercizioEffettivo();
+        boolean giornopieno = false;
+        if(giornoeffcorrente.getCalorie() != 0) giornopieno = true;
+        giornocorrenteview.visibilityConfermaAndAddButtons(utente.isProg_allen_comb(),giornopieno,giornoeffcorrente.isCompletato());
         if(utente.getProgramma_allenamento() == null){
             indexallenamento.showHideCaloriePanel(false);
             indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
@@ -103,6 +106,18 @@ public class AllenamentoController extends BaseAllenController{
                         cardLayout.show(variablePanel, "IndexAllenamentoView");
                     }
                 }
+            }
+        });
+
+        giornocorrenteview.addListenerConfermaButton(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                giornocorrenteview.enableConfermaButton(true);
+                ricombina();
+                giornoeffcorrente.setCompletato(true);
+                HashMap<String,Integer> campogiorno = new HashMap<String, Integer>();
+                campogiorno.put("completato",1);
+                new GiornoAllenModel().updateGiornoAllenEff(utente.getUsername(),giornoeffcorrente.getData(),campogiorno);
             }
         });
 
@@ -217,14 +232,14 @@ public class AllenamentoController extends BaseAllenController{
                 giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() + calcolaCalorie(attivita.getEsercizio(),quantita));
                 HashMap<String,Integer> mappa = new HashMap<String,Integer>();
                 mappa.put("cal_consumate", giornoeffcorrente.getCalorie());
-                new GiornoAlimModel().updateGiornoAlimEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
+                new GiornoAllenModel().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
                 double nuovaquantita = attivita.getQuantita() + quantita;
                 attivita.setQuantita(nuovaquantita);
                 new AttivitaModel().updateAttivita(attivita.getId_seduta(), esercizio, nuovaquantita);
                 int rowcount = tabellamodel.getRowCount();
                 boolean exit = true;
                 for(int indexrow = 0; indexrow < rowcount && exit; indexrow ++){
-                    if(tabellamodel.getValueAt(indexrow,1).equals(esercizio)) {
+                    if(tabellamodel.getValueAt(indexrow,0).equals(esercizio)) {
                         tabellamodel.setValueAt(nuovaquantita, indexrow, 1);
                         exit = false;
                     }
@@ -261,37 +276,41 @@ public class AllenamentoController extends BaseAllenController{
         if (disponibilita > 1) {
             int calorieconsumate = giornoeffcorrente.getCalorie();
             int calorieprog = programma.getSettimanaallenamento(indexoggi).getCalorie();
-            float tolleranza = calorieprog/0.05f;
+            float tolleranza = calorieprog*0.05f;
             boolean limitecalorie = false;
             if (calorieconsumate < calorieprog-tolleranza || calorieconsumate > calorieprog+tolleranza) {
                 limitecalorie = true;
             }
             if (limitecalorie) {
-                creaGiornoDinamico(indexoggi,programma.getSettimanaallenamento(indexoggi));
+                GiornoAllenProgObject giorno = creaGiornoDinamico(indexoggi,programma.getSettimanaallenamento(indexoggi));
                 int eccesso = calorieprog - calorieconsumate;
                 boolean flag = true;
                 int indexgiorno = indexoggi+1;
                 while (flag  && indexgiorno < 6) {
                     if (programma.getSettimanaallenamento(indexgiorno).getCalorie() != 0) {
-                        GiornoAllenProgObject giorno = creaGiornoDinamico(indexgiorno,programma.getSettimanaallenamento(indexgiorno));
-                        int nuovoobiettivo = giorno.getCalorie() + eccesso;
+                        GiornoAllenProgObject giornodopo = creaGiornoDinamico(indexgiorno,programma.getSettimanaallenamento(indexgiorno));
+                        int nuovoobiettivo = giornodopo.getCalorie() + eccesso;
                         if (nuovoobiettivo > 0) {
-                            AttivitaObject attivita = giorno.getSeduta().getAttivita().get(0);
+                            AttivitaObject attivita = giornodopo.getSeduta().getAttivita().get(0);
                             int consumocalorico = attivita.getEsercizio().getConsumo_calorico();
                             attivita.setQuantita((double) Math.round((nuovoobiettivo/consumocalorico)*10d)/10d);
-                            giorno.setCalorie(nuovoobiettivo);
+                            giornodopo.setCalorie(nuovoobiettivo);
                             new AttivitaModel().updateAttivita(attivita.getId_seduta(),attivita.getEsercizio().getTipologia(),attivita.getQuantita());
-                            new GiornoAllenModel().updateQuantitaGiornoAllenDinamico(utente.getProgramma_allenamento().getId(), giornoeffcorrente.getData().plusDays(indexgiorno-indexoggi), giorno.getCalorie());
+                            new GiornoAllenModel().updateCalorieGiornoAllenDinamico(utente.getProgramma_allenamento().getId(), giornoeffcorrente.getData().plusDays(indexgiorno-indexoggi), giornodopo.getCalorie());
                             flag = false;
                         }
                         else {
-                            eccesso += giorno.getCalorie();
-                            giorno.setCalorie(0);
-                            giorno.getSeduta().getAttivita().remove(0);
+                            eccesso += giornodopo.getCalorie();
+                            giornodopo.setCalorie(0);
+                            giornodopo.getSeduta().getAttivita().remove(0);
                         }
+                        removeSeduta(indexallenamento.getGiorni(DayOfWeek.of(indexgiorno)),GiornoEnum.dinamico);
+                        showSeduta(giornodopo,indexallenamento.getGiorni(DayOfWeek.of(indexgiorno)));
                     }
                     indexgiorno++;
                 }
+                removeSeduta(giornocorrenteview,giorno.getTipo());
+                showSeduta(giorno,giornocorrenteview);
             }
         }
     }

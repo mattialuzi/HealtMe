@@ -51,6 +51,7 @@ public class GiornoAllenForm {
         enableConfermaButton(completato);
         addSeduta.setVisible(giornopieno);
         removeSeduta.setVisible(giornopieno);
+        addSeduta.setEnabled(!completato);
     }
 
     public void addListenersAndShowButtons(ActionListener listener) {
@@ -61,6 +62,8 @@ public class GiornoAllenForm {
     public void addListenersForRemoveButtons(ActionListener listener){
         removeSeduta.addActionListener(listener);
     }
+
+    public void addListenerConfermaButton(ActionListener listener){ confermaSeduta.addActionListener(listener);}
 
     public void addTableSelectionListener(ListSelectionListener listener) {
         sedutaEffTable.getSelectionModel().addListSelectionListener(listener);
