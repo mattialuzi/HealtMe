@@ -26,7 +26,7 @@ public class GiornoAlimEffettivoObject extends GiornoAlimObject {
         this.status = status;
         pasti = new ArrayList<PastoObject>();
         for (int i=0; i<4; i++)
-            pasti.add(i,new PastoObject());
+            pasti.add(i,new PastoObject(i));
     }
 
     public GiornoAlimEffettivoObject(String username, LocalDate data, ArrayList<PastoObject> pastigiorno, StatusEnum status){

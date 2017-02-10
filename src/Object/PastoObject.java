@@ -19,13 +19,24 @@ public class PastoObject extends JObject {
 
     public PastoObject() {
         id=0;
-        tipo=null;
         portate=new ArrayList<PortataObject>();
         tipipasti = new ArrayList<PastoEnum>();
         tipipasti.add(0,PastoEnum.colazione);
         tipipasti.add(1,PastoEnum.pranzo);
         tipipasti.add(2,PastoEnum.cena);
         tipipasti.add(3,PastoEnum.spuntino);
+        tipo= null;
+    }
+
+    public PastoObject(int i) {
+        id=0;
+        portate=new ArrayList<PortataObject>();
+        tipipasti = new ArrayList<PastoEnum>();
+        tipipasti.add(0,PastoEnum.colazione);
+        tipipasti.add(1,PastoEnum.pranzo);
+        tipipasti.add(2,PastoEnum.cena);
+        tipipasti.add(3,PastoEnum.spuntino);
+        tipo= tipipasti.get(i);
     }
 
     public PastoObject(PastoEnum tipo) {
