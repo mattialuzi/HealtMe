@@ -434,7 +434,6 @@ public class ProgAllenController extends BaseAllenController {
             showSeduta(giorno,giornoview);
         }
         allenamento.getIndexallenamento().showHideCaloriePanel(true);
-
         allenamento.getIndexallenamento().setCalorieLabel(giornoeffcorrente.getCalorie(),progallen.getSettimanaallenamento(indexoggi).getCalorie());
     }
 }
