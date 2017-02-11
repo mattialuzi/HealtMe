@@ -1,10 +1,7 @@
 package Controller;
 
-import Model.UtenteModel;
+import DAO.UtenteDAO;
 import Object.*;
-import Object.Enum.AllergiaEnum;
-import Object.Enum.LavoroEnum;
-import Object.Enum.LivelloAttivitaFisicaEnum;
 import View.Auth;
 import View.Public.*;
 import View.Menu;
@@ -13,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
 
 public class PublicController {
 
@@ -77,7 +73,7 @@ public class PublicController {
                 registrazioneview.eliminaSpazi();
                 if (registrazioneview.isValid()){
                     UtenteObject nuovoutente = registrazioneview.getNuovoUtente();
-                    UtenteModel tabella= new UtenteModel();
+                    UtenteDAO tabella= new UtenteDAO();
                     boolean validator = tabella.findUserByUsername(nuovoutente.getUsername());
                     if(validator){
                         JOptionPane.showMessageDialog(null, "Username già esistente", "Errore", JOptionPane.ERROR_MESSAGE);
@@ -109,12 +105,12 @@ public class PublicController {
     public void completaloginAction() {
         String username = view.getLoginview().getUsername();
         String password = view.getLoginview().getPassword();
-        UtenteModel utentemodel = new UtenteModel();
-        boolean validator = utentemodel.findUserByCredential(username, password);
+        UtenteDAO utenteDAO = new UtenteDAO();
+        boolean validator = utenteDAO.findUserByCredential(username, password);
         if (!validator) {
             JOptionPane.showMessageDialog(null, "Username o Password errati", "Errore", JOptionPane.ERROR_MESSAGE);
         } else {
-            UtenteObject utente = utentemodel.getUserByUsername(username);
+            UtenteObject utente = utenteDAO.getUserByUsername(username);
             Menu welcome = new Menu();
             new MenuController(welcome, utente);
             Auth.getFrame().pack();

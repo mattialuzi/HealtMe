@@ -1,9 +1,8 @@
 package Object;
 
-import Helpers.JObject;
 import Object.Enum.*;
 
-public class CiboObject extends JObject {
+public class CiboObject {
 
     private String nome;
     private GruppoEnum gruppo;

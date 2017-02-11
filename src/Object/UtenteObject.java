@@ -1,14 +1,13 @@
 package Object;
 
-import Helpers.JObject;
 import Object.Enum.LavoroEnum;
 import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.Enum.AllergiaEnum;
-import Object.ProgrammaAlimentareObject;
+
 /**
  * Created by lorenzobraconi on 28/12/16.
  */
-public class UtenteObject extends JObject {
+public class UtenteObject {
 
     private String username;
     private String password;

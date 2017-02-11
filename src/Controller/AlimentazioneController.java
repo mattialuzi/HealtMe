@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.*;
+import DAO.*;
 import Object.Enum.*;
 import View.Alimentazione.*;
 import View.Menu;
@@ -80,12 +80,12 @@ public class AlimentazioneController extends BaseAlimController {
             public void actionPerformed(ActionEvent e) {
                 if (newcibo.isValid()) {
                     CiboObject nuovocibo = newcibo.getNuovoCibo();
-                    CiboModel cibomodel = new CiboModel();
-                    boolean validator = cibomodel.findCiboByName(nuovocibo.getNome());
+                    CiboDAO ciboDAO = new CiboDAO();
+                    boolean validator = ciboDAO.findCiboByName(nuovocibo.getNome());
                     if (validator) {
                         JOptionPane.showMessageDialog(null, "Cibo già esistente", "Errore", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        cibomodel.inserisciCibo(nuovocibo);
+                        ciboDAO.inserisciCibo(nuovocibo);
                         JOptionPane.showMessageDialog(null, "Cibo registrato con successo", "Operazione riuscita", JOptionPane.INFORMATION_MESSAGE);
                         newcibo.azzeraCampi();
                         cardLayout.show(variablePanel, "IndexAlimentazioneView");
@@ -117,7 +117,7 @@ public class AlimentazioneController extends BaseAlimController {
                 giornoeffcorrente.setStatus(nuovostatus);
                 HashMap<String, StatusEnum> campogiorno = new HashMap<String, StatusEnum>();
                 campogiorno.put("status", nuovostatus);
-                new GiornoAlimModel().updateGiornoAlimEff(utente.getUsername(), giornoeffcorrente.getData(), campogiorno);
+                new GiornoAlimDAO().updateGiornoAlimEff(utente.getUsername(), giornoeffcorrente.getData(), campogiorno);
             }
         });
 
@@ -168,19 +168,19 @@ public class AlimentazioneController extends BaseAlimController {
     public void setGiorni() {
         LocalDate data = LocalDate.now();
         DayOfWeek giornosettimana = data.getDayOfWeek();
-        GiornoAlimModel giornomodel = new GiornoAlimModel();
+        GiornoAlimDAO giornoDAO = new GiornoAlimDAO();
         giornocorrenteview = indexalimentazione.getGiorni(giornosettimana);
         giornocorrenteview.setButtonFromTable();
         giornocorrenteview.setTableFromButton();
         indexalimentazione.setTodayTab(giornosettimana);
         int i = giornosettimana.getValue();
         ProgrammaAlimentareObject progalim = utente.getProgramma_alimentare();
-        giornoeffcorrente = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
+        giornoeffcorrente = giornoDAO.getGiornoAlimEffettivo(utente.getUsername(), data);
         showPasti(giornoeffcorrente, giornocorrenteview);
         data = data.minusDays(1);
         for (int j = i-1; j > 0; j--) {
             GiornoAlimView giornoprimaview = indexalimentazione.getGiorni(DayOfWeek.of(j));
-            GiornoAlimObject giornoprima = giornomodel.getGiornoAlimEffettivo(utente.getUsername(), data);
+            GiornoAlimObject giornoprima = giornoDAO.getGiornoAlimEffettivo(utente.getUsername(), data);
             showPasti(giornoprima, giornoprimaview);
             data = data.minusDays(1);
         }
@@ -200,32 +200,32 @@ public class AlimentazioneController extends BaseAlimController {
         PastoObject pasto = giornoeffcorrente.getPastoByTipo(nuovopasto);
         if (pasto.getId() == 0) {
             pasto.setTipo(PastoEnum.valueOf(nuovopasto));
-            PastoModel pastomodel = new PastoModel();
-            pastomodel.inserisciPasto(pasto);
+            PastoDAO pastoDAO = new PastoDAO();
+            pastoDAO.inserisciPasto(pasto);
             String username = giornoeffcorrente.getUsername();
             LocalDate data = giornoeffcorrente.getData();
             HashMap<String,Integer> mappa = new HashMap<String,Integer>();
             mappa.put(nuovopasto,pasto.getId());
-            new GiornoAlimModel().updateGiornoAlimEff(username,data,mappa);
+            new GiornoAlimDAO().updateGiornoAlimEff(username,data,mappa);
         }
         if (!aggiornaPortata(pasto, alimento, quantita, tabellamodel)) {
-            CiboModel cibomodel = new CiboModel();
-            CiboObject nuovocibo = cibomodel.getCiboByName(alimento);
+            CiboDAO ciboDAO = new CiboDAO();
+            CiboObject nuovocibo = ciboDAO.getCiboByName(alimento);
             PortataObject nuovaportata = new PortataObject(nuovocibo);
             nuovaportata.setId_pasto(pasto.getId());
             nuovaportata.setTipo(PortataEnum.valueOf(portata));
             nuovaportata.setQuantita(quantita);
-            PortataModel portatamodel = new PortataModel();
-            portatamodel.inserisciPortata(nuovaportata);
+            PortataDAO portataDAO = new PortataDAO();
+            portataDAO.inserisciPortata(nuovaportata);
             pasto.addPortata(nuovaportata);
             giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() + calcolaCalorie(nuovaportata));
             HashMap<String,Integer> mappa = new HashMap<String,Integer>();
             mappa.put("cal_assunte", giornoeffcorrente.getCalorie());
-            new GiornoAlimModel().updateGiornoAlimEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
+            new GiornoAlimDAO().updateGiornoAlimEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
             tabellamodel.addRow(new String[]{portata,alimento,Integer.toString(quantita)});
         }
         indexalimentazione.setCalorieLabel(giornoeffcorrente.getCalorie());
-        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_assunte",String.valueOf(giornoeffcorrente.getCalorie()));
+        new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_assunte",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
     private boolean aggiornaPortata(PastoObject pasto, String alimento, int quantita, DefaultTableModel tabellamodel) {
@@ -236,10 +236,10 @@ public class AlimentazioneController extends BaseAlimController {
                 giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() + calcolaCalorie(portata.getCibo(),quantita));
                 HashMap<String,Integer> mappa = new HashMap<String,Integer>();
                 mappa.put("cal_assunte", giornoeffcorrente.getCalorie());
-                new GiornoAlimModel().updateGiornoAlimEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
+                new GiornoAlimDAO().updateGiornoAlimEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
                 int nuovaquantita = portata.getQuantita() + quantita;
                 portata.setQuantita(nuovaquantita);
-                new PortataModel().updatePortata(portata.getId_pasto(), alimento, nuovaquantita);
+                new PortataDAO().updatePortata(portata.getId_pasto(), alimento, nuovaquantita);
                 int rowcount = tabellamodel.getRowCount();
                 boolean exit = true;
                 for(int indexrow = 0; indexrow < rowcount && exit; indexrow ++){
@@ -264,14 +264,14 @@ public class AlimentazioneController extends BaseAlimController {
                 giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() - calcolaCalorie(portate.get(i)));
                 HashMap<String,Integer> mappa = new HashMap<String,Integer>();
                 mappa.put("cal_assunte", giornoeffcorrente.getCalorie());
-                new GiornoAlimModel().updateGiornoAlimEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
+                new GiornoAlimDAO().updateGiornoAlimEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
                 pasto.removePortata(portate.get(i));
                 exit = false;
             }
         }
-        new PortataModel().eliminaPortata(pasto.getId(), cibo);
+        new PortataDAO().eliminaPortata(pasto.getId(), cibo);
         indexalimentazione.setCalorieLabel(giornoeffcorrente.getCalorie());
-        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_assunte",String.valueOf(giornoeffcorrente.getCalorie()));
+        new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_assunte",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
     private int calcolaCalorie(CiboObject cibo,int quantita){
@@ -344,21 +344,21 @@ public class AlimentazioneController extends BaseAlimController {
     private void ricombinaPortata(PastoObject pasto, ArrayList<PortataObject> portateuguali, ArrayList<Integer> indiciricombina){
         AllergiaEnum allergia = utente.getAllergia();
         AlimentazioneEnum tipoalimentazione = utente.getProgramma_alimentare().getTipo_alimentazione();
-        CiboModel cibomodel = new CiboModel();
-        PortataModel portatamodel = new PortataModel();
+        CiboDAO ciboDAO = new CiboDAO();
+        PortataDAO portataDAO = new PortataDAO();
         ArrayList<PortataObject> portate = pasto.getPortate();
         int i= portateuguali.size();
         for (int j =0; j<i;j++) {
             int indice = indiciricombina.get(j);
             PortataObject portatadasostituire = portate.get(indice);
             generateIdoneitaMap();
-            ArrayList<String> portatedisponibili = cibomodel.getCiboForUser(allergia.toString(), tipoalimentazione.toString(), portateuguali.get(j).getTipo().toString(), getIdoneita(pasto.getTipo(), portateuguali.get(j).getTipo()));
+            ArrayList<String> portatedisponibili = ciboDAO.getCiboForUser(allergia.toString(), tipoalimentazione.toString(), portateuguali.get(j).getTipo().toString(), getIdoneita(pasto.getTipo(), portateuguali.get(j).getTipo()));
             portatedisponibili.remove(portateuguali.get(j).getCibo().getNome());
             int fabbisognoportata = calcolaCalorie(portatadasostituire);
             String nomecibo = portatedisponibili.get(randomize(portatedisponibili.size()));
-            CiboObject nuovocibo = cibomodel.getCiboByName(nomecibo);
+            CiboObject nuovocibo = ciboDAO.getCiboByName(nomecibo);
             portatadasostituire.setQuantita(calcolaQuantita(fabbisognoportata, nuovocibo.getKilocal()));
-            portatamodel.updatePortata(portatadasostituire.getId_pasto(),portatadasostituire.getCibo().getNome(), nuovocibo.getNome() ,portatadasostituire.getQuantita());
+            portataDAO.updatePortata(portatadasostituire.getId_pasto(),portatadasostituire.getCibo().getNome(), nuovocibo.getNome() ,portatadasostituire.getQuantita());
             portatadasostituire.setCibo(nuovocibo);
         }
     }
@@ -377,28 +377,28 @@ public class AlimentazioneController extends BaseAlimController {
             } else {
                 giornodinamico.setData(giornoeffcorrente.getData().plusDays(1));
             }
-            PastoModel pastomodel = new PastoModel();
-            PortataModel portatamodel = new PortataModel();
+            PastoDAO pastoDAO = new PastoDAO();
+            PortataDAO portataDAO = new PortataDAO();
             for (int k = indexstatus + 1; k < 4; k++) {
                 ArrayList<PortataObject> portate = giorno.getPasti(k).getPortate();
                 PastoObject nuovopasto = new PastoObject(giorno.getPasti(k).getTipo());
-                pastomodel.inserisciPasto(nuovopasto);
+                pastoDAO.inserisciPasto(nuovopasto);
                 for (PortataObject portata : portate) {
                     PortataObject nuovaportata = new PortataObject(portata.getCibo());
                     nuovaportata.setId_pasto(nuovopasto.getId());
                     nuovaportata.setTipo(portata.getTipo());
                     nuovaportata.setQuantita(portata.getQuantita());
-                    portatamodel.inserisciPortata(nuovaportata);
+                    portataDAO.inserisciPortata(nuovaportata);
                     nuovopasto.addPortata(nuovaportata);
                 }
                 giornodinamico.setPasti(k, nuovopasto);
             }
-            new GiornoAlimModel().inserisciGiornoAlimDinamico(giornodinamico);
+            new GiornoAlimDAO().inserisciGiornoAlimDinamico(giornodinamico);
             utente.getProgramma_alimentare().setSettimanaalimentare(indexgiorno, giornodinamico);
             return giornodinamico;
         } else {
             PastoEnum tipopasto = giornoeffcorrente.getPasti(indexstatus).getTipo();
-            new GiornoAlimModel().updateGiornoAlimDinamico(giornoeffcorrente.getPasti(indexstatus).getId(), giorno.getPasti(indexstatus).getId(), tipopasto);
+            new GiornoAlimDAO().updateGiornoAlimDinamico(giornoeffcorrente.getPasti(indexstatus).getId(), giorno.getPasti(indexstatus).getId(), tipopasto);
             giorno.setPasti(indexstatus,giornoeffcorrente.getPasti(indexstatus));
 
             return giorno;
@@ -454,9 +454,9 @@ public class AlimentazioneController extends BaseAlimController {
             aggiornaQuantita(portate.get(1), (fabbisogno * 30) / 100);
             aggiornaQuantita(portate.get(2), (fabbisogno * 20) / 100);
         }
-        PortataModel portatamodel = new PortataModel();
+        PortataDAO portataDAO = new PortataDAO();
         for (PortataObject portata : portate){
-            portatamodel.updatePortata(pasto.getId(), portata.getCibo().getNome(), portata.getQuantita());
+            portataDAO.updatePortata(pasto.getId(), portata.getCibo().getNome(), portata.getQuantita());
         }
     }
 

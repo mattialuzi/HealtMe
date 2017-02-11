@@ -1,9 +1,8 @@
 package Controller;
 
-import Model.Dbtable.Attivita;
-import Model.GiornoAlimModel;
-import Model.GiornoAllenModel;
-import Model.ProgressiModel;
+import DAO.GiornoAlimDAO;
+import DAO.GiornoAllenDAO;
+import DAO.ProgressiDAO;
 import View.Menu;
 import View.Riepilogo.ProgressiView;
 import View.Riepilogo.RiepilogoView;
@@ -49,10 +48,10 @@ public class RiepilogoController {
         int caloriedaconsumare = 0;
         if(utente.getProgramma_alimentare() != null ) fabbisogno= utente.getProgramma_alimentare().getSettimanaalimentare(oggi.getDayOfWeek().ordinal()).getCalorie();
         if(utente.getProgramma_allenamento() != null ) caloriedaconsumare = utente.getProgramma_allenamento().getSettimanaallenamento(oggi.getDayOfWeek().ordinal()).getCalorie();
-        new ProgressiModel().controllaProgresso(utente.getUsername(),oggi,utente.getPeso(), fabbisogno, caloriedaconsumare);
+        new ProgressiDAO().controllaProgresso(utente.getUsername(),oggi,utente.getPeso(), fabbisogno, caloriedaconsumare);
 
 
-        ProgressiObject progressi = new ProgressiModel().getValoreProgressi(utente.getUsername());
+        ProgressiObject progressi = new ProgressiDAO().getValoreProgressi(utente.getUsername());
         riepilogo.addProgressiView(new ProgressiView(progressi));
 
         storiaview.addMesePrecListener(new ActionListener() {
@@ -101,7 +100,7 @@ public class RiepilogoController {
             DefaultTableModel model = (DefaultTableModel)tabelle.get(i).getModel();
             model.setRowCount(0);
         }
-        GiornoAlimEffettivoObject giorno = new GiornoAlimModel().getGiornoAlimEffettivo(utente.getUsername(),date);
+        GiornoAlimEffettivoObject giorno = new GiornoAlimDAO().getGiornoAlimEffettivo(utente.getUsername(),date);
         String[] tipipasto = new String[] {"colazione","pranzo","spuntino","cena"};
         for (int i=0; i<4; i++) {
             PastoObject pasto = giorno.getPastoByTipo(tipipasto[i]);
@@ -121,7 +120,7 @@ public class RiepilogoController {
         JTable tabella = storiaview.getAllenTable();
         DefaultTableModel model = (DefaultTableModel) tabella.getModel();
         model.setRowCount(0);
-        GiornoAllenEffettivoObject giorno = new GiornoAllenModel().getGiornoAllenEffettivo(utente.getUsername(),data);
+        GiornoAllenEffettivoObject giorno = new GiornoAllenDAO().getGiornoAllenEffettivo(utente.getUsername(),data);
         SedutaObject seduta = giorno.getSeduta();
         Iterator<AttivitaObject> attivitaiterator = seduta.getAttivita().iterator();
         while (attivitaiterator.hasNext()) {

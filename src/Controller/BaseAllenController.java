@@ -2,7 +2,7 @@ package Controller;
 
 import Helpers.Controller;
 import Helpers.Item;
-import Model.EsercizioModel;
+import DAO.EsercizioDAO;
 import Object.Enum.GiornoEnum;
 import View.Allenamento.FormEsercizioEffettivo;
 import Object.GiornoAllenEffettivoObject;
@@ -105,8 +105,8 @@ public abstract class BaseAllenController extends Controller{
         dialog.getIntensita().removeItem("--scegli esercizio--");
         nomeEsercizio.setEnabled(true);
         nomeEsercizio.setText("");
-        EsercizioModel eserciziomodel = new EsercizioModel();
-        esercizi = eserciziomodel.getEserciziByIntensita(intensitascelta);
+        EsercizioDAO esercizioDAO = new EsercizioDAO();
+        esercizi = esercizioDAO.getEserciziByIntensita(intensitascelta);
         JList lista = dialog.getListaEsercizi();
         DefaultListModel listmodel = new DefaultListModel();
         try {

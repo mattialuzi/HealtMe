@@ -1,15 +1,11 @@
 package Object;
 
-import Helpers.JObject;
-import Model.Dbtable.Attivita;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by lorenzobraconi on 17/01/17.
  */
-public class SedutaObject extends JObject {
+public class SedutaObject {
     private int id;
     private ArrayList<AttivitaObject> listaattivita;
 

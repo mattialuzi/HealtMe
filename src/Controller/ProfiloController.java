@@ -1,7 +1,7 @@
 package Controller;
 
-import Model.UtenteModel;
-import Model.ProgressiModel;
+import DAO.UtenteDAO;
+import DAO.ProgressiDAO;
 import Object.Enum.AllergiaEnum;
 import Object.Enum.LavoroEnum;
 import Object.Enum.LivelloAttivitaFisicaEnum;
@@ -92,10 +92,10 @@ public class ProfiloController {
                     String nuovaAltezza = modificaInfoUtente(campo, altezza, utente.getUsername(), "virgola");
                     if (!nuovaAltezza.equals(altezza)) {
                         float nuovoPesoforma = profilo.calcoloPesoForma(Float.parseFloat(nuovaAltezza), utente.getSesso());
-                        UtenteModel utentemodel = new UtenteModel();
+                        UtenteDAO utenteDAO = new UtenteDAO();
                         HashMap hashmap = new HashMap();
                         hashmap.put(campo,Float.toString(nuovoPesoforma));
-                        utentemodel.updateInfoUtente(utente.getUsername(),hashmap);
+                        utenteDAO.updateInfoUtente(utente.getUsername(),hashmap);
                         utente.setPeso_forma(nuovoPesoforma);
                         utente.setAltezza(Float.parseFloat(nuovaAltezza));
                         profilo.setInfoUtente(utente);
@@ -113,7 +113,7 @@ public class ProfiloController {
                 if(!nuovoPeso.equals(peso)) {
                     utente.setPeso(Float.parseFloat(nuovoPeso));
                     profilo.setInfoUtente(utente);
-                    new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),campo,nuovoPeso);
+                    new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),campo,nuovoPeso);
                 }
             }
         });
@@ -190,8 +190,8 @@ public class ProfiloController {
             public void actionPerformed(ActionEvent e) {
                 int replay = JOptionPane.showConfirmDialog(null, "Sei sicuro di voler eliminare il tuo Account e i relativi dati?", "Eliminazione Account", JOptionPane.YES_NO_OPTION);
                 if (replay == JOptionPane.YES_OPTION){
-                    UtenteModel utentemodel = new UtenteModel();
-                    utentemodel.eliminaUtente(utente.getUsername());
+                    UtenteDAO utenteDAO = new UtenteDAO();
+                    utenteDAO.eliminaUtente(utente.getUsername());
                     Auth view = new Auth();
                     new PublicController(view);
                 }
@@ -210,7 +210,7 @@ public class ProfiloController {
         } else if((campo.equals("username")) && (newvalue.equals(info))){
             return info;
         } else if(campo.equals("username")) {
-            UtenteModel tabella = new UtenteModel();
+            UtenteDAO tabella = new UtenteDAO();
             boolean validator = tabella.findUserByUsername(newvalue);
             if (validator) {
                 JOptionPane.showMessageDialog(null, "Username già esistente", "Errore", JOptionPane.ERROR_MESSAGE);
@@ -219,8 +219,8 @@ public class ProfiloController {
         }
         HashMap<String,Object> campoutente = new HashMap<String,Object>();
         campoutente.put(campo, newvalue);
-        UtenteModel utentemodel = new UtenteModel();
-        utentemodel.updateInfoUtente(username, campoutente);
+        UtenteDAO utenteDAO = new UtenteDAO();
+        utenteDAO.updateInfoUtente(username, campoutente);
         return newvalue;
 
     }
@@ -228,8 +228,8 @@ public class ProfiloController {
     public void modificaInfoUtenteEnum(String campo, String info, String username){
             HashMap<String,Object> campoutente = new HashMap<String,Object>();
             campoutente.put(campo, info);
-            UtenteModel utentemodel = new UtenteModel();
-            utentemodel.updateInfoUtente(username, campoutente);
+            UtenteDAO utenteDAO = new UtenteDAO();
+            utenteDAO.updateInfoUtente(username, campoutente);
         }
 
 }

@@ -1,6 +1,5 @@
 package Object;
 
-import Helpers.JObject;
 import Object.Enum.CategoriaEnum;
 import Object.Enum.IntensitaEnum;
 import Object.Enum.UnitaMisuraEnum;
@@ -8,7 +7,7 @@ import Object.Enum.UnitaMisuraEnum;
 /**
  * Created by lorenzobraconi on 28/12/16.
  */
-public class EsercizioObject extends JObject{
+public class EsercizioObject {
 
     private String tipologia;
     private CategoriaEnum categoria;

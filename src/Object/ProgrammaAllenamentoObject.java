@@ -1,14 +1,11 @@
 package Object;
 
-import Helpers.JObject;
-
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Mattia on 16/01/2017.
  */
-public abstract class ProgrammaAllenamentoObject extends JObject {
+public abstract class ProgrammaAllenamentoObject {
     protected int id;
     protected ArrayList<GiornoAllenProgObject> settimanaallenamento;
 

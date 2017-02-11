@@ -1,12 +1,9 @@
 package Object;
 
 import Object.Enum.GiornoEnum;
-import Object.Enum.PastoEnum;
-import Helpers.JObject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class GiornoAlimDinamicoObject extends GiornoAlimProgObject {

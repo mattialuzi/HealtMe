@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.*;
+import DAO.*;
 import Object.Enum.GiornoEnum;
 import Object.UtenteObject;
 import Object.EsercizioObject;
@@ -95,12 +95,12 @@ public class AllenamentoController extends BaseAllenController{
             public void actionPerformed(ActionEvent e) {
                 if(newesercizio.isValid()){
                     EsercizioObject nuovoesercizio = newesercizio.getNuovoEsercizio();
-                    EsercizioModel eserciziomodel = new EsercizioModel();
-                    boolean validator = eserciziomodel.findEsercizioByName(nuovoesercizio.getTipologia());
+                    EsercizioDAO esercizioDAO = new EsercizioDAO();
+                    boolean validator = esercizioDAO.findEsercizioByName(nuovoesercizio.getTipologia());
                     if (validator) {
                         JOptionPane.showMessageDialog(null, "Esercizio già esistente", "Errore", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        eserciziomodel.inserisciEsercizio(nuovoesercizio);
+                        esercizioDAO.inserisciEsercizio(nuovoesercizio);
                         JOptionPane.showMessageDialog(null, "Esercizio registrato con successo", "Operazione riuscita", JOptionPane.INFORMATION_MESSAGE);
                         newesercizio.azzeraCampi();
                         cardLayout.show(variablePanel, "IndexAllenamentoView");
@@ -117,7 +117,7 @@ public class AllenamentoController extends BaseAllenController{
                 giornoeffcorrente.setCompletato(true);
                 HashMap<String,Integer> campogiorno = new HashMap<String, Integer>();
                 campogiorno.put("completato",1);
-                new GiornoAllenModel().updateGiornoAllenEff(utente.getUsername(),giornoeffcorrente.getData(),campogiorno);
+                new GiornoAllenDAO().updateGiornoAllenEff(utente.getUsername(),giornoeffcorrente.getData(),campogiorno);
             }
         });
 
@@ -166,19 +166,19 @@ public class AllenamentoController extends BaseAllenController{
     public void setGiorni() {
         LocalDate data = LocalDate.now();
         DayOfWeek giornosettimana = data.getDayOfWeek();
-        GiornoAllenModel giornomodel = new GiornoAllenModel();
+        GiornoAllenDAO giornoDAO = new GiornoAllenDAO();
         giornocorrenteview = indexallenamento.getGiorni(giornosettimana);
         //giornocorrenteview.setButtonFromTable();
         //giornocorrenteview.setTableFromButton();
         indexallenamento.setTodayTab(giornosettimana);
         int i = giornosettimana.getValue();
         ProgrammaAllenamentoObject progallen = utente.getProgramma_allenamento();
-        giornoeffcorrente = giornomodel.getGiornoAllenEffettivo(utente.getUsername(), data);
+        giornoeffcorrente = giornoDAO.getGiornoAllenEffettivo(utente.getUsername(), data);
         showSeduta(giornoeffcorrente, giornocorrenteview);
         data = data.minusDays(1);
         for (int j = i-1; j > 0; j--) {
             GiornoAllenView giornoprimaview = indexallenamento.getGiorni(DayOfWeek.of(j));
-            GiornoAllenObject giornoprima = giornomodel.getGiornoAllenEffettivo(utente.getUsername(), data);
+            GiornoAllenObject giornoprima = giornoDAO.getGiornoAllenEffettivo(utente.getUsername(), data);
             showSeduta(giornoprima, giornoprimaview);
             data = data.minusDays(1);
         }
@@ -197,31 +197,31 @@ public class AllenamentoController extends BaseAllenController{
         double quantita = Double.parseDouble(dialog.getQuantita().getText());
         SedutaObject seduta = giornoeffcorrente.getSeduta();
         if (seduta.getId() == 0) {
-            SedutaModel sedutamodel = new SedutaModel();
+            SedutaDAO sedutamodel = new SedutaDAO();
             sedutamodel.inserisciSeduta(seduta);
             String username = giornoeffcorrente.getUsername();
             LocalDate data = giornoeffcorrente.getData();
             HashMap<String,Integer> mappa = new HashMap<String,Integer>();
             mappa.put("seduta",seduta.getId());
-            new GiornoAllenModel().updateGiornoAllenEff(username,data,mappa);
+            new GiornoAllenDAO().updateGiornoAllenEff(username,data,mappa);
         }
         if (!aggiornaAttivita(seduta, esercizio, quantita, tabellamodel)) {
-            EsercizioModel eserciziomodel = new EsercizioModel();
-            EsercizioObject nuovoesercizio = eserciziomodel.getEsercizioByTipologia(esercizio);
+            EsercizioDAO esercizioDAO = new EsercizioDAO();
+            EsercizioObject nuovoesercizio = esercizioDAO.getEsercizioByTipologia(esercizio);
             AttivitaObject nuovaattivita = new AttivitaObject(nuovoesercizio);
             nuovaattivita.setId_seduta(seduta.getId());
             nuovaattivita.setQuantita(quantita);
-            AttivitaModel attivitamodel = new AttivitaModel();
-            attivitamodel.inserisciAttivita(nuovaattivita);
+            AttivitaDAO attivitaDAO = new AttivitaDAO();
+            attivitaDAO.inserisciAttivita(nuovaattivita);
             seduta.addAttivita(nuovaattivita);
             giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() + calcolaCalorie(nuovaattivita));
             HashMap<String,Integer> mappa = new HashMap<String,Integer>();
             mappa.put("cal_consumate", giornoeffcorrente.getCalorie());
-            new GiornoAllenModel().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
+            new GiornoAllenDAO().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
             tabellamodel.addRow(new String[]{esercizio, Double.toString(quantita), unita});
         }
         indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
-        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
+        new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
     private boolean aggiornaAttivita(SedutaObject seduta, String esercizio, double quantita, DefaultTableModel tabellamodel) {
@@ -232,10 +232,10 @@ public class AllenamentoController extends BaseAllenController{
                 giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() + calcolaCalorie(attivita.getEsercizio(),quantita));
                 HashMap<String,Integer> mappa = new HashMap<String,Integer>();
                 mappa.put("cal_consumate", giornoeffcorrente.getCalorie());
-                new GiornoAllenModel().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
+                new GiornoAllenDAO().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
                 double nuovaquantita = attivita.getQuantita() + quantita;
                 attivita.setQuantita(nuovaquantita);
-                new AttivitaModel().updateAttivita(attivita.getId_seduta(), esercizio, nuovaquantita);
+                new AttivitaDAO().updateAttivita(attivita.getId_seduta(), esercizio, nuovaquantita);
                 int rowcount = tabellamodel.getRowCount();
                 boolean exit = true;
                 for(int indexrow = 0; indexrow < rowcount && exit; indexrow ++){
@@ -260,14 +260,14 @@ public class AllenamentoController extends BaseAllenController{
                 giornoeffcorrente.setCalorie(giornoeffcorrente.getCalorie() - calcolaCalorie(listaattivita.get(i)));
                 HashMap<String,Integer> mappa = new HashMap<String,Integer>();
                 mappa.put("cal_consumate", giornoeffcorrente.getCalorie());
-                new GiornoAllenModel().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
+                new GiornoAllenDAO().updateGiornoAllenEff(giornoeffcorrente.getUsername(), giornoeffcorrente.getData(),mappa);
                 seduta.removeAttivita(listaattivita.get(i));
                 exit = false;
             }
         }
-        new AttivitaModel().eliminaAttivita(seduta.getId(), esercizio);
+        new AttivitaDAO().eliminaAttivita(seduta.getId(), esercizio);
         indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
-        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
+        new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
     public void ricombina(){
@@ -295,16 +295,16 @@ public class AllenamentoController extends BaseAllenController{
                             int consumocalorico = attivita.getEsercizio().getConsumo_calorico();
                             attivita.setQuantita((double) Math.round((nuovoobiettivo/consumocalorico)*10d)/10d);
                             giornodopo.setCalorie(nuovoobiettivo);
-                            new AttivitaModel().updateAttivita(attivita.getId_seduta(),attivita.getEsercizio().getTipologia(),attivita.getQuantita());
-                            new GiornoAllenModel().updateCalorieGiornoAllenDinamico(utente.getProgramma_allenamento().getId(), giornoeffcorrente.getData().plusDays(indexgiorno-indexoggi), giornodopo.getCalorie());
+                            new AttivitaDAO().updateAttivita(attivita.getId_seduta(),attivita.getEsercizio().getTipologia(),attivita.getQuantita());
+                            new GiornoAllenDAO().updateCalorieGiornoAllenDinamico(utente.getProgramma_allenamento().getId(), giornoeffcorrente.getData().plusDays(indexgiorno-indexoggi), giornodopo.getCalorie());
                             flag = false;
                         }
                         else {
                             eccesso += giornodopo.getCalorie();
                             giornodopo.setCalorie(0);
-                            new AttivitaModel().eliminaAttivita(giornodopo.getSeduta().getId(), giornodopo.getSeduta().getAttivita().get(0).getEsercizio().getTipologia());
+                            new AttivitaDAO().eliminaAttivita(giornodopo.getSeduta().getId(), giornodopo.getSeduta().getAttivita().get(0).getEsercizio().getTipologia());
                             giornodopo.getSeduta().getAttivita().remove(0);
-                            new GiornoAllenModel().updateCalorieGiornoAllenDinamico(utente.getProgramma_allenamento().getId(), giornoeffcorrente.getData().plusDays(indexgiorno-indexoggi), giornodopo.getCalorie());
+                            new GiornoAllenDAO().updateCalorieGiornoAllenDinamico(utente.getProgramma_allenamento().getId(), giornoeffcorrente.getData().plusDays(indexgiorno-indexoggi), giornodopo.getCalorie());
                         }
                         removeSeduta(indexallenamento.getGiorni(DayOfWeek.of(indexgiorno+1)),GiornoEnum.dinamico);
                         showSeduta(giornodopo,indexallenamento.getGiorni(DayOfWeek.of(indexgiorno+1)));
@@ -332,21 +332,21 @@ public class AllenamentoController extends BaseAllenController{
                 giornodinamico.setData(giornoeffcorrente.getData().plusDays(indexgiorno-indexoggi));
                 listaattivita = giorno.getSeduta().getAttivita();
             }
-            new SedutaModel().inserisciSeduta(giornodinamico.getSeduta());
-            AttivitaModel attivitaModel = new AttivitaModel();
+            new SedutaDAO().inserisciSeduta(giornodinamico.getSeduta());
+            AttivitaDAO attivitaDAO = new AttivitaDAO();
             for (AttivitaObject attivita : listaattivita) {
                 AttivitaObject nuovaattivita = new AttivitaObject(attivita.getEsercizio());
                 nuovaattivita.setId_seduta(giornodinamico.getSeduta().getId());
                 nuovaattivita.setQuantita(attivita.getQuantita());
-                attivitaModel.inserisciAttivita(nuovaattivita);
+                attivitaDAO.inserisciAttivita(nuovaattivita);
                 giornodinamico.getSeduta().addAttivita(nuovaattivita);
             }
-            new GiornoAllenModel().inserisciGiornoAllenDinamico(giornodinamico);
+            new GiornoAllenDAO().inserisciGiornoAllenDinamico(giornodinamico);
             utente.getProgramma_allenamento().setSettimanaallenamento(indexgiorno,giornodinamico);
             return giornodinamico;
         }
         else {
-            new GiornoAllenModel().updateGiornoAllenDinamico(giornoeffcorrente.getSeduta().getId(), giorno.getSeduta().getId());
+            new GiornoAllenDAO().updateGiornoAllenDinamico(giornoeffcorrente.getSeduta().getId(), giorno.getSeduta().getId());
             giorno.setSeduta(giornoeffcorrente.getSeduta());
             return giorno;
         }

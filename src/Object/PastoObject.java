@@ -1,15 +1,10 @@
 package Object;
 
-import Helpers.JObject;
-import Model.Dbtable.Pasto;
-import Model.Dbtable.Portata;
 import Object.Enum.PastoEnum;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
-public class PastoObject extends JObject {
+public class PastoObject {
 
     private int id;
     private PastoEnum tipo;

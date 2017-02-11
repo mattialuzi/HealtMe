@@ -1,16 +1,13 @@
 package Object;
 
-import Helpers.JObject;
 import Object.Enum.AlimentazioneEnum;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 
 /**
  * Created by Mattia on 16/01/2017.
  */
-public abstract class ProgrammaAlimentareObject extends JObject {
+public abstract class ProgrammaAlimentareObject {
     protected int id;
     protected ArrayList<GiornoAlimProgObject> settimanaalimentare;
     protected AlimentazioneEnum tipo_alimentazione;

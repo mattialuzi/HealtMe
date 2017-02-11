@@ -1,12 +1,11 @@
 package Controller;
 
 import Helpers.Item;
-import Model.EsercizioModel;
-import Model.ProgressiModel;
-import Model.UtenteModel;
+import DAO.EsercizioDAO;
+import DAO.ProgressiDAO;
+import DAO.UtenteDAO;
 import Object.Enum.LivelloAttivitaFisicaEnum;
-import Model.*;
-import Object.Enum.GiornoEnum;
+import DAO.*;
 import Object.UtenteObject;
 import Object.ProgAllenCombObject;
 import Object.GiornoAllenProgObject;
@@ -298,7 +297,7 @@ public class ProgAllenController extends BaseAllenController {
             DefaultTableModel tabellamodel = (DefaultTableModel) tabellagiorno.getModel();
             int rowcount = tabellamodel.getRowCount();
             for(int indexrow = 0;indexrow < rowcount; indexrow++){
-                EsercizioObject esecizio = new EsercizioModel().getEsercizioByTipologia(tabellamodel.getValueAt(indexrow,0).toString());
+                EsercizioObject esecizio = new EsercizioDAO().getEsercizioByTipologia(tabellamodel.getValueAt(indexrow,0).toString());
                 AttivitaObject attivita = new AttivitaObject(esecizio);
                 attivita.setQuantita((Integer) tabellamodel.getValueAt(indexrow,1));
                 seduta.getAttivita().add(attivita);
@@ -308,13 +307,13 @@ public class ProgAllenController extends BaseAllenController {
         }
         utente.setProgramma_allenamento(nuovoprogmanuale);
         utente.setProg_allen_comb(false);
-        new ProgrammaAllenamentoModel().inserisciProgrammaManuale(nuovoprogmanuale);
-        UtenteModel utentemodel = new UtenteModel();
+        new ProgrammaAllenamentoDAO().inserisciProgrammaManuale(nuovoprogmanuale);
+        UtenteDAO utenteDAO = new UtenteDAO();
         HashMap<String, Object> campo = new HashMap<String, Object>();
         campo.put("programma_allenamento", utente.getProgramma_allenamento().getId());
         campo.put("prog_allen_comb", 0);
-        utentemodel.updateInfoUtente(utente.getUsername(), campo);
-        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_da_consumare",String.valueOf(nuovoprogmanuale.getSettimanaallenamento(indexoggi).getCalorie()));
+        utenteDAO.updateInfoUtente(utente.getUsername(), campo);
+        new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_da_consumare",String.valueOf(nuovoprogmanuale.getSettimanaallenamento(indexoggi).getCalorie()));
     }
 
 
@@ -333,8 +332,8 @@ public class ProgAllenController extends BaseAllenController {
         dialogpraticati.getIntensita().removeItem("--scegli esercizio--");
         nomeEsercizio.setEnabled(true);
         nomeEsercizio.setText("");
-        EsercizioModel eserciziomodel = new EsercizioModel();
-        esercizi = eserciziomodel.getEserciziByIntensita(intensitascelta);
+        EsercizioDAO esercizioDAO = new EsercizioDAO();
+        esercizi = esercizioDAO.getEserciziByIntensita(intensitascelta);
         JList lista = dialogpraticati.getListaEsercizi();
         DefaultListModel listmodel = new DefaultListModel();
         try {
@@ -385,14 +384,14 @@ public class ProgAllenController extends BaseAllenController {
         ProgAllenCombObject nuovoprogcombinato = new ProgAllenCombObject();
         nuovoprogcombinato.setDisponibilita(disponibilita);
         nuovoprogcombinato.setCalorie_da_consumare(caloriegiornaliere);
-        EsercizioModel eserciziomodel = new EsercizioModel();
+        EsercizioDAO esercizioDAO = new EsercizioDAO();
         int j= 5;
         int k= 0;
         for (int i=0; k < disponibilita; i=(i+2)%j) {
             int randomindex = randomize(esercizipraticati.size());
             GiornoAllenProgObject giorno = nuovoprogcombinato.getSettimanaallenamento(i);
             giorno.setCalorie(caloriegiornaliere);
-            EsercizioObject nuovoesercizio = eserciziomodel.getEsercizioByTipologia(esercizipraticati.get(randomindex));
+            EsercizioObject nuovoesercizio = esercizioDAO.getEsercizioByTipologia(esercizipraticati.get(randomindex));
             AttivitaObject nuovaattivita = new AttivitaObject(nuovoesercizio);
             nuovaattivita.setQuantita((double) Math.round((caloriegiornaliere/nuovoesercizio.getConsumo_calorico())*10d)/10d);
             giorno.getSeduta().addAttivita(nuovaattivita);
@@ -401,13 +400,13 @@ public class ProgAllenController extends BaseAllenController {
         }
         utente.setProgramma_allenamento(nuovoprogcombinato);
         utente.setProg_allen_comb(true);
-        new ProgrammaAllenamentoModel().inserisciProgrammaCombinato(nuovoprogcombinato);
-        UtenteModel utentemodel = new UtenteModel();
+        new ProgrammaAllenamentoDAO().inserisciProgrammaCombinato(nuovoprogcombinato);
+        UtenteDAO utenteutenteDAO = new UtenteDAO();
         HashMap<String, Object> campo = new HashMap<String, Object>();
         campo.put("programma_allenamento", utente.getProgramma_allenamento().getId());
         campo.put("prog_allen_comb", 1);
-        utentemodel.updateInfoUtente(utente.getUsername(), campo);
-        new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_da_consumare",String.valueOf(nuovoprogcombinato.getCalorie_da_consumare()));
+        utenteutenteDAO.updateInfoUtente(utente.getUsername(), campo);
+        new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_da_consumare",String.valueOf(nuovoprogcombinato.getCalorie_da_consumare()));
     }
 
     private ArrayList<String> getEserciziPraticati() {

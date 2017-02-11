@@ -1,10 +1,10 @@
 package Controller;
 
 
-import Model.CiboModel;
-import Model.ProgrammaAlimentareModel;
-import Model.ProgressiModel;
-import Model.UtenteModel;
+import DAO.CiboDAO;
+import DAO.ProgrammaAlimentareDAO;
+import DAO.ProgressiDAO;
+import DAO.UtenteDAO;
 import Object.Enum.*;
 import View.Alimentazione.*;
 import Object.*;
@@ -212,7 +212,7 @@ public class ProgAlimController extends BaseAlimController {
                     DefaultTableModel tabellamodel = (DefaultTableModel) tabellegiorno.get(j).getModel();
                     int rowcount = tabellamodel.getRowCount();
                     for(int indexrow = 0; indexrow < rowcount ; indexrow++){
-                        CiboObject cibo = new CiboModel().getCiboByName(tabellamodel.getValueAt(indexrow,1).toString());
+                        CiboObject cibo = new CiboDAO().getCiboByName(tabellamodel.getValueAt(indexrow,1).toString());
                         PortataObject portata = new PortataObject(cibo);
                         portata.setQuantita((Integer)tabellamodel.getValueAt(indexrow,2));
                         portata.setTipo(PortataEnum.valueOf(tabellamodel.getValueAt(indexrow,0).toString()));
@@ -224,31 +224,31 @@ public class ProgAlimController extends BaseAlimController {
             }
             utente.setProgramma_alimentare(nuovoprogmanuale);
             utente.setProg_alim_comb(false);
-            new ProgrammaAlimentareModel().inserisciProgrammaManuale(nuovoprogmanuale);
-            UtenteModel utentemodel = new UtenteModel();
+            new ProgrammaAlimentareDAO().inserisciProgrammaManuale(nuovoprogmanuale);
+            UtenteDAO utenteDAO = new UtenteDAO();
             HashMap<String, Object> campo = new HashMap<String, Object>();
             campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
             campo.put("prog_alim_comb", 0);
-            utentemodel.updateInfoUtente(utente.getUsername(), campo);
-            new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"fabbisogno",String.valueOf(nuovoprogmanuale.getSettimanaalimentare(indexoggi).getCalorie()));
+            utenteDAO.updateInfoUtente(utente.getUsername(), campo);
+            new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"fabbisogno",String.valueOf(nuovoprogmanuale.getSettimanaalimentare(indexoggi).getCalorie()));
         }
 
         private void generaProgramma(){
             fabbisogno = calcolaFabbisogno();
-            CiboModel cibomodel = new CiboModel();
+            CiboDAO ciboDAO = new CiboDAO();
             String tipoalim = progalimcomb.getTipoalimBox().getSelectedItem().toString();
             String allergia = utente.getAllergia().toString();
             generateIdoneitaMap();
-            ArrayList<String> snackcolazione = cibomodel.getCiboForUser(allergia,tipoalim,"snack", getIdoneita(PastoEnum.colazione, PortataEnum.snack));
-            ArrayList<String> snackspuntino = cibomodel.getCiboForUser(allergia,tipoalim,"snack", getIdoneita(PastoEnum.spuntino, PortataEnum.snack));
-            ArrayList<String> frutta = cibomodel.getCiboForUser(allergia,tipoalim,"frutta", getIdoneita(PastoEnum.colazione, PortataEnum.frutta));
-            ArrayList<String> primopranzo = cibomodel.getCiboForUser(allergia,tipoalim,"primo", getIdoneita(PastoEnum.pranzo, PortataEnum.primo));
-            ArrayList<String> primocena = cibomodel.getCiboForUser(allergia,tipoalim,"primo", getIdoneita(PastoEnum.cena, PortataEnum.primo));
-            ArrayList<String> secondo = cibomodel.getCiboForUser(allergia,tipoalim,"secondo", getIdoneita(PastoEnum.pranzo, PortataEnum.secondo));
-            ArrayList<String> contorno = cibomodel.getCiboForUser(allergia,tipoalim,"contorno", getIdoneita(PastoEnum.pranzo, PortataEnum.contorno));
-            ArrayList<String> dolci = cibomodel.getCiboForUser(allergia,tipoalim,"dolce", getIdoneita(PastoEnum.pranzo, PortataEnum.dolce));
-            ArrayList<String> bevandacolazione = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", getIdoneita(PastoEnum.colazione, PortataEnum.bevanda));
-            ArrayList<String> bevandaspuntino = cibomodel.getCiboForUser(allergia,tipoalim,"bevanda", getIdoneita(PastoEnum.spuntino, PortataEnum.bevanda));
+            ArrayList<String> snackcolazione = ciboDAO.getCiboForUser(allergia,tipoalim,"snack", getIdoneita(PastoEnum.colazione, PortataEnum.snack));
+            ArrayList<String> snackspuntino = ciboDAO.getCiboForUser(allergia,tipoalim,"snack", getIdoneita(PastoEnum.spuntino, PortataEnum.snack));
+            ArrayList<String> frutta = ciboDAO.getCiboForUser(allergia,tipoalim,"frutta", getIdoneita(PastoEnum.colazione, PortataEnum.frutta));
+            ArrayList<String> primopranzo = ciboDAO.getCiboForUser(allergia,tipoalim,"primo", getIdoneita(PastoEnum.pranzo, PortataEnum.primo));
+            ArrayList<String> primocena = ciboDAO.getCiboForUser(allergia,tipoalim,"primo", getIdoneita(PastoEnum.cena, PortataEnum.primo));
+            ArrayList<String> secondo = ciboDAO.getCiboForUser(allergia,tipoalim,"secondo", getIdoneita(PastoEnum.pranzo, PortataEnum.secondo));
+            ArrayList<String> contorno = ciboDAO.getCiboForUser(allergia,tipoalim,"contorno", getIdoneita(PastoEnum.pranzo, PortataEnum.contorno));
+            ArrayList<String> dolci = ciboDAO.getCiboForUser(allergia,tipoalim,"dolce", getIdoneita(PastoEnum.pranzo, PortataEnum.dolce));
+            ArrayList<String> bevandacolazione = ciboDAO.getCiboForUser(allergia,tipoalim,"bevanda", getIdoneita(PastoEnum.colazione, PortataEnum.bevanda));
+            ArrayList<String> bevandaspuntino = ciboDAO.getCiboForUser(allergia,tipoalim,"bevanda", getIdoneita(PastoEnum.spuntino, PortataEnum.bevanda));
             ArrayList<GiornoAlimProgObject> giorniProgComb = new ArrayList<GiornoAlimProgObject>();
             for (int i=1; i<7; i++) {
                 if (i % 2 == 0)
@@ -260,13 +260,13 @@ public class ProgAlimController extends BaseAlimController {
             ProgAlimCombObject nuovoprogcombinato = new ProgAlimCombObject(giorniProgComb, fabbisogno, AlimentazioneEnum.valueOf(tipoalim));
             utente.setProgramma_alimentare(nuovoprogcombinato);
             utente.setProg_alim_comb(true);
-            new ProgrammaAlimentareModel().inserisciProgrammaCombinato(nuovoprogcombinato);
-            UtenteModel utentemodel = new UtenteModel();
+            new ProgrammaAlimentareDAO().inserisciProgrammaCombinato(nuovoprogcombinato);
+            UtenteDAO utenteDAO = new UtenteDAO();
             HashMap<String, Object> campo = new HashMap<String, Object>();
             campo.put("programma_alimentare", utente.getProgramma_alimentare().getId());
             campo.put("prog_alim_comb", 1);
-            utentemodel.updateInfoUtente(utente.getUsername(), campo);
-            new ProgressiModel().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"fabbisogno",String.valueOf(nuovoprogcombinato.getFabbisogno()));
+            utenteDAO.updateInfoUtente(utente.getUsername(), campo);
+            new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"fabbisogno",String.valueOf(nuovoprogcombinato.getFabbisogno()));
         }
 
         private int calcolaFabbisogno(){
@@ -420,7 +420,7 @@ public class ProgAlimController extends BaseAlimController {
 
         private PortataObject generaPortata(ArrayList<String> portate, int calorie, PortataEnum tipoportata){
             int randomindex = randomize(portate.size());
-            CiboObject cibo = new CiboModel().getCiboByName(portate.get(randomindex));
+            CiboObject cibo = new CiboDAO().getCiboByName(portate.get(randomindex));
             int quantita = calcolaQuantita(calorie, cibo.getKilocal());
             return new PortataObject(cibo, tipoportata, quantita);
         }

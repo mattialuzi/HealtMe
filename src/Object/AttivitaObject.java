@@ -1,8 +1,6 @@
 package Object;
 
-import Helpers.JObject;
-
-public class AttivitaObject extends JObject {
+public class AttivitaObject {
 
     private int id_seduta;
     private EsercizioObject esercizio;

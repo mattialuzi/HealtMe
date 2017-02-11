@@ -1,12 +1,10 @@
 package Controller;
 import Helpers.Controller;
-import Model.CiboModel;
+import DAO.CiboDAO;
 import Object.Enum.GiornoEnum;
 import Object.Enum.PastoEnum;
 import Object.Enum.PortataEnum;
-import Object.Enum.StatusEnum;
 import View.Alimentazione.FormCiboEffettivo;
-import View.Alimentazione.GiornoAlimForm;
 import View.Alimentazione.GiornoAlimView;
 import Object.*;
 import javax.swing.*;
@@ -18,7 +16,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Lorenzo on 26/01/17.
@@ -124,8 +121,8 @@ public abstract class BaseAlimController extends Controller {
             dialog.getMisuraLabel().setText("grammi");
         nomeAlimento.setEnabled(true);
         nomeAlimento.setText("");
-        CiboModel cibomodel = new CiboModel();
-        alimenti = cibomodel.getCibiByPortata(portatascelta);
+        CiboDAO ciboDAO = new CiboDAO();
+        alimenti = ciboDAO.getCibiByPortata(portatascelta);
         JList lista = dialog.getListaAlimenti();
         DefaultListModel listmodel = new DefaultListModel();
         try {

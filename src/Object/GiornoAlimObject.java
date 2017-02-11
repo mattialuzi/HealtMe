@@ -1,17 +1,14 @@
 package Object;
 
-import Helpers.JObject;
-import Model.Dbtable.Pasto;
 import Object.Enum.GiornoEnum;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 /**
  * Created by Mattia on 16/01/2017.
  */
-public abstract class GiornoAlimObject extends JObject {
+public abstract class GiornoAlimObject {
 
     protected GiornoEnum tipo;
     protected ArrayList<PastoObject> pasti;

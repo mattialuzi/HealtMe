@@ -1,9 +1,8 @@
 package Object;
 
-import Helpers.JObject;
 import Object.Enum.PortataEnum;
 
-public class PortataObject extends JObject {
+public class PortataObject {
 
     private int id_pasto;
     private CiboObject cibo;
