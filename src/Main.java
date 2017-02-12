@@ -1,4 +1,4 @@
-import Controller.PublicController;
+import Presenter.PublicPresenter;
 import View.Auth;
 
 public class Main {
@@ -7,7 +7,7 @@ public class Main {
             @Override
             public void run() {
                 Auth view = new Auth();
-                new PublicController(view);
+                new PublicPresenter(view);
             }
         });
     }

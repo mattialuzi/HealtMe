@@ -1,4 +1,4 @@
-package Controller;
+package Presenter;
 
 import DAO.UtenteDAO;
 import Object.*;
@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PublicController {
+public class PublicPresenter {
 
     //La vista Auth è quella in cui ci sono le carte della vista pubblica
     private Auth view;
@@ -20,7 +20,7 @@ public class PublicController {
     private JPanel mainPanel;
 
     //Passo al costruttore del controller la vista con le carte
-    public PublicController(Auth view) {
+    public PublicPresenter(Auth view) {
 
         this.view = view;
         //prendo il pannello che racchiude le 3 carte e lo chiamo mainPanel
@@ -112,7 +112,7 @@ public class PublicController {
         } else {
             UtenteObject utente = utenteDAO.getUserByUsername(username);
             Menu welcome = new Menu();
-            new MenuController(welcome, utente);
+            new MenuPresenter(welcome, utente);
             Auth.getFrame().pack();
         }
     }

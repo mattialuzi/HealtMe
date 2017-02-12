@@ -1,6 +1,6 @@
 package View.Public;
 
-import Controller.PublicController;
+import Presenter.PublicPresenter;
 import Helpers.View;
 import Object.*;
 import Object.Enum.AllergiaEnum;
@@ -13,7 +13,7 @@ import java.util.Enumeration;
 
 public class Registrazione extends View {
 
-    private PublicController controller;
+    private PublicPresenter controller;
     private JPanel mainPanel;
     private JTextField username;
     private JTextField pass;

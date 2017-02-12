@@ -1,4 +1,4 @@
-package Controller;
+package Presenter;
 
 import Helpers.Item;
 import DAO.EsercizioDAO;
@@ -34,7 +34,7 @@ import java.time.DayOfWeek;
 /**
  * Created by lorenzobraconi on 06/02/17.
  */
-public class ProgAllenController extends BaseAllenController {
+public class ProgAllenPresenter extends BaseAllenPresenter {
 
     private UtenteObject utente;
     private CardLayout cardLayout;
@@ -50,7 +50,7 @@ public class ProgAllenController extends BaseAllenController {
     private GiornoAllenView giornocorrenteview;
 
 
-    public ProgAllenController(AllenamentoView allenamento , UtenteObject utente,GiornoAllenEffettivoObject giornoeffcorrente) {
+    public ProgAllenPresenter(AllenamentoView allenamento , UtenteObject utente, GiornoAllenEffettivoObject giornoeffcorrente) {
         this.allenamento = allenamento;
         this.utente = utente;
         this.giornoeffcorrente = giornoeffcorrente;

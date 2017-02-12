@@ -1,6 +1,6 @@
-package Controller;
+package Presenter;
 
-import Helpers.Controller;
+import Helpers.Presenter;
 import Helpers.Item;
 import DAO.EsercizioDAO;
 import Object.Enum.GiornoEnum;
@@ -22,7 +22,7 @@ import java.util.Iterator;
 /**
  * Created by lorenzobraconi on 06/02/17.
  */
-public abstract class BaseAllenController extends Controller{
+public abstract class BaseAllenPresenter extends Presenter {
 
     protected GiornoAllenEffettivoObject giornoeffcorrente;
     protected FormEsercizioEffettivo dialog;

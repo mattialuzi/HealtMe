@@ -1,4 +1,4 @@
-package Controller;
+package Presenter;
 
 
 import DAO.CiboDAO;
@@ -27,7 +27,7 @@ import java.util.TreeMap;
 /**
  * Created by lorenzobraconi on 25/01/17.
  */
-public class ProgAlimController extends BaseAlimController {
+public class ProgAlimPresenter extends BaseAlimPresenter {
 
     private UtenteObject utente;
     private CardLayout cardLayout;
@@ -41,7 +41,7 @@ public class ProgAlimController extends BaseAlimController {
     private StatusEnum status;
     private int fabbisogno;
 
-    public ProgAlimController(AlimentazioneView alimentazione, UtenteObject utente, GiornoAlimEffettivoObject giornoeffcorrente, StatusEnum status) {
+    public ProgAlimPresenter(AlimentazioneView alimentazione, UtenteObject utente, GiornoAlimEffettivoObject giornoeffcorrente, StatusEnum status) {
 
         this.utente = utente;
         this.status = status;

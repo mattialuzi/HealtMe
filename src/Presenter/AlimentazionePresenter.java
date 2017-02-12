@@ -1,4 +1,4 @@
-package Controller;
+package Presenter;
 
 import DAO.*;
 import Object.Enum.*;
@@ -20,7 +20,7 @@ import java.util.Iterator;
 /**
  * Created by lorenzobraconi on 05/01/17.
  */
-public class AlimentazioneController extends BaseAlimController {
+public class AlimentazionePresenter extends BaseAlimPresenter {
 
     private AlimentazioneView alimentazione;
     private CardLayout cardLayout = new CardLayout();
@@ -30,7 +30,7 @@ public class AlimentazioneController extends BaseAlimController {
     private IndexAlimentazioneView indexalimentazione;
 
 
-    public AlimentazioneController(Menu menu, UtenteObject utente) {
+    public AlimentazionePresenter(Menu menu, UtenteObject utente) {
 
         this.alimentazione = menu.getAlimentazioneview();
         this.utente = utente;
@@ -55,7 +55,7 @@ public class AlimentazioneController extends BaseAlimController {
         menu.addNewProgAlimButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ProgAlimController(alimentazione, utente, giornoeffcorrente, giornoeffcorrente.getStatus());
+                new ProgAlimPresenter(alimentazione, utente, giornoeffcorrente, giornoeffcorrente.getStatus());
                 SubMenuVisibility(menu.getSubMenuAlimPanel());
             }
         });

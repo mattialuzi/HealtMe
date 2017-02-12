@@ -1,4 +1,4 @@
-package Controller;
+package Presenter;
 
 import DAO.UtenteDAO;
 import DAO.ProgressiDAO;
@@ -19,11 +19,11 @@ import java.util.HashMap;
 /**
  * Created by lorenzobraconi on 05/01/17.
  */
-public class ProfiloController {
+public class ProfiloPresenter {
 
     private ProfiloView profilo;
 
-    public ProfiloController(Menu menu, UtenteObject utente) {
+    public ProfiloPresenter(Menu menu, UtenteObject utente) {
 
         this.profilo = menu.getProfiloview();
         profilo.setInfoUtente(utente);
@@ -193,7 +193,7 @@ public class ProfiloController {
                     UtenteDAO utenteDAO = new UtenteDAO();
                     utenteDAO.eliminaUtente(utente.getUsername());
                     Auth view = new Auth();
-                    new PublicController(view);
+                    new PublicPresenter(view);
                 }
             }
         });

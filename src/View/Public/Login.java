@@ -1,6 +1,6 @@
 package View.Public;
 
-import Controller.PublicController;
+import Presenter.PublicPresenter;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class Login {
 
-    private PublicController controller;
+    private PublicPresenter controller;
     private JTextField username;
     private JPasswordField password;
     private JButton accediButton;

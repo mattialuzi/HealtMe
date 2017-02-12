@@ -1,5 +1,5 @@
-package Controller;
-import Helpers.Controller;
+package Presenter;
+import Helpers.Presenter;
 import DAO.CiboDAO;
 import Object.Enum.GiornoEnum;
 import Object.Enum.PastoEnum;
@@ -20,7 +20,7 @@ import java.util.Iterator;
 /**
  * Created by Lorenzo on 26/01/17.
  */
-public abstract class BaseAlimController extends Controller {
+public abstract class BaseAlimPresenter extends Presenter {
 
     protected GiornoAlimEffettivoObject giornoeffcorrente;
     protected String nuovopasto;

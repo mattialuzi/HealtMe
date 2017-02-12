@@ -1,4 +1,4 @@
-package Controller;
+package Presenter;
 
 import DAO.*;
 import Object.Enum.GiornoEnum;
@@ -30,7 +30,7 @@ import java.util.Iterator;
 /**
  * Created by lorenzobraconi on 05/01/17.
  */
-public class AllenamentoController extends BaseAllenController{
+public class AllenamentoPresenter extends BaseAllenPresenter {
 
     private UtenteObject utente;
     private AllenamentoView allenamento;
@@ -39,7 +39,7 @@ public class AllenamentoController extends BaseAllenController{
     private GiornoAllenView giornocorrenteview;
     private IndexAllenamentoView indexallenamento;
 
-    public AllenamentoController(Menu menu, UtenteObject utente) {
+    public AllenamentoPresenter(Menu menu, UtenteObject utente) {
 
         this.utente = utente;
         this.allenamento = menu.getAllenamentoview();
@@ -70,7 +70,7 @@ public class AllenamentoController extends BaseAllenController{
         menu.addNewProgAllenButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ProgAllenController(allenamento,utente,giornoeffcorrente);
+                new ProgAllenPresenter(allenamento,utente,giornoeffcorrente);
                 SubMenuVisibility(menu.getSubMenuAllenPanel());
             }
         });

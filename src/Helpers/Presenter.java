@@ -6,9 +6,9 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by ALLDE on 29/12/2016.
  */
-public class Controller {
+public class Presenter {
 
-    public Controller() {
+    public Presenter() {
     }
 
     public void MenuVisibility(JPanel menuPanel){

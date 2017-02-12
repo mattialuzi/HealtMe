@@ -1,4 +1,4 @@
-package Controller;
+package Presenter;
 
 import DAO.GiornoAlimDAO;
 import DAO.GiornoAllenDAO;
@@ -30,7 +30,7 @@ import java.util.*;
 /**
  * Created by lorenzobraconi on 05/01/17.
  */
-public class RiepilogoController {
+public class RiepilogoPresenter {
 
     private UtenteObject utente;
     private RiepilogoView riepilogo;
@@ -38,7 +38,7 @@ public class RiepilogoController {
 
 
 
-    public RiepilogoController(Menu menu,UtenteObject utente) {
+    public RiepilogoPresenter(Menu menu, UtenteObject utente) {
 
         this.utente = utente;
         this.riepilogo = menu.getRiepilogoview();
