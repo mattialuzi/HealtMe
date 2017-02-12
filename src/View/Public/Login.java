@@ -1,11 +1,7 @@
 package View.Public;
 
-import Presenter.PublicPresenter;
-
 import javax.swing.*;
 import java.awt.event.ActionListener;
-
-
 
 public class Login {
 
