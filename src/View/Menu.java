@@ -43,6 +43,7 @@ public class Menu {
     private JPanel subMenuAllenPanel;
     private JButton logoutButton;
     private JPanel logoutbuttonPanel;
+    private JLabel menulabel;
     private AlimentazioneView alimentazione;
     private AllenamentoView allenamento;
     private ProfiloView profilo;
@@ -54,8 +55,11 @@ public class Menu {
         frame.setContentPane(mainPanel);
         try {
             Image img = ImageIO.read(getClass().getResource("resources/menu1.png"));
+            Image icon = ImageIO.read(getClass().getResource("resources/pulseicon.png"));
+            Image newimgicon = icon.getScaledInstance( 28, 28,  java.awt.Image.SCALE_SMOOTH );
             Image newimg = img.getScaledInstance( 25, 25,  java.awt.Image.SCALE_SMOOTH );
             menuButton.setIcon(new ImageIcon(newimg));
+            menulabel.setIcon(new ImageIcon(newimgicon));
             menuButton.setBorder(null);
         } catch (Exception ex) {
             System.out.println(ex);

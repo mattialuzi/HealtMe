@@ -1,11 +1,9 @@
 package View.Profilo;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import Helpers.View;
 import Object.UtenteObject;
 
-import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class ProfiloView extends View {
@@ -35,14 +33,6 @@ public class ProfiloView extends View {
     private JButton emailModButton;
 
     public ProfiloView() {
-        try {
-            Image img = ImageIO.read(getClass().getResource("../resources/editicon.png"));
-            Image newimg = img.getScaledInstance( 25, 25,  java.awt.Image.SCALE_SMOOTH );
-            usernameModButton.setIcon(new ImageIcon(newimg));
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
-        }
     }
 
     public void setInfoUtente(UtenteObject utente){

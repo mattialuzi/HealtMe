@@ -109,9 +109,12 @@ public class PublicPresenter {
             JOptionPane.showMessageDialog(null, "Username o Password errati", "Errore", JOptionPane.ERROR_MESSAGE);
         } else {
             UtenteObject utente = utenteDAO.getUserByUsername(username);
+            Auth.getFrame().setVisible(false);
             Menu welcome = new Menu();
             new MenuPresenter(welcome, utente);
             Auth.getFrame().pack();
+            Auth.getFrame().setLocationRelativeTo(null);
+            Auth.getFrame().setVisible(true);
         }
     }
 
