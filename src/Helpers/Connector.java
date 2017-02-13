@@ -7,12 +7,15 @@ import java.sql.*;
  */
 public class Connector {
     private Connection conn;
+    private String user = "root";
+    private String password = "";
+    private String dbname = "healthme";
 
     public Connection connect()
     {
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            this.conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/healthme?user='root'");
+            this.conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+this.dbname,this.user,this.password);
             return conn;
         }
         catch(Exception e){

@@ -1,15 +1,10 @@
 package View.Public;
 
-import Presenter.PublicPresenter;
-
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-
-
 public class Login {
 
-    private PublicPresenter controller;
     private JTextField username;
     private JPasswordField password;
     private JButton accediButton;

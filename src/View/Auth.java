@@ -1,9 +1,9 @@
 package View;
 
 import View.Public.*;
-
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 /**
  * Created by lorenzobraconi on 05/01/17.
@@ -20,6 +20,9 @@ public class Auth {
     private Registrazione registrazioneview;
 
     public Auth() {
+        URL iconURL = getClass().getResource("resources/pulseicon.png");
+        ImageIcon icon = new ImageIcon(iconURL);
+        frame.setIconImage(icon.getImage());
         frame.setContentPane(mainPanel);
         frame.setMinimumSize(new Dimension(500,300));
         frame.setLocationRelativeTo(null);
