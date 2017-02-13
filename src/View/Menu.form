@@ -12,7 +12,7 @@
         <constraints border-constraint="West"/>
         <properties>
           <background color="-7829368"/>
-          <visible value="true"/>
+          <visible value="false"/>
         </properties>
         <border type="none"/>
         <children>
