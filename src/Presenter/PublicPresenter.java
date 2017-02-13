@@ -114,6 +114,7 @@ public class PublicPresenter {
             Menu welcome = new Menu();
             new MenuPresenter(welcome, utente);
             Auth.getFrame().pack();
+            Auth.getFrame().setLocationRelativeTo(null);
         }
     }
 
