@@ -103,7 +103,6 @@ public class PublicPresenter {
     }
 
     public void completaloginAction() {
-        Auth.getFrame().setVisible(false);
         String username = view.getLoginview().getUsername();
         String password = view.getLoginview().getPassword();
         UtenteDAO utenteDAO = new UtenteDAO();
@@ -112,6 +111,7 @@ public class PublicPresenter {
             JOptionPane.showMessageDialog(null, "Username o Password errati", "Errore", JOptionPane.ERROR_MESSAGE);
         } else {
             UtenteObject utente = utenteDAO.getUserByUsername(username);
+            Auth.getFrame().setVisible(false);
             Menu welcome = new Menu();
             new MenuPresenter(welcome, utente);
             Auth.getFrame().pack();
