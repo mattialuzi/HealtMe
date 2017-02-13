@@ -23,7 +23,6 @@ public class GiornoAlimDAO {
     protected Giorno_alim_prog programmato;
     protected Giorno_alim_dinamico dinamico;
 
-
     public GiornoAlimDAO() {
         effettivo = new Giorno_alim_eff();
         programmato = new Giorno_alim_prog();
