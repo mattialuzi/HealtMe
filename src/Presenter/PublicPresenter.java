@@ -103,6 +103,7 @@ public class PublicPresenter {
     }
 
     public void completaloginAction() {
+        Auth.getFrame().setVisible(false);
         String username = view.getLoginview().getUsername();
         String password = view.getLoginview().getPassword();
         UtenteDAO utenteDAO = new UtenteDAO();
@@ -115,6 +116,7 @@ public class PublicPresenter {
             new MenuPresenter(welcome, utente);
             Auth.getFrame().pack();
             Auth.getFrame().setLocationRelativeTo(null);
+            Auth.getFrame().setVisible(true);
         }
     }
 
