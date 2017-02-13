@@ -1,12 +1,12 @@
 package Object;
 
 import Object.Enum.GiornoEnum;
-
 import java.time.LocalDate;
 
 /**
- * Created by lorenzobraconi on 17/01/17.
+ * La classe GiornoAllenEffettivoObject mappa la tabella "giorno_allen_effettivo" del database
  */
+
 public class GiornoAllenEffettivoObject extends GiornoAllenObject{
 
     private String username;

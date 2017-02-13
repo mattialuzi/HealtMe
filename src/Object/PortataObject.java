@@ -2,6 +2,10 @@ package Object;
 
 import Object.Enum.PortataEnum;
 
+/**
+ * La classe PortataObject mappa la tabella "portata" del database
+ */
+
 public class PortataObject {
 
     private int id_pasto;

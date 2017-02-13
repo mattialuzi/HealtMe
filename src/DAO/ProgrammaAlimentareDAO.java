@@ -5,7 +5,6 @@ import DAO.Dbtable.Prog_alim_comb;
 import DAO.Dbtable.Prog_alim_manu;
 import Object.*;
 import Object.Enum.AlimentazioneEnum;
-
 import java.sql.ResultSet;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -13,8 +12,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Created by ALLDE on 28/01/2017.
+ * La classe ProgrammaAlimentareDAO contiene i metodi per la gestione dei dati delle tabella "prog_alim_man" e "prog_alim_comb" del database
  */
+
 public class ProgrammaAlimentareDAO {
     protected Prog_alim_manu manuale;
     protected Prog_alim_comb combinato;
@@ -24,12 +24,22 @@ public class ProgrammaAlimentareDAO {
         combinato = new Prog_alim_comb();
     }
 
+    /**
+     * Metodo che inserisce un programma alimentare manuale nella tabella "prog_alim_man" del database a partire da un ProgAlimManObject
+     * @param programma Variabile di tipo ProgAlimManObject
+     */
+
     public void inserisciProgrammaManuale(ProgAlimManObject programma){
         String dati =String.valueOf(programma.getId());
         manuale.insert(aggiungiGiorni(programma,dati));
         int nuovoid = manuale.executeForKey();
         programma.setId(nuovoid);
     }
+
+    /**
+     * Metodo che inserisce un programma alimentare combinato nella tabella "prog_alim_comb" del database a partire da un ProgAlimCombObject
+     * @param programma Variabile di tipo ProgAlimCombObject
+     */
 
     public void inserisciProgrammaCombinato(ProgAlimCombObject programma){
         String dati =String.valueOf(programma.getId());
@@ -38,6 +48,13 @@ public class ProgrammaAlimentareDAO {
         int nuovoid = combinato.executeForKey();
         programma.setId(nuovoid);
     }
+
+    /**
+     * Metodo che costruisce la query che "riempie" tutti i giorni di un programma alimentare con tutti i pasti e le relative portate
+     * @param programma Variabile di tipo ProgrammaAlimentereObject
+     * @param dati Stringa sql parziale
+     * @return La stringa sql completa che permette di inserire un programma alimentare con tutti i giorni, completi di pasti e portate
+     */
 
     private String aggiungiGiorni (ProgrammaAlimentareObject programma,String dati) {
         PastoDAO pastoDAO = new PastoDAO();
@@ -61,6 +78,13 @@ public class ProgrammaAlimentareDAO {
         }
         return dati;
     }
+
+    /**
+     * Metodo che recupera un programma alimentare in base al tipo e al codice
+     * @param comb Variabile booleana che indica se il programma alimentare che si vuole recuperare è combinato o manuale
+     * @param progalim codice del programma alimentare
+     * @return null se il programma alimentare non è presente. Una variabile di tipo ProgAlimCombObject se il programma è presente e combinato. Una variabile di tipo ProgAlimManObject se il programma è presente e manuale.
+     */
 
     public ProgrammaAlimentareObject getProgrammaAlimentare(boolean comb, Integer progalim) {
         if (progalim == 0) return null;

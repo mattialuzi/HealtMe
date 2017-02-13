@@ -15,7 +15,6 @@ public class Index {
 
     public Index() {
 
-
     }
 
     public void addLoginButtonListener(ActionListener listener){

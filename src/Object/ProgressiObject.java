@@ -3,9 +3,13 @@ package Object;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ProgressiObject {
-    private String username;
+/**
+ * La classe ProgressiObject mappa la tabella "progressi" del database
+ */
 
+public class ProgressiObject {
+
+    private String username;
     private ArrayList<LocalDate> date = new ArrayList<>();
     private ArrayList<Double> pesi = new ArrayList<>();
     private ArrayList<Double> calorie_assunte = new ArrayList<>();

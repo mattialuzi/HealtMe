@@ -6,6 +6,10 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
 
+/**
+ * La classe FormCiboEffettivo contiene attributi e metodi associati al file XML FormCiboEffettivo.form
+ */
+
 public class FormCiboEffettivo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -47,21 +51,6 @@ public class FormCiboEffettivo extends JDialog {
 
     }
 
-    public void addSetPortataItemListener(ItemListener listener) { portata.addItemListener(listener);}
-
-    public void addSearchKeyListener(KeyListener listener) { nomeAlimento.addKeyListener(listener);}
-
-    public void addSetCiboListSelectionListener(ListSelectionListener listener) { listaAlimenti.addListSelectionListener(listener);}
-
-    public void addQuantitaKeyListener(KeyListener listener) { quantita.addKeyListener(listener);}
-
-    public void addPortataEffettivaButtonListener(ActionListener listener) { buttonOK.addActionListener(listener); }
-
-    public void removePortataEffettivaButtonListener () {
-        ActionListener[] oldlistener = buttonOK.getActionListeners();
-        buttonOK.removeActionListener(oldlistener[0]);
-    }
-
     public void onCancel() {
         buttonOK.setEnabled(false);
         quantita.setText("");
@@ -95,5 +84,22 @@ public class FormCiboEffettivo extends JDialog {
 
     public JButton getButtonOK() {
         return buttonOK;
+    }
+
+    /** Listener associati ad elementi di cui è composto il file XML FormCiboEffettivo.form */
+
+    public void addSetPortataItemListener(ItemListener listener) { portata.addItemListener(listener);}
+
+    public void addSearchKeyListener(KeyListener listener) { nomeAlimento.addKeyListener(listener);}
+
+    public void addSetCiboListSelectionListener(ListSelectionListener listener) { listaAlimenti.addListSelectionListener(listener);}
+
+    public void addQuantitaKeyListener(KeyListener listener) { quantita.addKeyListener(listener);}
+
+    public void addPortataEffettivaButtonListener(ActionListener listener) { buttonOK.addActionListener(listener); }
+
+    public void removePortataEffettivaButtonListener () {
+        ActionListener[] oldlistener = buttonOK.getActionListeners();
+        buttonOK.removeActionListener(oldlistener[0]);
     }
 }

@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
- * Created by lorenzobraconi on 25/01/17.
+ * La classe ProgAlimPresenter è il presenter utilizzato per creare un nuovo programma alimentare
  */
 public class ProgAlimPresenter extends BaseAlimPresenter {
 
@@ -177,6 +177,12 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             }
         });
     }
+
+    /**
+     * Metodo che aggiunge una portata manuale nella creazione di un programma alimenentare manuale
+     * @param tabellamodel DefualtTableModel della tabella di cui si vuole aggiungere la portata
+     */
+
         public void aggiungiPortataManuale(DefaultTableModel tabellamodel) {
             String portata = dialog.getPortata().getSelectedItem().toString();
             String alimento = dialog.getNomeAlimento().getText();
@@ -185,6 +191,14 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             tabellamodel.addRow(new Object[]{portata, alimento, quantita});
             }
         }
+
+    /**
+     * Metodo che verifica se una portata è già presente nella tabella, se sì ne aggiorna la quantita
+     * @param tabellamodel DefualtTableModel della tabella
+     * @param alimento Alimento di cui si vuole verificare la presenza
+     * @param quantita Quantita da aggiungere a quella portata
+     * @return true se la quantita è stata aggiornata e l'alimento è presente, false se l'alimento non è presente
+     */
 
         public boolean aggiornaPortataManuale(DefaultTableModel tabellamodel,String alimento,int quantita){
             boolean exit = true;
@@ -199,7 +213,11 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             return exit;
         }
 
-        public void aggiungiProgrammaManuale(){
+    /**
+     * Metodo che permette di aggiungere un programma alimentare manuale
+     */
+
+    public void aggiungiProgrammaManuale(){
             ProgAlimManObject nuovoprogmanuale = new ProgAlimManObject();
             for(int i = 0; i<7 ; i++) {
                 GiornoAlimProgObject giornosettimana = nuovoprogmanuale.getSettimanaalimentare(i);
@@ -233,7 +251,11 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"fabbisogno",String.valueOf(nuovoprogmanuale.getSettimanaalimentare(indexoggi).getCalorie()));
         }
 
-        private void generaProgramma(){
+    /**
+     * Metodo che permette di generare un programma alimentare in maniera automatica
+     */
+
+    private void generaProgramma(){
             fabbisogno = calcolaFabbisogno();
             CiboDAO ciboDAO = new CiboDAO();
             String tipoalim = progalimcomb.getTipoalimBox().getSelectedItem().toString();
@@ -268,6 +290,11 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             utenteDAO.updateInfoUtente(utente.getUsername(), campo);
             new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"fabbisogno",String.valueOf(nuovoprogcombinato.getFabbisogno()));
         }
+
+    /**
+     * Metodo che permette di calcolare il fabbisogno calorico giornaliero di un utente
+     * @return Il fabbiosogno calorico giornaliero
+     */
 
         private int calcolaFabbisogno(){
             Double pesoforma = utente.getPeso_forma();
@@ -321,6 +348,19 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             return (int) Math.round(mb*laf);
         }
 
+    /**
+     * Metodo che genera un giorno dispari del programma alimentare combinato
+     * @param snackcolazione Arraylist di stringhe degli snack per la colazione
+     * @param snackspuntino Arraylist di stringhe degli snack per lo spuntino
+     * @param frutta Arraylist di stringhe dei frutti
+     * @param primopranzo Arraylist di stringhe dei primi per il pranzo
+     * @param secondo Arraylist di stringhe dei secondi
+     * @param contorno Arraylist di stringhe dei contorni
+     * @param bevandacolazione Arraylist di stringhe delle bevande della colazione
+     * @param bevandaspuntino Arraylist di stringhe delle bevande dello spuntino
+     * @return Una variabile di tipo GiornoAlimProgObject
+     */
+
         private GiornoAlimProgObject generaGiorniDispari(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino){
             ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
             pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
@@ -329,6 +369,20 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             pasti.add(generaCenaDispari(secondo, contorno, frutta));
             return new GiornoAlimProgObject(pasti, fabbisogno);
         }
+
+    /**
+     * Metodo che genera un giorno pari del programma alimentare combinato
+     * @param snackcolazione Arraylist di stringhe degli snack per la colazione
+     * @param snackspuntino Arraylist di stringhe degli snack per lo spuntino
+     * @param frutta Arraylist di stringhe dei frutti
+     * @param primopranzo Arraylist di stringhe dei primi per il pranzo
+     * @param secondo Arraylist di stringhe dei secondi
+     * @param contorno Arraylist di stringhe dei contorni
+     * @param bevandacolazione Arraylist di stringhe delle bevande della colazione
+     * @param bevandaspuntino Arraylist di stringhe delle bevande dello spuntino
+     * @param primocena Arraylist di stringhe dei primi per la cena
+     * @return Una variabile di tipo GiornoAlimProgObject
+     */
 
         private GiornoAlimProgObject generaGiorniPari(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino, ArrayList<String> primocena){
             ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
@@ -339,6 +393,20 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             return new GiornoAlimProgObject(pasti, fabbisogno);
         }
 
+    /**
+     * Metodo che genera un giorno pari del programma alimentare combinato
+     * @param snackcolazione Arraylist di stringhe degli snack per la colazione
+     * @param snackspuntino Arraylist di stringhe degli snack per lo spuntino
+     * @param frutta Arraylist di stringhe dei frutti
+     * @param primopranzo Arraylist di stringhe dei primi per il pranzo
+     * @param secondo Arraylist di stringhe dei secondi
+     * @param contorno Arraylist di stringhe dei contorni
+     * @param bevandacolazione Arraylist di stringhe delle bevande della colazione
+     * @param bevandaspuntino Arraylist di stringhe delle bevande dello spuntino
+     * @param dolci Arraylist di stringhe dei dolci
+     * @return Una variabile di tipo GiornoAlimProgObject
+     */
+
         private GiornoAlimProgObject generaDomenica(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino, ArrayList<String> dolci){
             ArrayList<PastoObject> pasti = new ArrayList<PastoObject>();
             pasti.add(generaColazione(snackcolazione, frutta, bevandacolazione));
@@ -347,6 +415,14 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             pasti.add(generaCenaDispari(secondo, contorno, frutta));
             return new GiornoAlimProgObject(pasti, fabbisogno);
         }
+
+    /**
+     * Metodo che genera un pasto colazione del giorno alimentare programmato
+     * @param snack Arraylist di stringhe degli snack
+     * @param frutta Arraylist di stringhe dei frutti
+     * @param bevanda Arraylist di stringhe delle bevande
+     * @return Una variabile di tipo PastoObject
+     */
 
         private PastoObject generaColazione(ArrayList<String> snack, ArrayList<String> frutta, ArrayList<String> bevanda){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
@@ -358,6 +434,15 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             portate.add(generaPortata(bevanda,fabbevanda, PortataEnum.bevanda));
             return new PastoObject(portate, PastoEnum.colazione);
         }
+
+    /**
+     * Metodo che genera un pasto pranzo del giorno alimentare programmato
+     * @param primo Arraylist di stringhe dei primi
+     * @param secondo Arraylist di stringhe dei secondi
+     * @param contorno Arraylist di stringhe dei contorni
+     * @param frutta Arraylist di stringhe dei frutti
+     * @return Una variabile di tipo PastoObject
+     */
 
         private PastoObject generaPranzo(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
@@ -372,6 +457,15 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             return new PastoObject(portate, PastoEnum.pranzo);
         }
 
+    /**
+     * Metodo che genera un pasto pranzo con il dolce del giorno alimentare programmato
+     * @param primo Arraylist di stringhe dei primi
+     * @param secondo Arraylist di stringhe dei secondi
+     * @param contorno Arraylist di stringhe dei contorni
+     * @param dolce Arraylist di stringhe dei dolci
+     * @return Una variabile di tipo PastoObject
+     */
+
         private PastoObject generaPranzoDolce(ArrayList<String> primo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> dolce){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabprimo = (fabbisogno*13)/100;
@@ -385,6 +479,14 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             return new PastoObject(portate, PastoEnum.pranzo);
         }
 
+    /**
+     * Metodo che genera un pasto cena del giorno (dispari) alimentare programmato
+     * @param secondo Arraylist di stringhe dei secondi
+     * @param contorno Arraylist di stringhe dei contorni
+     * @param frutta Arraylist di stringhe dei frutti
+     * @return Una variabile di tipo PastoObject
+     */
+
         private PastoObject generaCenaDispari(ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabsecondo = (fabbisogno*16)/100;
@@ -395,6 +497,14 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             portate.add(generaPortata(frutta, fabfrutta, PortataEnum.frutta));
             return new PastoObject(portate, PastoEnum.cena);
         }
+
+    /**
+     * Metodo che genera un pasto cena del giorno (pari) alimentare programmato
+     * @param secondo Arraylist di stringhe dei secondi
+     * @param primo Arraylist di stringhe dei primi
+     * @param frutta Arraylist di stringhe dei frutti
+     * @return Una variabile di tipo PastoObject
+     */
 
         private PastoObject generaCenaPari(ArrayList<String> secondo, ArrayList<String> primo, ArrayList<String> frutta){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
@@ -407,6 +517,14 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             return new PastoObject(portate, PastoEnum.cena);
         }
 
+    /**
+     * Metodo che genera un pasto spuntino del giorno alimentare programmato
+     * @param snack Arraylist di stringhe degli snack
+     * @param frutta Arraylist di stringhe dei frutti
+     * @param bevanda Arraylist di stringhe delle bevande
+     * @return Una variabile di tipo PastoObject
+     */
+
         private PastoObject generaSpuntino(ArrayList<String> snack, ArrayList<String> frutta, ArrayList<String> bevanda){
             ArrayList<PortataObject> portate = new ArrayList<PortataObject>();
             int fabsnack = (fabbisogno*5)/100;
@@ -418,6 +536,14 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             return new PastoObject(portate, PastoEnum.spuntino);
         }
 
+    /**
+     * Metodo che genera una portata di un pasto
+     * @param portate Arraylist di stringhe delle cibi
+     * @param calorie Calorie di quel cibo
+     * @param tipoportata Tipo enumerativo della portata
+     * @return
+     */
+
         private PortataObject generaPortata(ArrayList<String> portate, int calorie, PortataEnum tipoportata){
             int randomindex = randomize(portate.size());
             CiboObject cibo = new CiboDAO().getCiboByName(portate.get(randomindex));
@@ -425,7 +551,11 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
             return new PortataObject(cibo, tipoportata, quantita);
         }
 
-        private void showNewProg () {
+    /**
+     * Metodo che mostra il programma alimentare appena creato
+     */
+
+    private void showNewProg () {
             IndexAlimentazioneView indexalim = alimentazione.getIndexalimentazione();
             ProgrammaAlimentareObject progalim = utente.getProgramma_alimentare();
             for (int i=1; i<=7; i++) {

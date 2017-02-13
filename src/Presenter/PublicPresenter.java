@@ -11,52 +11,48 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * La classe PublicPresenter è il presenter utilizzato nella HomePage di Health Me!, per effettuare il login e per registrarsi
+ */
+
 public class PublicPresenter {
 
-    //La vista Auth è quella in cui ci sono le carte della vista pubblica
     private Auth view;
-    //Instanzio il nuovo cardLAyout
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel;
 
-    //Passo al costruttore del controller la vista con le carte
     public PublicPresenter(Auth view) {
 
         this.view = view;
-        //prendo il pannello che racchiude le 3 carte e lo chiamo mainPanel
         mainPanel = view.getMainPanel();
         cardLayout = (CardLayout)mainPanel.getLayout();
-        //il costruttore Public deve mostrare la carta index del contenitore mainPanel
         cardLayout.show(mainPanel, "Index");
-        //Setto la vista visibile
         Auth.setVisible(true);
-        //Ottengo le altre carte...Auth ha un metodo get che permette di ottenre le carte.
         Index indexview = view.getIndexview();
         Login loginview = view.getLoginview();
         Registrazione registrazioneview = view.getRegistrazioneview();
 
-        //Listener al bottone di login di Indexview che permette di vedere la carte dove si inseriscono le credenziali
         indexview.addLoginButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(mainPanel,"Login");
             }
         });
-        //Listener al bottone di registrazione di Indexview che permette di vedere la carte dove è possibile registrarsi
+
         indexview.addRegistratiButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(mainPanel,"Registrazione");
             }
         });
-        //Listener al bottone di azzera di Registrazioneview che permette di azzerare tutti i campi. Utilizza la funzione azzeraCampi della vista registrazione
+
         registrazioneview.addAzzeraButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 registrazioneview.azzeraCampi();
             }
         });
-        //Listener al bottone di Indietro di Refistrazioneview che permette di azzerare i campi e tornare alla carta Indexview
+
         registrazioneview.addIndietroButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,11 +61,9 @@ public class PublicPresenter {
             }
         });
 
-        //Codice del listener che si attiva quando premo il bottone di Conferma Registrazione della vista registrazione
         registrazioneview.addCompletaRegistrazioneButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //si prendono i valori inseriti nelle JTextfiel e si eliminano gli spazi
                 registrazioneview.eliminaSpazi();
                 if (registrazioneview.isValid()){
                     UtenteObject nuovoutente = registrazioneview.getNuovoUtente();
@@ -101,6 +95,10 @@ public class PublicPresenter {
             }
         });
     }
+
+    /**
+     * Metodo che verifica se le credenziali immesse in fase di login sono corrette
+     */
 
     public void completaloginAction() {
         String username = view.getLoginview().getUsername();

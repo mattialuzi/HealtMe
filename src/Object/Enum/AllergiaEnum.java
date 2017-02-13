@@ -1,8 +1,9 @@
 package Object.Enum;
 
 /**
- * Created by ALLDE on 28/12/2016.
+ * La classe AllergiaEnum implementa l'enumerazione allergia per un cibo
  */
+
 public enum AllergiaEnum {
     nessuna,
     glutine,

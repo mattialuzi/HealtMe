@@ -8,8 +8,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
- * Created by lorenzobraconi on 19/01/17.
+ * La classe PortataDAO contiene i metodi per la gestione dei dati della tabella "portata" del database.
  */
+
 public class PortataDAO {
 
     protected Portata tabella;
@@ -17,6 +18,12 @@ public class PortataDAO {
     public PortataDAO() {
         tabella = new Portata();
     }
+
+    /**
+     * Metodo che recupera tutte le portate di un pasto in base al codice
+     * @param idpasto Codice del pasto
+     * @return ArrayList di PortateObject
+     */
 
     public ArrayList<PortataObject> getPortateById(int idpasto){
         tabella.select();
@@ -40,6 +47,11 @@ public class PortataDAO {
         return portate;
     }
 
+    /**
+     * Metodo che inserisce una nuova portata a partire da una PortataObject
+     * @param portata Variabile di tipo PortataObject il cui valore degli attributi costituiscono i dati da inserire
+     */
+
     public void inserisciPortata (PortataObject portata) {
         String dati= ""+portata.getId_pasto()+"";
         dati=dati+",'"+String.valueOf(portata.getCibo().getNome())+"'";
@@ -49,6 +61,13 @@ public class PortataDAO {
         tabella.execute();
     }
 
+    /**
+     * Metodo che modifica la quantita di una portata
+     * @param id_pasto Codice del pasto
+     * @param cibo Nome del cibo
+     * @param quantita Valore della nuova quantità
+     */
+
     public  void updatePortata (int id_pasto, String cibo, int quantita) {
         String dati= "quantita = "+quantita;
         tabella.update(dati);
@@ -56,12 +75,26 @@ public class PortataDAO {
         tabella.execute();
     }
 
+    /**
+     * Metodo che modifica la quantita e il nome di un cibo di una portata
+     * @param id_pasto Codice del pasto
+     * @param vecchiocibo Vecchio nome del cibo
+     * @param nuovocibo Nuovo nome del cibo
+     * @param quantita Valore della nuova quantità
+     */
+
     public  void updatePortata (int id_pasto, String vecchiocibo, String nuovocibo, int quantita) {
         String dati= "quantita = " + quantita + " , cibo = '" + nuovocibo + "'";
         tabella.update(dati);
         tabella.where("id_pasto='" + id_pasto + "' AND cibo='" + vecchiocibo + "'");
         tabella.execute();
     }
+
+    /**
+     * Metodo che elimina una portata in base al codice del pasto ed il cibo
+     * @param id_pasto Codice del pasto
+     * @param cibo Nome del cibo da eliminare
+     */
 
     public void eliminaPortata (int id_pasto, String cibo) {
         tabella.delete();

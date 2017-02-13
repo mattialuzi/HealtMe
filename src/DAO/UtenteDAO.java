@@ -6,10 +6,13 @@ import Object.Enum.AllergiaEnum;
 import Object.Enum.LavoroEnum;
 import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.UtenteObject;
-
 import java.sql.ResultSet;
 import java.util.Iterator;
 import java.util.Map;
+
+/**
+ * La classe UtenteDAO contiene i metodi per la gestione dei dati della tabella "utente" del database.
+ */
 
 public class UtenteDAO {
     protected Utente tabella;
@@ -17,6 +20,11 @@ public class UtenteDAO {
     public UtenteDAO() {
         tabella= new Utente();
     }
+
+    /**
+     * Metodo che inserisce un nuovo utente a partire da un UtenteObject
+     * @param utente Variabile di tipo UtenteObject il cui valore degli attributi costituiscono i dati da inserire
+     */
 
     public void inserisciUtente(UtenteObject utente){
         String dati= "'"+utente.getUsername()+"'";
@@ -40,6 +48,12 @@ public class UtenteDAO {
         tabella.execute();
     }
 
+    /**
+     * Metodo che verifica se un utente è presente nel database a partire dal suo username
+     * @param user Username di cui si vuole verificare la presenza
+     * @return true se l'username è presente, false se non presente
+     */
+
     public boolean findUserByUsername(String user){
         boolean success=false;
         tabella.select();
@@ -52,6 +66,13 @@ public class UtenteDAO {
         return success;
     }
 
+    /**
+     * Metodo che verifica se la coppia username e password è presente nel database
+     * @param user Stringa del nome
+     * @param pass Stringa della password
+     * @return true se la coppia user-pass è presente, false se non è presente
+     */
+
     public boolean findUserByCredential(String user, String pass){
         boolean success = false;
         tabella.select();
@@ -63,6 +84,12 @@ public class UtenteDAO {
             success=false;
         return success;
     }
+
+    /**
+     * Metedo che recupera un utente in base all'username e ne restituisce un UtenteObject
+     * @param user Username dell'utente che si intende recuperare
+     * @return Variabile di tipo UtenteObject i cui attributi sono settati in base ai dati dell'utente recuperato
+     */
 
     public UtenteObject getUserByUsername(String user){
         tabella.select();
@@ -94,6 +121,12 @@ public class UtenteDAO {
         return utentecorrente;
     }
 
+    /**
+     * Metodo che modifica le informazioni di utente in base al suo username
+     * @param username Username dell'utente di cui si vogliono modificare le informazioni
+     * @param campoutente Map: la chiave è di tipo String e indica il campo del valore da modificare, il valore è di tipo Object con il nuovo valore
+     */
+
     public void updateInfoUtente(String username, Map<String,Object> campoutente){
         String dati = "";
         Iterator<Map.Entry<String,Object>> iterator = campoutente.entrySet().iterator();
@@ -107,6 +140,11 @@ public class UtenteDAO {
         tabella.where("username='" + username + "'");
         tabella.execute();
     }
+
+    /**
+     * Metoco che elimina un utente in base al suo username
+     * @param username Username dell'utente che si vuole eliminare dal database
+     */
 
     public void eliminaUtente(String username){
         tabella.delete();

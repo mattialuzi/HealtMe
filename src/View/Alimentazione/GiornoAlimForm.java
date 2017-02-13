@@ -1,8 +1,6 @@
 package View.Alimentazione;
 
-import Object.Enum.GiornoEnum;
 import Object.Enum.StatusEnum;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -11,8 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Mattia on 25/01/2017.
+ * La classe GiornoAlimForm contiene attributi e metodi associati al file XML GiornoAlimForm.form
  */
+
 public class GiornoAlimForm {
     private JPanel mainPanel;
     private JButton addSpuntino;
@@ -34,9 +33,9 @@ public class GiornoAlimForm {
     private JButton confermaSpuntino;
     private HashMap<ListSelectionModel, JButton> tabelle;
     private HashMap<String, JTable> bottoni;
-    //private HashMap<StatusEnum, JButton> statusmap;
 
     public GiornoAlimForm(String Title) {
+
         Titlelabel.setText(Title);
         String[] columnnames = {"Portata", "Alimento", "Quantita"};
         DefaultTableModel tablemodel = new DefaultTableModel(columnnames, 0) {
@@ -75,6 +74,10 @@ public class GiornoAlimForm {
         return mainPanel;
     }
 
+    /**
+     * Metodo che setta la visibilità dei bottoni per aggiungere una nuova portata nei pasti effettivi
+     */
+
     public void setButtonsVisible () {
         addColazione.setVisible(true);
         removeColazione.setVisible(true);
@@ -86,13 +89,18 @@ public class GiornoAlimForm {
         removeSpuntino.setVisible(true);
     }
 
-    public void enableConfermaButton(StatusEnum status){ //Funzione che indica quali cose cose abilitare/far vedere in base status
-        if(status.equals(StatusEnum.colazione)) { //Caso iniziale: status è già settato a colazione.
+    /**
+     * Metodo che mostra la visibilità dei componenti dell'interfaccia grafice in base allo status
+     * @param status Valore enumerativo di status su cui basare la visibilità
+     */
+
+    public void enableConfermaButton(StatusEnum status){
+        if(status.equals(StatusEnum.colazione)) {
             confermaColazione.setEnabled(true);
             addPranzo.setEnabled(false);
             addCena.setEnabled(false);
             addSpuntino.setEnabled(false);
-        } else if(status.equals(StatusEnum.pranzo)) { //Caso in cui ho cliccato su "Conferma Colazione" e quindi status è a pranzo.
+        } else if(status.equals(StatusEnum.pranzo)) {
             confermaColazione.setEnabled(false);
             confermaPranzo.setEnabled(true);
             colazioneEffTable.setEnabled(false);
@@ -100,7 +108,7 @@ public class GiornoAlimForm {
             addPranzo.setEnabled(true);
             addCena.setEnabled(false);
             addSpuntino.setEnabled(false);
-        } else if(status.equals(StatusEnum.spuntino)) { //Caso in cui ho cliccato su "Pranzo" e quindi status è a spuntino.
+        } else if(status.equals(StatusEnum.spuntino)) {
             confermaPranzo.setEnabled(false);
             confermaSpuntino.setEnabled(true);
             colazioneEffTable.setEnabled(false);
@@ -119,7 +127,7 @@ public class GiornoAlimForm {
             addPranzo.setEnabled(false);
             addSpuntino.setEnabled(false);
             addCena.setEnabled(true);
-        } else { // Caso in cui lo status è a Completato!
+        } else {
             confermaCena.setEnabled(false);
             colazioneEffTable.setEnabled(false);
             pranzoEffTable.setEnabled(false);
@@ -131,6 +139,12 @@ public class GiornoAlimForm {
             addCena.setEnabled(false);
         }
     }
+
+    /**
+     * Metodo che setta la visibilità del bottone conferma e i bottoni di aggiunta di una portata
+     * @param comb Variabile booleana che indica se il programma alimentare è combinato
+     * @param status Valore enumerativo di status su cui basare la visibilità
+     */
 
 
     public void visibilityConfermaAndAddButtons(boolean comb, StatusEnum status){
@@ -148,6 +162,66 @@ public class GiornoAlimForm {
             addCena.setEnabled(true);
         }
     }
+
+    /**
+     * Metodo che aggiunge le tabelle dei pasti effettivi ad un arrylist di JTable
+     * @return Un ArrayList di Jtable
+     */
+
+    public ArrayList<JTable> getEffTables () {
+        ArrayList<JTable> listatabelle = new ArrayList<JTable>(4);
+        listatabelle.add(0, colazioneEffTable);
+        listatabelle.add(1, pranzoEffTable);
+        listatabelle.add(2, spuntiniEffTable);
+        listatabelle.add(3, cenaEffTable);
+        return listatabelle;
+    }
+
+    /**
+     * Metodo che riepie un HashMap con dei componenti la cui la chiave è il model della tabella ed il valore è il bottone di di rimuovi
+     */
+
+    public void setButtonFromTable(){
+        this.tabelle = new HashMap<ListSelectionModel, JButton>();
+        tabelle.put(colazioneEffTable.getSelectionModel(), removeColazione);
+        tabelle.put(pranzoEffTable.getSelectionModel(), removePranzo);
+        tabelle.put(cenaEffTable.getSelectionModel(), removeCena);
+        tabelle.put(spuntiniEffTable.getSelectionModel(), removeSpuntino);
+    }
+
+    /**
+     * Ottiene il valore di un componente dell'HasHMap in base alla chiave
+     * @param tablemodel Variabile di tipo ListSelectionModel
+     * @return Il bottone rimuovi della tabella ottenuta
+     */
+
+    public JButton getButtonFromTable(ListSelectionModel tablemodel){
+        return tabelle.get(tablemodel);
+    }
+
+    /**
+     * Metodo che riepie un HashMap con dei componenti la cui la chiave è l'action command del bottone ed il valore è una tabella
+     */
+
+    public void setTableFromButton(){
+        this.bottoni = new HashMap<String, JTable>();
+        bottoni.put(removeColazione.getActionCommand(), colazioneEffTable);
+        bottoni.put(removePranzo.getActionCommand(), pranzoEffTable);
+        bottoni.put(removeCena.getActionCommand(), cenaEffTable);
+        bottoni.put(removeSpuntino.getActionCommand(), spuntiniEffTable);
+    }
+
+    /**
+     * Ottiene il valore di un componente dell'HasHMap in base alla chiave
+     * @param nomebottone Stringa del bottone
+     * @return Tabella selezionata
+     */
+
+    public JTable getTableFromButton(String nomebottone){
+        return bottoni.get(nomebottone);
+    }
+
+    /** Listener associati ad elementi di cui è composto il file XML GiornoAlimForm.form  */
 
     public void addListenersAndShowButtons(ActionListener listener) {
         addColazione.addActionListener(listener);
@@ -177,46 +251,5 @@ public class GiornoAlimForm {
         cenaEffTable.getSelectionModel().addListSelectionListener(listener);
         spuntiniEffTable.getSelectionModel().addListSelectionListener(listener);
     }
-
-    public ArrayList<JTable> getEffTables () {
-        ArrayList<JTable> listatabelle = new ArrayList<JTable>(4);
-        listatabelle.add(0, colazioneEffTable);
-        listatabelle.add(1, pranzoEffTable);
-        listatabelle.add(2, spuntiniEffTable);
-        listatabelle.add(3, cenaEffTable);
-        return listatabelle;
-    }
-
-    public void setButtonFromTable(){
-        this.tabelle = new HashMap<ListSelectionModel, JButton>();
-        tabelle.put(colazioneEffTable.getSelectionModel(), removeColazione);
-        tabelle.put(pranzoEffTable.getSelectionModel(), removePranzo);
-        tabelle.put(cenaEffTable.getSelectionModel(), removeCena);
-        tabelle.put(spuntiniEffTable.getSelectionModel(), removeSpuntino);
-    }
-
-    public JButton getButtonFromTable(ListSelectionModel tablemodel){
-        return tabelle.get(tablemodel);
-    }
-
-    public void setTableFromButton(){
-        this.bottoni = new HashMap<String, JTable>();
-        bottoni.put(removeColazione.getActionCommand(), colazioneEffTable);
-        bottoni.put(removePranzo.getActionCommand(), pranzoEffTable);
-        bottoni.put(removeCena.getActionCommand(), cenaEffTable);
-        bottoni.put(removeSpuntino.getActionCommand(), spuntiniEffTable);
-    }
-
-    public JTable getTableFromButton(String nomebottone){
-        return bottoni.get(nomebottone);
-    }
-
-    /*public void setConfermaFromStatus(){
-        this.statusmap = new HashMap<StatusEnum, JButton>();
-        statusmap.put(StatusEnum.colazione, confermaColazione);
-        statusmap.put(StatusEnum.pranzo, confermaPranzo);
-        statusmap.put(StatusEnum.spuntino, confermaSpuntino);
-        statusmap.put(StatusEnum.cena, confermaCena);
-    }*/
 }
 

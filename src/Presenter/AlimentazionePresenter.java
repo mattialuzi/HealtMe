@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Created by lorenzobraconi on 05/01/17.
+ * La classe AlimentazionePresenter è il presenter utilizzato per inserire un nuovo alimento e per la gestione della settimana alimentare
  */
+
 public class AlimentazionePresenter extends BaseAlimPresenter {
 
     private AlimentazioneView alimentazione;
@@ -161,9 +162,17 @@ public class AlimentazionePresenter extends BaseAlimPresenter {
 
     }
 
+    /**
+     * Metodo che mostra la carta (classe view) IndexAlimentazioneView del cardLayout
+     */
+
     public void showIndex(){
         cardLayout.show(variablePanel, "IndexAlimentazioneView");
     }
+
+    /**
+     * Metodo che recupera tutti i giorni della settimana alimentare
+     */
 
     public void setGiorni() {
         LocalDate data = LocalDate.now();
@@ -185,13 +194,18 @@ public class AlimentazionePresenter extends BaseAlimPresenter {
             data = data.minusDays(1);
         }
         if (progalim != null) {
-            for (int j = 1; j <= 7; j++) { //perchè DayOfWeek.of(j) ritorna Lunedì se j=1 .... Domenica se j=7
+            for (int j = 1; j <= 7; j++) {
                 GiornoAlimView giornodopoview = indexalimentazione.getGiorni(DayOfWeek.of(j));
-                GiornoAlimObject giornodopo = progalim.getSettimanaalimentare(j-1); //perchè DayOfWeek.of(j) ritorna Lunedì se j=1 .... Domenica se j=7
+                GiornoAlimObject giornodopo = progalim.getSettimanaalimentare(j-1);
                 showPasti(giornodopo, giornodopoview);
             }
         }
     }
+
+    /**
+     * Metodo che aggiunge alla tabella la portata effettiva di un pasto
+     * @param tabellamodel Variabile di tipo DefaultTableModel della tabella
+     */
 
     public void aggiungiPortataEffettiva(DefaultTableModel tabellamodel) {
         String portata = dialog.getPortata().getSelectedItem().toString();
@@ -228,6 +242,15 @@ public class AlimentazionePresenter extends BaseAlimPresenter {
         new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_assunte",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
+    /**
+     * Metodo che verifica se aggiornare la quantita di un cibo di un pasto se è già presente
+     * @param pasto Variabile PastoObject che contiene il pasto della portata da modificare
+     * @param alimento Alimento che si vuole verificare se è già presente
+     * @param quantita Valore della nuova quantità
+     * @param tabellamodel DefaultTableModel della tabella
+     * @return true se l'alimento è presente e la quantita è stata modificata, false se non è presente
+     */
+
     private boolean aggiornaPortata(PastoObject pasto, String alimento, int quantita, DefaultTableModel tabellamodel) {
         Iterator<PortataObject> portateiterator = pasto.getPortate().iterator();
         while ( portateiterator.hasNext() ) {
@@ -254,6 +277,12 @@ public class AlimentazionePresenter extends BaseAlimPresenter {
         return false;
     }
 
+    /**
+     * Metodo che rimuove una portata di un pasto effettivo tra quelle già inserite
+     * @param tabella Tabella da cui prendere la portata di un pasto
+     * @param nomepasto Nome del pasto di cui si rimuovere la portata
+     */
+
     public void removePortata(JTable tabella, String nomepasto){
         String cibo = tabella.getModel().getValueAt(tabella.getSelectedRow(), 1).toString();
         PastoObject pasto = giornoeffcorrente.getPastoByTipo(nomepasto);
@@ -274,9 +303,20 @@ public class AlimentazionePresenter extends BaseAlimPresenter {
         new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_assunte",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
+    /**
+     * Metodo che calcola le calorie di un cibo data una quantità
+     * @param cibo Variabile CiboObject di cui si vuole calcolare le calorie
+     * @param quantita Quantità di quel cibo
+     * @return Calorie di quel cibo
+     */
+
     private int calcolaCalorie(CiboObject cibo,int quantita){
         return quantita*(cibo.getKilocal())/100;
     }
+
+    /**
+     * Metodo che permette di ricombinare i pasti di un giorno alimentare programmato
+     */
 
     private void ricombina() {
         int indexstatus = giornoeffcorrente.getStatus().ordinal();
@@ -341,6 +381,13 @@ public class AlimentazionePresenter extends BaseAlimPresenter {
 
     }
 
+    /**
+     * Metodo che modifica le portate di un pasto programmato
+     * @param pasto Pasto di cui si vuole modificare le portate
+     * @param portateuguali Arraylist di PortateObject che si devono ricombinare dei pasti successivi
+     * @param indiciricombina Arraylist di Integer che contiene gli indici delle portate da ricombinare
+     */
+
     private void ricombinaPortata(PastoObject pasto, ArrayList<PortataObject> portateuguali, ArrayList<Integer> indiciricombina){
         AllergiaEnum allergia = utente.getAllergia();
         AlimentazioneEnum tipoalimentazione = utente.getProgramma_alimentare().getTipo_alimentazione();
@@ -362,6 +409,14 @@ public class AlimentazionePresenter extends BaseAlimPresenter {
             portatadasostituire.setCibo(nuovocibo);
         }
     }
+
+    /**
+     * Metodo che recupera un giorno alimentare dinamico
+     * @param giorno Variabile di tipo GiornoAlimProgObject
+     * @param indexgiorno Indice del giorno
+     * @param indexstatus Indice dello status
+     * @return
+     */
 
     private GiornoAlimProgObject getGiornoDinamico (GiornoAlimProgObject giorno, int indexgiorno, int indexstatus) {
         if (giorno.getTipo().equals(GiornoEnum.programmato)) {
@@ -405,6 +460,13 @@ public class AlimentazionePresenter extends BaseAlimPresenter {
         }
     }
 
+    /**
+     * Metodo "costruisce" gli indici delle portate da ricombinare
+     * @param portatediverse Arraylist di PortataObject che contiene le portate effettive
+     * @param portateprog Arraylist di PortataObject che contiene le portate programmate
+     * @return Arraylist di Integer che contiene gli indici delle portate da ricombinare
+     */
+
     private ArrayList<Integer> controllaPortate (ArrayList<PortataObject> portatediverse, ArrayList<PortataObject> portateprog) {
         ArrayList<Integer> indiciportatedaricombinare = new ArrayList<Integer>();
         int portateprogsize = portateprog.size();
@@ -422,6 +484,13 @@ public class AlimentazionePresenter extends BaseAlimPresenter {
         }
         return indiciportatedaricombinare;
     }
+
+    /**
+     * Metodo che ricombina le calorie di un pasto
+     * @param pasto Pasto di cui si deve ricombinare le calorie
+     * @param fabbisogno Fabbisogno di quel pasto
+     * @param indicegiorno Indice del gionro
+     */
 
 
     private void ricombinaCaloriaPasto (PastoObject pasto, int fabbisogno, int indicegiorno){
@@ -460,6 +529,11 @@ public class AlimentazionePresenter extends BaseAlimPresenter {
         }
     }
 
+    /**
+     * Metodo che aggiorna la quantita di una portata
+     * @param portata Portata di cui si deve modificare la quantita
+     * @param fabportata Fabbisogno della portata
+     */
 
     private void aggiornaQuantita (PortataObject portata, int fabportata){
         int nuovaquantita = (fabportata*100)/(portata.getCibo().getKilocal());

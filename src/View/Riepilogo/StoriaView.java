@@ -18,8 +18,9 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
- * Created by lorenzobraconi on 04/02/17.
+ * La classe StoriaView contiene attributi e metodi associati al file XML StoriaView.form
  */
+
 public class StoriaView {
     private JPanel mainPanel;
     private JButton precButton;

@@ -1,8 +1,11 @@
 package Object;
 
 import Object.Enum.PastoEnum;
-
 import java.util.ArrayList;
+
+/**
+ * La classe PastoObject mappa la tabella "pasto" del database
+ */
 
 public class PastoObject {
 

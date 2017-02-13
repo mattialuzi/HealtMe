@@ -5,9 +5,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-/**
- * Created by ALLDE on 07/02/2017.
- */
 public class ProgAllenManView {
     private JPanel mainPanel;
     private JTabbedPane settimanaPane;

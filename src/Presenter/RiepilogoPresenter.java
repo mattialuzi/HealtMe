@@ -28,7 +28,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * Created by lorenzobraconi on 05/01/17.
+ * La classe RiepiloPresenter è il presenter utilizzato nella sezione Riepilogo di Health Me!
  */
 public class RiepilogoPresenter {
 
@@ -94,6 +94,11 @@ public class RiepilogoPresenter {
         });
     }
 
+    /**
+     * Metodo che recupera tutte i pasti e le relative portate di un giorno alimentare effettivo in base alla data
+     * @param date Data del giorno alimentare effettivo da recuperare
+     */
+
     public void showGiornoAlim(LocalDate date){
         ArrayList<JTable> tabelle = storiaview.getAlimTables();
         for (int i=0; i<4; i++){
@@ -115,6 +120,11 @@ public class RiepilogoPresenter {
             }
         }
     }
+
+    /**
+     * Metodo che recupera tutte le sedute e le relative attivita di un giorno d'allenamento effettivo in base alla data
+     * @param data Data del giorno d'allenamento effettivo da recuperare
+     */
 
     public void showGiornoAllen(LocalDate data){
         JTable tabella = storiaview.getAllenTable();

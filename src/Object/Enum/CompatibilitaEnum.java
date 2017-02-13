@@ -1,8 +1,9 @@
 package Object.Enum;
 
 /**
- * Created by ALLDE on 28/12/2016.
+ * La classe CompatibilitaEnum implementa l'enumerazione compatibilita di un cibo
  */
+
 public enum CompatibilitaEnum {
     onnivora,
     vegetariana,

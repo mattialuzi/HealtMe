@@ -1,9 +1,10 @@
 package DAO.Dbtable;
 
-/**
- * Created by Mattia on 27/12/2016.
- */
 import Helpers.DbTable;
+
+/**
+ * Classe Giorno_alim_dinamico che estende l'helpers DbTable
+ */
 
 public class Giorno_alim_dinamico extends DbTable {
     public Giorno_alim_dinamico(){

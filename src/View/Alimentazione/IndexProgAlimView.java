@@ -4,8 +4,9 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 
 /**
- * Created by lorenzobraconi on 25/01/17.
+ * La classe IndexProgAlimView contiene attributi e metodi associati al file XML IndexProgAlimView.form
  */
+
 public class IndexProgAlimView {
 
     private JPanel mainPanel;
@@ -18,6 +19,8 @@ public class IndexProgAlimView {
     public JPanel getMainPanel() {
         return mainPanel;
     }
+
+    /** Listener associati ad elementi di cui è composto il file XML IndexProgAlimForm.form */
 
     public void addNewProgManButtonListener(ActionListener listener){
         manualeButton.addActionListener(listener);

@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by lorenzobraconi on 05/01/17.
+ * La classe MenuPresenter è il presenter utilizzato per la gestione del menu laterale
  */
 public class MenuPresenter extends Presenter {
     private Menu menu;
@@ -29,7 +29,6 @@ public class MenuPresenter extends Presenter {
         ProfiloPresenter profiloPresenter = new ProfiloPresenter(menu, utente);
         AlimentazionePresenter alimentazionePresenter = new AlimentazionePresenter(menu, utente);
         AllenamentoPresenter allenamentoPresenter = new AllenamentoPresenter(menu, utente);
-        //Auth.getFrame().pack();
 
         menu.addMenuButtonListener(new ActionListener() {
             @Override

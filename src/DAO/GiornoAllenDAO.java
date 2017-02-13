@@ -7,15 +7,15 @@ import Object.GiornoAllenEffettivoObject;
 import Object.GiornoAllenProgObject;
 import Object.GiornoAllenDinamicoObject;
 import Object.SedutaObject;
-
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Created by lorenzobraconi on 07/02/17.
+ * La classe GiornoAllenDAO contiene i metodi per la gestione dei dati delle tabella "giorno_allen_effettivo","giorno_allen_progr","giorno_allen_dinamico" del database
  */
+
 public class GiornoAllenDAO {
     protected Giorno_allen_eff effettivo;
     protected Giorno_allen_prog programmato;
@@ -27,6 +27,13 @@ public class GiornoAllenDAO {
         programmato = new Giorno_allen_prog();
         dinamico = new Giorno_allen_dinamico();
     }
+
+    /**
+     * Metodo che recupera un giorno d'allenamento effettivo dalla tabella "giorno_allen_effettivo" del database in base a username e data
+     * @param username Nome dell'username
+     * @param data Data del giorno
+     * @return Una variabile di tipo GiornoAllenEffettivoObject costruito in base alle informazioni del giorno recuperato
+     */
 
     public GiornoAllenEffettivoObject getGiornoAllenEffettivo(String username, LocalDate data){
         effettivo.select();
@@ -52,6 +59,14 @@ public class GiornoAllenDAO {
         }
     }
 
+    /**
+     * Metodo che modifica un giorno d'allenamento effettivo della tabella "giorno_allen_effettivo" del database
+     * @param username Nome dell'username
+     * @param data Data del giorno
+     * @param map Mappa la cui chiave è di tipo String ed il valore è un tipo generico
+     * @param <V> Tipo generico
+     */
+
     public <V> void updateGiornoAllenEff(String username, LocalDate data, Map<String,V> map) {
         String dati = "";
         Iterator<Map.Entry<String,V>> iterator = map.entrySet().iterator();
@@ -66,6 +81,11 @@ public class GiornoAllenDAO {
         effettivo.execute();
     }
 
+    /**
+     * Metodo che inserisce un giorno d'allenamento effettivo nella tabella "giorno_allen_effettivo" del database in base ad un GiornoAllenEffettivoObject
+     * @param giornoeff Variabile di tipo GiornoAllenEffettivoObject il cui valore degli attributi costituiscono le informazioni da inserire
+     */
+
     public void inserisciGiornoAllenEff(GiornoAllenEffettivoObject giornoeff){
         String dati= "'" + giornoeff.getUsername()+"'";
         dati = dati +  ", '" + String.valueOf(giornoeff.getData() +"'");
@@ -76,6 +96,11 @@ public class GiornoAllenDAO {
         effettivo.execute();
     }
 
+    /**
+     * Metodo che inserisce un giorno d'allenamento programmato nella tabella "giorno_allen_progr" del database in base ad un GiornoAllenProgObject
+     * @param giornoprog Variabile di tipo GiornoAllenProgObject il cui valore degli attributi costituiscono le informazioni da inserire
+     */
+
     public void inserisciGiornoAllenProg(GiornoAllenProgObject giornoprog){
         String dati = "'" + giornoprog.getId_giorno()+"'";
         dati = dati + ", '" + giornoprog.getCalorie() + "'";
@@ -85,6 +110,11 @@ public class GiornoAllenDAO {
         giornoprog.setId_giorno(idgiorno);
     }
 
+    /**
+     * Metodo che inserisce un giorno d'allenamento dinamico nella tabella "giorno_allen_dinamico" del database in base ad un GiornoAllenDinamicoObject
+     * @param giornodinamico Variabile di tipo GiornoAllenDinamicoObject il cui valore degli attributi costituiscono le informazioni da inserire
+     */
+
     public void inserisciGiornoAllenDinamico(GiornoAllenDinamicoObject giornodinamico){
         String dati = "'" + giornodinamico.getId_programma()+"'" ;
         dati = dati + ", '" + giornodinamico.getData() + "'";
@@ -93,6 +123,14 @@ public class GiornoAllenDAO {
         dinamico.insert(dati);
         dinamico.execute();
     }
+
+    /**
+     * Metodo che recupera un giorno d'allenamento della tabella "giorno_allen_dinamico" del database in base al codice del giorno,codice del programma e data
+     * @param idgiorno Codice del giorno
+     * @param idprogramma Codice del programma
+     * @param data Data del giorno
+     * @return Variabile di tipo GiornoAllenProgObject recuperata
+     */
 
     public GiornoAllenProgObject getGiornoProgrammatoComb(int idgiorno, int idprogramma, LocalDate data){
         dinamico.select();
@@ -114,6 +152,12 @@ public class GiornoAllenDAO {
         }
     }
 
+    /**
+     * Metodo che recupera un giorno d'allenamento della tabella "giorno_allen_prog" del database in base al codice del giorno
+     * @param idgiorno Codice del giorno
+     * @return Variabile di tipo GiornoAllenProgObject recuperata
+     */
+
     public GiornoAllenProgObject getGiornoProgrammatoMan(int idgiorno){
         programmato.select();
         programmato.where("id_giorno='" + idgiorno + "'");
@@ -133,12 +177,25 @@ public class GiornoAllenDAO {
         }
     }
 
+    /**
+     * Metodo che modifica il codice della seduta di un giorno alimentare dinamico della tabella "giorno_allen_dinamico" del database
+     * @param idsedutanuova Nuovo valore di idseduta
+     * @param idsedutavecchia Vecchio valore di idseduta
+     */
+
     public void updateGiornoAllenDinamico(int idsedutanuova,int idsedutavecchia){
         String dati = "seduta=" + idsedutanuova;
         dinamico.update(dati);
         dinamico.where("seduta=" + idsedutavecchia);
         dinamico.execute();
     }
+
+    /**
+     * Metodo che modifica il valore della calorie da consumare di un giorno d'allenamento dinamico della tabella "giorno_allen_dinamico" del database
+     * @param idprogramma Codice del programma
+     * @param data Data del giorno
+     * @param calorie Nuovo valore di calorie da consumare
+     */
 
     public void updateCalorieGiornoAllenDinamico(int idprogramma, LocalDate data, int calorie){
         String dati = "calorie_da_consumare=" + calorie;

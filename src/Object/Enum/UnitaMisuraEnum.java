@@ -1,8 +1,9 @@
 package Object.Enum;
 
 /**
- * Created by Lorenzo on 28/12/16.
+ * La classe UnitaMisutaEnum implementa l'enumerazione unità di misura di un esercizio
  */
+
 public enum UnitaMisuraEnum {
     minuti,
     kilometri,

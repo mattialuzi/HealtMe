@@ -2,11 +2,9 @@ package DAO;
 
 import DAO.Dbtable.Giorno_alim_dinamico;
 import DAO.Dbtable.Giorno_alim_eff;
-
 import java.util.*;
 import java.sql.ResultSet;
 import java.time.LocalDate;
-
 import DAO.Dbtable.Giorno_alim_prog;
 import Object.Enum.PastoEnum;
 import Object.Enum.StatusEnum;
@@ -16,8 +14,9 @@ import Object.GiornoAlimDinamicoObject;
 import Object.PastoObject;
 
 /**
- * Created by ALLDE on 19/01/2017.
+ * La classe GiornoAlimDAO contiene i metodi per la gestione dei dati delle tabella "giorno_alim_effettivo","giorno_alim_prog","giorno_alim_dinamico" del database
  */
+
 public class GiornoAlimDAO {
     protected Giorno_alim_eff effettivo;
     protected Giorno_alim_prog programmato;
@@ -28,6 +27,13 @@ public class GiornoAlimDAO {
         programmato = new Giorno_alim_prog();
         dinamico = new Giorno_alim_dinamico();
     }
+
+    /**
+     * Metodo che recupera un giorno alimentare effettivo dalla tabella "giorno_alim_effettivo" del database in base a username e data
+     * @param username Nome dell'username
+     * @param data Data del giorno
+     * @return Una variabile di tipo GiornoAlimEffettivoObject costruito in base alle informazioni del giorno recuperato
+     */
 
     public GiornoAlimEffettivoObject getGiornoAlimEffettivo(String username,LocalDate data){
         effettivo.select();
@@ -56,6 +62,14 @@ public class GiornoAlimDAO {
         }
     }
 
+    /**
+     * Metodo che modifica un giorno alimentare effettivo della tabella "giorno_alim_effettivo" del database
+     * @param username Nome dell'username
+     * @param data Data del giorno
+     * @param map Mappa la cui chiave è di tipo String ed il valore è un tipo generico
+     * @param <V> Tipo generico
+     */
+
     public <V> void updateGiornoAlimEff(String username, LocalDate data, Map<String,V> map) {
         String dati = "";
         Iterator<Map.Entry<String,V>> iterator = map.entrySet().iterator();
@@ -70,6 +84,11 @@ public class GiornoAlimDAO {
         effettivo.execute();
     }
 
+    /**
+     * Metodo che inserisce un giorno alimentare effettivo nella tabella "giorno_alim_effettivo" del database in base ad un GiornoAlimEffettivoObject
+     * @param giornoeff Variabile di tipo GiornoAlimEffettivoObject il cui valore degli attributi costituiscono le informazioni da inserire
+     */
+
     public void inserisciGiornoAlimEff(GiornoAlimEffettivoObject giornoeff){
         String dati= "'" + giornoeff.getUsername()+"'";
         dati = dati +  ", '" + String.valueOf(giornoeff.getData() +"'");
@@ -83,6 +102,11 @@ public class GiornoAlimDAO {
         effettivo.execute();
     }
 
+    /**
+     * Metodo che inserisce un giorno alimentare programmato nella tabella "giorno_alim_prog" del database in base ad un GiornoAlimProgObject
+     * @param giornoprog Variabile di tipo GiornoAlimProgObject il cui valore degli attributi costituiscono le informazioni da inserire
+     */
+
     public void inserisciGiornoAlimProg(GiornoAlimProgObject giornoprog){
         String dati= "'" + giornoprog.getId_giorno()+"'";
         dati = dati +  ", '" + giornoprog.getCalorie() +"'";
@@ -95,6 +119,11 @@ public class GiornoAlimDAO {
         giornoprog.setId_giorno(idgiorno);
     }
 
+    /**
+     * Metodo che inserisce un giorno alimentare dinamico nella tabella "giorno_alim_dinamico" del database in base ad un GiornoAlimDinamicoObject
+     * @param giornodinamico Variabile di tipo GiornoAlimDinamicoObject il cui valore degli attributi costituiscono le informazioni da inserire
+     */
+
     public void inserisciGiornoAlimDinamico(GiornoAlimDinamicoObject giornodinamico){
         String dati= "'" + giornodinamico.getId_programma()+"'";
         dati = dati +  ", '" + giornodinamico.getData() +"'";
@@ -106,6 +135,14 @@ public class GiornoAlimDAO {
         dinamico.insert(dati);
         dinamico.execute();
     }
+
+    /**
+     * Metodo che recupera un giorno alimentare della tabella "giorno_alim_dinamico" del database in base al codice del giorno,codice del programma e data
+     * @param idgiorno Codice del giorno
+     * @param idprogramma Codice del programma
+     * @param data Data del giorno
+     * @return Variabile di tipo GiornoAlimProgObject recuperata
+     */
 
     public GiornoAlimProgObject getGiornoProgrammatoComb(int idgiorno, int idprogramma, LocalDate data){
         dinamico.select();
@@ -132,6 +169,12 @@ public class GiornoAlimDAO {
 
     }
 
+    /**
+     * Metodo che recupera un giorno alimentare della tabella "giorno_alim_prog" del database in base al codice del giorno
+     * @param idgiorno Codice del giorno
+     * @return Variabile di tipo GiornoAlimProgObject recuperata
+     */
+
     public GiornoAlimProgObject getGiornoProgrammatoMan(int idgiorno){
         programmato.select();
         programmato.where("id_giorno='" + idgiorno + "'");
@@ -155,27 +198,17 @@ public class GiornoAlimDAO {
         }
     }
 
+    /**
+     * Metodo che modifica un giorno alimentare dinamico della tabella "giorno_alim_dinamico" del database
+     * @param idpastonuovo Nuovo valore di idpasto
+     * @param idpastovecchio Vecchio valore
+     * @param tipopasto Tipo del pasto
+     */
+
     public void updateGiornoAlimDinamico(int idpastonuovo,int idpastovecchio, PastoEnum tipopasto){
         String dati = tipopasto + "=" + idpastonuovo;
         dinamico.update(dati);
         dinamico.where(tipopasto + "=" + idpastovecchio);
         dinamico.execute();
     }
-
-    /*public int findPastoInserito(String pasto, LocalDate data, String username){
-        effettivo.select(pasto);
-        effettivo.where("username='" + username + "' and data='" + data+"'");
-        ResultSet pastoeff = effettivo.fetch();
-        int idpasto = 0;
-        try{
-            while(pastoeff.next()) {
-                idpasto = pastoeff.getInt(pasto);
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println("Errore "+e);
-        }
-        return idpasto;
-    }*/
 }

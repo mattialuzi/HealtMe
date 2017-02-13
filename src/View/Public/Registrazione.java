@@ -39,7 +39,6 @@ public class Registrazione extends View {
 
     public Registrazione() {
 
-        // Setto i valori dei ComboBox prendendoli dalle enumerazioni
         lavoro.setModel(new DefaultComboBoxModel(LavoroEnum.values()));
         livelloattivitafisica.setModel(new DefaultComboBoxModel(LivelloAttivitaFisicaEnum.values()));
         allergia.setModel(new DefaultComboBoxModel(AllergiaEnum.values()));
@@ -148,7 +147,6 @@ public class Registrazione extends View {
                     utente.setSesso(0);
             }
         }
-        // Setto lavoro, livello attivita fisica e allergia dell'utente
         LavoroEnum lav = (LavoroEnum) lavoro.getSelectedItem();
         utente.setLavoro(lav);
         LivelloAttivitaFisicaEnum livello = (LivelloAttivitaFisicaEnum) livelloattivitafisica.getSelectedItem();

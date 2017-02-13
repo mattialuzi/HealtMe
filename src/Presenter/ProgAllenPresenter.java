@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.time.DayOfWeek;
 
 /**
- * Created by lorenzobraconi on 06/02/17.
+ * La classe ProgAlimPresenter è il presenter utilizzato per creare un nuovo programma d'allenamento
  */
 public class ProgAllenPresenter extends BaseAllenPresenter {
 
@@ -264,6 +264,11 @@ public class ProgAllenPresenter extends BaseAllenPresenter {
         });
     }
 
+    /**
+     * Metodo che aggiunge una attività manuale nella creazione di un programma d'allenamento manuale
+     * @param tabellamodel DefualtTableModel della tabella di cui si vuole aggiungere la attivita
+     */
+
     public void aggiungiAttivitaManuale(DefaultTableModel tabellamodel){
         String unita = dialog.getMisuraLabel().getText();
         String esercizio = dialog.getNomeEsercizio().getText();
@@ -272,6 +277,14 @@ public class ProgAllenPresenter extends BaseAllenPresenter {
             tabellamodel.addRow(new Object[]{esercizio,quantita,unita});
         }
     }
+
+    /**
+     * Metodo che verifica se una attivita è già presente nella tabella, se sì ne aggiorna la quantita
+     * @param tabellamodel DefualtTableModel della tabella
+     * @param esercizio Alimento di cui si vuole verificare la presenza
+     * @param quantita Quantita da aggiungere a quella attività
+     * @return true se la quantita è stata aggiornata e l'esercizio è presente, false se l'esercizio non è presente
+     */
 
     public boolean aggiornaAttivitaManuale(DefaultTableModel tabellamodel,String esercizio,int quantita){
         boolean exit = true;
@@ -285,6 +298,10 @@ public class ProgAllenPresenter extends BaseAllenPresenter {
         }
         return exit;
     }
+
+    /**
+     * Metodo che aggiunge un programma d'allenamento manuale
+     */
 
     public void aggiungiProgrammaManuale(){
         ProgAllenManObject nuovoprogmanuale = new ProgAllenManObject();
@@ -316,6 +333,12 @@ public class ProgAllenPresenter extends BaseAllenPresenter {
         new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_da_consumare",String.valueOf(nuovoprogmanuale.getSettimanaallenamento(indexoggi).getCalorie()));
     }
 
+    /**
+     * Metodo che verifica se un esercizio è già presente nella lista degli esercizi che si intende praticare
+     * @param listamodel ListaModel della lista
+     * @param esercizio Esercizio che si vuole verificare se presente nella lista
+     * @return true se esercizio presente, false se esercizio non presente
+     */
 
     public boolean aggiornaEsercizioPraticato(DefaultListModel listamodel,String esercizio){
         boolean exit = true;
@@ -325,6 +348,10 @@ public class ProgAllenPresenter extends BaseAllenPresenter {
         }
         return exit;
     }
+
+    /**
+     * Metodo che mostra gli esercizi in base all'intensità
+     */
 
     public void showEserciziPraticati(){
         String intensitascelta = dialogpraticati.getIntensita().getSelectedItem().toString();
@@ -346,6 +373,10 @@ public class ProgAllenPresenter extends BaseAllenPresenter {
         lista.setModel(listmodel);
     }
 
+    /**
+     * Metodo che filtra gli esercizi in base al carattere messo dall'utente
+     */
+
     public void filtraEserciziPraticati(){
         String input = dialogpraticati.getNomeEsercizio().getText();
         DefaultListModel listafiltrata = new DefaultListModel();
@@ -362,7 +393,9 @@ public class ProgAllenPresenter extends BaseAllenPresenter {
         }
     }
 
-    //inizio
+    /**
+     * Metodo che genera il programma d'allenamento generato in modo automatico
+     */
 
     private void generaProgramma () {
         ArrayList<String> esercizipraticati = getEserciziPraticati();
@@ -409,6 +442,11 @@ public class ProgAllenPresenter extends BaseAllenPresenter {
         new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_da_consumare",String.valueOf(nuovoprogcombinato.getCalorie_da_consumare()));
     }
 
+    /**
+     * Metodo che recupera gli esercizi che l'utente intende praticare nella generazione del programma d'allenamento combinato
+     * @return Un Arraylist di stringhe di esercizi
+     */
+
     private ArrayList<String> getEserciziPraticati() {
         ArrayList<String> esercizipraticati = new ArrayList<>();
         ListModel listmodel = progallencomb.getListaEsercizi().getModel();
@@ -419,9 +457,18 @@ public class ProgAllenPresenter extends BaseAllenPresenter {
         return esercizipraticati;
     }
 
+    /**
+     * Metodo che prende il valore della disponibilità dell'utente
+     * @return Il numero di giorni che intende praticare attività fisica
+     */
+
     private int getDisponibilita() {
         return Integer.parseInt(String.valueOf(progallencomb.getComboDisponibilita().getModel().getSelectedItem()));
     }
+
+    /**
+     * Mostra il nuovo programma d'allenamento generato in maniera automatica
+     */
 
     private void showNewProg(){
         IndexAllenamentoView indexallen = allenamento.getIndexallenamento();

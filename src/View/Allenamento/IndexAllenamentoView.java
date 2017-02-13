@@ -1,16 +1,11 @@
 package View.Allenamento;
 
-import View.Alimentazione.GiornoAlimView;
-
 import javax.swing.*;
 import java.time.DayOfWeek;
 import java.util.HashMap;
 
 import static java.time.DayOfWeek.*;
 
-/**
- * Created by lorenzobraconi on 06/02/17.
- */
 public class IndexAllenamentoView {
     private JPanel mainPanel;
     private JPanel rimanentePanel;

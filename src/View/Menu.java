@@ -11,8 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * Created by lorenzobraconi on 05/01/17.
+ *  La classe Menu contiene attributi e metodi associati al file XML Menu.form
  */
+
 public class Menu {
 
     private JPanel mainPanel;
@@ -51,7 +52,6 @@ public class Menu {
         JFrame frame = Auth.getFrame();
         frame.getContentPane().removeAll();
         frame.setContentPane(mainPanel);
-        //da finire il bottone
         try {
             Image img = ImageIO.read(getClass().getResource("resources/menu1.png"));
             Image newimg = img.getScaledInstance( 25, 25,  java.awt.Image.SCALE_SMOOTH );
@@ -65,36 +65,6 @@ public class Menu {
         variablePanel.add(profiloPanel, "ProfiloView");
         variablePanel.add(riepilogoPanel, "RiepilogoView");
 
-    }
-
-    public void addMenuButtonListener(ActionListener listener){
-        menuButton.addActionListener(listener);
-    }
-
-    public void addAlimentazioneButtonListener(ActionListener listener){ alimentazioneButton.addActionListener(listener); }
-
-    public void addNewProgAlimButtonListener(ActionListener listener){ newProgAlimButton.addActionListener(listener); }
-
-    public void addNewCiboButtonListener(ActionListener listener){ newCiboButton.addActionListener(listener); }
-
-    public void addAllenamentoButtonListener(ActionListener listener){
-        allenamentoButton.addActionListener(listener);
-    }
-
-    public void addNewProgAllenButtonListener(ActionListener listener) { newProgAllenButton.addActionListener(listener);}
-
-    public void addNewEsercizioButtonListener(ActionListener listener) { newEsercizioButton.addActionListener(listener);}
-
-    public void addProfiloButtonListener(ActionListener listener){
-        profiloButton.addActionListener(listener);
-    }
-
-    public void addRiepilogoButtonListener(ActionListener listener){
-        riepilogoButton.addActionListener(listener);
-    }
-
-    public void addLogoutButtonListener(ActionListener listener){
-        logoutButton.addActionListener(listener);
     }
 
     public JPanel getVariablePanel() {
@@ -128,6 +98,40 @@ public class Menu {
     public RiepilogoView getRiepilogoview() {
         return riepilogo;
     }
+
+    /** Listener associati ad elementi di cui è composto il file XML Menu.form */
+
+    public void addMenuButtonListener(ActionListener listener){
+        menuButton.addActionListener(listener);
+    }
+
+    public void addAlimentazioneButtonListener(ActionListener listener){ alimentazioneButton.addActionListener(listener); }
+
+    public void addNewProgAlimButtonListener(ActionListener listener){ newProgAlimButton.addActionListener(listener); }
+
+    public void addNewCiboButtonListener(ActionListener listener){ newCiboButton.addActionListener(listener); }
+
+    public void addAllenamentoButtonListener(ActionListener listener){
+        allenamentoButton.addActionListener(listener);
+    }
+
+    public void addNewProgAllenButtonListener(ActionListener listener) { newProgAllenButton.addActionListener(listener);}
+
+    public void addNewEsercizioButtonListener(ActionListener listener) { newEsercizioButton.addActionListener(listener);}
+
+    public void addProfiloButtonListener(ActionListener listener){
+        profiloButton.addActionListener(listener);
+    }
+
+    public void addRiepilogoButtonListener(ActionListener listener){
+        riepilogoButton.addActionListener(listener);
+    }
+
+    public void addLogoutButtonListener(ActionListener listener){
+        logoutButton.addActionListener(listener);
+    }
+
+    /** Metodo che crea componenti dell'User Interface */
 
     private void createUIComponents() {
         alimentazione = new AlimentazioneView();

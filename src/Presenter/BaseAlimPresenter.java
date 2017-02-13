@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Created by Lorenzo on 26/01/17.
+ * La classe BaseAlimPresenter contiene attributi e metodi comuni ad AlimentazionePresenter ed ProgAlimPresenter
  */
+
 public abstract class BaseAlimPresenter extends Presenter {
 
     protected GiornoAlimEffettivoObject giornoeffcorrente;
@@ -29,6 +30,9 @@ public abstract class BaseAlimPresenter extends Presenter {
     protected HashMap<PastoEnum,HashMap<PortataEnum,String[]>> idoneitamap;
     protected int indexoggi;
 
+    /**
+     * Metodo che aggiunge il listener alla form di inserimento di un cibo effettivo
+     */
 
     public class ListenersAndShowButtonsAction implements ActionListener {
         @Override
@@ -43,6 +47,10 @@ public abstract class BaseAlimPresenter extends Presenter {
         }
     }
 
+    /**
+     * Metodo che aggiunge il listener all'inserimento di una portata della form di inserimento di un cibo effettivo
+     */
+
     public class SetPortataItemAction implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent e) {
@@ -53,6 +61,10 @@ public abstract class BaseAlimPresenter extends Presenter {
             }
         }
     }
+
+    /**
+     * Metodo che aggiunge il listener all'inserimento di un carattere della form di inserimento di un cibo effettivo
+     */
 
     public class SearchKeyAction implements KeyListener {
         @Override
@@ -69,6 +81,10 @@ public abstract class BaseAlimPresenter extends Presenter {
         }
     }
 
+    /**
+     * Metodo che aggiunge il listener alla selezione di un cibo della form di inserimento di un cibo effettivo
+     */
+
     public class SetCiboListSelectionAction implements ListSelectionListener {
         @Override
         public void valueChanged(ListSelectionEvent e) {
@@ -80,6 +96,10 @@ public abstract class BaseAlimPresenter extends Presenter {
             else dialog.getButtonOK().setEnabled(false);
         }
     }
+
+    /**
+     * Metodo che aggiunge il listener all'inserimento della quantità di un cibo della form di inserimento di un cibo effettivo
+     */
 
     public class QuantitaKeyAction implements KeyListener {
         @Override
@@ -99,6 +119,10 @@ public abstract class BaseAlimPresenter extends Presenter {
         }
     }
 
+    /**
+     * Metodo che permette di mostrare certe tipi di portate in base al pasto nella form di inserimento di un cibo effettivo
+     */
+
     public void setPortataItems(){
         JComboBox portata = dialog.getPortata();
         dialog.getNomeAlimento().setEnabled(false);
@@ -110,6 +134,10 @@ public abstract class BaseAlimPresenter extends Presenter {
             portata.setModel(new DefaultComboBoxModel(new String[]{"--scegli portata--","primo", "secondo", "contorno", "dolce", "frutta"}));
         }
     }
+
+    /**
+     * Metodo che permette di mostrare gli alimenti nella form di inserimento di un cibo effettivo
+     */
 
     public void showAlimenti(){
         String portatascelta = dialog.getPortata().getSelectedItem().toString();
@@ -135,6 +163,10 @@ public abstract class BaseAlimPresenter extends Presenter {
         lista.setModel(listmodel);
     }
 
+    /**
+     * Metodo che permette di filtrare gli alimenti nella form di inserimento di un cibo effettivo
+     */
+
     public void filtraAlimenti(){
         String input = dialog.getNomeAlimento().getText();
         DefaultListModel listafiltrata = new DefaultListModel();
@@ -150,6 +182,12 @@ public abstract class BaseAlimPresenter extends Presenter {
             System.out.println("C'è un errore:" + e);
         }
     }
+
+    /**
+     * Metodo che permette di mostrare tutte le portate di tutti i pasti di un determinato giorno
+     * @param giorno Variabile di tipo GiornoAlimObject di cui si vuole mostrare tutti le portate di tutti i pasti
+     * @param giornoview Variabile della classe view GiornoAlimView su di cui si vogliono mostrare le informazioni
+     */
 
     protected void showPasti(GiornoAlimObject giorno, GiornoAlimView giornoview) {
         ArrayList<JTable> tabelle = giornoview.getTables(giorno.getTipo());
@@ -169,6 +207,12 @@ public abstract class BaseAlimPresenter extends Presenter {
 
     }
 
+    /**
+     * Metodo che permette di rimuovere  tutte le portate di tutti le tabelle pasti
+     * @param giornoview Variabile della classe view GiornoAlimView da cui prendere le tabelle
+     * @param tipogiorno Tipo del giorno di cui rimuovere le portate
+     */
+
     protected void removePasti(GiornoAlimView giornoview, GiornoEnum tipogiorno){
         ArrayList<JTable> tabelle = giornoview.getTables(tipogiorno);
         for (int i=0; i<4; i++){
@@ -177,13 +221,30 @@ public abstract class BaseAlimPresenter extends Presenter {
         }
     }
 
+    /**
+     * Metodo che permette a di calcolare le calorie a partire da una variabile PortataObject
+     * @param portata Variabile di tipo PortataObject di cui si vuole calcolare le calorie
+     * @return Il valore delle calorie
+     */
+
     protected int calcolaCalorie(PortataObject portata){
         return portata.getQuantita()*(portata.getCibo().getKilocal())/100;
     }
 
+    /**
+     * Metodo che calcola la quantità di un cibo a partire da calorie e kcal di un cibo
+     * @param calorie Calorie necessarie per la quantità da calcolare
+     * @param kilocal Kcal del cibo
+     * @return Il valore della quantità
+     */
+
     protected int calcolaQuantita(int calorie, int kilocal){
         return (calorie*100)/kilocal;
     }
+
+    /**
+     * Metodo che riempie un HashMap la cui chiave è un enumerativo di portata e il valore è un array di stringhe
+     */
 
     protected void generateIdoneitaMap() {
         if (idoneitamap == null) {
@@ -213,6 +274,13 @@ public abstract class BaseAlimPresenter extends Presenter {
             idoneitamap.put(PastoEnum.cena, cenamap);
         }
     }
+
+    /**
+     * Metodo che ottiene il valore di un componenete dell'HashMap in base al valore della chiave
+     * @param pasto Tipo enumerativo del pasto
+     * @param portata Valore della chiave da cui si estapola l'elemento dell'HashMap
+     * @return Array di stringa
+     */
 
     protected String[] getIdoneita (PastoEnum pasto, PortataEnum portata) {
         return idoneitamap.get(pasto).get(portata);

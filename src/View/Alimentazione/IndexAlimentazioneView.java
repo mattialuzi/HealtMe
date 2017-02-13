@@ -9,8 +9,9 @@ import java.util.Map;
 import static java.time.DayOfWeek.*;
 
 /**
- * Created by lorenzobraconi on 11/01/17.
+ * La classe IndexAlimentazioneView contiene attributi e metodi associati al file XML IndexAlimentazioneView.form
  */
+
 public class IndexAlimentazioneView {
     private JPanel mainPanel;
     private JTabbedPane tabbedPane1;
@@ -52,6 +53,10 @@ public class IndexAlimentazioneView {
         return mainPanel;
     }
 
+    /**
+     * Metodo che crea componenti dell'User Interface
+     */
+
     private void createUIComponents() {
         lunedi = new GiornoAlimView();
         martedi = new GiornoAlimView();
@@ -69,13 +74,29 @@ public class IndexAlimentazioneView {
         domenicaPanel = domenica.getMainPanel();
     }
 
+    /**
+     *  Metodo che prende un elemento dell'HasHMap in base alla chiave
+     * @param giornosettimana  Valore della chiave
+     * @return La variabile GiornoAlimView selezionata
+     */
+
     public GiornoAlimView getGiorni(DayOfWeek giornosettimana) {
             return giorni.get(giornosettimana);
     }
 
+    /**
+     * Metodo che imposta il tab al giorno corrente della settimana
+     * @param today Nome del giorno
+     */
+
     public void setTodayTab (DayOfWeek today) {
         tabbedPane1.setSelectedComponent(giorni.get(today).getMainPanel());
     }
+
+    /**
+     * Metodo che imposta la visibilità del panel Calorie
+     * @param prog Indica se il programma è combinato
+     */
 
     public void showHideCaloriePanel(boolean prog){
         obiettivoPanel.setVisible(prog);
@@ -83,6 +104,11 @@ public class IndexAlimentazioneView {
         ugualePanel.setVisible(prog);
         rimanentePanel.setVisible(prog);
     }
+
+    /**
+     * Setta Il valorie delle calorie nei label
+     * @param effettive Valore della calorie effettive
+     */
 
     public void setCalorieLabel(int effettive){
         effettivoLabel.setText(String.valueOf(effettive));
@@ -92,6 +118,12 @@ public class IndexAlimentazioneView {
             rimanenteLabel.setText(rimanenti+" Kcal");
         }
     }
+
+    /**
+     * Setta Il valorie delle calorie nei label
+     * @param effettive Valore della calorie effettive
+     * @param obiettivo Valore della calorie obiettivo
+     */
 
     public void setCalorieLabel(int effettive,int obiettivo){
         effettivoLabel.setText(String.valueOf(effettive));

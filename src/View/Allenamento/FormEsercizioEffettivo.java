@@ -4,9 +4,6 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
 
-/**
- * Created by lorenzobraconi on 07/02/17.
- */
 public class FormEsercizioEffettivo extends JDialog{
     private JPanel contentPane;
     private JComboBox intensita;

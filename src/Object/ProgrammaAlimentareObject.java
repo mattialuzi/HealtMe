@@ -1,13 +1,14 @@
 package Object;
 
 import Object.Enum.AlimentazioneEnum;
-
 import java.util.ArrayList;
 
 /**
- * Created by Mattia on 16/01/2017.
+ * La classe ProgrammaAlimentareObject contiene dati comuni per gli Object ProgAlim
  */
+
 public abstract class ProgrammaAlimentareObject {
+
     protected int id;
     protected ArrayList<GiornoAlimProgObject> settimanaalimentare;
     protected AlimentazioneEnum tipo_alimentazione;

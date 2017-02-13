@@ -10,8 +10,9 @@ import java.awt.event.ItemListener;
 import java.util.Enumeration;
 
 /**
- * Created by lorenzobraconi on 11/01/17.
+ * La classe NewCiboView contiene attributi e metodi associati al file XML NewCiboView.form
  */
+
 public class NewCiboView extends View {
     private JPanel mainPanel;
     private JButton azzeraCampiButton;
@@ -33,17 +34,9 @@ public class NewCiboView extends View {
         idoneita.setModel(new DefaultComboBoxModel(items));
     }
 
-    public void addAzzeraCampiButtonListener(ActionListener listener) {
-        azzeraCampiButton.addActionListener(listener);
-    }
-
-    public void addAggiungiAlimentoButtonListener(ActionListener listener) {
-        aggiungiAlimentoButton.addActionListener(listener);
-    }
-
-    public void addSetIdoneitaItemListener (ItemListener listener) {
-        portata.addItemListener(listener);
-    }
+    /**
+     * Metodo che azzera i campi della form di inserimento di un nuovo cibo
+     */
 
     public void azzeraCampi() {
         nome.setText("");
@@ -53,6 +46,11 @@ public class NewCiboView extends View {
         allergia.setSelectedIndex(0);
         compatibilita.setSelectedIndex(0);
     }
+
+    /**
+     * Metodo che verifica se i valori inseriti rispettano il corretto pattern
+     * @return
+     */
 
     public boolean isValid() {
         boolean validator = true;
@@ -69,6 +67,11 @@ public class NewCiboView extends View {
         return validator;
     }
 
+    /**
+     * Metodo che crea un nuovo CiboObject settando i valori
+     * @return Variabile di tipo CiboObject
+     */
+
     public CiboObject getNuovoCibo() {
         CiboObject nuovocibo = new CiboObject();
         nuovocibo.setNome(nome.getText());
@@ -82,9 +85,10 @@ public class NewCiboView extends View {
         return nuovocibo;
     }
 
-    public JPanel getMainPanel() {
-        return mainPanel;
-    }
+    /**
+     * Metodo che setta l'idoneità di un cibo in base al tipo di portata
+     * @param tipoportata Tipo di portata
+     */
 
     public void setIdoneita(PortataEnum tipoportata) {
         Item[] items;
@@ -112,12 +116,23 @@ public class NewCiboView extends View {
         idoneita.setModel(new DefaultComboBoxModel(items));
     }
 
+    public JPanel getMainPanel() {
+        return mainPanel;
+    }
 
+    /** Listener associati ad elementi di cui è composto il file XML NewCiboView.form */
 
+    public void addAzzeraCampiButtonListener(ActionListener listener) {
+        azzeraCampiButton.addActionListener(listener);
+    }
 
+    public void addAggiungiAlimentoButtonListener(ActionListener listener) {
+        aggiungiAlimentoButton.addActionListener(listener);
+    }
 
-
-
+    public void addSetIdoneitaItemListener (ItemListener listener) {
+        portata.addItemListener(listener);
+    }
 }
 
 

@@ -1,10 +1,11 @@
 package Object;
 
 import Object.Enum.GiornoEnum;
-
 import java.time.LocalDate;
-import java.util.Date;
 
+/**
+ * La classe GiornoAllenDinamicoObject mappa la tabella "giorno_allen_dinamico" del database
+ */
 
 public class GiornoAllenDinamicoObject extends GiornoAllenProgObject{
 

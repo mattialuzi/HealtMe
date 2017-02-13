@@ -10,8 +10,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Created by lorenzobraconi on 12/01/17.
+ * La classe GiornoAlimView contiene attributi e metodi associati al file XML GiornoAlimView.form
  */
+
 public class GiornoAlimView {
     private JPanel mainPanel;
     private JTable spuntiniProgTable;
@@ -22,6 +23,7 @@ public class GiornoAlimView {
     private GiornoAlimForm giornoeffettivo;
 
     public GiornoAlimView() {
+
         String[] columnnames = {"Portata", "Alimento", "Quantita"};
         DefaultTableModel tablemodel = new DefaultTableModel(columnnames, 0) {
             @Override
@@ -59,6 +61,73 @@ public class GiornoAlimView {
         return mainPanel;
     }
 
+    /**
+     * Setta la visibilita della classe view GiornoALimForm
+     */
+
+    public void setaddButtonsVisible () {
+       giornoeffettivo.setButtonsVisible();
+    }
+
+    /**
+     * Metodo che prende le tabelle di un giorno
+     * @param tipogiorno Tipo del giorno da cui recuperare le tabella
+     * @return Tabelle dei pasti programmati
+     */
+
+    public ArrayList<JTable> getTables (GiornoEnum tipogiorno) {
+        if (tipogiorno == GiornoEnum.effettivo) {
+            return giornoeffettivo.getEffTables();
+        } else {
+            ArrayList<JTable> listatabelle = new ArrayList<JTable>(4);
+            listatabelle.add(0, colazioneProgTable);
+            listatabelle.add(1, pranzoProgTable);
+            listatabelle.add(2, spuntiniProgTable);
+            listatabelle.add(3, cenaProgTable);
+            return listatabelle;
+        }
+    }
+
+    /**
+     * Setta le HashMap
+     */
+
+    public void setButtonFromTable(){
+        giornoeffettivo.setButtonFromTable();
+    }
+
+    /**
+     * Metodo che prende un elemento dell'HasHMap in base alla chiave
+     * @param tablemodel Valore della chiave
+     * @return Il bottone selezionato
+     */
+
+    public JButton getButtonFromTable(ListSelectionModel tablemodel){
+        return giornoeffettivo.getButtonFromTable(tablemodel);
+    }
+
+    /**
+     * Setta le HashMap
+     */
+
+    public void setTableFromButton(){
+        giornoeffettivo.setTableFromButton();
+    }
+
+    /**
+     * Metodo che prende un elemento dell'HasHMap in base alla chiave
+     * @param nomebottone  Valore della chiave
+     * @return La tabella selezionata
+     */
+
+    public JTable getTableFromButton(String nomebottone){
+        return giornoeffettivo.getTableFromButton(nomebottone);
+    }
+
+    /**
+     * Listener associati ad elementi di cui è composto il file XML GiornoAlimView.form
+     */
+
     public void addListenersAndshowButtons(ActionListener listener) {
         giornoeffettivo.addListenersAndShowButtons(listener);
     }
@@ -83,38 +152,9 @@ public class GiornoAlimView {
         giornoeffettivo.addTableSelectionListener(listener);
     }
 
-    public void setaddButtonsVisible () {
-       giornoeffettivo.setButtonsVisible();
-    }
-
-    public ArrayList<JTable> getTables (GiornoEnum tipogiorno) {
-        if (tipogiorno == GiornoEnum.effettivo) {
-            return giornoeffettivo.getEffTables();
-        } else {
-            ArrayList<JTable> listatabelle = new ArrayList<JTable>(4);
-            listatabelle.add(0, colazioneProgTable);
-            listatabelle.add(1, pranzoProgTable);
-            listatabelle.add(2, spuntiniProgTable);
-            listatabelle.add(3, cenaProgTable);
-            return listatabelle;
-        }
-    }
-
-    public void setButtonFromTable(){
-        giornoeffettivo.setButtonFromTable();
-    }
-
-    public JButton getButtonFromTable(ListSelectionModel tablemodel){
-        return giornoeffettivo.getButtonFromTable(tablemodel);
-    }
-
-    public void setTableFromButton(){
-        giornoeffettivo.setTableFromButton();
-    }
-
-    public JTable getTableFromButton(String nomebottone){
-        return giornoeffettivo.getTableFromButton(nomebottone);
-    }
+    /**
+     * Metodo che crea componenti dell'User Interface
+     */
 
     private void createUIComponents() {
         giornoeffettivo = new GiornoAlimForm("Cosa hai mangiato");

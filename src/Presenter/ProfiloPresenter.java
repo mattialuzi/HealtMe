@@ -15,9 +15,8 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-
 /**
- * Created by lorenzobraconi on 05/01/17.
+ * La classe ProfiloPresenter è il presenter utilizzato per la sezione profilo di Health Me!
  */
 public class ProfiloPresenter {
 
@@ -200,6 +199,15 @@ public class ProfiloPresenter {
         });
     }
 
+    /**
+     * Metodo che modifica un campo non enumerativo del profilo dell'utente
+     * @param campo Campo che si intende modificare
+     * @param info Vecchio valore del campo
+     * @param username Username dell'utente
+     * @param tipocampo Tipo di pattern per validare il nuovo valore del campo
+     * @return Il nuovo valore inserito per quel campo
+     */
+
     public String modificaInfoUtente(String campo, String info, String username, String tipocampo ) {
 
         String newvalue = JOptionPane.showInputDialog(null, "Modifica " + campo + ": ", info);
@@ -225,6 +233,13 @@ public class ProfiloPresenter {
         return newvalue;
 
     }
+
+    /**
+     * Metodo che modifica un campo enumerativo del profilo dell'utente
+     * @param campo Campo enumerativo che si intende modificare
+     * @param info Nuovo valore del campo enumerativo
+     * @param username Username dell'utente
+     */
 
     public void modificaInfoUtenteEnum(String campo, String info, String username){
             HashMap<String,Object> campoutente = new HashMap<String,Object>();

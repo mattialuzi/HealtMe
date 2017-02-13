@@ -3,9 +3,11 @@ package Object;
 import java.util.ArrayList;
 
 /**
- * Created by lorenzobraconi on 17/01/17.
+ * La classe SedutaObject mappa la tabella "seduta" del database
  */
+
 public class SedutaObject {
+
     private int id;
     private ArrayList<AttivitaObject> listaattivita;
 

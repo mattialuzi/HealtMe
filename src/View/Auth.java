@@ -6,8 +6,9 @@ import java.awt.*;
 import java.net.URL;
 
 /**
- * Created by lorenzobraconi on 05/01/17.
+ *  La classe Auth contiene attributi e metodi associati al file XML Auth.form
  */
+
 public class Auth {
 
     private static JFrame frame = new JFrame("Health Me!");
@@ -51,6 +52,8 @@ public class Auth {
     public static JFrame getFrame() {
         return frame;
     }
+
+    /**  Metodo che crea componenti dell'User Interface  */
 
     private void createUIComponents() {
         indexview = new Index();

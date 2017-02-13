@@ -1,12 +1,12 @@
 package Object;
 
 import Object.Enum.AlimentazioneEnum;
-
 import java.util.ArrayList;
 
 /**
- * Created by lorenzobraconi on 28/12/16.
+ * La classe ProgAlimManObject mappa la tabella "prog_alim_man" del database
  */
+
 public class ProgAlimManObject extends ProgrammaAlimentareObject {
 
     public ProgAlimManObject () {

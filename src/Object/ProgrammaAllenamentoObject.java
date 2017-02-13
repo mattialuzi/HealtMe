@@ -3,9 +3,11 @@ package Object;
 import java.util.ArrayList;
 
 /**
- * Created by Mattia on 16/01/2017.
+ * La classe ProgrammaAllenamentoObject contiene dati comuni per gli Object ProgAllen
  */
+
 public abstract class ProgrammaAllenamentoObject {
+
     protected int id;
     protected ArrayList<GiornoAllenProgObject> settimanaallenamento;
 

@@ -1,13 +1,12 @@
 package Object;
 
 import Object.Enum.GiornoEnum;
-
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
- * Created by lorenzobraconi on 28/12/16.
+ * La classe GiornoAlimProgObject mappa la tabella "giorno_alim_prog" del database
  */
+
 public class GiornoAlimProgObject extends GiornoAlimObject {
 
     private int id_giorno;

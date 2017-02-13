@@ -3,8 +3,9 @@ package View.Alimentazione;
 import javax.swing.*;
 
 /**
- * Created by lorenzobraconi on 05/01/17.
+ * La classe AlimentazioneView contiene attributi e metodi associati al file XML AlimentazioneView.form
  */
+
 public class AlimentazioneView {
     private JPanel mainPanel;
     private JPanel indexAlimPanel;
@@ -28,6 +29,10 @@ public class AlimentazioneView {
     public NewCiboView getNewcibo() {
         return newcibo;
     }
+
+    /**
+     * Metodo che crea componenti dell'User Interface
+     */
 
     private void createUIComponents() {
         indexalimentazione = new IndexAlimentazioneView();

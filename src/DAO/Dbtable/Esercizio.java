@@ -1,9 +1,10 @@
 package DAO.Dbtable;
 
-/**
- * Created by Mattia on 27/12/2016.
- */
 import Helpers.DbTable;
+
+/**
+ * Classe Esercizio che estende l'helpers DbTable
+ */
 
 public class Esercizio extends DbTable {
     public Esercizio(){

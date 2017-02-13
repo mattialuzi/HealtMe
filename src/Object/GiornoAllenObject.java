@@ -3,8 +3,9 @@ package Object;
 import Object.Enum.GiornoEnum;
 
 /**
- * Created by lorenzobraconi on 28/12/16.
+ * La classe GiornoAllenObject contiene dati comuni per gli Object GiornoAllen
  */
+
 public abstract class GiornoAllenObject {
 
     protected GiornoEnum tipo;

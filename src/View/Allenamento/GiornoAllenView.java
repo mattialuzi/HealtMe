@@ -7,9 +7,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 
-/**
- * Created by lorenzobraconi on 07/02/17.
- */
 public class GiornoAllenView {
     private JPanel mainPanel;
     private JPanel effettivoPanel;

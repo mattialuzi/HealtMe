@@ -5,6 +5,10 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * La Classe Graph contiene metodi di costruzione di grafici
+ */
+
 public class Graph extends JPanel {
     private ArrayList<LocalDate> arrayx1 = new ArrayList<>();
     private ArrayList<Double> arrayy1 = new ArrayList<>();
@@ -68,7 +72,10 @@ public class Graph extends JPanel {
         this.setPreferredSize(new Dimension((x1.size()-1)*xFactor+2*borderx,200));
     }
 
-
+    /**
+     * Override del metodo paintComponenet
+     * @param g
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -150,8 +157,5 @@ public class Graph extends JPanel {
 
             }
         }
-
-
     }
-
 }

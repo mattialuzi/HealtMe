@@ -1,11 +1,9 @@
 package Object.Enum;
 
-import javax.swing.*;
-import java.util.ArrayList;
-
 /**
- * Created by ALLDE on 28/12/2016.
+ * La classe GiornoEnum implementa l'enumerazione giorno di un programma alimentare o d'allenamento
  */
+
 public enum GiornoEnum {
     programmato,
     effettivo,

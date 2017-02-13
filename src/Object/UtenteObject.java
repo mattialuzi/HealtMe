@@ -5,8 +5,9 @@ import Object.Enum.LivelloAttivitaFisicaEnum;
 import Object.Enum.AllergiaEnum;
 
 /**
- * Created by lorenzobraconi on 28/12/16.
+ * La classe UtenteObject mappa la tabella "utente" del database
  */
+
 public class UtenteObject {
 
     private String username;

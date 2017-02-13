@@ -8,9 +8,6 @@ import Object.UtenteObject;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-/**
- * Created by lorenzobraconi on 05/01/17.
- */
 public class ProfiloView extends View {
     private JPanel mainPanel;
     private JButton eliminaAccountButton;

@@ -3,13 +3,13 @@ package DAO;
 import DAO.Dbtable.Attivita;
 import Object.AttivitaObject;
 import Object.EsercizioObject;
-
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
- * Created by lorenzobraconi on 07/02/17.
+ * La classe AttivitaDAO contiene i metodi per la gestione dei dati della tabella "attivita" del database.
  */
+
 public class AttivitaDAO {
 
     protected Attivita tabella;
@@ -17,6 +17,12 @@ public class AttivitaDAO {
     public AttivitaDAO() {
         tabella = new Attivita();
     }
+
+    /**
+     * Metodo che recupera tutte le attivita di una seduta di allenamento in base al codice
+     * @param idseduta Codice della seduta
+     * @return ArrayList di AttivitaObject
+     */
 
     public ArrayList<AttivitaObject> getAttivitaById(int idseduta){
         tabella.select();
@@ -38,6 +44,11 @@ public class AttivitaDAO {
         return listaattivita;
     }
 
+    /**
+     * Metodo che inserisce una nuova attività a partire da una AttivitaObject
+     * @param attivita variabile di tipo AttivitaObject i cui attributi costituiscono i dati per inserire una nuova attivita nel database
+     */
+
     public void inserisciAttivita (AttivitaObject attivita) {
         String dati= ""+attivita.getId_seduta()+"";
         dati=dati+",'"+String.valueOf(attivita.getEsercizio().getTipologia())+"'";
@@ -46,11 +57,24 @@ public class AttivitaDAO {
         tabella.execute();
     }
 
+    /**
+     * Metodo che elimina una attività in base alla chiave primaria della tabella del database
+     * @param id_seduta Codice della seduta
+     * @param esercizio Nome dell'esercizio
+     */
+
     public void eliminaAttivita (int id_seduta, String esercizio) {
         tabella.delete();
         tabella.where("id_seduta='" + id_seduta + "' AND esercizio='" + esercizio + "'");
         tabella.execute();
     }
+
+    /**
+     * Metodo che modifica la quantità di una attività
+     * @param id_seduta Codice della seduta
+     * @param esercizio Nome dell'esercizio
+     * @param quantita  Nuova quantita dell'esercizio
+     */
 
     public void updateAttivita (int id_seduta, String esercizio, double quantita ) {
         String dati = "quantita= "+quantita;

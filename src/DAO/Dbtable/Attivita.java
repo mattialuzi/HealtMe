@@ -1,10 +1,10 @@
 package DAO.Dbtable;
 
-/**
- * Created by Mattia on 27/12/2016.
- */
-
 import Helpers.DbTable;
+
+/**
+ * Classe Attivita che estende l'helpers DbTable
+ */
 
 public class Attivita extends DbTable {
     public Attivita(){

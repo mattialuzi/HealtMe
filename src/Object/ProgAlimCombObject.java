@@ -1,9 +1,11 @@
 package Object;
 
 import Object.Enum.AlimentazioneEnum;
-import View.Alimentazione.AlimentazioneView;
-
 import java.util.ArrayList;
+
+/**
+ * La classe ProgAlimCombObject mappa la tabella "prog_alim_comb" del database
+ */
 
 
 public class ProgAlimCombObject extends ProgrammaAlimentareObject {

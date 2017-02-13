@@ -1,23 +1,17 @@
 package Helpers;
 
-
 import java.sql.*;
-import java.util.*;
+
+/**
+ * La classe DbTable estente ogni file del package Dbtable e contiene tutte le funzioni principali che permettono di interagire con il DBMS
+ */
 
 public class DbTable {
 
     protected String name;
     protected String sql;
 
-    public void select(){
-        sql="SELECT * FROM " + name;
-    }
-
-    public void select(String campo) { sql="SELECT " +campo+ " FROM " + name;}
-
-    public void where(String clausola){
-        sql=sql + " WHERE " + clausola;
-    }
+    /** Metodi DML (insert, update , delete)  */
 
     public void insert(String campi){
 
@@ -28,6 +22,38 @@ public class DbTable {
 
         sql="update "+ name + " set " + info;
     }
+
+    public void delete(){
+        sql="delete from "+name;
+    }
+
+    /**Metodi select*/
+
+    /** Seleziono tutte le tuple della tabella */
+
+    public void select(){
+        sql="SELECT * FROM " + name;
+    }
+
+    /** Seleziono solo alcuni campi della tabella */
+
+    public void select(String campo) { sql="SELECT " +campo+ " FROM " + name;}
+
+    /**Metodi per il completamento della query*/
+
+    /** Aggiungo alla query la clausola where */
+
+    public void where(String clausola){
+        sql=sql + " WHERE " + clausola;
+    }
+
+    /** Aggiungo alla query la clausola order by */
+
+    public void order(String clausola){
+        sql = sql + "ORDER BY " + clausola;
+    }
+
+    /** Metodi di esecuzione della query */
 
     public int count(ResultSet risultato){
         int i=0;
@@ -42,13 +68,7 @@ public class DbTable {
         return i;
     }
 
-    public void order(String clausola){
-        sql = sql + "ORDER BY " + clausola;
-    }
-
-    public void delete(){
-        sql="delete from "+name;
-    }
+    /** Utilizzata per l'esecuzione di una query di tipo insert che non contiene un attributo di tipo AUTO_INCREMENT nel database */
 
     public boolean execute(){
         Connector connector= new Connector();
@@ -66,6 +86,8 @@ public class DbTable {
         connector.disconnect();
         return check;
     }
+
+    /** Utilizzata per l'esecuzione di una query di tipo insert che contiene un attributo di tipo AUTO_INCREMENT nel database */
 
     public int executeForKey(){
         Connector connector= new Connector();
@@ -90,7 +112,7 @@ public class DbTable {
         return generated_key;
     }
 
-
+    /**Utilizzata per l'esecuzione di query da cui si deve estrapolare dati dal database */
 
     public ResultSet fetch(){
 

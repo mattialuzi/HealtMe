@@ -2,9 +2,6 @@ package View.Allenamento;
 
 import javax.swing.*;
 
-/**
- * Created by ALLDE on 07/02/2017.
- */
 public class NewProgAllenView {
 
     private JPanel mainPanel;

@@ -5,18 +5,24 @@ import Object.Enum.CategoriaEnum;
 import Object.Enum.IntensitaEnum;
 import Object.Enum.UnitaMisuraEnum;
 import Object.EsercizioObject;
-
 import java.sql.ResultSet;
 
 /**
- * Created by ALLDE on 07/02/2017.
+ * La classe EsercizioDAO contiene i metodi per la gestione dei dati della tabella "esercizio" del database.
  */
+
 public class EsercizioDAO {
     protected Esercizio tabella;
 
     public EsercizioDAO() {
         tabella = new Esercizio();
     }
+
+    /**
+     * Metodo che recupera un esercizio in base al suo nome e ne restituisce un EsercizioObject
+     * @param tipologia Nome dell'esercizio da recuperare
+     * @return Variabile di tipo EsercizioObject i cui attributi sono settati in base ai dati dell'esercizio recuperato
+     */
 
     public EsercizioObject getEsercizioByTipologia(String tipologia){
         tabella.select();
@@ -36,6 +42,12 @@ public class EsercizioDAO {
         return esercizio;
     }
 
+    /**
+     * Metodo che verifica se un esercizio è presente in base al suo nome
+     * @param nome Nome dell'esercizio di cui si vuole verificare la presenza nel database
+     * @return True se l'esercizio è presente, falso se non presente
+     */
+
     public boolean findEsercizioByName(String nome){
         boolean success=false;
         tabella.select();
@@ -48,6 +60,11 @@ public class EsercizioDAO {
         return success;
     }
 
+    /**
+     * Metodo che inserisce un esercizio a partire da un EsercizioObject
+     * @param esercizio Variabile di tipo EsercizioObject il cui valore degli attributi costituiscono i dati da inserire
+     */
+
     public void inserisciEsercizio(EsercizioObject esercizio){
         String dati= "'"+esercizio.getTipologia()+"'";
         dati=dati+",'"+String.valueOf(esercizio.getCategoria())+"'";
@@ -58,11 +75,16 @@ public class EsercizioDAO {
         tabella.execute();
     }
 
+    /**
+     * Metodo che recupera un esercizio in base all'intensità
+     * @param intensita Nome dell'intensità
+     * @return Variabile di tipo ResultSet che contiene tutti gli esercizi recuperati
+     */
+
     public ResultSet getEserciziByIntensita(String intensita){
         tabella.select();
         tabella.where("intensita='" + intensita + "'");
         return tabella.fetch();
 
     }
-
 }

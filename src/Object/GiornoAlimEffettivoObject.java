@@ -2,15 +2,14 @@ package Object;
 
 import Object.Enum.GiornoEnum;
 import Object.Enum.StatusEnum;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 
 /**
- * Created by Mattia on 16/01/2017.
+ * La classe GiornoAlimEffettivoObject mappa la tabella "giorno_alim_effettivo del database
  */
+
+
 public class GiornoAlimEffettivoObject extends GiornoAlimObject {
 
     private String username;

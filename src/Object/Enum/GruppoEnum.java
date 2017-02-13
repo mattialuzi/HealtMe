@@ -1,8 +1,9 @@
 package Object.Enum;
 
 /**
- * Created by lorenzobraconi on 28/12/16.
+ * La classe GruppoEnum implementa l'enumerazione gruppo di un cibo
  */
+
 public enum GruppoEnum {
     carne,
     pesce,

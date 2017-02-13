@@ -4,10 +4,9 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
 
-/**
- * Created by ALLDE on 07/02/2017.
- */
+
 public class FormEserciziPraticati extends JDialog {
+
     private JPanel contentPane;
     private JComboBox Intensita;
     private JTextField nomeEsercizio;

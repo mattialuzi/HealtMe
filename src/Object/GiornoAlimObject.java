@@ -1,13 +1,13 @@
 package Object;
 
 import Object.Enum.GiornoEnum;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Mattia on 16/01/2017.
+ * La classe GiornoAlimObject contiene dati comuni per gli Object GiornoAlim
  */
+
 public abstract class GiornoAlimObject {
 
     protected GiornoEnum tipo;

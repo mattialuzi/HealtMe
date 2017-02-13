@@ -1,8 +1,9 @@
 package Object.Enum;
 
 /**
- * Created by lorenzobraconi on 30/01/17.
+ * La classe IdoneitaEnum implementa l'enumerazione idoneita di un cibo
  */
+
 public enum IdoneitaEnum {
     tutti,
     pranzo_cena,

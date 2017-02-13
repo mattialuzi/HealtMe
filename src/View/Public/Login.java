@@ -34,5 +34,4 @@ public class Login {
     public JPanel getMainPanel() {
         return mainPanel;
     }
-
 }

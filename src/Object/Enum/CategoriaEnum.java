@@ -1,8 +1,9 @@
 package Object.Enum;
 
 /**
- * Created by Lorenzo on 28/12/16.
+ * La classe CategoriaEnum implementa l'enumerazione categoria di un esericizio
  */
+
 public enum CategoriaEnum {
     sport_squadra,
     sport_montagna,

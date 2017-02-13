@@ -5,8 +5,9 @@ import Object.Enum.IntensitaEnum;
 import Object.Enum.UnitaMisuraEnum;
 
 /**
- * Created by lorenzobraconi on 28/12/16.
+ * La classe EsercizioObject mappa la tabella "esercizio" del database
  */
+
 public class EsercizioObject {
 
     private String tipologia;

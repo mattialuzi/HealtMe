@@ -4,11 +4,11 @@ import javax.swing.*;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
- * Created by Mattia on 25/01/2017.
+ *  La classe ProgAlimManView contiene attributi e metodi associati al file XML ProgAlimManView.form
  */
+
 public class ProgAlimManView {
     private JPanel mainPanel;
     private JTabbedPane settimanaPane;
@@ -45,6 +45,8 @@ public class ProgAlimManView {
         return mainPanel;
     }
 
+    /**  Listener associati ad elementi di cui è composto il file XML ProgAlimManView.form */
+
     public void addTabbedSelectionListener (ChangeListener listener) {
         settimanaPane.addChangeListener(listener);
     }
@@ -57,10 +59,20 @@ public class ProgAlimManView {
         confermaProgrammaButton.addActionListener(listener);
     }
 
+    /**
+     *  Metodo che prende un elemento dell'HasHMap in base alla chiave
+     * @param panel Valore della chiave
+     * @return La variabile GiornoAlimForm selezionata
+     */
+
     public GiornoAlimForm getTabView (int panel) {
         return giornimanuali.get(panel);
     }
 
+
+    /**
+     * Metodo che crea componenti dell'User Interface
+     */
 
     private void createUIComponents() {
         lunedimanuale = new GiornoAlimForm("Cosa vuoi mangiare il lunedi");

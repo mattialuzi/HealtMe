@@ -2,6 +2,10 @@ package Helpers;
 
 import javax.swing.*;
 
+/**
+ * La classe View estende ogni classe view e contiene metodi comuni a tutte le classi
+ */
+
 public class View {
 
     private JPanel panel;
@@ -11,11 +15,23 @@ public class View {
         panel= new JPanel();
     }
 
-    //elimina lo spazio alla fine della stringa
+    /**
+     * Metodo che elimina tutti gli spazi finali di un testo presente in un TextBox
+     * @param elemento Stringa di cui si vuole eliminare gli spazi finali
+     * @return La stringa passata come parametro esclusa degli spazi finali
+     */
+
     public String deleteLastSpace(String elemento)
     {
         return elemento.replaceAll("\\s+$", "");
     }
+
+    /**
+     * Metodo che permette verificare se un elemento rispetta il corretto pattern
+     * @param elemento Stringa che si vuole verificare
+     * @param tipo Pattern che si vuole utilizzare per verificare
+     * @return true se l'elemento rispetta il pattern , false se non lo rispetta
+     */
 
     public boolean validate(String elemento, String tipo){
         boolean res = false;
@@ -38,6 +54,12 @@ public class View {
         return res;
     }
 
+    /**
+     * Metodo che implementa il pattern corretto per stringhe di testo
+     * @param elemento Elemento da verificare
+     * @return True se lo rispetta, false se non lo rispetta
+     */
+
     public boolean checkTesto(String elemento){
         boolean ritorno = false;
         String regola = "[A-Za-z]*";
@@ -45,6 +67,12 @@ public class View {
             ritorno=true;
         return ritorno;
     }
+
+    /**
+     * Metodo che implementa il pattern corretto per stringhe di tipo password
+     * @param elemento Elemento da verificare
+     * @return True se lo rispetta, false se non lo rispetta
+     */
 
     public boolean checkPass(String elemento){
         boolean ritorno = false;
@@ -54,6 +82,12 @@ public class View {
         return ritorno;
     }
 
+    /**
+     * Metodo che implementa il pattern corretto per numeri interi
+     * @param elemento Elemento da verificare
+     * @return True se lo rispetta, false se non lo rispetta
+     */
+
     public boolean checkIntero(String elemento){
         boolean ritorno = false;
         String regola = "[1-9][0-9]*";
@@ -61,6 +95,12 @@ public class View {
             ritorno=true;
         return ritorno;
     }
+
+    /**
+     * Metodo che implementa il pattern corretto per numeri che rappresentano età
+     * @param elemento Elemento da verificare
+     * @return True se lo rispetta, false se non lo rispetta
+     */
 
     public boolean checkEta(String elemento){
         boolean ritorno = false;
@@ -70,6 +110,12 @@ public class View {
         return ritorno;
     }
 
+    /**
+     * Metodo che implementa il pattern corretto per numeri con la virgola
+     * @param elemento Elemento da verificare
+     * @return True se lo rispetta, false se non lo rispetta
+     */
+
     public boolean checkVirgola(String elemento){
         boolean ritorno = false;
         String regola = "[0-9]+[\\.][0-9]+";
@@ -77,6 +123,12 @@ public class View {
             ritorno=true;
         return ritorno;
     }
+
+    /**
+     * Metodo che implementa il pattern corretto per le date
+     * @param elemento Elemento da verificare
+     * @return True se lo rispetta, false se non lo rispetta
+     */
 
     public boolean checkData(String elemento){
         boolean ritorno = false;
@@ -86,6 +138,12 @@ public class View {
         return ritorno;
     }
 
+    /**
+     * Metodo che implementa il pattern corretto per stringhe che rappresentano email
+     * @param elemento Elemento da verificare
+     * @return True se lo rispetta, false se non lo rispetta
+     */
+
     public boolean checkEmail(String elemento){
         boolean ritorno = false;
         String regola = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -93,6 +151,12 @@ public class View {
             ritorno=true;
         return ritorno;
     }
+
+    /**
+     * Metodo che implementa il pattern corretto per stringhe di nomi di cibi e esercizi
+     * @param elemento Elemento da verificare
+     * @return True se lo rispetta, false se non lo rispetta
+     */
 
     public boolean checkEsercizioCibo(String elemento){
         boolean ritorno = false;
@@ -102,9 +166,15 @@ public class View {
         return ritorno;
     }
 
+    /**
+     * Metodo che permette il calcolare il peso forma dati altezza e sesso
+     * @param altezza altezza della persona di cui si vuole calcolare il peso forma
+     * @param sesso sesso della persona di cui si vuole calcolare il peso forma
+     * @return il valore del peso forma di tipo float
+     */
+
     public double calcoloPesoForma(double altezza, int sesso){
         double peso_forma;
-        //per indicare un numero float si mette una f alla fine
         if(sesso == 1) {
             peso_forma = 22.1 * altezza * altezza;
         }

@@ -1,7 +1,7 @@
 package Object.Enum;
 
 /**
- * Created by lorenzobraconi on 01/02/17.
+ * La classe StatusEnum implementa l'enumerazione status di un giorno di allenamento dinamico
  */
 public enum StatusEnum {
     colazione,

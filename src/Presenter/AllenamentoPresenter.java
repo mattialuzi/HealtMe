@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Created by lorenzobraconi on 05/01/17.
+ * La classe AllenamentoPresenter è il presenter utilizzato per inserire un nuovo esercizio e per la gestione della settimana d'allenamento
  */
 public class AllenamentoPresenter extends BaseAllenPresenter {
 
@@ -159,9 +159,17 @@ public class AllenamentoPresenter extends BaseAllenPresenter {
         });
     }
 
+    /**
+     * Metodo che mostra la carta (classe view) IndexAllenamentoView del cardLayout
+     */
+
     public void showIndex(){
         cardLayout.show(variablePanel, "IndexAllenamentoView");
     }
+
+    /**
+     * Metodo che recupera tutti i giorni della settimana d'allenamento
+     */
 
     public void setGiorni() {
         LocalDate data = LocalDate.now();
@@ -190,6 +198,11 @@ public class AllenamentoPresenter extends BaseAllenPresenter {
             }
         }
     }
+
+    /**
+     * Metodo che aggiunge alla tabella l'attività effettiva di una seduta
+     * @param tabellamodel Variabile di tipo DefaultTableModel della tabella
+     */
 
     public void aggiungiEsercizioEffettivo(DefaultTableModel tabellamodel) {
         String unita = dialog.getMisuraLabel().getText();
@@ -224,6 +237,15 @@ public class AllenamentoPresenter extends BaseAllenPresenter {
         new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
     }
 
+    /**
+     * Metodo che verifica se aggiornare la quantita di un esercizio di un seduta se è già presente
+     * @param seduta Variabile SedutaObject che contiene la seduta dell'attività da modificare
+     * @param esercizio Esercizio che si vuole verificare se è già presente
+     * @param quantita Valore della nuova quantità
+     * @param tabellamodel DefaultTableModel della tabella
+     * @return true se l'esercizio è presente e la quantita è stata modificata, false se non è presente
+     */
+
     private boolean aggiornaAttivita(SedutaObject seduta, String esercizio, double quantita, DefaultTableModel tabellamodel) {
         Iterator<AttivitaObject> attivitaiterator = seduta.getAttivita().iterator();
         while ( attivitaiterator.hasNext() ) {
@@ -250,6 +272,11 @@ public class AllenamentoPresenter extends BaseAllenPresenter {
         return false;
     }
 
+    /**
+     * Metodo che rimuove un'attività di una seduta effettiva tra quelle già inserite
+     * @param tabella Tabella da cui prendere l'attività di una seduta
+     */
+
     public void removeAttivita(JTable tabella){
         String esercizio = tabella.getModel().getValueAt(tabella.getSelectedRow(), 0).toString();
         SedutaObject seduta = giornoeffcorrente.getSeduta();
@@ -269,6 +296,10 @@ public class AllenamentoPresenter extends BaseAllenPresenter {
         indexallenamento.setCalorieLabel(giornoeffcorrente.getCalorie());
         new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),"calorie_consumate",String.valueOf(giornoeffcorrente.getCalorie()));
     }
+
+    /**
+     * Metodo che permette di ricombinare gli esercizi di un giorno d'allenamento programmato
+     */
 
     public void ricombina(){
         ProgAllenCombObject programma =(ProgAllenCombObject) utente.getProgramma_allenamento();
@@ -317,6 +348,13 @@ public class AllenamentoPresenter extends BaseAllenPresenter {
         }
     }
 
+    /**
+     * Metodo che recupera un giorno d'allenamento dinamico
+     * @param indexgiorno Indice del giorno
+     * @param giorno Variabile di tipo GiornoAllenProgObject
+     * @return
+     */
+
     public GiornoAllenProgObject creaGiornoDinamico(int indexgiorno, GiornoAllenProgObject giorno) {
         if (giorno.getTipo().equals(GiornoEnum.programmato))
         {
@@ -351,6 +389,13 @@ public class AllenamentoPresenter extends BaseAllenPresenter {
             return giorno;
         }
     }
+
+    /**
+     * Metodo che calcola le calorie di un esercizio data la quantità
+     * @param esercizio Variabile EsercizioObject di cui si vuole calcolare le calorie
+     * @param quantita Quantità di quel cibo
+     * @return Calorie di quel esercizio
+     */
 
     private int calcolaCalorie(EsercizioObject esercizio, double quantita){
         return (int) quantita*esercizio.getConsumo_calorico();

@@ -5,9 +5,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 
-/**
- * Created by lorenzobraconi on 07/02/17.
- */
 public class GiornoAllenForm {
     private JPanel mainPanel;
     private JLabel Titlelabel;

@@ -1,8 +1,9 @@
 package Object.Enum;
 
 /**
- * Created by Lorenzo on 28/12/16.
+ * La classe IntensitaEnum implementa l'enumerazione intensita di un esercizio
  */
+
 public enum IntensitaEnum {
     assente,
     leggero,

@@ -4,10 +4,6 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 
-
-/**
- * Created by ALLDE on 07/02/2017.
- */
 public class ProgAllenCombView {
     private JPanel mainPanel;
     private JComboBox comboDisponibilita;
@@ -25,14 +21,6 @@ public class ProgAllenCombView {
     public JPanel getMainPanel() {
         return mainPanel;
     }
-
-        /*esercizipraticati.setLocationRelativeTo(null);
-        //nuovopasto = e.getActionCommand();
-        //setPortataItems();
-        esercizipraticati.setTitle("Inserisci nuovo esercizio praticato ");
-        esercizipraticati.getButtonOK();
-        esercizipraticati.pack();
-        esercizipraticati.setVisible(true); */
 
     public void addPlusButtonListener(ActionListener listener) {
         addEsercizio.addActionListener(listener);

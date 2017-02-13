@@ -10,9 +10,6 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
-/**
- * Created by lorenzobraconi on 07/02/17.
- */
 public class NewEsercizioView extends View {
 
     private JPanel mainPanel;

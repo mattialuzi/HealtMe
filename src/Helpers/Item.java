@@ -1,8 +1,9 @@
 package Helpers;
 
 /**
- * Created by Mattia on 31/01/2017.
+ * La classe Item è utilizzata nei ComboBox
  */
+
 public class Item {
     private String value;
     private String label;

@@ -1,7 +1,10 @@
 package Object;
 
-
 import java.util.ArrayList;
+
+/**
+ * La classe ProgAllenCombObject mappa la tabella "prog_allen_comb" del database
+ */
 
 public class ProgAllenCombObject extends ProgrammaAllenamentoObject {
 

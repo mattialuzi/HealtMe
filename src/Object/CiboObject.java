@@ -2,6 +2,10 @@ package Object;
 
 import Object.Enum.*;
 
+/**
+ * La classe CiboObject mappa la tabella "cibo" del database
+ */
+
 public class CiboObject {
 
     private String nome;

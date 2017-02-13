@@ -3,9 +3,6 @@ package View.Allenamento;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-/**
- * Created by ALLDE on 07/02/2017.
- */
 public class IndexProgAllenView {
 
     private JPanel mainPanel;

@@ -3,7 +3,7 @@ package DAO.Dbtable;
 import Helpers.DbTable;
 
 /**
- * Created by ALLDE on 19/01/2017.
+ * Classe Giorno_allen_eff che estende l'helpers DbTable
  */
 public class Giorno_allen_eff extends DbTable {
     public Giorno_allen_eff() {

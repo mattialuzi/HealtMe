@@ -20,8 +20,9 @@ import java.sql.ResultSet;
 import java.util.Iterator;
 
 /**
- * Created by lorenzobraconi on 06/02/17.
+ *  La classe BaseAllenPresenter contiene attributi e metodi comuni ad AllenamentoPresenter ed ProgAllenPresenter
  */
+
 public abstract class BaseAllenPresenter extends Presenter {
 
     protected GiornoAllenEffettivoObject giornoeffcorrente;
@@ -29,17 +30,24 @@ public abstract class BaseAllenPresenter extends Presenter {
     protected ResultSet esercizi;
     protected int indexoggi;
 
+    /**
+     * Metodo che aggiunge il listener alla form di inserimento di un esercizio effettivo
+     */
+
     public class ListenersAndShowButtonsAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             dialog.setLocationRelativeTo(null);
             dialog.getIntensita().setModel(new DefaultComboBoxModel(new String[]{"--scegli esercizio--","leggero", "moderato", "intenso"}));
             dialog.setTitle("Inserisci esercizio svolto");
-            //dialog.getButtonOK().setActionCommand(nuovopasto);
             dialog.pack();
             dialog.setVisible(true);
         }
     }
+
+    /**
+     * Metodo che aggiunge il listener all'inserimento dell'intensità della form di inserimento di un cibo effettivo
+     */
 
     public class SetIntensitaItemAction implements ItemListener {
         @Override
@@ -51,6 +59,10 @@ public abstract class BaseAllenPresenter extends Presenter {
             }
         }
     }
+
+    /**
+     * Metodo che aggiunge il listener all'inserimento di un carattere della form di inserimento di un esercizio effettivo
+     */
 
     public class SearchKeyAction implements KeyListener {
         @Override
@@ -67,6 +79,10 @@ public abstract class BaseAllenPresenter extends Presenter {
         }
     }
 
+    /**
+     * Metodo che aggiunge il listener alla selezione di un esercizio della form di inserimento di un esercizio effettivo
+     */
+
     public class SetEsercizioListSelectionAction implements ListSelectionListener {
         @Override
         public void valueChanged(ListSelectionEvent e) {
@@ -80,6 +96,10 @@ public abstract class BaseAllenPresenter extends Presenter {
             else dialog.getButtonOK().setEnabled(false);
         }
     }
+
+    /**
+     * Metodo che aggiunge il listener all'inserimento della quantità di un esercizio della form di inserimento di un esercizio effettivo
+     */
 
     public class QuantitaKeyAction implements KeyListener {
         @Override
@@ -98,6 +118,10 @@ public abstract class BaseAllenPresenter extends Presenter {
             else dialog.getButtonOK().setEnabled(false);
         }
     }
+
+    /**
+     *  Metodo che permette di mostrare gli esercizi nella form di inserimento di un esercizio effettivo
+     */
 
     public void showEsercizi(){
         String intensitascelta = dialog.getIntensita().getSelectedItem().toString();
@@ -119,6 +143,10 @@ public abstract class BaseAllenPresenter extends Presenter {
         lista.setModel(listmodel);
     }
 
+    /**
+     * Metodo che permette di filtrare gli esercizi nella form di inserimento di un esercizio effettivo
+     */
+
     public void filtraEsercizi(){
         String input = dialog.getNomeEsercizio().getText();
         DefaultListModel listafiltrata = new DefaultListModel();
@@ -135,6 +163,12 @@ public abstract class BaseAllenPresenter extends Presenter {
         }
     }
 
+    /**
+     * Metodo che permette di mostrare tutte le attività di tutti le sedute di un determinato giorno
+     * @param giorno Variabile di tipo GiornoAllenObject di cui si vuole mostrare tutti le attività di tutti le sedute
+     * @param giornoview Variabile della classe view GiornoAllenView su di cui si vogliono mostrare le informazioni
+     */
+
     protected void showSeduta(GiornoAllenObject giorno, GiornoAllenView giornoview) {
         JTable tabella = giornoview.getTable(giorno.getTipo());
         SedutaObject seduta = giorno.getSeduta();
@@ -149,12 +183,23 @@ public abstract class BaseAllenPresenter extends Presenter {
         }
     }
 
+    /**
+     * Metodo che permette di rimuovere  tutte le attività della tabella seduta
+     * @param giornoview Variabile della classe view GiornoAllenView da cui prendere la tabella
+     * @param tipogiorno Tipo del giorno di cui rimuovere le attività
+     */
+
     protected void removeSeduta(GiornoAllenView giornoview, GiornoEnum tipogiorno){
         JTable tabella = giornoview.getTable(tipogiorno);
         DefaultTableModel model = (DefaultTableModel)tabella.getModel();
         model.setRowCount(0);
     }
 
+    /**
+     * Metodo che permette a di calcolare le calorie a partire da una variabile AttivitàObject
+     * @param attivita Variabile di tipo AttivitaObject di cui si vuole calcolare le calorie
+     * @return Il valore delle calorie
+     */
 
     protected int calcolaCalorie(AttivitaObject attivita){
         return (int) attivita.getQuantita()*attivita.getEsercizio().getConsumo_calorico();

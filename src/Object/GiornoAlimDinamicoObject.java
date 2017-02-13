@@ -1,10 +1,12 @@
 package Object;
 
 import Object.Enum.GiornoEnum;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * La classe GiornoAlimDinamicoObject mappa la tabella "giorno_alim_dinamico" del database
+ */
 
 public class GiornoAlimDinamicoObject extends GiornoAlimProgObject {
 

@@ -1,5 +1,9 @@
 package Object;
 
+/**
+ * La classe AttivitaObject mappa la tabella "attivita" del database
+ */
+
 public class AttivitaObject {
 
     private int id_seduta;

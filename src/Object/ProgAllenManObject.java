@@ -1,7 +1,10 @@
 package Object;
 
 import java.util.ArrayList;
-import java.util.Date;
+
+/**
+ * La classe ProgAllenManObject mappa la tabella "prog_allen_man" del database
+ */
 
 public class ProgAllenManObject extends ProgrammaAllenamentoObject {
 

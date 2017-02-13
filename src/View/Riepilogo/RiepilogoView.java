@@ -3,9 +3,11 @@ package View.Riepilogo;
 import javax.swing.*;
 
 /**
- * Created by lorenzobraconi on 05/01/17.
+ * La classe RiepilogoView contiene attributi e metodi associati al file XML RiepilogoView.form
  */
+
 public class RiepilogoView {
+
     private JPanel mainPanel;
     private JTabbedPane tabbedPane1;
     private JPanel storiaPanel;
@@ -29,10 +31,11 @@ public class RiepilogoView {
         return storia;
     }
 
+    /**
+     *  Metodo che crea componenti dell'User Interface
+     */
     private void createUIComponents() {
-        //progressi = new ProgressiView();
         storia = new StoriaView();
-        //progressiPanel = progressi.getMainPanel();
         storiaPanel = storia.getMainPanel();
     }
 
