@@ -270,55 +270,55 @@ public class ProgAlimPresenter extends BaseAlimPresenter {
         }
 
         private int calcolaFabbisogno(){
-            Float pesoforma = utente.getPeso_forma();
+            Double pesoforma = utente.getPeso_forma();
             int sesso = utente.getSesso();
             int eta = utente.getEta();
             LavoroEnum lavoro = utente.getLavoro();
             LivelloAttivitaFisicaEnum attivitafisica = utente.getLivello_attivita_fisica();
-            float mb;
-            float laf;
+            double mb;
+            double laf;
             if(sesso == 1) {
-                TreeMap<Integer, Float> uomomap = new TreeMap<Integer, Float>();
-                uomomap.put(10, (15.3f * pesoforma) + 679);
-                uomomap.put(30, (11.6f * pesoforma) + 879);
-                uomomap.put(60, (11.9f * pesoforma) + 700);
-                uomomap.put(74, (8.4f * pesoforma) + 819);
+                TreeMap<Integer, Double> uomomap = new TreeMap<Integer, Double>();
+                uomomap.put(10, (15.3 * pesoforma) + 679);
+                uomomap.put(30, (11.6 * pesoforma) + 879);
+                uomomap.put(60, (11.9 * pesoforma) + 700);
+                uomomap.put(74, (8.4 * pesoforma) + 819);
                 mb = uomomap.floorEntry(eta).getValue();
                 if(attivitafisica.equals(LivelloAttivitaFisicaEnum.assente) || attivitafisica.equals(LivelloAttivitaFisicaEnum.leggero)){
-                    HashMap<LavoroEnum,Float> uomohash = new HashMap<LavoroEnum,Float>();
-                    uomohash.put(LavoroEnum.leggero,1.41f);
-                    uomohash.put(LavoroEnum.moderato,1.70f);
-                    uomohash.put(LavoroEnum.pesante,2.01f);
+                    HashMap<LavoroEnum,Double> uomohash = new HashMap<LavoroEnum,Double>();
+                    uomohash.put(LavoroEnum.leggero,1.41);
+                    uomohash.put(LavoroEnum.moderato,1.70);
+                    uomohash.put(LavoroEnum.pesante,2.01);
                     laf=uomohash.get(lavoro);
                 } else {
-                    HashMap<LavoroEnum,Float> uomohash = new HashMap<LavoroEnum,Float>();
-                    uomohash.put(LavoroEnum.leggero,1.55f);
-                    uomohash.put(LavoroEnum.moderato,1.78f);
-                    uomohash.put(LavoroEnum.pesante,2.10f);
+                    HashMap<LavoroEnum,Double> uomohash = new HashMap<LavoroEnum,Double>();
+                    uomohash.put(LavoroEnum.leggero,1.55);
+                    uomohash.put(LavoroEnum.moderato,1.78);
+                    uomohash.put(LavoroEnum.pesante,2.10);
                     laf=uomohash.get(lavoro);
                 }
             } else {
-                TreeMap<Integer, Float> donnamap = new TreeMap<Integer, Float>();
-                donnamap.put(10, (14.7f * pesoforma) + 496);
-                donnamap.put(30, (8.7f * pesoforma) + 829);
-                donnamap.put(60, (9.2f * pesoforma) + 688);
-                donnamap.put(74, (9.8f * pesoforma) + 624);
+                TreeMap<Integer, Double> donnamap = new TreeMap<Integer, Double>();
+                donnamap.put(10, (14.7 * pesoforma) + 496);
+                donnamap.put(30, (8.7 * pesoforma) + 829);
+                donnamap.put(60, (9.2 * pesoforma) + 688);
+                donnamap.put(74, (9.8 * pesoforma) + 624);
                 mb = donnamap.floorEntry(eta).getValue();
                 if(attivitafisica.equals(LivelloAttivitaFisicaEnum.assente) || attivitafisica.equals(LivelloAttivitaFisicaEnum.leggero)){
-                    HashMap<LavoroEnum,Float> donnahash = new HashMap<LavoroEnum,Float>();
-                    donnahash.put(LavoroEnum.leggero,1.42f);
-                    donnahash.put(LavoroEnum.moderato,1.56f);
-                    donnahash.put(LavoroEnum.pesante,1.73f);
+                    HashMap<LavoroEnum,Double> donnahash = new HashMap<LavoroEnum,Double>();
+                    donnahash.put(LavoroEnum.leggero,1.42);
+                    donnahash.put(LavoroEnum.moderato,1.56);
+                    donnahash.put(LavoroEnum.pesante,1.73);
                     laf=donnahash.get(lavoro);
                 } else {
-                    HashMap<LavoroEnum,Float> donnahash = new HashMap<LavoroEnum,Float>();
-                    donnahash.put(LavoroEnum.leggero,1.56f);
-                    donnahash.put(LavoroEnum.moderato,1.64f);
-                    donnahash.put(LavoroEnum.pesante,1.82f);
+                    HashMap<LavoroEnum,Double> donnahash = new HashMap<LavoroEnum,Double>();
+                    donnahash.put(LavoroEnum.leggero,1.56);
+                    donnahash.put(LavoroEnum.moderato,1.64);
+                    donnahash.put(LavoroEnum.pesante,1.82);
                     laf=donnahash.get(lavoro);
                 }
             }
-            return Math.round(mb*laf);
+            return (int) Math.round(mb*laf);
         }
 
         private GiornoAlimProgObject generaGiorniDispari(ArrayList<String> snackcolazione, ArrayList<String> snackspuntino, ArrayList<String> frutta, ArrayList<String> primopranzo, ArrayList<String> secondo, ArrayList<String> contorno, ArrayList<String> bevandacolazione, ArrayList<String> bevandaspuntino){

@@ -91,13 +91,14 @@ public class ProfiloPresenter {
                 if (replay == JOptionPane.YES_OPTION) {
                     String nuovaAltezza = modificaInfoUtente(campo, altezza, utente.getUsername(), "virgola");
                     if (!nuovaAltezza.equals(altezza)) {
-                        float nuovoPesoforma = profilo.calcoloPesoForma(Float.parseFloat(nuovaAltezza), utente.getSesso());
+                        double nuovoPesoforma = profilo.calcoloPesoForma(Double.parseDouble(nuovaAltezza), utente.getSesso());
                         UtenteDAO utenteDAO = new UtenteDAO();
                         HashMap hashmap = new HashMap();
-                        hashmap.put(campo,Float.toString(nuovoPesoforma));
+                        hashmap.put("peso_forma",Double.toString(nuovoPesoforma));
+                        hashmap.put("altezza", nuovaAltezza);
                         utenteDAO.updateInfoUtente(utente.getUsername(),hashmap);
                         utente.setPeso_forma(nuovoPesoforma);
-                        utente.setAltezza(Float.parseFloat(nuovaAltezza));
+                        utente.setAltezza(Double.parseDouble(nuovaAltezza));
                         profilo.setInfoUtente(utente);
                     }
                 }
@@ -111,7 +112,7 @@ public class ProfiloPresenter {
                 String campo = "peso";
                 String nuovoPeso = modificaInfoUtente(campo,peso, utente.getUsername(), "virgola");
                 if(!nuovoPeso.equals(peso)) {
-                    utente.setPeso(Float.parseFloat(nuovoPeso));
+                    utente.setPeso(Double.parseDouble(nuovoPeso));
                     profilo.setInfoUtente(utente);
                     new ProgressiDAO().updateInfoProgressi(utente.getUsername(), LocalDate.now(),campo,nuovoPeso);
                 }

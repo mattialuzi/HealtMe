@@ -53,9 +53,9 @@ public class ProfiloView extends View {
         nomeLabel.setText(utente.getNome());
         cognomeLabel.setText(utente.getCognome());
         etaLabel.setText(String.valueOf(utente.getEta()));
-        altezzaLabel.setText(String.valueOf(utente.getAltezza()));
+        altezzaLabel.setText(String.valueOf(Math.round((utente.getAltezza()*100d))/100d));
         pesoLabel.setText(String.valueOf(utente.getPeso()));
-        pesoformaLabel.setText(String.valueOf(utente.getPeso_forma()));
+        pesoformaLabel.setText(String.valueOf(Math.round((utente.getPeso_forma()*100d))/100d));
         emailLabel.setText(utente.getEmail());
         lavoroLabel.setText(String.valueOf(utente.getLavoro()));
         attivitafisicaLabel.setText(String.valueOf(utente.getLivello_attivita_fisica()));

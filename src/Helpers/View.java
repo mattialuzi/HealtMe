@@ -102,14 +102,14 @@ public class View {
         return ritorno;
     }
 
-    public float calcoloPesoForma(float altezza, int sesso){
-        float peso_forma;
+    public double calcoloPesoForma(double altezza, int sesso){
+        double peso_forma;
         //per indicare un numero float si mette una f alla fine
         if(sesso == 1) {
-            peso_forma = 22.1f * altezza * altezza;
+            peso_forma = 22.1 * altezza * altezza;
         }
         else {
-            peso_forma = 20.6f * altezza * altezza;
+            peso_forma = 20.6 * altezza * altezza;
         }
         return peso_forma;
     }

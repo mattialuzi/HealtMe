@@ -15,12 +15,12 @@ public class UtenteObject {
     private String cognome;
     private int eta;
     private int sesso;
-    private float altezza;
+    private double altezza;
     private double peso;
     private LavoroEnum lavoro;
     private LivelloAttivitaFisicaEnum livello_attivita_fisica;
     private AllergiaEnum allergia;
-    private float peso_forma;
+    private double peso_forma;
     private String email;
     private ProgrammaAlimentareObject programma_alimentare;
     private ProgrammaAllenamentoObject programma_allenamento;
@@ -100,7 +100,7 @@ public class UtenteObject {
         return altezza;
     }
 
-    public void setAltezza(float altezza) {
+    public void setAltezza(double altezza) {
         this.altezza = altezza;
     }
 
@@ -108,7 +108,7 @@ public class UtenteObject {
         return peso;
     }
 
-    public void setPeso(float peso) {
+    public void setPeso(double peso) {
         this.peso = peso;
     }
 
@@ -136,11 +136,11 @@ public class UtenteObject {
         this.allergia = allergia;
     }
 
-    public float getPeso_forma() {
+    public double getPeso_forma() {
         return peso_forma;
     }
 
-    public void setPeso_forma(float peso_forma) {
+    public void setPeso_forma(double peso_forma) {
         this.peso_forma = peso_forma;
     }
 
